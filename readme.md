@@ -32,21 +32,21 @@ The purpose of utilizing co-chains rather than having layer 2 blockchains are mu
 
 I wanted to provide some examples of co-chains to help provide a better idea of what a co-chain could look like.
 
-- **Main Chain** - This co-chain is responsible for creating the messaging protocols that go between various user types. It sets up two tokens, one for validators and the other for partners. Compiler for the Pseudo programing language, it creates an alias system that allows users to have user names that could be used for easier transactions (user names begin with an @). It sets the rules to create chain rules, which includes several options such as developer compensation, tokenomics and preferred validators. It maintains the block time for the chain and it stores the link that go across multiple networks. There will be more details on all this later since the main chain's code is here.
+- **Main Chain** - This co-chain is responsible for creating the messaging protocols that go between various user types. It sets up two tokens, one for validators and the other for partners. Compiler for the Pseudo programing language, it creates an alias system that allows users to have user names that could be used for easier transactions (user names begin with an @). It sets the rules to create chain rules, which includes several options such as developer compensation, tokenomics and preferred validators. It maintains the block time for the chain and it stores the link that go across multiple networks. There will be more details on all this later since the main chain's code is here. There is also a protocol for digital asset assignment meaning that one or more users can own a digital asset and make fees off of it's use (think Music where you have the writer and the music as two separate but required pieces to create the DA); there should also be a way to make groups that can be used as a user.  Create a emergency message system that the chain owner can use to contact all users of that chain. Perception score which helps identify bad actors on the network. Convergence which helps with the blockchain getting too large. Licenses framework to show how to write licenses for the chain (allows users to see what they can and cannot do on chain). *Does the main chain need to keep a list of the known validators of other chains?*
 
 - **Mimic** - This is our AI chain, in here we create very specific models that are great at a particular task then link that up to a hypervisor that directs the incoming request to the correct model. *The reason for many small models rather than one monolithic model is so it's easier to change and can run on various hardware*
 
-- **Pages** - This is our Web 4 system that delivers something similar to webpages, but instead of HTML and CSS you have M3L and GSS. The advantages of those markups is they allow a single component to be updated rather than an entire document so it's less load on the network. The goal is to also get rid of cookies so you're not helping companies track your habits online. This also introduces AdCoin which is used for pulling up different pages; you can trade for it or earn it by interacting with ads. This also sets up UnaS (UndChain naming service) which will be responsible for resolving names from addresses, much like how DNS works today.
+- **Pages** - This is our Web 4 system that delivers something similar to webpages, but instead of HTML and CSS you have **M3L** and **GSS**. The advantages of those markups is they allow a single component to be updated rather than an entire document so it's less load on the network. The goal is to also get rid of cookies so you're not helping companies track your habits online. This also introduces AdCoin which is used for pulling up different pages; you can trade for it or earn it by interacting with ads. This also sets up UnaS (UndChain naming service) which will be responsible for resolving names from addresses, much like how DNS works today. There is also a protocol called Adult_Swim which is a verification system to know if a particular user is above a set age. There will also be a content rating system to help both classify content as well as promote it.
 
-- **Live** - This is our decentralized audio / video streaming system; this will be our first attempt at making a system who's goal is to have low latency response. 
+- **Live** - This is our decentralized audio / video streaming system; this will be our first attempt at making a system who's goal is to have low latency system that is designed to be interactive between the provider and the participant (think live chat and a streamer). 
 
-- **Code Ledger** - This is a software repository system that is specifically built for Pseudo since we need a means of tracking changes to the code from a specific user and pay them out accordingly based on what the chain rules state. Haven't spoke on this, but the idea is that you can earn tokens by contributing code to project and depending on the impact you get rewarded. There is also a bounty system for new developments. 
+- **Code Ledger** - This is a software repository system that is specifically built for Pseudo since we need a means of tracking changes to the code from a specific user and pay them out accordingly based on what the chain rules state. Haven't spoke on this, but the idea is that you can earn tokens by contributing code to project and depending on the impact you get rewarded. There is also a bounty system for new developments. Once of the features I am looking to implement is a in-line messaging system as an example, you're working in a team and have a question about a function I want the ability for you to post your question / comment in code that can later be answered by someone else. In doing this we should be able to answer any future questions from new developers.
 
-- **SQeeL** - This is UndChain's SQL system for creating and maintaining decentralized databases on chain. This will have the ability to either be a public database or it can be private with a shared key.
+- **SQeeL** - This is UndChain's SQL system for creating and maintaining decentralized databases on chain. This will have the ability to either be a public database or it can be private with a shared key. One example for a public database would be a video content library where you need to store not only the video, but tags such as upload dates, gene, duration and previews. An example for a private database would be a manufacturing item database where you store the item ICN, cost, warehouse location and quantity.
 
-- **Messaging** - I don't have a great name for this just yet and I'm not sure if this protocol should be moved to the main chain since I would like to create an emergency messaging system, but as the name suggests this is a decentralized messaging protocol, this will not only have the ability to perform direct messaging, but also the ability to create groups. This could be used as a basis for a social network. 
+- **Messaging** - I don't have a great name for this just yet and I'm not sure if this protocol should be moved to the main chain since I would like to create an emergency messaging system, but as the name suggests this is a decentralized messaging protocol, this will not only have the ability to perform direct messaging, but also the ability to create groups. This could be used as a basis for a social network or a forum. 
 
-- **GameChain** - This blockchain is focused on helping developers launch decentralized serves that allow their players to connect live based gaming content. This will be fairly difficult to implement as latency will become the most important metric. Another goal of this is to create something called world engine which has the goal of creating a fully simulated world system, so that actions in one area create ripple effects throughout the globe / map. 
+- **Player 2** - This blockchain is focused on helping developers launch decentralized serves that allow their players to connect live based gaming content. This will be fairly difficult to implement as latency will become the most important metric. Another goal of this is to create something called world engine which has the goal of creating a fully simulated world system, so that actions in one area create ripple effects throughout the globe / map. This should also include our Meta space who's goal is to create a open ruleset for how objects and actions happen in the Meta_Space (character sizing / physics)
 
 As you can see there are a ton of chain ideas and I am sure more that will need to be developed to make this a full ecosystem. I may not be able to develop everything listed here, but my intention is to do as many as I can that are diverse as possible, so I can adjust the protocol based on the needs of these chains. I have personally found that when you use a product, you pick up on things that you would ordinarily miss. When developing co-chains always try to think of the value not just another asset class. 
 ## Co-chain code
@@ -67,6 +67,37 @@ In UndChain there are four different user types; this is done to create a separa
 
 # Block Generation
 
-Blocks will be generated using block time rather than size, there is a concern that the size of the chain may expand too fast due to this so items such as job files and payout lists once completed will be stored by the partners. There is also a process called The Convergence that consolidates the chain, this is explained more later when we discuss encryption standards. Each block is generated in three stages
+Blocks will be generated using block time rather than size, I have a concern that the size of the chain may expand too fast, due to this so items such as job files, work files and payout lists once completed will be stored by the partners. There is also a process called **The Convergence** that consolidates the chain; this is explained more later when we discuss encryption standards. Each block is generated in three stages and each of those stages have three steps each. *It's important to note that I considered each stage to be hashed and sent to a co-chain, I have decided not to do that since I think that it's overkill.* 
 
-1. **Request** - 
+The timing will have to be experimental in the beginning, we **MUST** have blocks that are long enough to allow a sufficient number of job requests to occur while maintain a network that is responsive to the client. I think we should target 44 seconds per block. Please note that while the block may not complete in 44 seconds the job request should propagate quickly so that a confirmed transaction may occur. 
+
+### Stage 1 - Initialize 
+
+1. **Request** - In this first step we have a client requesting service for a utility, going to the validators. The validators then place this in a job file, so that the utility can be performed by a partner.
+
+2. **Link** - In the second step a partner(s) contacts the validator(s) stating that they have resources to perform the requested utility. *Please note this may seem repetitive considering the next stage. This is here to show that we don't just hold the job until the stage is complete.*
+
+3. **Sync Jobs** - In this step we sync this blocks job file with the other validators on this chain. 
+
+### Stage 2 - Link
+
+1. **Search** - In this step the work that was posted previously in the job file is either waiting on a partner to respond *or* the Validator knows the partner, and contacts them.
+
+2. **Partner(s) Found** - Once a sufficient number of partners respond we then initiate the connection swap. The means of communication depends on both the chain and the user, at this time I think it's wise to go through a proxy in order to avoid the possibility of a DDoS attack.
+
+3. **Connection Established** - In this step we add the connection as well as the block number we connected on (needed for payout later), to the **work file**. Validator listens for hashes from other co-chains it's connected to. 
+
+
+### Stage 3 - Utility Complete
+
+It's important to note that utility does **NOT** have to be completed when a block ends, in fact it rarely will. Utility completion either completes when the partner or the client end transmission, or when a payout period has been reached (every 4 hours on the main chain).
+
+1. **Receipt** - Either the client or partner show the receipt of the utility, this could be as simple as a signature from both entities or some transactional information in plain text, but a signature from both **MUST** exist for it to be valid. It's best if both partner and client submit the receipt to the validators since either party could choose not to send it. 
+
+2. **Utility Complete** - The validator marks the utility as complete along with the block it was completed on and appends the receipt of the transaction. *Note: Receipts must be less than 128 characters (size constraints). You could place a link to a file on chain that allows you to make your receipt as large as you want.* 
+
+3. **Payout** - This happens at an interval that is defined by the chain owner (main chain is every 4 hours). If no payout occurs then we append this to the **pay sheet**. Validators then hash the transactions and append that to the block, this hash is also shared with co-chains.  
+
+## Tokenomics
+
+UndChain will have two native tokens associated with it's main chain. At this time I don't have a good name for them so I am calling them UndChain GP and SP. 
