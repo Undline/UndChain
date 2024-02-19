@@ -32,11 +32,13 @@ The purpose of utilizing co-chains rather than having layer 2 blockchains are mu
 
 I wanted to provide some examples of co-chains to help provide a better idea of what a co-chain could look like.
 
-- **Main Chain** - This co-chain is responsible for creating the messaging protocols that go between various user types. It sets up two tokens, one for validators and the other for partners. Compiler for the Pseudo programing language, it creates an alias system that allows users to have user names that could be used for easier transactions (user names begin with an @). It sets the rules to create chain rules, which includes several options such as developer compensation, tokenomics and preferred validators. It maintains the block time for the chain and it stores the link that go across multiple networks. There will be more details on all this later since the main chain's code is here. There is also a protocol for digital asset assignment meaning that one or more users can own a digital asset and make fees off of it's use (think Music where you have the writer and the music as two separate but required pieces to create the DA); there should also be a way to make groups that can be used as a user.  Create a emergency message system that the chain owner can use to contact all users of that chain. Perception score which helps identify bad actors on the network. Convergence which helps with the blockchain getting too large. Licenses framework to show how to write licenses for the chain (allows users to see what they can and cannot do on chain). *Does the main chain need to keep a list of the known validators of other chains?*
+- **Main Chain** - This co-chain is responsible for creating the messaging protocols that go between various user types. It sets up two tokens, one for validators and the other for partners. Compiler for the Pseudo programing language, it creates an alias system that allows users to have user names that could be used for easier transactions (user names begin with an @). It sets the rules to create chain rules, which includes several options such as developer compensation, tokenomics and preferred validators. It maintains the block time for the chain and it stores the link that go across multiple networks. There will be more details on all this later since the main chain's code is here. There is also a protocol for digital asset assignment meaning that one or more users can own a digital asset and make fees off of it's use (think Music where you have the writer and the music as two separate but required pieces to create the DA); there should also be a way to make groups that can be used as a user.  Create a emergency message system that the chain owner can use to contact all users of that chain. Perception score which helps identify bad actors on the network. Convergence which helps with the blockchain getting too large. Licenses framework to show how to write licenses for the chain (allows users to see what they can and cannot do on chain). Subscriptions, this system allows users to pay using a subscription model that expires on a defined date; this will make budgeting easier for users. Open transaction, this keeps a digital asset transaction with the same end user open in the event something like a tip is to be given. *Does the main chain need to keep a list of the known validators of other chains?*
 
 - **Mimic** - This is our AI chain, in here we create very specific models that are great at a particular task then link that up to a hypervisor that directs the incoming request to the correct model. *The reason for many small models rather than one monolithic model is so it's easier to change and can run on various hardware*
 
 - **Pages** - This is our Web 4 system that delivers something similar to webpages, but instead of HTML and CSS you have **M3L** and **GSS**. The advantages of those markups is they allow a single component to be updated rather than an entire document so it's less load on the network. The goal is to also get rid of cookies so you're not helping companies track your habits online. This also introduces AdCoin which is used for pulling up different pages; you can trade for it or earn it by interacting with ads. This also sets up UnaS (UndChain naming service) which will be responsible for resolving names from addresses, much like how DNS works today. There is also a protocol called Adult_Swim which is a verification system to know if a particular user is above a set age. There will also be a content rating system to help both classify content as well as promote it.
+
+- **Will** - This chain serves as an emergency backup system in the event that either you loose your keys or you pass away. The idea is that you set a threshold of time to transpire where you have no network activity. If this occurs a smart contract (per your instructions) executes and transmits your digital assets to the wallet(s) of your choosing. We will also be creating a 'compromised' button so that if you notice your account is hacked you can hit this button and it will freeze your account (you won't be able to make transactions). You may also set withdraw limits that can go off at a set interval of your choosing (either total daily or per transaction). A Will takes up to seven days in order to take effect, but if a freeze is hit during that time the Will is ignored and the previous one is used (or the assets are locked) *I am debating on this being on the main chain, I think this could be a core feature.*
 
 - **Live** - This is our decentralized audio / video streaming system; this will be our first attempt at making a system who's goal is to have low latency system that is designed to be interactive between the provider and the participant (think live chat and a streamer). 
 
@@ -59,7 +61,7 @@ In UndChain there are four different user types; this is done to create a separa
 
 1. **Chain Owner** - It's probably best to think of Chain Owners as developers. This group is responsible for creating the functionality of the chain as well as setting the tokenomics (fees). When a chain is developed and active the chain owner will receive a digital asset indicating the ownership of that chain. This allows the chain to be transferred to another owner(s). Chain owners may select who they are partnered with, at this time I believe the limit will be two. Chain owners are also able to select preferred validators (I'd say in most cases it would be themselves) and how many validators they will have on the network, with the minimum being three. *yep, I already know what you're worried about, it gets addressed later.* 
 
-2. **Validators** - Think of Validators as routers and are responsible for taking a user request and connecting them with an appropriate resource. This is mainly meant to link clients and partners together. They are also responsible for keeping up with utility payout and they validate the traffic going between users. 
+2. **Validators** - Think of Validators as routers and are responsible for taking a user request and connecting them with an appropriate resource. This is mainly meant to link clients and partners together. They are also responsible for keeping up with utility payout and they validate the traffic going between users. They also maintain the **users file** which is a repository of usernames with the public keys that are associated with it. 
  
 3. **Partners** - This classification of users can be best thought of as the miners for this blockchain, however instead of hashing random numbers they focus on the three utility types. They work closely with validators to receive jobs from the jobs file and then either work directly or through a proxy with the client in order to complete that utility. Once it's completed, they sign a receipt with the client indicating the job was completed successfully. 
 
@@ -100,4 +102,147 @@ It's important to note that utility does **NOT** have to be completed when a blo
 
 ## Tokenomics
 
-UndChain will have two native tokens associated with it's main chain. At this time I don't have a good name for them so I am calling them UndChain GP and SP. 
+UndChain will have two native tokens associated with it's main chain. At this time I don't have a good name for them so I am calling them UndChain GP and SP. *Although AdCoin is **NOT** apart of the main chain I will discuss it as well since I believe pages will play a major role in this network*
+
+### UndChain GP
+
+GP will act somewhat like Bitcoin in regards to halving, GP is provided to validators. We will start with a initial token amount of 4,444,444 which will be distributed in development, advertisement and air drops. While I understand this may upset some, it's important to note that the idea is to use this to both promote and reward developments. I will discuss later how these will be distributed. The chain will start with an emission of 4444 tokens per day. Every four years we will experience a 'flooring' which is the same as a halving except we don't use decimals. This will continue until we reach one token per day which that will continue forever. While this does create an infinite supply I believe this is important to help keep validators interested in maintaining the network without charging high fees. Below is a table that shows the proposed floorings:
+
+|Flooring| Year | Token Per Day| 
+|--- | ---- | -----------------|
+| 1 | 1 | 4444 |
+| 2 | 4 | 2222 |
+| 3 | 8 |1111|
+| 4 |12|555|
+| 5 |16|277|
+| 6 |20|138|
+| 7 |24|69|
+| 8 |28|34|
+| 9 |32|17|
+| 10 |36|8|
+| 11|40|4|
+| 12 |44|2|
+|13|48+|1|
+
+tokens_per_day = 4444 // 2 ** flooring_number
+### UndChain SP
+
+SP is the reward system given to partners.  It's emission schedule is voted on by the active partners on chain. Activity will be defined a bit later, but my initial thoughts are that at least one successful transaction per week and a perception score above 444. During this vote you may either double the daily emission or halve the daily emission. I am concerned that partners will always want the emission to go down while users will want it to go up so I need to think of a way to counterbalance these effects. Maybe set the auto fee to do the same?  The initial daily emission of tokens is 4444 per day and the vote to either floor or double the supply happens every four years (a week before GP), so that the event happens at the same time as GP.
+
+One of the reasons why I wanted the flooring to come to a vote is so that I can test decentralized voting systems that have conditionals that need to be met that have a large impact on the system. If this works well, it could be rolled out as a way to vote for new features / improvements on the main chain. 
+
+### Ad Coin
+
+Again Ad Coin really shouldn't be on here since it's apart of the pages chain. Ad Coin has an initial supply of 4 trillion tokens, the reason for this is because accessing content on a site should be cheep and I envision that it should only cost a couple Ad Coin. All Ad Coin will be created at the start of the chain and will be shared across a couple eco systems as well as air dropped so that users can use the chain immediately. Not sure if it's going to be given when you create an account or if it's part of the onboarding process (so you can learn how to earn tokens rather than purchase and use them). 
+
+At a later time I will generate 444,444,444,444 more tokens. The idea is to test out a token generator system that takes the new tokens minted and splits them (based on percentage) to the token holders. So let's say there were 100 tokens and @Bob had 90 and @Sally had 10, if a token generator event occurs where we minted 10 more tokens, @Bob would then have 99 tokens and @Sally would have 11.
+
+### Token Guidelines
+
+All tokens on the chain will be divisible up to 12 decimal places, we will use the standard way to identify low values as the metric system (mili, micro, nano, pico), for example in order to send a transaction on chain @Jerry requests 100p of GP to provide the service. I think that is a lot easier than having a long decimal number and I'm not going to make up a weird name for sub-dividing tokens.
+
+Again, please refrain from making a bunch of tokens on chain. If you are connected to the main chain you have access to GP and SP by default. This is done by creating a token share across chains. This share is dependent on how many transactions take place on the chain. So, if `MainChain` chain does 10 transactions and `Pages` does 100 (and we assume a daily amount of 4444) then `MainChain` would get 444.4 tokens to distribute to it's validators and `Pages` would get 3,999.6.
+
+### Fees
+
+Fees should reflect UndChain's core ideals of digital ownership, meaning that not only do you own your digital assets, but you also own your labor. Because of this partners are free to set any fee they wish on the service provided (independent of the chain owner). The chain owner can only set a percentage of the fee you collect so if you choose to collect no fee then the chain owner would not receive anything from you as a partner. With that there is an auto-fee system that I believe most people will use since it takes in chain usage and value of the token.
+
+There could be a time when the auto-fee will be adjusted down via a vote, I only see this happening in cases where the value of the token far exceeds the value of the service. In these cases a vote will take place, but keep note that the fee reduction will be placed on a timer (since I wouldn't think clients would never vote for the fee to go higher). 
+
+## Network Fundamentals
+
+
+### Consensus and Rotation
+
+UndChain operates on a 2/3 majority consensus mechanism, the reason behind this is that since a chain owner is able to set up to 44% of the available slots with **known validators** (which guarantees them a spot), they have to get buy in from another 23% of unknown validators. This consensus system also works in regulating unknown validators since they must have buy in from at least 11% of the known validators. There is a potential problem with this however, the chain owner could simply create more validators that are not listed and have them run on the network. 
+
+Due to this potential vulnerability, a rotation schedule for validators will be implemented that forces **active validators** to swap out with **passive validators** which should reduce the risk. 
+
+Between the rotation schedule and the 2/3 consensus mechanism I believe this will enforce the network to move forward. This also allows up to 32% of the validators to act in a deceptive way. There is a mechanism for validators and partners who operate in a deceptive manner which is called the perception score. If malice is detected your perception score is dropped. 
+
+### Perception Score
+
+The idea behind the perception score is so that a validator or client can judge the merits of a user without having to do blockchain analysis on that user. This system **MUST** be closely monitored and can **NEVER** be used as a means of preventing transactions from occurring. This isn't a social credit score, but more of a reliability rating of that particular user. All users can experience a reduction in their perception score, but validators and partners are the most affected since it can prevent them from providing service on the network. Much like the ledger, the score is maintained by the validators (meaning they request the score to be updated), but is stored by the partners. 
+
+#### Perception Score Loss
+
+Validators can loose their perception score if
+
+1. They provide false records of transactional events
+2. They do not maintain up to date user / job / work / payout files
+3. They fail to perform a transaction on a particular user(s)
+4. Drop connection without notice
+5. Being blocked from a large number of clients
+
+Partners can lower their perception score if
+
+1. Failure to maintain saved files
+2. Falsify a transaction with a client
+3. Are too slow for the task they promised they could do
+4. Drop connection without notice
+5. Blocked from several clients - *Not sure about this one*
+
+#### Perception Score Gain
+
+It's important to stress that this is **NOT** a social credit score, but like a credit score you can rebuild it. Since I am sure there will be instances where this happens by accident (especially with disconnects). 
+
+Validators can gain perception score by
+
+1. Being a passive validator
+2. Participating on the test net
+3. Recovering from a outage 7x (that means the resource has been used 7 times with no problems)
+4. Having a higher number of connections than your peers
+
+Partners can gain perception tokens by
+
+1. Participating in the test net
+2. Getting un-blocked
+3. Recovering from a outage 7x (that means the resource has been used 7 times with no problems)
+
+I am concerned about using the block feature as a means of determining a perception score as I am sure it will be used in a poor manner however, clients only hurt themselves when they block other users since that prevents them from using their services. Also, we should consider placing a mechanism that disregards the block if it's noted that client has a abnormally large blocked list. 
+
+### Scaling and Security
+
+UndChain should move very quickly since we use so few validators in order to issue work on the chain, however there is a problem with network delay due to physical size so the use of parallel networks is to be used. The idea is that a parallel network operates in the same manner as each other with the exception being their user base. The user declares which network they wish to be apart of and with that they are provided a list of the validators that are responsible in that region to interact with. This doesn't mean that you are stuck on that network permanently though. You can initiate a transfer at anytime and your assets will travel with you. Again the reason for the parallel networks is to increase QoS by making content more local to that specific space, this includes the ledger. Much like how tokens are dispersed across co-chains they are also dispersed the same way with networks. Token allotment is decided by network 1 and is based on activity. 
+
+##### How do you create a new network? You don't :) 
+
+I still haven't decided just how I am going to do this, but I believe it will most likely be a mixture of algorithmic as well as chain owner responsibility. Perhaps I could leave it to a vote?
+
+#### Convergence
+
+I believe that this blockchain is going to get large fast even with some of the space constraints that I am already planning on implementing. So what I am planning on implementing is a by product of the fact that we have decentralized storage on chain. What I am planning is that at least every flooring we implement The Convergence which is a process where we store all of the blockchains information on file and effectively restart the blockchain using the hash of the old chain as a genesis block. This would effectively lower the barrier in regards to how much RAM a validator needs since they can offload it onto the partners to store. The convergence will also occur when when have a crypto swap.
+
+### Security
+
+There is a concern with quantum computing on the rise that traditional cryptographic algorithms may become obsolete. If history tells us anything is that it's a matter of when a cryptographic algorithm will be cracked rather than if. Because of that potential danger, UndChain can modulate and / or change it's cryptographic algorithm. *This is why we have usernames rather than just use public keys* Initially we will use standard AES encryption since that is industry standard and seems like it should work for quite a while longer. When we are close to that algorithm being compromised we will initiate a crypto swap. This will notify users to generate a new public / private key pair using a more secure cryptographic algorithm. The user then responds with the public key to the new protocol and signs it with the current private key so we know it comes from them. The Validators then update the users file to reflect the new public key and on the day of go live we use those signatures instead. If a user fails to update their keys then during the next transaction we initiate a forced key migration (which sounds worse than what it is, basically we send a emergency message back saying to update the key). If that fails, then we allow the account to continue, but notify them that the account is high risk and can be compromised at anytime. UndChain should NEVER force a user to update their keys, but should warn them of the danger of not doing so. *Important to note, once we reach zero day (meaning the attack is live) we do not allow the user to change the key since we don't know if it's them. Instead they can use the freeze feature and hopefully it will go to a updated account. Or they can loose their digital assets if and when someone cracks their account.*
+
+- Interesting thought would be to allow users to update their key at anytime, but I am not sure why anyone would do this. The validator has to mark the active public key anyway so it wouldn't matter if they did update their keys. 
+	- Could lead to an attack if users are constantly updating their keys. Maybe charge for out of sequence key update?
+
+
+
+---
+
+# Technical Documentation
+
+Might be wondering why it took this long to get to the technical details; UndChain is very abstract right now and I don't have every technical detail flushed out. 
+
+UndChain uses Python for now; I choose Python due to the ease of development however, it is slow and we will pay a price for that. Ideally everything we need just comes with the language. I think the only imports we will use is `hashlib`, `sockets` and `time`. 
+
+The plan is to separate each user type in classes that inherit from user. Each type should have it's own messaging system that I am planning on making a state machine to handle different packets. We will start with Validators since they are the first entity that performs any action on chain. 
+
+## Main
+
+This is going to be basic for now, just a command line that asks what user type are you. Should also detect if you have a key on the system, if not create one.
+
+## Validator Class 
+
+- Need to create an Enum that has the different states a validator can be in
+	- **Discovery**
+	- **Time Sync**
+	- **Ready**
+	- **Busy**
+	- **Low Trust** - Not sure about this one, we should have it, but I think this should be in addition to the other states.
+
+
