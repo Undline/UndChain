@@ -3,6 +3,7 @@ Putting this here as a place holder since I know I will need to refactor common
 user methods. The ones I have in here are probably not permanent
 '''
 
+from typing import Tuple
 import hashlib
 
 class User:
@@ -11,16 +12,18 @@ class User:
         self.public_key = hashlib.sha256(b'public_key_data').hexdigest()
         self.username = '@test'
 
-    def get_account(self) -> list:
+    def get_account(self) -> Tuple[str, str]:
         """
-        Get the account details for this user. Returns a list with the following items:
+        Get the account details for this user. Returns the following items:
         - Public Key Hash (str)
         - Username (str)        
         """
+
         return [self.public_key, self.username]
     
     def sign(self) -> str:
         """
         Returns the user's signature that is used in all transactions.
         """
+
         return 'Hello there'
