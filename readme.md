@@ -254,6 +254,10 @@ While a balance of power is key that doesn't completely ensure decentralization,
 
 While having a separation of power between the validators who maintain the blockchain and the partners who hold the ledger and process the payments. There is another reason the validators exist, and that is to keep mining pools away from UndChain. There is no need for them; the Validators already perform token distributions and traffic control so there is no benefit for another entity to perform that function. This also gives the partners full rewards since validators don't earn SP.
 
+## Wallets
+
+Had a thought while doing some development work in regards to having hot and cold wallets, and since UndChain needs the ability to sign transactions (fairly regularly) I think it may be wise to implement the idea of hot and cold wallets so that users already have that as a additional means of security. What this would mean is that instead of just one public address in a user accounts name you would have two. I need to think more on this and how it should be implemented. I will say for sure that fees between those two wallets will be zero.
+
 
 ---
 
@@ -261,7 +265,7 @@ While having a separation of power between the validators who maintain the block
 
 Might be wondering why it took this long to get to the technical details; UndChain is very abstract right now and I don't have every technical detail flushed out. 
 
-UndChain uses Python for now; I choose Python due to the ease of development however, it is slow and we will pay a price for that. At this time we will use the standard library so no additional packages are needed. 
+UndChain uses Python for now; I choose Python due to the ease of development however, it is slow and we will pay a price for that. At this time we will use the standard library so no additional packages are needed.
 
 The plan is to separate each user type in classes that inherit from user. Each type should have it's own messaging system that I am planning on making a state machine to handle different packets. We will start with Validators since they are the first entity that performs any action on chain. 
 
