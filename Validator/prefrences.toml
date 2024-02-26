@@ -1,0 +1,30 @@
+[Validator]
+name = '@test'
+public_key = '0x123456789ABCDEF'
+
+# Chains that we want to work for...
+
+[[Chains]]
+name = 'Main Chain'
+chain_ID = 0
+network_ID = 0 # test net
+# Prefered validators are a way are so that a validator can select other validators that they like
+prefered__validator = {'Bob' = '0x12', 'Jim' = '0x34', 'Sally' = '0x56'}
+
+[[Chains]]
+name = 'Pages'
+chain_ID = 1
+network_ID = 0 # test net
+prefered__validator = {'Bob' = '0x12', 'Jim' = '0x34', 'Sally' = '0x56'}
+
+[[Chains]]
+name = 'SQeeL'
+chain_ID = 2
+network_ID = 0 # test net
+prefered__validator = {'Bob' = '0x12', 'Jim' = '0x34', 'Sally' = '0x56'}
+
+[[Chains]]
+name = 'Mimic'
+chain_ID = 3
+network_ID = 0 # test net
+prefered__validator = {'Jane' = '0x12', 'Jim' = '0x34', 'Sally' = '0x56'}
