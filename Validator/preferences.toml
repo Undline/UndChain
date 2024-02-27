@@ -1,0 +1,94 @@
+[Validator]
+name = '@test'
+public_key = '0x123456789ABCDEF'
+
+# Chains that we want to work for...
+
+[[Chains]]
+name = "Main Chain"
+chain_ID = 0
+network_ID = 0 # test net
+[[Chains.preferred_validators]]
+name = "Bob"
+public_key = "0x12"
+protocol = "IP"
+address = "192.168.1.15"
+
+[[Chains.preferred_validators]]
+name = "Jim"
+public_key = "0x34"
+protocol = "IP"
+address = "192.168.1.14"
+
+[[Chains.preferred_validators]]
+name = "Sally"
+public_key = "0x56"
+protocol = "LoRA"
+address = "B827EBFFFE7B80CD"
+
+
+[[Chains]]
+name = 'Pages'
+chain_ID = 1
+network_ID = 0 
+[[Chains.preferred_validators]]
+name = "Bob"
+public_key = "0x12"
+protocol = "IP"
+address = "192.168.1.15"
+
+[[Chains.preferred_validators]]
+name = "Jim"
+public_key = "0x34"
+protocol = "IP"
+address = "192.168.1.14"
+
+[[Chains.preferred_validators]]
+name = "Sally"
+public_key = "0x56"
+protocol = "LoRA"
+address = "B827EBFFFE7B80CD"
+
+[[Chains]]
+name = 'SQeeL'
+chain_ID = 2
+network_ID = 0
+[[Chains.preferred_validators]]
+name = "Bob"
+public_key = "0x12"
+protocol = "IP"
+address = "192.168.1.15"
+
+[[Chains.preferred_validators]]
+name = "Jim"
+public_key = "0x34"
+protocol = "IP"
+address = "192.168.1.14"
+
+[[Chains.preferred_validators]]
+name = "Sally"
+public_key = "0x56"
+protocol = "LoRA"
+address = "B827EBFFFE7B80CD"
+
+[[Chains]]
+name = 'Mimic'
+chain_ID = 3
+network_ID = 0 
+[[Chains.preferred_validators]]
+name = "Jane"
+public_key = "0x12"
+protocol = "IP"
+address = "192.168.2.69"
+
+[[Chains.preferred_validators]]
+name = "Jim"
+public_key = "0x34"
+protocol = "IP"
+address = "192.168.1.14"
+
+[[Chains.preferred_validators]]
+name = "Sally"
+public_key = "0x56"
+protocol = "LoRA"
+address = "B827EBFFFE7B80CD"
