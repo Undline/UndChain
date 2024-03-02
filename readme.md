@@ -144,6 +144,8 @@ All tokens on the chain will be divisible up to 12 decimal places, we will use t
 
 Again, please refrain from making a bunch of tokens on chain. If you are connected to the main chain you have access to GP and SP by default. This is done by creating a token share across chains. This share is dependent on how many transactions take place on the chain. So, if `MainChain` chain does 10 transactions and `Pages` does 100 (and we assume a daily amount of 4444) then `MainChain` would get 444.4 tokens to distribute to it's validators and `Pages` would get 3,999.6.
 
+There will also be a dedicated `burn` address that can be used by any chain for any token. With the expressed function to only allow incoming transactions and no outgoing transactions. This will be rooted in the base protocol to not allow this address to send transactions, you can (like any other address view it's balance). Need to take a lot of care in designing this so that it cannot be compromised (**since its a big honey pot**). 
+
 ### Fees
 
 Fees should reflect UndChain's core ideals of digital ownership, meaning that not only do you own your digital assets, but you also own your labor. Because of this partners are free to set any fee they wish on the service provided (independent of the chain owner). The chain owner can only set a percentage of the fee you collect so if you choose to collect no fee then the chain owner would not receive anything from you as a partner. With that there is an auto-fee system that I believe most people will use since it takes in chain usage and value of the token.
