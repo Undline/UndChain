@@ -9,8 +9,8 @@ import hashlib
 class User:
     def __init__(self):
         # Example of creating SHA-256 hash of some data and converting it to a hex string
-        self.public_key = hashlib.sha256(b'public_key_data').hexdigest()
-        self.username = '@test'
+        self.public_key: str = hashlib.sha256(b'public_key_data').hexdigest()
+        self.username: str = '@test'
 
     def get_account(self) -> Tuple[str, str]:
         """
@@ -19,11 +19,11 @@ class User:
         - Username (str)        
         """
 
-        return [self.public_key, self.username]
+        return self.public_key, self.username
     
     def sign(self) -> str:
         """
         Returns the user's signature that is used in all transactions.
         """
 
-        return 'Hello there'
+        return 'My Signature'

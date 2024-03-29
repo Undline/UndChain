@@ -2,14 +2,8 @@ import tomllib
 from typing import Dict, Any
 
 class AppConfig:
-    """
-    A singleton class for loading and accessing application configuration data from a TOML file.
-    
-    Attributes:
-        _instance (AppConfig): A private class attribute to hold the singleton instance.
-        data (Dict[str, Any]): A dictionary to store the loaded configuration data.
-    """
-    _instance: 'AppConfig' = None
+
+    _instance: 'AppConfig' = None # type: ignore
 
     def __new__(cls) -> 'AppConfig':
         """
@@ -63,17 +57,3 @@ if __name__ == '__main__':
                 print(f"  Validator Public Key: {validator['public_key']}")
                 print(f"  Protocol: {validator['protocol']}")
                 print(f"  Address: {validator['address']}")
-
-    
-    # Create the first instance of AppConfig
-    config_instance_1: AppConfig = AppConfig()
-    
-    # Create another instance of AppConfig
-    config_instance_2: AppConfig = AppConfig()
-
-    # Check if both instances are actually the same instance
-    if config_instance_1 is config_instance_2:
-        print("Singleton test passed: Both variables refer to the same instance.")
-    else:
-        print("Singleton test failed: Variables refer to different instances.")
-

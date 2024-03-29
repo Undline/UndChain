@@ -34,7 +34,7 @@ def main(user_type: Optional[str] = None, **kwargs: Any) -> None:
                 break
 
             if user_input in ['VALIDATOR', 'CHAIN OWNER', 'PARTNER', 'CLIENT']:
-                print(f"You are a {user_input.title()}.")
+                print(f"You are a {user_input.title()}. Still developing the role, so nothing happens after this.")
                 # Specific user type code here
                 break
             else:

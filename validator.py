@@ -1,7 +1,7 @@
 import enum
 from typing import List, Tuple
 from user import User
-from console_colors import Console_Colors as cc
+from console_colors import Console_Colors as cli
 from chain_rules import known_validator
 
 class NetworkState(enum.Enum):
@@ -13,7 +13,12 @@ class NetworkState(enum.Enum):
 
 class Validator(User):
     def __init__(self) -> None:
-        """When the validator class initializes, default to a discovery state."""
+        '''
+        We initialize into the discovery state, since when the validator is 
+        coming online we are always searching for other validators. We then iterate
+        through each chain to determine which one we should participate in. 
+        '''
+
         super().__init__()
         self.state: NetworkState = NetworkState.DISCOVERY
         self.chains: List[Tuple[int, int]] = self.chain_select()
@@ -35,13 +40,13 @@ class Validator(User):
         return [(0, 0)]
 
 
-    def discover(self, chain_ID: int) -> None:
+    def discover(self, chain_ID: tuple[int, int]) -> None:
         '''
         This method is designed to be ran if you are in discovery mode so you can
         find other validators on the network and connect to them
         '''
         if self.state == NetworkState.DISCOVERY:
-            print(f'{cc.MAGENTA}Searching for Validators...{cc.RESET}')
+            print(f'{cli.MAGENTA}Searching for Validators...{cli.RESET}')
             if known_validator(self.get_account(), chain_ID):
                 print(f'Awesome! I\'m part of the cool kids club. Reach out to the other known validators and wait for unknown validators to come on-line.')
         pass
