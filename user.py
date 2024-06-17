@@ -7,10 +7,11 @@ from typing import Tuple
 import hashlib
 
 class User:
-    def __init__(self):
+    def __init__(self) -> None:
         # Example of creating SHA-256 hash of some data and converting it to a hex string
         self.public_key: str = hashlib.sha256(b'public_key_data').hexdigest()
         self.username: str = '@test'
+        self.username = self.username.capitalize()
 
     def get_account(self) -> Tuple[str, str]:
         """
