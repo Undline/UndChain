@@ -276,6 +276,13 @@ UndChain uses Python for now; I choose Python due to the ease of development how
 
 The plan is to separate each user type in classes that inherit from user. Each type should have it's own messaging system that I am planning on making a state machine to handle different packets. We will start with Validators since they are the first entity that performs any action on chain. 
 
+## Python imports
+
+```Bash
+pip install cryptography
+pip install kivy [full]
+```
+
 ## Main
 
 This is going to be basic for now, just a command line that asks what user type are you. Should also detect if you have a key on the system, if not create one.
