@@ -283,6 +283,14 @@ pip install cryptography
 pip install kivy [full]
 ```
 
+#### Cryptography
+
+Using this library since I believe it to be more secure than writing my own. This is used for account creation as well as encrypting and decrypting traffic across the network, signing transactions and creating DH keys. 
+
+#### Kivy
+
+Using this library as a stand in for ForestFox (M3L / GSS interpreter) since that development is going to take more time in order to develop the standard fully. This should be replace with ForestFox which is the UI interpreter for UndChain.
+
 ## Main
 
 This is going to be basic for now, just a command line that asks what user type are you. Should also detect if you have a key on the system, if not create one.
