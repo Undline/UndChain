@@ -136,4 +136,53 @@ class ECDSAHandler(CryptoHandler):
             )
         return public_key # type: ignore
     
+    def sign_message(self, private_key: ec.EllipticCurvePrivateKey, message: bytes) -> bytes:
+        '''
+        This is used for signing messages using the EC private key.
+
+        Returns:
+            bytes: The signature
+        '''
+        signature = private_key.sign(
+            message,
+            ec.ECDSA(self.hash_algorithm())
+        )
+        return signature
     
+    def verify_signature(self, public_key: ec.EllipticCurvePublicKey, message: bytes, signature: bytes) -> bool:
+        '''
+        Verifies a signature using the EC public key.
+
+        Returns:
+            bool: True if the signature is valid
+        '''
+        try:
+            public_key.verify(
+                signature,
+                message,
+                ec.ECDSA(self.hash_algorithm())
+            )
+            return True
+        except:
+            return False
+        
+    def derive_symmetric_key(self, private_key: ec.EllipticCurvePrivateKey, public_key: ec.EllipticCurvePublicKey) -> bytes:
+        '''
+        Derive a symmetric key from a shared secret using a DH key exchange.
+
+
+        Returns:
+            bytes: The derived symmetric key
+        '''
+        shared_secret: bytes = private_key.exchange(ec.ECDH(), public_key)
+
+        derived_key = HKDF(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=None,
+            info=b'handshake data',
+            backend=default_backend()
+        ).derive(shared_secret)
+        # NOTE: Need to read up more on this
+
+        return derived_key
