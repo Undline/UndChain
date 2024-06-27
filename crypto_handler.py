@@ -80,7 +80,7 @@ class CryptoHandler(ABC):
         pass
 
     @abstractmethod
-    def decrypt_message(self, private_key: Any, cipher_text: bytes, ephemeral_public_key: bytes, nonce: bytes, tag: bytes) -> bytes:
+    def decrypt_message(self, private_key: Any, cipher_text: bytes, ephemeral_public_key_bytes: bytes, nonce: bytes, tag: bytes) -> bytes:
         '''
         Decrypts a message using the provided private key
         and AES for symmetric decryption.
@@ -100,5 +100,5 @@ class CryptoHandler(ABC):
         '''
         pass
 
-    
+
 

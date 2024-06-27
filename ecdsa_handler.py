@@ -186,3 +186,56 @@ class ECDSAHandler(CryptoHandler):
         # NOTE: Need to read up more on this
 
         return derived_key
+    
+    def encrypt_message(self, public_key: ec.EllipticCurvePublicKey, message: bytes) -> Tuple[bytes, bytes, bytes, bytes]:
+        '''
+        Encrypts a message using the public key and AES for symmetric encryption. This 
+        is used during the DH exchange
+
+        Returns:
+            Tuple[bytes, bytes, bytes, bytes]: The cipher text, ephemeral key, nonce and authentication tag
+        '''
+        ephemeral_private_key = ec.generate_private_key(public_key.curve, default_backend())
+        ephemeral_public_key = ephemeral_private_key.public_key()
+
+        derived_key = self.derive_symmetric_key(ephemeral_private_key, public_key)
+
+        nonce = os.urandom(12)
+        encryptor = Cipher(
+            algorithms.AES(derived_key),
+            modes.GCM(nonce),
+            backend=default_backend()
+        ).encryptor()
+        ciphertext = encryptor.update(message) + encryptor.finalize()
+
+        return ciphertext, ephemeral_public_key.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+            ), nonce, encryptor.tag
+    
+    def decrypt_message(self, private_key: ec.EllipticCurvePrivateKey, cipher_text: bytes, ephemeral_public_key_bytes: bytes, nonce: bytes, tag: bytes) -> bytes:
+        '''
+        Decrypt a message using the provided ECDSA private key and AES symmetric decryption. DH
+
+        Returns:
+            bytes: The decrypted message
+        '''
+        ephemeral_public_key = serialization.load_pem_public_key(
+            ephemeral_public_key_bytes,
+            backend=default_backend()
+        )
+        
+        derived_key: bytes = self.derive_symmetric_key(private_key, ephemeral_public_key) # type: ignore
+        
+        decryptor = Cipher(
+            algorithms.AES(derived_key),
+            modes.GCM(nonce, tag),
+            backend=default_backend()
+        ).decryptor()
+        decrypted_message = decryptor.update(cipher_text) + decryptor.finalize()
+
+        return decrypted_message
+    
+# Test usage
+if __name__ == '__main__':
+    handler = ECDSAHandler()
