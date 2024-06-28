@@ -239,3 +239,29 @@ class ECDSAHandler(CryptoHandler):
 # Test usage
 if __name__ == '__main__':
     handler = ECDSAHandler()
+
+    # Generate Keys
+    private_key, public_key = handler.generate_keys()
+
+    print(f'Private key: {private_key} and public key: {public_key}')
+
+    #Save keys
+    hot_wallet_result = handler.save_keys(private_key=private_key, public_key=public_key, file_name='hot', directory='test')
+    cold_wallet_result = handler.save_keys(private_key=private_key, public_key=public_key, file_name='cold', directory='test')
+
+    print(hot_wallet_result)
+    print(cold_wallet_result)
+
+    #Load keys
+    private_key: ec.EllipticCurvePrivateKey = handler.load_private_key('test\\hot_private_key.pem', 'test\\hot_salt.bin')
+    public_key: ec.EllipticCurvePublicKey = handler.load_public_key('test\\hot_public_key.pem')
+
+    #Sign and verify a message
+    message = b'Test message'
+    signature = handler.sign_message(private_key, message)
+    print(f'Signature: {signature}')
+
+    is_valid = handler.verify_signature(public_key, message, signature)
+    print(f'Signature valid: {is_valid}')
+
+    
