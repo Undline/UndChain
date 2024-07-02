@@ -264,4 +264,15 @@ if __name__ == '__main__':
     is_valid = handler.verify_signature(public_key, message, signature)
     print(f'Signature valid: {is_valid}')
 
+    # Encrypt and decrypt a message
+    encrypted_message, ephemeral_public_key_bytes, nonce, tag = handler.encrypt_message(public_key, message)
+
+    print(f'Encrypted message: {encrypted_message}')
+    print(f'Ephemeral public key: {ephemeral_public_key_bytes}')
+    print(f'Nonce: {nonce}')
+    print(f'Tag: {tag}')
+
+    decrypted_message = handler.decrypt_message(private_key, encrypted_message, ephemeral_public_key_bytes, nonce, tag)
+    print(f'Decrypted message: {decrypted_message}')
+
     
