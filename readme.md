@@ -179,7 +179,45 @@ Accounts are refundable after demonstrating active participation in the network,
 
 ### Organizations
 
-An organization is a group of user accounts on chain that have access / privileges to a shared resource.  There a different roles with an organization that can control various utilities (think digital assets, data and software and point of contact). There are pre-defined account types such as president, developer, accounts, support and board member. Each organization will begin with a % such as %UndChain (there will be the organization name for the UndChain system). Unlike user accounts, organizations do cost tokens to mint. However, after minting you can add as many members as you wish with however many roles. Members can also choose to transfer their role in the same way that any digital asset occurs on chain with the exception being that the president must agree to the transfer as well as the transferee. I am not sure what the fee should be at this time, but I believe it needs to be paid in either GP or SP. 
+An organization is a group of user accounts on UndChain that have access/privileges to shared resources. There are different roles within an organization that can control various utilities (e.g., digital assets, data, software, and points of contact). There are predefined account types such as president, developer, support, board member, manager, editor, contributor, auditor, moderator, advisor, marketing, treasurer, analyst, and operations. Each organization will begin with a % symbol followed by the organization name (e.g., %UndChain for the UndChain system).
+
+Unlike user accounts, organizations do cost tokens to mint. However, after minting, you can add as many members as you wish with however many roles. Members can also choose to transfer their role in the same way that any digital asset is transferred on chain, with the exception that the president must agree to the transfer as well as the transferee. Organizations are not based on a staking period and are not refunded. The cost to mint an organization is equivalent to $44 in 1986 USD, which must be paid in USP.
+
+An organization is automatically created when you purchase a new co-chain, providing an immediate structure for managing the co-chain's operations and resources. Note: The cost to purchase a co-chain is 444$ in 1986 USD
+
+The president can also appoint managers to handle member additions and deletions on their behalf, allowing for delegation of responsibilities.
+
+### Enhanced Features:
+
+- **Customizable Roles:** Create custom roles in addition to predefined ones, tailored to the organization’s specific needs.
+- **Role-Based Access Control (RBAC):** Assign specific permissions to each role for more granular control and security.
+- **Activity Logs:** Maintain detailed logs for tracking changes and auditing actions.
+- **Multi-Signature Accounts:** Require multiple signatures for critical actions to enhance security.
+- **Smart Contracts:** Manage smart contracts directly within the organization.
+- **Voting Mechanisms:** Built-in voting systems for governance and decision-making.
+- **Notification System:** Alerts for important actions, changes, or events.
+- **Membership Tiers:** Different access levels and benefits for various membership tiers.
+- **Collaboration Tools:** Shared documents, project management, and communication features.
+- **External Integration:** Connect with external services and APIs for enhanced functionality.
+- **Reputation System:** Recognize and reward valuable members based on their contributions.
+- **Escrow Services:** Secure transactions with built-in escrow services.
+
+### Role Descriptions:
+
+- **President:** The leader of the organization with the highest level of control, including the ability to approve role transfers and appoint managers.
+- **Developer:** Responsible for managing and developing digital assets, data, and software within the organization.
+- **Support:** Provides assistance and support to other members and users interacting with the organization.
+- **Board Member:** Participates in decision-making and governance of the organization.
+- **Manager:** Handles day-to-day operations, including adding and deleting members, and can be delegated tasks by the president.
+- **Editor:** Manages content creation and editing within the organization.
+- **Contributor:** Provides content or resources with limited decision-making power.
+- **Auditor:** Reviews and audits the organization’s activities and transactions.
+- **Moderator:** Manages community interactions and ensures adherence to rules and guidelines.
+- **Advisor:** Provides strategic advice and guidance to the organization.
+- **Marketing:** Manages marketing strategies and campaigns for the organization.
+- **Treasurer:** Manages the financial assets and transactions of the organization.
+- **Analyst:** Conducts analysis and provides insights on various aspects of the organization’s operations.
+- **Operations:** Handles day-to-day operations and logistics.
 
 ### Consensus and Rotation
 
