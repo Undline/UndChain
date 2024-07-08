@@ -1,3 +1,4 @@
+from typing import Any, Tuple
 from crypto_handler import CryptoHandler
 from ecdsa_handler import ECDSAHandler
 
@@ -12,7 +13,8 @@ class CryptoFactory:
     protocols.
     '''
 
-    _crypto_handler = ECDSAHandler()
+    # Ensure we have a handler active by default
+    _crypto_handler: CryptoHandler = ECDSAHandler()
 
     @staticmethod
     def set_crypto_handler(handler: CryptoHandler) -> None:
@@ -23,3 +25,18 @@ class CryptoFactory:
         '''
         CryptoFactory._crypto_handler = handler
 
+    @staticmethod
+    def get_crypto_handler() -> CryptoHandler:
+        if CryptoFactory._crypto_handler is None:
+            raise ValueError(f'ERROR: Crypto handler is not set. It must have been set to none elsewhere in the code.')
+        return CryptoFactory._crypto_handler
+    
+    @staticmethod
+    def generate_keys() -> Tuple[Any, Any]:
+        return CryptoFactory.get_crypto_handler().generate_keys()
+    
+# Example Usage of the factory
+if __name__ == '__main__':
+    private_key, public_key = CryptoFactory.generate_keys()
+    print(f'Private Key (object): {private_key}')
+    print(f'Public Key (object): {public_key}')

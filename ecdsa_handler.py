@@ -245,12 +245,16 @@ if __name__ == '__main__':
 
     print(f'Private key: {private_key} and public key: {public_key}')
 
+    print('-' * 44)
+
     #Save keys
-    hot_wallet_result = handler.save_keys(private_key=private_key, public_key=public_key, file_name='hot', directory='test')
-    cold_wallet_result = handler.save_keys(private_key=private_key, public_key=public_key, file_name='cold', directory='test')
+    hot_wallet_result: str = handler.save_keys(private_key=private_key, public_key=public_key, file_name='hot', directory='test')
+    cold_wallet_result: str = handler.save_keys(private_key=private_key, public_key=public_key, file_name='cold', directory='test')
 
     print(hot_wallet_result)
     print(cold_wallet_result)
+
+    print('-' * 44)
 
     #Load keys
     private_key: ec.EllipticCurvePrivateKey = handler.load_private_key('test\\hot_private_key.pem', 'test\\hot_salt.bin')
@@ -258,11 +262,13 @@ if __name__ == '__main__':
 
     #Sign and verify a message
     message = b'Test message'
-    signature = handler.sign_message(private_key, message)
+    signature: bytes = handler.sign_message(private_key, message)
     print(f'Signature: {signature}')
+    print('-' * 44)
 
-    is_valid = handler.verify_signature(public_key, message, signature)
+    is_valid: bool = handler.verify_signature(public_key, message, signature)
     print(f'Signature valid: {is_valid}')
+    print('-' * 44)
 
     # Encrypt and decrypt a message
     encrypted_message, ephemeral_public_key_bytes, nonce, tag = handler.encrypt_message(public_key, message)
@@ -271,8 +277,9 @@ if __name__ == '__main__':
     print(f'Ephemeral public key: {ephemeral_public_key_bytes}')
     print(f'Nonce: {nonce}')
     print(f'Tag: {tag}')
+    print('-' * 44)
 
-    decrypted_message = handler.decrypt_message(private_key, encrypted_message, ephemeral_public_key_bytes, nonce, tag)
+    decrypted_message: bytes = handler.decrypt_message(private_key, encrypted_message, ephemeral_public_key_bytes, nonce, tag)
     print(f'Decrypted message: {decrypted_message}')
 
     
