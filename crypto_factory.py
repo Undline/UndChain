@@ -35,8 +35,12 @@ class CryptoFactory:
     def generate_keys() -> Tuple[Any, Any]:
         return CryptoFactory.get_crypto_handler().generate_keys()
     
+    @staticmethod
+    def serialize_public_key(public_key: Any) -> str:
+        return CryptoFactory.get_crypto_handler().serialize_public_key(public_key)
+    
 # Example Usage of the factory
 if __name__ == '__main__':
     private_key, public_key = CryptoFactory.generate_keys()
-    print(f'Private Key (object): {private_key}')
-    print(f'Public Key (object): {public_key}')
+
+    print(f'Public Key (PEM): {CryptoFactory.serialize_public_key(public_key)}')
