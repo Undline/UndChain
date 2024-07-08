@@ -46,6 +46,19 @@ class ECDSAHandler(CryptoHandler):
         public_key: ec.EllipticCurvePublicKey = private_key.public_key()
         return private_key, public_key
     
+    def serialize_public_key(self, public_key: ec.EllipticCurvePublicKey) -> str:
+        '''
+        Serializes the public key in PEM format
+
+        Returns:
+            str: The public key in PEM format
+        '''
+        public_key_pem: str = public_key.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        ).decode('utf-8')
+        return public_key_pem
+    
     def save_keys(self, private_key: ec.EllipticCurvePrivateKey, public_key: ec.EllipticCurvePublicKey, file_name: str, directory: str = '.') -> str:
         '''
         Saves the private / public key pair to PEM files. Encrypts the
@@ -232,7 +245,7 @@ class ECDSAHandler(CryptoHandler):
             modes.GCM(nonce, tag),
             backend=default_backend()
         ).decryptor()
-        decrypted_message = decryptor.update(cipher_text) + decryptor.finalize()
+        decrypted_message: bytes = decryptor.update(cipher_text) + decryptor.finalize()
 
         return decrypted_message
     
@@ -243,7 +256,7 @@ if __name__ == '__main__':
     # Generate Keys
     private_key, public_key = handler.generate_keys()
 
-    print(f'Private key: {private_key} and public key: {public_key}')
+    print(f'Public key (PEM):\n\n{handler.serialize_public_key(public_key)}')
 
     print('-' * 44)
 

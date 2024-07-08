@@ -20,6 +20,15 @@ class CryptoHandler(ABC):
         pass
 
     @abstractmethod
+    def serialize_public_key(self, public_key: Any) -> str:
+        '''
+        Serializes the public key to a PEM format
+
+        Returns:
+            str: The public key in PEM format.
+        '''
+
+    @abstractmethod
     def save_keys(self, private_key: Any, public_key: Any, file_name: str, directory: str = '.') -> str:
         '''
         Saves the private and public keys to a PEM file. Encrypts the private key.
