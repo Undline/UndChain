@@ -39,8 +39,57 @@ class CryptoFactory:
     def serialize_public_key(public_key: Any) -> str:
         return CryptoFactory.get_crypto_handler().serialize_public_key(public_key)
     
+    @staticmethod
+    def save_keys(private_key: Any, public_key: Any, filename: str, directory: str = '.') -> str:
+        return CryptoFactory.get_crypto_handler().save_keys(private_key, public_key, filename, directory)
+    
+    @staticmethod
+    def load_private_key(filepath: str, salt_file_path: str) -> Any:
+        return CryptoFactory.get_crypto_handler().load_private_key(filepath, salt_file_path)
+    
+    @staticmethod
+    def load_public_key(filepath: str) -> Any:
+        return CryptoFactory.get_crypto_handler().load_public_key(filepath)
+    
+    @staticmethod
+    def sign_message(private_key: Any, message: bytes) -> bytes:
+        return CryptoFactory.get_crypto_handler().sign_message(private_key, message)
+    
+    @staticmethod
+    def verify_signature(public_key: Any, message: bytes, signature: bytes) -> bool:
+        return CryptoFactory.get_crypto_handler().verify_signature(public_key, message, signature)
+    
+
+    
 # Example Usage of the factory
 if __name__ == '__main__':
     private_key, public_key = CryptoFactory.generate_keys()
 
-    print(f'Public Key (PEM): {CryptoFactory.serialize_public_key(public_key)}')
+    print(f'Public Key (PEM):\n\n{CryptoFactory.serialize_public_key(public_key)}')
+
+    print('-' * 44)
+
+    hot_wallet_result: str = CryptoFactory.save_keys(private_key, public_key, filename='hot', directory='test')
+
+    print(f'{hot_wallet_result}')
+
+    print('-' * 44)
+
+    private_key = CryptoFactory.load_private_key(filepath='test\\hot_private_key.pem', salt_file_path='test\\hot_salt.bin')
+    public_key = CryptoFactory.load_public_key(filepath='test\\hot_public_key.pem')
+
+    print(f'Private Key Object = {private_key}')
+    print(f'Public Key Object= {public_key}')
+
+    print('-' * 44)
+
+    test_message = b'This is a quick test to check if the handlers are working as intended'
+    signature: bytes = CryptoFactory.sign_message(private_key, test_message)
+    print(f'Message Signature: {signature}\n')
+
+    is_valid: bool = CryptoFactory.verify_signature(public_key, test_message, signature)
+    print(f'The signature returned: {is_valid}')
+
+    print('-' * 44)
+
+    
