@@ -109,5 +109,22 @@ class CryptoHandler(ABC):
         '''
         pass
 
+    @abstractmethod
+    def asymmetric_encrypt_message(self, public_key: Any, message: bytes) -> bytes:
+        '''
+        Encrypts a message with the provided public key (asymmetric encryption)
 
+        Returns:
+            bytes: The encrypted message in bytes
+        '''
+        pass
 
+    @abstractmethod
+    def asymmetric_decrypt_message(self, private_key: Any, encrypted_message: bytes) -> bytes:
+        '''
+        Decrypt a message using the private key (asymmetric encryption)
+
+        Returns:
+            bytes: Decrypted message in bytes.
+        '''
+        pass
