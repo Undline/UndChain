@@ -249,6 +249,70 @@ class ECDSAHandler(CryptoHandler):
 
         return decrypted_message
     
+    def asymmetric_encrypt_message(self, public_key: ec.EllipticCurvePublicKey, message: bytes) -> Tuple[bytes, bytes, bytes, bytes]:
+        '''
+        Encrypt a message using the provided public key
+
+        Returns:
+            Tuple[bytes, bytes, bytes]: The encrypted message, ephemeral public key, and nonce.
+        '''
+        ephemeral_private_key = ec.generate_private_key(public_key.curve, default_backend())
+        ephemeral_public_key = ephemeral_private_key.public_key()
+
+        shared_secret = ephemeral_private_key.exchange(ec.ECDH(), public_key)
+        derived_key = HKDF(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=None,
+            info=b'handshake data',
+            backend=default_backend()
+        ).derive(shared_secret)
+
+        nonce = os.urandom(12)
+        encryptor = Cipher(
+            algorithms.AES(derived_key),
+            modes.GCM(nonce),
+            backend=default_backend()
+        ).encryptor()
+        ciphertext = encryptor.update(message) + encryptor.finalize()
+        tag = encryptor.tag
+
+        return ciphertext, ephemeral_public_key.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        ), nonce, tag
+    
+    def asymmetric_decrypt_message(self, private_key: ec.EllipticCurvePrivateKey, encrypted_message: bytes, ephemeral_public_key_bytes: bytes, nonce: bytes, tag: bytes) -> bytes:
+        '''
+        Decrypts a message using the provided private key along with the 
+        ephemeral key sent by originator
+
+        Returns:
+            bytes: Decrypted message in bytes.
+        '''
+        ephemeral_public_key = serialization.load_pem_public_key(
+            ephemeral_public_key_bytes,
+            backend=default_backend()
+        )
+        
+        shared_secret = private_key.exchange(ec.ECDH(), ephemeral_public_key) # type: ignore
+        derived_key = HKDF(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=None,
+            info=b'handshake data',
+            backend=default_backend()
+        ).derive(shared_secret)
+        
+        decryptor = Cipher(
+            algorithms.AES(derived_key),
+            modes.GCM(nonce, tag),
+            backend=default_backend()
+        ).decryptor()
+        decrypted_message = decryptor.update(encrypted_message) + decryptor.finalize()
+
+        return decrypted_message
+    
 # Test usage
 if __name__ == '__main__':
     handler = ECDSAHandler()
@@ -295,4 +359,11 @@ if __name__ == '__main__':
     decrypted_message: bytes = handler.decrypt_message(private_key, encrypted_message, ephemeral_public_key_bytes, nonce, tag)
     print(f'Decrypted message: {decrypted_message}')
 
-    
+    print('-' * 44)
+
+    # Asymmetric encryption and decryption
+    asymmetric_encrypted_message, ephemeral_public_key_bytes, nonce, tag = handler.asymmetric_encrypt_message(public_key, message)
+    print(f'Asymmetric Encrypted message: {asymmetric_encrypted_message}')
+
+    asymmetric_decrypted_message = handler.asymmetric_decrypt_message(private_key, asymmetric_encrypted_message, ephemeral_public_key_bytes, nonce, tag) # type: ignore
+    print(f'Asymmetric Decrypted message: {asymmetric_decrypted_message}')
