@@ -200,7 +200,7 @@ class ECDSAHandler(CryptoHandler):
 
         return derived_key
     
-    def encrypt_message(self, public_key: ec.EllipticCurvePublicKey, message: bytes) -> Tuple[bytes, bytes, bytes, bytes]:
+    def symmetric_encrypt_message(self, public_key: ec.EllipticCurvePublicKey, message: bytes) -> Tuple[bytes, bytes, bytes, bytes]:
         '''
         Encrypts a message using the public key and AES for symmetric encryption. This 
         is used during the DH exchange
@@ -226,7 +226,7 @@ class ECDSAHandler(CryptoHandler):
             format=serialization.PublicFormat.SubjectPublicKeyInfo
             ), nonce, encryptor.tag
     
-    def decrypt_message(self, private_key: ec.EllipticCurvePrivateKey, cipher_text: bytes, ephemeral_public_key_bytes: bytes, nonce: bytes, tag: bytes) -> bytes:
+    def symmetric_decrypt_message(self, private_key: ec.EllipticCurvePrivateKey, cipher_text: bytes, ephemeral_public_key_bytes: bytes, nonce: bytes, tag: bytes) -> bytes:
         '''
         Decrypt a message using the provided ECDSA private key and AES symmetric decryption. DH
 
@@ -348,7 +348,7 @@ if __name__ == '__main__':
     print('-' * 44)
 
     # Encrypt and decrypt a message
-    encrypted_message, ephemeral_public_key_bytes, nonce, tag = handler.encrypt_message(public_key, message)
+    encrypted_message, ephemeral_public_key_bytes, nonce, tag = handler.symmetric_encrypt_message(public_key, message)
 
     print(f'Encrypted message: {encrypted_message}')
     print(f'Ephemeral public key: {ephemeral_public_key_bytes}')
@@ -356,7 +356,7 @@ if __name__ == '__main__':
     print(f'Tag: {tag}')
     print('-' * 44)
 
-    decrypted_message: bytes = handler.decrypt_message(private_key, encrypted_message, ephemeral_public_key_bytes, nonce, tag)
+    decrypted_message: bytes = handler.symmetric_decrypt_message(private_key, encrypted_message, ephemeral_public_key_bytes, nonce, tag)
     print(f'Decrypted message: {decrypted_message}')
 
     print('-' * 44)
