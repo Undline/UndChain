@@ -104,6 +104,17 @@ class CryptoFactory:
         '''
         return CryptoFactory.get_crypto_handler().verify_signature(public_key, message, signature)
     
+    @staticmethod
+    def symmetric_encrypt_message(public_key: Any, message: bytes) -> Tuple[bytes, bytes, bytes, bytes]:
+        '''
+        Encrypts a message using the provided public key for symmetric 
+        encryption. Which is used when communicating with an live participant.
+
+        Returns:
+            Tuple[bytes, bytes, bytes, bytes]: The encrypted message, ephemeral public key, nonce and authentication tag.
+        '''
+        return CryptoFactory.get_crypto_handler().symmetric_encrypt_message(public_key, message)
+    
 
     
 # Example Usage of the factory
