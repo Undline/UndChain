@@ -110,7 +110,7 @@ class CryptoHandler(ABC):
         pass
 
     @abstractmethod
-    def asymmetric_encrypt_message(self, public_key: Any, message: bytes) -> Tuple[bytes, bytes, bytes]:
+    def asymmetric_encrypt_message(self, public_key: Any, message: bytes) -> Tuple[bytes, bytes, bytes,bytes]:
         '''
         Encrypts a message with the provided public key (asymmetric encryption)
 
@@ -120,7 +120,7 @@ class CryptoHandler(ABC):
         pass
 
     @abstractmethod
-    def asymmetric_decrypt_message(self, private_key: Any, encrypted_message: bytes, ephemeral_public_key_bytes: bytes, nonce: bytes) -> bytes:
+    def asymmetric_decrypt_message(self, private_key: Any, encrypted_message: bytes, ephemeral_public_key_bytes: bytes, nonce: bytes, tags: bytes) -> bytes:
         '''
         Decrypt a message using the private key (asymmetric encryption)
 

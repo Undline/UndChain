@@ -115,6 +115,35 @@ class CryptoFactory:
         '''
         return CryptoFactory.get_crypto_handler().symmetric_encrypt_message(public_key, message)
     
+    @staticmethod
+    def symmetric_decrypt_message(private_key: Any, encrypted_message: bytes, ephemeral_public_key_bytes: bytes, nonce: bytes, tag: bytes) -> bytes:
+        '''
+        Decrypts a message using the provided private key and AES for symmetric decryption.
+
+        Returns:
+            bytes: The decrypted message.
+        '''
+        return CryptoFactory.get_crypto_handler().symmetric_decrypt_message(private_key, encrypted_message, ephemeral_public_key_bytes, nonce, tag)
+    
+    @staticmethod
+    def asymmetric_encrypt_message(public_key: Any, message: bytes) -> Tuple[bytes, bytes, bytes, bytes]:
+        '''
+        Encrypts a message using the provided public key for asymmetric encryption.
+
+        Returns:
+            Tuple[bytes,bytes,bytes, bytes]: The encrypted message, ephemeral public key, nonce and authentication tag.
+        '''
+        return CryptoFactory.get_crypto_handler().asymmetric_encrypt_message(public_key, message)
+    
+    @staticmethod
+    def asymmetric_decrypt_message(private_key: Any, encrypted_message: bytes, ephemeral_public_key_bytes: bytes, nonce: bytes, tag: bytes) -> bytes:
+        '''
+        Decrypts a message using the provided private key for asymmetric decryption.
+
+        Returns:
+            bytes: The decrypted message.
+        '''
+        return CryptoFactory.get_crypto_handler().asymmetric_decrypt_message(private_key, encrypted_message, ephemeral_public_key_bytes, nonce, tag)
 
     
 # Example Usage of the factory
