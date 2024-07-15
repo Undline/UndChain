@@ -181,15 +181,16 @@ class ECDSAHandler(CryptoHandler):
         
     def derive_symmetric_key(self, private_key: ec.EllipticCurvePrivateKey, public_key: ec.EllipticCurvePublicKey) -> bytes:
         '''
-        Derive a symmetric key from a shared secret using a DH key exchange.
-
+        Derive a symmetric key from a shared secret using a DH key exchange. Used
+        by both the sender and receiver. This is used in both encrypt and decrypt
+        symmetric message.
 
         Returns:
             bytes: The derived symmetric key
         '''
         shared_secret: bytes = private_key.exchange(ec.ECDH(), public_key)
 
-        derived_key = HKDF(
+        derived_key: bytes = HKDF(
             algorithm=hashes.SHA256(),
             length=32,
             salt=None,
@@ -211,7 +212,7 @@ class ECDSAHandler(CryptoHandler):
         ephemeral_private_key = ec.generate_private_key(public_key.curve, default_backend())
         ephemeral_public_key = ephemeral_private_key.public_key()
 
-        derived_key = self.derive_symmetric_key(ephemeral_private_key, public_key)
+        derived_key: bytes = self.derive_symmetric_key(ephemeral_private_key, public_key)
 
         nonce = os.urandom(12)
         encryptor = Cipher(

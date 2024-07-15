@@ -177,4 +177,26 @@ if __name__ == '__main__':
 
     print('-' * 44)
 
-    
+    # Symmetric encryption and decryption
+    message = b'Test message for symmetric encryption / decryption'
+    symmetric_encrypted_message, ephemeral_public_key_bytes, nonce, tag = CryptoFactory.symmetric_encrypt_message(public_key, message)
+    print(f'Symmetric Encrypted message: {symmetric_encrypted_message}')
+    print(f'Ephemeral public key: {ephemeral_public_key_bytes}')
+    print(f'Nonce: {nonce}')
+    print(f'Tag: {tag}')
+
+    symmetric_decrypted_message: bytes = CryptoFactory.symmetric_decrypt_message(private_key, symmetric_encrypted_message, ephemeral_public_key_bytes, nonce, tag)
+    print(f'Symmetric decrypted message: {symmetric_decrypted_message}')
+
+    print('-' * 44)
+
+    # Asymmetric encryption and decryption
+    message = 'Test message for asymmetric encryption / decryption 😊'.encode('utf-8')
+    asymmetric_encrypted_message, ephemeral_public_key_bytes, nonce, tag = CryptoFactory.asymmetric_encrypt_message(public_key, message)
+    print(f'Asymmetric encrypted message: {asymmetric_encrypted_message}')
+    print(f'Asymmetric ephemeral key: {ephemeral_public_key_bytes}')
+    print(f'Asymmetric nonce: {nonce}')
+    print(f'Asymmetric tag: {tag}')
+
+    asymmetric_decrypted_message: bytes = CryptoFactory.asymmetric_decrypt_message(private_key, asymmetric_encrypted_message, ephemeral_public_key_bytes, nonce, tag)
+    print(f'Asymmetric decrypted message: {asymmetric_decrypted_message.decode("utf-8")}')
