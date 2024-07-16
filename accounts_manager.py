@@ -37,7 +37,7 @@ class AccountManager:
         }
 
         # Need to find a library that saves toml files from dictionaries
-        
+
 
         return account_path
     
@@ -46,3 +46,10 @@ class AccountManager:
         Saves the key pair in the same folder as the username
         '''
         CryptoFactory.get_crypto_handler().save_keys(private_key, public_key, file_name=username, directory=directory)
+
+
+# Example use / unit tests
+if __name__ == '__main__':
+    manager = AccountManager()
+
+    
