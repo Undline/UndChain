@@ -1,5 +1,6 @@
 import os
 import tomllib
+import tomli_w
 from typing import Tuple, Dict
 from crypto_factory import CryptoFactory
 
@@ -13,7 +14,7 @@ class AccountManager:
         if not os.path.exists(accounts_dir):
             os.makedirs(accounts_dir)
 
-    def create_accounts(self, username: str) -> str:
+    def create_account(self, username: str) -> str:
         '''
         Create a new account with a given username; we generate a 
         key pair and saves it to a file.
@@ -36,7 +37,8 @@ class AccountManager:
             'public_key': CryptoFactory.view_public_key(public_key)
         }
 
-        # Need to find a library that saves toml files from dictionaries
+        with open(os.path.join(account_path, 'account_info.toml'), 'wb') as file:
+            tomli_w.dump(account_info, file)
 
 
         return account_path
