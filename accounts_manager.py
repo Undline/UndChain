@@ -97,20 +97,63 @@ class AccountManager:
         os.rmdir(account_path)
 
         return f'Account {username} has been deleted.'
+    
+    def username_request_message(self, username: str) -> str:
+        '''
+        Creates a message to send to the validator to request this username
+        for the provided public key.
 
+        Returns:
+            str: This is the message that will be sent to the validator
+        '''
+        account_info: Dict[str, str] = self.load_account(username)
+        public_key: str = account_info['public_key']
+
+        message: str = f'[Username_Request] {username}:{public_key}'
+
+        return message
+    
+    def rename_account(self, old_username: str, new_username:str) -> str:
+        '''
+        Renames the specified old_username with the new username. This is 
+        used when a username request is denied and the user has to pick a 
+        new one.
+
+        Returns:
+            str: Confirmation the file has been renamed.
+        '''
+        old_account_path: str = os.path.join(self.accounts_dir, old_username)
+        new_account_path: str = os.path.join(self.accounts_dir, new_username)
+
+        if not os.path.exists(old_account_path):
+            raise ValueError(f'Account {old_username} does NOT exist.')
+        if os.path.exists(new_account_path):
+            raise ValueError(f'Username: {new_username} already exists.')
+        
+        os.rename(old_account_path, new_account_path)
+
+        account_info_path: str = os.path.join(new_account_path, 'account_info.toml')
+        with open(account_info_path, 'rb') as file:
+            account_info: Dict[str, str] = tomllib.load(file)
+
+        account_info['username'] = new_username
+        with open(account_info_path, 'wb') as file:
+            tomli_w.dump(account_info, file)
+
+        return f'Account {old_username} has been renamed to {new_username}'
 
 # Example use / unit tests
 if __name__ == '__main__':
     manager = AccountManager()
 
     # Create a new account
-    account_path: str = manager.create_account('test1')
+    account_path: str = manager.create_account('Jane')
     print(f'Created an account at: {account_path}')
 
     print('-' * 44)
 
     # Load Account
-    account: Dict[str, str] = manager.load_account('test1')
+    account: Dict[str, str] = manager.load_account('Jane')
     print(f'Loaded account info for test_user: \n{account}')
 
     print('-' * 44)
@@ -121,8 +164,20 @@ if __name__ == '__main__':
 
     print('-' * 44)
 
+    # Username request message
+    request: str = manager.username_request_message(username='Jane')
+    print(f'Message sent: \n{request}')
+
+    print('-' * 44)
+
+    # Rename the account
+    rename: str = manager.rename_account(old_username='Jane', new_username='Bob')
+    print(f'{rename}')
+
+    print('-' * 44)
+
     # Delete user account
-    delete_result: str = manager.delete_account('test1')
+    delete_result: str = manager.delete_account('Bob')
     print(delete_result)
 
     print('-' * 44)
