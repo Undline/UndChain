@@ -87,3 +87,14 @@ class AbstractCommunication(ABC):
             float: The latency in milliseconds
         '''
         pass
+
+    @abstractmethod
+    def acknowledge_message(self, message: bytearray) -> bytearray:
+        '''
+        Sends out an acknowledgement that a message was received. Use
+        this when going across lossy / noisy lines. 
+
+        Returns:
+            bytearray: Hash of the message received from the sender.
+        '''
+        pass
