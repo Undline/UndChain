@@ -8,7 +8,7 @@ class AbstractCommunication(ABC):
     '''
 
     @abstractmethod
-    def connect(self, recipient: str) -> None:
+    def connect(self, recipient: bytearray) -> None:
         '''
         Establish a connection with another user on the network.
         '''
@@ -40,14 +40,14 @@ class AbstractCommunication(ABC):
         pass
     
     @abstractmethod
-    def send_message(self, message: bytearray, recipient: str) -> None:
+    def send_message(self, message: bytearray, recipient: bytearray, use_TCP: bool) -> None:
         '''
         Send a message to a recipient
         '''
         pass
 
     @abstractmethod
-    def receive_message(self) -> bytearray:
+    def receive_message(self, use_TCP: bool) -> bytearray:
         '''
         Receives a message
 
@@ -57,22 +57,33 @@ class AbstractCommunication(ABC):
         pass
 
     @abstractmethod
-    def translate_address(self, username: str) -> str:
+    def translate_address(self, username: str) -> bytearray:
         '''
-        Translates a username to a network address or physical route path.
+        Translates a username to a network address or physical route 
+        path, on the local machine.
 
         Returns:
-            str: The network address / route path
+            bytearray: The network address / route path
         '''
         pass
 
     @abstractmethod
-    def request_address(self, username: str) -> str:
+    def request_address(self, username: str) -> bytearray:
         '''
         Sends a request to a validator to fetch a path to another user
         on the network.
 
         Returns:
             str: Route path
+        '''
+        pass
+
+    @abstractmethod
+    def ping(self, recipient: bytearray) -> float:
+        '''
+        Checks the latency and reachability of the recipient
+
+        Returns:
+            float: The latency in milliseconds
         '''
         pass
