@@ -19,11 +19,11 @@ class IP_Communication(AbstractCommunication):
         Establish a connection with another user on UndChian using the recipients
         public key or username.
         '''
-        IP_address = self.translate_address(recipient)
+        ip_address, connection_method = self.translate_address(recipient)
 
         #TODO: Come up with a method to determine if we use P2P or TCP
 
-    def translate_address(self, recipient: bytearray) -> bytearray:
+    def translate_address(self, recipient: bytearray) -> tuple:
         '''
         Takes in a recipient which can be a public key or a username
         and resolves that into a IP address that can be used to reach 
@@ -32,8 +32,10 @@ class IP_Communication(AbstractCommunication):
         if len(recipient) > 64:
             # If it's greater than 64 characters it's a public key
             IP_address = bytearray('127.0.0.1', 'utf-8')
+            method = bytearray('TCP', 'utf-8')
         else:
             IP_address = bytearray('127.0.0.1', 'utf-8')
+            method = bytearray('UDP', 'utf-8')
 
-        return IP_address # Returning loopback for now
+        return IP_address, method # Returning loopback for now
 
