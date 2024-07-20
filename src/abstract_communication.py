@@ -57,7 +57,7 @@ class AbstractCommunication(ABC):
         pass
 
     @abstractmethod
-    def translate_address(self, username: str) -> bytearray:
+    def translate_address(self, recipient: bytearray) -> bytearray:
         '''
         Translates a username to a network address or physical route 
         path, on the local machine.
