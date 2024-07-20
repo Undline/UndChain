@@ -1,4 +1,5 @@
 import socket
+import asyncio
 import time
 from abstract_communication import AbstractCommunication
 
@@ -9,7 +10,8 @@ class IP_Communication(AbstractCommunication):
     sending information across UndChain. 
     '''
 
-    def __init__(self) -> None:
+    def __init__(self, loop: asyncio.AbstractEventLoop) -> None:
+        self.loop: asyncio.AbstractEventLoop = loop
         self.tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.connected = False
@@ -21,8 +23,23 @@ class IP_Communication(AbstractCommunication):
         '''
         ip_address, connection_method = self.translate_address(recipient)
 
-        #TODO: Come up with a method to determine if we use P2P or TCP
+        if connection_method == 'TCP':
+            
+            self.connected = True
+            
+        elif connection_method == 'UDP':
+            
+            self.connected = True
+        else:
+            raise ValueError(f'Unknown connection method: {connection_method} going to {recipient.decode("utf-8")}')
 
+    async def _nat_traversal(self, ip_address: str, port: int) -> None:
+        '''
+        Performs NAT traversal to establish a peer to peer connection using
+        UDP.
+        '''
+        pass
+    
     def translate_address(self, recipient: bytearray) -> tuple:
         '''
         Takes in a recipient which can be a public key or a username
