@@ -54,3 +54,13 @@ class AbstractCommunication(ABC):
             bytearray: The message that was received.
         '''
         pass
+
+    @abstractmethod
+    def translate_address(self, username: str) -> str:
+        '''
+        Translates a username to a network address or physical route path.
+
+        Returns:
+            str: The network address / route path
+        '''
+        pass
