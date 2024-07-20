@@ -31,7 +31,8 @@ class AbstractCommunication(ABC):
     @abstractmethod
     def check_connection_status(self) -> bool:
         '''
-        Determines if a connection is still active
+        Determines if a connection is still active. Could also be 
+        used as a keep alive.
 
         Returns:
             bool: True if teh connection is still active
@@ -62,5 +63,16 @@ class AbstractCommunication(ABC):
 
         Returns:
             str: The network address / route path
+        '''
+        pass
+
+    @abstractmethod
+    def request_address(self, username: str) -> str:
+        '''
+        Sends a request to a validator to fetch a path to another user
+        on the network.
+
+        Returns:
+            str: Route path
         '''
         pass
