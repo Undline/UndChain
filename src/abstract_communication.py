@@ -20,14 +20,6 @@ class AbstractCommunication(ABC):
         '''
         pass
 
-    def authentication(self, credentials: dict) -> None:
-        '''
-        Authenticate with another client
-
-        NOT SURE IF THIS IS NEEDED JUST ADDING IT IN CASE
-        '''
-        pass
-
     @abstractmethod
     def check_connection_status(self) -> bool:
         '''
@@ -35,7 +27,7 @@ class AbstractCommunication(ABC):
         used as a keep alive.
 
         Returns:
-            bool: True if teh connection is still active
+            bool: True if the connection is still active
         '''
         pass
     
