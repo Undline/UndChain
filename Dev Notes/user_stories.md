@@ -54,6 +54,7 @@ In this user story I want to explore the interaction going from the partner to t
 			- Validators could send challenge requests. Maybe offload this responsibility to the passive validators so active validators don't get overloaded (apart of validator to validator communication)?
 		- Should we create a system where the validator notifies the partner when a utility that they are interested in opens up or are we expecting the partner to find it in the job file?
 			- I am leaning toward having the validator send it since I think it's just as costly to handle a bunch of job file requests from partners every block. not to mention this would be a good use case for the `when` keyword inside of pseudo
+    - Partners periodically send a still active message to notify the validators that they are still awaiting additional utility requests. Do this in cases where the partner is waiting to long for more requests. Need to come up with a good time scale for this
 2. Validator notifies the partner when a utility that they are subscribed to comes up. *pretty sure we are going to send what the partner is looking for rather than the whole file*
 	- What could go wrong?
 		- It's possible that a partner could be censored for whatever reason and the validators could be censoring that partner for things other than a low perception score. What solutions could be implemented to mitigate this
@@ -87,6 +88,7 @@ In this user story I want to explore the interaction going from the partner to t
 6. Partners need to be able to send out a at capacity message in order to tell the validators that they are busy and cannot accept any addition work at this time
 	- Why? There will be situations where the partner will not have the resources to take on additional demand from the network.
 		- Plus this gives us some realtime statistics of how loaded down the network is. Again leading to possibly creating new networks or shifting traffic to another domain.
+        - Need to create a cool down so we don't spam this to the validators constantly
 7. Partners can also send a sign off message in the event that they need to shutdown. 
 	- Why? 
 		- In the event of power failures. This wont stop the perception score from dropping, but it will prevent any additional utility requests from coming in and making it worse.
@@ -99,3 +101,4 @@ In this user story I want to explore the interaction going from the partner to t
 		- Validators could not recognize the end of transaction 
 			- they do have to send a message indicating that the request happened.  If you have that its easy to prove that they acted maliciously. 
 			- Could also be due to validators being overloaded. Perhaps this should be on a retry system?
+    - Each party should have their receipts turned in within a few blocks from each other
