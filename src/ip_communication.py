@@ -16,7 +16,7 @@ class IP_Communication(AbstractCommunication):
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.connected = False
 
-    def connect(self, recipient: bytearray) -> None:
+    def connect(self, recipient: bytearray, retry: int = 4, timeout: int = 6) -> None:
         '''
         Establish a connection with another user on UndChian using the recipients
         public key or username.
