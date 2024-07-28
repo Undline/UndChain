@@ -19,17 +19,6 @@ class AbstractCommunication(ABC):
         Closes the connection with another user
         '''
         pass
-
-    @abstractmethod
-    def check_connection_status(self) -> bool:
-        '''
-        Determines if a connection is still active. Could also be 
-        used as a keep alive.
-
-        Returns:
-            bool: True if the connection is still active
-        '''
-        pass
     
     @abstractmethod
     def send_message(self, message: bytearray, recipient: bytearray, use_TCP: bool) -> None:
