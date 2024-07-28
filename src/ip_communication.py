@@ -1,6 +1,8 @@
 import socket
 import asyncio
 import time
+from typing import Any, Tuple
+
 from abstract_communication import AbstractCommunication
 
 class IP_Communication(AbstractCommunication):
@@ -12,31 +14,29 @@ class IP_Communication(AbstractCommunication):
 
     def __init__(self, loop: asyncio.AbstractEventLoop) -> None:
         self.loop: asyncio.AbstractEventLoop = loop
-        self.tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.tcp_socket = None
+        self.udp_socket = None
         self.connected = False
 
-    def connect(self, recipient: bytearray, retry: int = 4, timeout: int = 6) -> None:
+    async def connect(self, recipient: bytearray) -> None:
         '''
         Establish a connection with another user on UndChian using the recipients
         public key or username.
         '''
-        ip_address, connection_method = self.translate_address(recipient)
+        ip_address, port, use_TCP = self.translate_address(recipient)
 
-        if connection_method == 'TCP':
-            
-            self.connected = True
-            
-        elif connection_method == 'UDP':
-            
-            self.connected = True
+        if use_TCP:
+            self.tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            await self.loop.sock_connect(self.tcp_socket, (ip_address, port))
         else:
-            raise ValueError(f'Unknown connection method: {connection_method} going to {recipient.decode("utf-8")}')
+            self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            await self._nat_traversal(ip_address, port)
+        self.connected = True
 
-    async def _nat_traversal(self, ip_address: str, port: int) -> None:
+    async def _nat_traversal(self, ip_address: str, port: int, reties: int = 6, timeout: float = 4.0) -> None:
         '''
         Performs NAT traversal to establish a peer to peer connection using
-        UDP.
+        UDP hole punching.
         '''
         pass
     
