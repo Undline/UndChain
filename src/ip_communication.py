@@ -1,9 +1,10 @@
 import socket
 import asyncio
 import time
-from typing import Any, Tuple
+from typing import Any, Tuple, Optional
 
 from abstract_communication import AbstractCommunication
+from crypto_factory import CryptoFactory
 
 class IP_Communication(AbstractCommunication):
     '''
@@ -12,16 +13,17 @@ class IP_Communication(AbstractCommunication):
     sending information across UndChain. 
     '''
 
-    def __init__(self, loop: asyncio.AbstractEventLoop) -> None:
+    def __init__(self, loop: asyncio.AbstractEventLoop, recipient_public_key: Optional[bytearray] = None) -> None:
         self.loop: asyncio.AbstractEventLoop = loop
         self.tcp_socket = None
         self.udp_socket = None
         self.connected = False
+        self.recipient_public_key: bytearray | None = recipient_public_key
 
     async def connect(self, recipient: bytearray) -> None:
         '''
-        Establish a connection with another user on UndChian using the recipients
-        public key or username.
+        Establish a connection with another user on UndChian using the
+        provided route information (IP address and port).
         '''
         ip_address, port, use_TCP = self.translate_address(recipient)
 
