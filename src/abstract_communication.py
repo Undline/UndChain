@@ -28,7 +28,7 @@ class AbstractCommunication(ABC):
         pass
 
     @abstractmethod
-    def receive_message(self, use_TCP: bool) -> bytearray:
+    def receive_message(self, use_TCP: bool, buffer_size: int = 1024) -> bytearray:
         '''
         Receives a message
 
