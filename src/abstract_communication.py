@@ -8,9 +8,10 @@ class AbstractCommunication(ABC):
     '''
 
     @abstractmethod
-    def connect(self, recipient: bytearray) -> None:
+    def connect(self, recipient: bytearray, route: None | bytearray = None) -> None:
         '''
-        Establish a connection with another user on the network.
+        Establish a connection with another user on the network. if the route is
+        known it may be passed in. Default is the route is unknown.
         '''
         pass
 
