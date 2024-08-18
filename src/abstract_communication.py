@@ -1,4 +1,11 @@
 from abc import ABC, abstractmethod
+from enum import Enum
+
+class MessageType(Enum):
+    GENERIC = 0
+    JOB_REQUEST = 1
+    SERVER_STATUS = 2
+    ROUTE_REQUEST = 3
 
 class AbstractCommunication(ABC):
     '''
@@ -72,6 +79,18 @@ class AbstractCommunication(ABC):
         pass
 
     @abstractmethod
+    def generate_packet(self, message: str, message_type: MessageType = MessageType.GENERIC) -> bytearray:
+        '''
+        This method creates a framework around how messages are generated
+        and what format those messages should be formed around. The default is
+        a generic message type which doesn't have any optimization.
+
+        Returns:
+            bytearray: The message prototype in a bytearray format
+        '''
+        pass
+
+    @abstractmethod
     def translate_address(self, recipient: bytearray) -> bytearray:
         '''
         Translates a username to a network address or physical route 
@@ -79,16 +98,5 @@ class AbstractCommunication(ABC):
 
         Returns:
             bytearray: The network address / route path
-        '''
-        pass
-
-    @abstractmethod
-    def request_address(self, username: str) -> bytearray:
-        '''
-        Sends a request to a validator to fetch a path to another user
-        on the network.
-
-        Returns:
-            str: Route path
         '''
         pass
