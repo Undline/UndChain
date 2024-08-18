@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from enum import Enum
+from datetime import datetime, timezone
 
 class MessageType(Enum):
     GENERIC = 0
@@ -10,8 +11,8 @@ class MessageType(Enum):
 class AbstractCommunication(ABC):
     '''
     The goal of this class is to lay a framework for any communication
-    methods. We will use standard internet protocol, but this should 
-    expand to other forms of communication standards.
+    methods. We will first implement the standard internet protocol, but 
+    this should expand to other forms of communication standards.
     '''
 
     @abstractmethod
@@ -78,7 +79,6 @@ class AbstractCommunication(ABC):
         '''
         pass
 
-    @abstractmethod
     def generate_packet(self, message: str, message_type: MessageType = MessageType.GENERIC) -> bytearray:
         '''
         This method creates a framework around how messages are generated
@@ -88,7 +88,11 @@ class AbstractCommunication(ABC):
         Returns:
             bytearray: The message prototype in a bytearray format
         '''
-        pass
+        version = "2024.08.12.0" # Year.Month.Day.Sub-version 
+        timestamp: datetime = datetime.now(timezone.utc)
+        packet: str = f'Version: {version}\nTimestamp: {timestamp}\nType: {message_type.name}\nMessage: {message}'
+        return bytearray(packet, 'utf-8')
+        
 
     @abstractmethod
     def translate_address(self, recipient: bytearray) -> bytearray:
