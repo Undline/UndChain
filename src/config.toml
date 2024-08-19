@@ -1,0 +1,18 @@
+[network.0]
+
+[network.0.subdomain.0]
+
+[network.0.subdomain.0.UndChain]
+version = "2024.08.12.0" #Year.Month.Day.Sub-Version
+validators = ["127.0.0.1:4444"]
+co_chains = ["mimic", "pages"]
+
+[network.0.subdomain.0.Mimic]
+version = "2024.08.13.0"
+validators = ["127.0.0.1:4444"]
+co_chains = ["SQeeL"]
+
+[network.0.subdomain.0.Pages]
+version = "2024.08.14.0"
+validators = ["127.0.0.1:4444"]
+co_chains = [""]

@@ -88,9 +88,10 @@ class AbstractCommunication(ABC):
         Returns:
             bytearray: The message prototype in a bytearray format
         '''
-        version = "2024.08.12.0" # Year.Month.Day.Sub-version 
+        version = "2024.08.12.0" # TODO - Replace this with a higher order function that sets which chain and network to use
+        chain_ID = "UndChain.0.0" # TODO - Replace this with a higher order function
         timestamp: datetime = datetime.now(timezone.utc)
-        packet: str = f'Version: {version}\nTimestamp: {timestamp}\nType: {message_type.name}\nMessage: {message}'
+        packet: str = f'Version: {version}\nChain: {chain_ID}\nTimestamp: {timestamp}\nType: {message_type.name}\nMessage: {message}'
         return bytearray(packet, 'utf-8')
         
 
