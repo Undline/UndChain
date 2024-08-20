@@ -15,6 +15,10 @@ class AbstractCommunication(ABC):
     this should expand to other forms of communication standards.
     '''
 
+    def __init__(self, version: str, co_chain_ID: str) -> None:
+        self.version: str = version
+        self.co_chain_ID: str = co_chain_ID
+
     @abstractmethod
     def connect(self, recipient: bytearray, route: None | bytearray = None) -> None:
         '''
@@ -88,10 +92,9 @@ class AbstractCommunication(ABC):
         Returns:
             bytearray: The message prototype in a bytearray format
         '''
-        version = "2024.08.12.0" # TODO - Replace this with a higher order function that sets which chain and network to use
-        chain_ID = "UndChain.0.0" # TODO - Replace this with a higher order function
         timestamp: datetime = datetime.now(timezone.utc)
-        packet: str = f'Version: {version}\nChain: {chain_ID}\nTimestamp: {timestamp}\nType: {message_type.name}\nMessage: {message}'
+        
+        packet: str = f'Version: {self.version}\nChain: {self.co_chain_ID}\nTimestamp: {timestamp}\nType: {message_type.name}\nMessage: {message}'
         return bytearray(packet, 'utf-8')
         
 
