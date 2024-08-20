@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 from datetime import datetime, timezone
+from typing import Self
 
 class MessageType(Enum):
     GENERIC = 0
@@ -18,6 +19,18 @@ class AbstractCommunication(ABC):
     def __init__(self, version: str, co_chain_ID: str) -> None:
         self.version: str = version
         self.co_chain_ID: str = co_chain_ID
+
+    def __enter__(self) -> Self:
+        '''
+        This is so we can use this class with a with block
+        '''
+        return self
+    
+    def __exit__(self) -> None:
+        '''
+        Handles what happens when a with block ends
+        '''
+        self.disconnect()
 
     @abstractmethod
     def connect(self, recipient: bytearray, route: None | bytearray = None) -> None:
