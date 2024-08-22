@@ -33,7 +33,7 @@ class AbstractCommunication(ABC):
         self.disconnect()
 
     @abstractmethod
-    def connect(self, recipient: bytearray, route: None | bytearray = None) -> None:
+    async def connect(self, recipient: bytearray, route: None | bytearray = None) -> None:
         '''
         Establish a connection with another user on the network. if the route is
         known it may be passed in. Default is the route is unknown.
@@ -48,14 +48,14 @@ class AbstractCommunication(ABC):
         pass
     
     @abstractmethod
-    def send_message(self, message: bytearray, recipient: bytearray, use_TCP: bool) -> None:
+    async def send_message(self, message: bytearray, recipient: bytearray, use_TCP: bool) -> None:
         '''
         Send a message to a recipient
         '''
         pass
 
     @abstractmethod
-    def receive_message(self, use_TCP: bool, buffer_size: int = 1024) -> bytearray:
+    async def receive_message(self, use_TCP: bool, buffer_size: int = 1024) -> bytearray:
         '''
         Receives a message
 
@@ -87,7 +87,7 @@ class AbstractCommunication(ABC):
         pass
 
     @abstractmethod
-    def ping(self, recipient: bytearray) -> float:
+    async def ping(self, recipient: bytearray) -> float:
         '''
         Checks the latency and reachability of the recipient
 
