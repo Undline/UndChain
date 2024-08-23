@@ -17,6 +17,11 @@ class AbstractCommunication(ABC):
     '''
 
     def __init__(self, version: str, co_chain_ID: str) -> None:
+        '''
+        Adding these two initialization variables so we can pass it
+        to the packet generator
+        '''
+        
         self.version: str = version
         self.co_chain_ID: str = co_chain_ID
 
@@ -114,10 +119,11 @@ class AbstractCommunication(ABC):
     @abstractmethod
     def translate_address(self, recipient: bytearray) -> bytearray:
         '''
-        Translates a username to a network address or physical route 
-        path, on the local machine.
+        Translates a network address (public key or username) to a route
+        path that can be used for routing a packet on UndChain. That is 
+        stored locally on this machine.
 
         Returns:
-            bytearray: The network address / route path
+            bytearray: The route path
         '''
         pass

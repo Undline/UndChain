@@ -1,5 +1,11 @@
-'''
-TODO: Need to figure out how to blend fixed communication with 
-peer to peer communication so that we are using the correct 
-protocol whenever we are sending information out on the network
-'''
+import socket
+import asyncio
+import multiprocessing
+
+from abstract_communication import AbstractCommunication
+
+class IPCommunication(AbstractCommunication):
+    # Keep track of our active connections for debug purpose
+    active_connections = 0
+
+    
