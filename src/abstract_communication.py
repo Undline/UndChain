@@ -81,17 +81,6 @@ class AbstractCommunication(ABC):
         pass
 
     @abstractmethod
-    def get_route(self, recipient: bytearray) -> bytearray:
-        '''
-        Returns a route based off of who the message is being sent to.
-
-        Returns:
-            bytearray: Instruction that the protocol needs in order to 
-            communicate with the targeted device.
-        '''
-        pass
-
-    @abstractmethod
     async def ping(self, recipient: bytearray) -> float:
         '''
         Checks the latency and reachability of the recipient
@@ -117,7 +106,7 @@ class AbstractCommunication(ABC):
         
 
     @abstractmethod
-    def translate_address(self, recipient: bytearray) -> bytearray:
+    def get_route(self, recipient: bytearray) -> bytearray:
         '''
         Translates a network address (public key or username) to a route
         path that can be used for routing a packet on UndChain. That is 
