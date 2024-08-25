@@ -1,13 +1,14 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 from datetime import datetime, timezone
-from typing import Self
+from typing import Self, Any
 
 class MessageType(Enum):
     GENERIC = 0
     JOB_REQUEST = 1
     SERVER_STATUS = 2
     ROUTE_REQUEST = 3
+    RETURN_ADDRESS = 4
 
 class AbstractCommunication(ABC):
     '''
@@ -42,6 +43,22 @@ class AbstractCommunication(ABC):
         '''
         Establish a connection with another user on the network. if the route is
         known it may be passed in. Default is the route is unknown.
+        '''
+        pass
+
+    @abstractmethod
+    async def start_listener(self, host: str, port: int) -> None:
+        '''
+        Start listening for incoming traffic connections on the specified
+        host and port. This method should be implemented for all communication
+        types and is generally used for Validators. 
+        '''
+        pass
+
+    @abstractmethod
+    async def handle_user(self, connection: bytearray, address: bytearray) -> None:
+        '''
+        Handle an incoming connection from another user.
         '''
         pass
 
