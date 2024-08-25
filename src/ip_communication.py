@@ -5,7 +5,7 @@ import asyncio
 import multiprocessing
 from typing import Optional
 
-from abstract_communication import AbstractCommunication
+from abstract_communication import AbstractCommunication, MessageType
 
 class IPCommunication(AbstractCommunication):
     # Keep track of our active connections for debug purpose
@@ -69,8 +69,6 @@ class IPCommunication(AbstractCommunication):
         '''
         This method handles new connections coming in from the listener method
         and returns them to where ever they need to go.
-        TODO Need to take the message that is sent as pass that up to another
-        class so it can be handled appropriately.
         '''
 
         while True:
@@ -79,9 +77,33 @@ class IPCommunication(AbstractCommunication):
                 print(f'User {address} disconnected')
                 break
             print(f'Received message from {address}: {message.decode("utf-8")}')
+            self.handle_message(message)
             await asyncio. get_event_loop().sock_sendall(user_socket, message)
         
         user_socket.close()
+
+    def handle_message(self, message: bytes) -> None:
+        '''
+        Interpret and handle a received message based on its type.
+        '''
+
+        message_str: str = message.decode('utf-8')
+        lines: list[str] = message_str.split('\n')
+        message_type_line: str = next(line for line in lines if line.startswith("Type: "))
+        message_type: str = message_type_line.split(": ")[1]
+
+        if message_type == MessageType.GENERIC.name:
+            print("Found generic message...")
+        elif message_type == MessageType.JOB_REQUEST.name:
+            print("Handling JOB_REQUEST message...")
+        elif message_type == MessageType.SERVER_STATUS.name:
+            print("Handling SERVER_STATUS message...")
+        elif message_type == MessageType.ROUTE_REQUEST.name:
+            print("Handling ROUTE_REQUEST message...")
+        elif message_type == MessageType.RETURN_ADDRESS.name:
+            print("Message for a return address was sent. *Act like a STUN server*")
+        else:
+            print(f"Unknown message type: {message_type}")
 
     async def send_message(self, message: bytearray, recipient: bytearray, use_TCP: bool) -> None:
         '''
