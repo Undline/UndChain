@@ -3,10 +3,32 @@ import socket
 import json
 import asyncio
 import multiprocessing
+import logging
 import tomllib
 from typing import Optional
 
 from abstract_communication import AbstractCommunication, MessageType
+
+# Configure logger for the IPCommunication class
+logger: logging.Logger = logging.getLogger('IPCommunication')
+logger.setLevel(logging.DEBUG)
+
+# Create a file handler for logging to a file
+file_handler = logging.FileHandler('ip_communication.log')
+file_handler.setLevel(logging.DEBUG)
+
+# Create a stream handler for logging to the console
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.DEBUG)
+
+# Create a logging format
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+console_handler.setFormatter(formatter)
+
+# Add both handlers to the logger
+logger.addHandler(file_handler)
+logger.addHandler(console_handler)
 
 class IPCommunication(AbstractCommunication):
     # Keep track of our active connections for debug purpose
@@ -22,6 +44,7 @@ class IPCommunication(AbstractCommunication):
         self.socket = None
         self.retries: int = retries
         self.cool_down: float = cool_down
+        logger.debug(f"Initialized IPCommunication with version {version} and co_chain_ID {co_chain_ID}")
 
     async def connect(self, recipient: bytearray, route: Optional[dict] = None) -> None:
         '''
@@ -33,28 +56,32 @@ class IPCommunication(AbstractCommunication):
         if route is None:
             # Resolve the recipient's address via local storage and use TCP
             route = self.get_route(recipient)
+
         ip_address: None | str = route.get('ip')
         port:None | str = route.get('port')
         method: str = route.get('method', 'TCP')
 
         if not ip_address or not port:
+            logger.error("IP address or port is missing")
             raise ValueError("IP address and port must be specified.")
 
         try:
             if method == 'TCP':
                 self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 await asyncio.get_event_loop().sock_connect(self.socket, (ip_address, port))
+                logger.info(f'Connected to {ip_address}:{port} via TCP')
             elif method == 'P2P':
                 self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
                 # Need to implement the UDP hole punch protocol
-                print(f'Using UDP for communication with {ip_address}:{port}')
+                logger.info(f'Using UDP for communication with {ip_address}:{port}')
             else:
+                logger.error(f"Unsupported connection method: {method}")
                 raise ValueError(f"Unsupported connection method: {method}")
 
             IPCommunication.active_connections += 1
-            print(f'Active connections: {IPCommunication.active_connections}')
+            logger.debug(f'Active connections: {IPCommunication.active_connections}')
         except Exception as e:
-            print(f'Failed to connect to {ip_address}:{port} suing {method}: {e}')
+            logger.exception(f'Failed to connect to {ip_address}:{port} suing {method}: {e}')
             self.socket = None
 
     async def start_listener(self, host: str, port: int) -> None:
