@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from enum import Enum
 from datetime import datetime, timezone
 from typing import Self, Any
+import json
 
 class MessageType(Enum):
     GENERIC = 0
@@ -114,7 +115,7 @@ class AbstractCommunication(ABC):
         '''
         pass
 
-    def generate_packet(self, message: str, message_type: MessageType = MessageType.GENERIC) -> bytearray:
+    def generate_packet(self, message: str, message_type: MessageType = MessageType.GENERIC) -> bytes:
         '''
         This method creates a framework around how messages are generated
         and what format those messages should be formed around. The default is
@@ -123,11 +124,14 @@ class AbstractCommunication(ABC):
         Returns:
             bytearray: The message prototype in a bytearray format
         '''
-        timestamp: datetime = datetime.now(timezone.utc)
-        
-        packet: str = f'Version: {self.version}\nChain: {self.co_chain_ID}\nTimestamp: {timestamp}\nType: {message_type.name}\nMessage: {message}'
-        return bytearray(packet, 'utf-8')
-        
+        packet = {
+            "version": self.version,
+            "chain": self.co_chain_ID,
+            "type": message_type.name,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "message": message
+        }
+        return json.dumps(packet).encode('utf-8')
 
     @abstractmethod
     def get_route(self, recipient: bytearray) -> bytearray:
