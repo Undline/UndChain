@@ -63,6 +63,13 @@ class AbstractCommunication(ABC):
         pass
 
     @abstractmethod
+    def handle_message(self, message: bytearray) -> None:
+        '''
+        Interpret and handle a received message based on its type.
+        '''
+        pass
+
+    @abstractmethod
     def disconnect(self) -> None:
         '''
         Closes the connection with another user
