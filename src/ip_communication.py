@@ -49,6 +49,40 @@ class IPCommunication(AbstractCommunication):
         IPCommunication.active_connections += 1
         print(f'Active connections: {IPCommunication.active_connections}')
 
+    async def start_listener(self, host: str, port: int) -> None:
+        '''
+        This starts the IP listener method so that an incoming connections
+        coming from users can be handled.
+        '''
+
+        self.listener_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.listener_socket.bind((host, port))
+        self.listener_socket.listen(5)
+        print(f'Listening on {host}:{port}')
+
+        while True:
+            user_socket, user_address = await asyncio.get_event_loop().sock_accept(self.listener_socket)
+            print(f'Connection accepted from {user_address}')
+            asyncio.create_task(self.handle_user(user_socket, user_address))
+                
+    async def handle_user(self, user_socket: socket.socket, address: tuple[str, int]) -> None:
+        '''
+        This method handles new connections coming in from the listener method
+        and returns them to where ever they need to go.
+        TODO Need to take the message that is sent as pass that up to another
+        class so it can be handled appropriately.
+        '''
+
+        while True:
+            message: bytes = await asyncio.get_event_loop().sock_recv(user_socket, 1024)
+            if not message:
+                print(f'User {address} disconnected')
+                break
+            print(f'Received message from {address}: {message.decode("utf-8")}')
+            await asyncio. get_event_loop().sock_sendall(user_socket, message)
+        
+        user_socket.close()
+
     async def send_message(self, message: bytearray, recipient: bytearray, use_TCP: bool) -> None:
         '''
         Method for sending a message to and from a recipient. Handles both TCP and
