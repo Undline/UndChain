@@ -288,17 +288,24 @@ class IPCommunication(AbstractCommunication):
         Resolve the recipient's address and connection method from the 
         config.toml file
         '''
-        
+
         try:
+            # Convert bytearray to a string for use as a dictionary key
+            recipient_str = recipient.decode('utf-8')
+
             with open('config.toml', 'rb') as f:
                 config = tomllib.load(f)
-            route_info = config.get('routes', {}).get(recipient)
+
+            route_info = config.get('routes', {}).get(recipient_str)
+
             if not route_info:
-                raise ValueError(f"Route for recipient '{recipient}' not found.")
+                raise ValueError(f"Route for recipient '{recipient_str}' not found.")
             return route_info
+
         except FileNotFoundError:
             logger.error("Configuration file 'config.toml' not found.")
             return {"ip": "127.0.0.1", "port": 4444, "method": "TCP"}
         except Exception as e:
             logger.error(f"Error loading route information: {e}")
             return {"ip": "127.0.0.1", "port": 4444, "method": "TCP"}
+
