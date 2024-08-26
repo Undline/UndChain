@@ -1,4 +1,5 @@
 [routes]
+"client" = { ip = "127.0.0.1", port = 4444, method = "TCP" }
 "client1" = { ip = "192.168.1.10", port = 5000, method = "TCP" }
 "client2" = { ip = "192.168.1.11", port = 5001, method = "UDP" }
 

@@ -293,6 +293,7 @@ class IPCommunication(AbstractCommunication):
         try:
             # Convert bytearray to a string for use as a dictionary key
             recipient_str = recipient.decode('utf-8')
+            logger.info(f'The recipient being passed into the get route method is: {recipient}')
 
             with open('config.toml', 'rb') as f:
                 config = tomllib.load(f)

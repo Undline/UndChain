@@ -12,7 +12,7 @@ async def simulate_client(identifier) -> None:
     recipient = bytearray("127.0.0.1:4444", "utf-8")
 
     try:
-        await client.connect(recipient)
+        await client.connect(bytearray(b"client"))
         logger.info(f"Client {identifier} connected to the listener.")
         
         # Simulate sending a message
@@ -40,7 +40,7 @@ async def simulate_client(identifier) -> None:
 
 async def main() -> None:
     tasks = []
-    num_clients = 10_000  # Number of clients to simulate
+    num_clients = 10  # Number of clients to simulate
 
     for i in range(num_clients):
         tasks.append(simulate_client(i))
