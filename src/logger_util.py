@@ -1,4 +1,5 @@
 import logging
+from logging.handlers import RotatingFileHandler
 import os
 
 class ColoredFormatter(logging.Formatter):
@@ -46,7 +47,7 @@ def setup_logger(name: str, log_file: str) -> logging.Logger:
     console_handler.setFormatter(console_formatter)
 
     # File handler without color
-    file_handler = logging.FileHandler(log_file_path)
+    file_handler = RotatingFileHandler(log_file_path, maxBytes=1_000_000, backupCount=4)
     file_handler.setLevel(logging.DEBUG)
     file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     file_handler.setFormatter(file_formatter)
