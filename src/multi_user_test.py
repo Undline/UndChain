@@ -22,7 +22,10 @@ async def simulate_client(identifier) -> None:
         
         # Simulate receiving a response
         response: bytes | None = await client.receive_message(use_TCP=True)
-        logger.info(f"Client {identifier} received: {response.decode('utf-8')}")
+        if response:
+            logger.info(f"Client {identifier} received: {response.decode('utf-8')}")
+        else:
+            logger.error(f'Client failed to receive a response.')
 
         # Simulate the client holding the connection open for a random amount of time
         sleep_time: float = random.uniform(0.1, 2.0)  # Random sleep between 0.1 and 2 seconds
