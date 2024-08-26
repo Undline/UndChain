@@ -12,7 +12,7 @@ async def simulate_client(identifier) -> None:
     recipient = bytearray("127.0.0.1:4444", "utf-8")
 
     try:
-        await client.connect(bytearray(b"client"))
+        await client.connect(bytearray(b"localhost"))
         logger.info(f"Client {identifier} connected to the listener.")
         
         # Simulate sending a message
