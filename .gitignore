@@ -3,3 +3,7 @@ __pycache__/
 test/
 accounts/
 *.log
+*.1
+*.2
+*.3
+*.4

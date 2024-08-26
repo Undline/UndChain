@@ -240,7 +240,7 @@ class IPCommunication(AbstractCommunication):
 
         try:
             if use_TCP:
-                data = await asyncio.wait_for(
+                data: bytes = await asyncio.wait_for(
                     asyncio.get_event_loop().sock_recv(self.socket, buffer_size),
                     timeout=timeout
                 )
