@@ -25,10 +25,10 @@ async def simulate_client(identifier) -> None:
         if response:
             logger.info(f"Client {identifier} received: {response.decode('utf-8')}")
         else:
-            logger.error(f'Client failed to receive a response.')
+            logger.error(f'Client {identifier} failed to receive a response.')
 
         # Simulate the client holding the connection open for a random amount of time
-        sleep_time: float = random.uniform(0.1, 2.0)  # Random sleep between 0.1 and 2 seconds
+        sleep_time: float = random.uniform(0.1, 20.0)  # Random sleep between 0.1 and 2 seconds
         await asyncio.sleep(sleep_time)
         logger.info(f"Client {identifier} kept the connection open for {sleep_time:.2f} seconds.")
         
@@ -40,7 +40,7 @@ async def simulate_client(identifier) -> None:
 
 async def main() -> None:
     tasks = []
-    num_clients = 10  # Number of clients to simulate
+    num_clients = 8_888  # Number of clients to simulate
 
     for i in range(num_clients):
         tasks.append(simulate_client(i))
