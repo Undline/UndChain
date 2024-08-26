@@ -93,6 +93,7 @@ class IPCommunication(AbstractCommunication):
         finally:
             self.listener_socket.close()
             logger.info('Listener socket closed')
+
     async def handle_user(self, user_socket: socket.socket, address: tuple[str, int]) -> None:
         '''
         This method handles new connections coming in from the listener method
@@ -104,10 +105,10 @@ class IPCommunication(AbstractCommunication):
                 try:
                     message: bytes = await asyncio.get_event_loop().sock_recv(user_socket, 1024)
                     if not message:
-                        logger.error(f'User {address} disconnected')
+                        logger.error(f'Not a message. User {address} disconnected')
                         break
                     logger.info(f'Received message from {address}: {message.decode("utf-8")}')
-                    response = self.handle_message(message, address)
+                    response: bytes | None = self.handle_message(message, address)
                     if response:
                         await asyncio.get_event_loop().sock_sendall(user_socket, response)
                 except ConnectionResetError:
