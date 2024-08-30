@@ -1,0 +1,79 @@
+# General Information
+version = "2024.08.31"
+chain_name = "UndChain"
+priority_fee = 0.01  # Extra fee for priority requests
+owner_signature = "SIGNATURE_PLACEHOLDER"  # Placeholder for chain owner's signature
+
+# Validator Management
+[max_validators]
+max = 10
+
+[[known_validators]]
+public_key = "validator_pub_key_1"
+contact = "127.0.0.1:4444"
+
+[[known_validators]]
+public_key = "validator_pub_key_2"
+contact = "127.0.0.1:4445"
+
+[[known_validators]]
+public_key = "validator_pub_key_3"
+contact = "127.0.0.1:4446"
+
+# Only up to 44% of max_validators can be known
+# For max = 10, up to 4 known validators
+
+# Job File Structure
+[base_job_file]
+fields = ["user_id", "job_type", "min_partners", "block_id", "block_time", "job_priority"]
+mandatory = ["user_id", "job_type", "block_id"]
+job_types = ["transfer", "auction", "naming_service", "digital_space", "dmail"]
+token = "UGP"  # The token used for transactions
+
+[co_chains.auction_house]
+fields = ["auction_details"]
+mandatory = ["auction_details"]
+job_types = ["create_auction", "bid", "finalize_auction"]
+
+# Utility Functions
+[utilities.balance_check]
+fee = 0.005
+arguments = ["public_key", "username"]
+description = "Check balance by public key or username."
+
+[utilities.auction_house]
+fee = 0.02
+arguments = ["list", "asset_name"]
+description = "Interact with the auction house to list or query assets."
+
+# Co-Chains and Sub-Domains
+[co_chains_linked]
+chain1 = "CoChainA"
+chain2 = "CoChainB"
+
+[sub_domains.sub_domain1]
+name = "US_SubDomain"
+linked_co_chains = ["CoChainA"]
+
+[sub_domains.sub_domain2]
+name = "UK_SubDomain"
+linked_co_chains = ["CoChainB"]
+
+# Governance and Tokenomics
+[tokenomics]
+token_issuance = "fixed"
+payout_timing = "daily"
+
+[governance]
+voting_period = "7 days"
+quorum = "60%"
+
+# Performance Metrics
+[performance]
+max_block_time = 10  # seconds
+latency_threshold = 200  # milliseconds
+
+# Subscription Services (Optional)
+[subscription_services]
+basic_plan = { cost = 1.0, description = "Basic subscription plan for users." }
+premium_plan = { cost = 5.0, description = "Premium subscription plan with additional features." }
