@@ -86,6 +86,15 @@ class RunRules:
 
         mandatory_fields = self.config[co_chain_name]["mandatory"]
         return all(field in job_data and job_data[field] is not None for field in mandatory_fields)
+    
+    def get_known_validator_keys(self) -> list[str]:
+        '''
+        Retrieves a list of all the known validators from the run 
+        rules file.
+        '''
+
+        known_validators = self.config["known_validators"]
+        return [validator["public_key"] for validator in known_validators]
 
 # Example Usage
 if __name__ == "__main__":
