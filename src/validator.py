@@ -1,10 +1,10 @@
 from logging import Logger
 from typing import Any, Dict, LiteralString
-from logger_util import setup_logger
 from enum import Enum
 from run_rules import RunRules
 from crypto_factory import CryptoFactory
 
+from logger_util import setup_logger
 logger: Logger = setup_logger('Validator', 'validator.log')
 
 class ValidatorState(Enum):
