@@ -2,7 +2,8 @@ from logging import Logger
 from typing import Any, Dict, LiteralString
 from enum import Enum
 from run_rules import RunRules
-from crypto_factory import CryptoFactory
+
+from job_file import JobFile
 
 from logger_util import setup_logger
 logger: Logger = setup_logger('Validator', 'validator.log')
@@ -16,10 +17,10 @@ class ValidatorState(Enum):
     ERROR = 6
 
 class Validator:
-    def __init__(self, public_key: str, rules_file: str) -> None:
+    def __init__(self, public_key: bytearray, rules_file: str) -> None:
         logger.info("Initializing Validator")
         self.state = ValidatorState.DISCOVERY
-        self.public_key = public_key
+        self.public_key: bytearray = public_key
         self.run_rules = RunRules(rules_file)
         logger.info(f"Rules for {rules_file} have been loaded")
         self.run = False
@@ -114,11 +115,13 @@ class Validator:
         '''
         
         known_validator_keys: list[str] = self.run_rules.get_known_validator_keys()
-        is_known: bool = self.public_key in known_validator_keys
+        public_key_str: str = self.public_key.decode("utf-8")
+        is_known: bool = public_key_str in known_validator_keys
         return is_known
 
 if __name__ == "__main__":
-    validator = Validator("validator_pub_key_3", "UndChain.toml")
+    public_key = bytearray("validator_pub_key_3", "utf-8")
+    validator = Validator(public_key, "UndChain.toml")
     validator.start()
 
     validator.stop()

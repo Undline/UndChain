@@ -2,7 +2,7 @@ from logging import Logger
 from typing import Any, Dict, List
 
 from logger_util import setup_logger
-logger: Logger = setup_logger('Validator', 'validator.log')
+logger: Logger = setup_logger('Job_File', 'job_file.log')
 
 class JobFile:
     def __init__(self) -> None:
