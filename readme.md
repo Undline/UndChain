@@ -157,7 +157,7 @@ There could be a time when the auto-fee will be adjusted down via a vote, I only
 
 ### Accounts
 
-Anyone can generate an account on UndChain just as they can with any other blockchain, by generating a public/private key pair. Once you have generated your keys, simply send in a new user request message to the Validators. Usernames, which begin with an @ symbol (e.g., @Undline, @Joe, @Sue_Storm), provide an easy means of transferring digital assets using a name instead of a long public key. These names are resolved on the validators' end using UnaS (UndChain Naming System), which acts like DNS.
+Anyone can generate an account on UndChain just as they can with any other blockchain, by generating a public/private key pair. Once you have generated your keys, simply send in a new user request message. Usernames, which begin with an @ symbol (e.g., @Undline, @Joe, @Sue_Storm), provide an easy means of transferring digital assets using a name instead of a long public key. These names are resolved on the validators' end using UnaS (UndChain Naming System), which acts like DNS.
 
 While usernames are not a requirement, public keys are necessary for adding you to the public ledger and allowing other users to reach you. This ensures that even new users without tokens can still participate and interact on the network. Users can receive tokens through drops or earn them by actively participating in the network.
 
@@ -278,7 +278,7 @@ I still haven't decided just how I am going to do this, but I believe it will mo
 
 #### Convergence
 
-I believe that this blockchain is going to get large fast even with some of the space constraints that I am already planning on implementing. So what I am planning on implementing is a by product of the fact that we have decentralized storage on chain. What I am planning is that at least every flooring we implement The Convergence which is a process where we store all of the blockchains information on file and effectively restart the blockchain using the hash of the old chain as a genesis block. This would effectively lower the barrier in regards to how much RAM a validator needs since they can offload it onto the partners to store. The convergence will also occur when when have a crypto swap.
+I believe that this blockchain is going to get large fast even with some of the space constraints that I am already planning on implementing. So what I am planning on implementing is a by product of the fact that we have decentralized storage on chain. What I am planning is that at least every flooring we implement The Convergence which is a process where we store all of the blockchains information on file and effectively restart the blockchain using the hash of the old chain as a genesis block. This would effectively lower the barrier in regards to how much RAM a validator needs since they can offload it onto the partners to store. The convergence will also occur when we have a cryptography swap (example switching to Kyber).
 
 ### Security
 
@@ -287,6 +287,69 @@ There is a concern with quantum computing on the rise that traditional cryptogra
 - Interesting thought would be to allow users to update their key at anytime, but I am not sure why anyone would do this. The validator has to mark the active public key anyway so it wouldn't matter if they did update their keys. 
 	- Could lead to an attack if users are constantly updating their keys. Maybe charge for out of sequence key update?
 
+## Pseudo Language
+
+#### What is Pseudo?
+
+Pseudo is a Pythonic-style language designed for securely creating real-world programs that run directly on chain within the UndChain protocol. It's main goal is to allow developers (chain owners) a way to execute decentralized applications while maintaining a high level of security, fixability and accuracy. It provides a sandboxed environment that ensures no partner nor validator can exploit the system, protecting personal files and resources during the execution of these scripts. Pseudo is a heavily typed language so you will need to declare a variables type prior to using it.
+
+##### Sandbox Environment
+
+Pseudo runs all of it's scripts within a sandboxed environment that is designed to limit access to the hosts (partner or clients) machine, so that malicious code should not be able to access data or resources that are outside the scope that the program can run within. This is done by the partner dedicating portions of their system for UndChain specific tasks; for example when setting up a new worker the user is asked how much of their storage space they want to dedicate to the blockchain (has to be within 4GB segments). At that point the 'working folder' cannot go outside this area. Any attempts to do so will result in a drop in perception score from the chain owner. 
+
+##### Co-Chain Extensibility
+
+Developers can import functions from other co-chains, extending the language functionality using the `from` and `import` keywords (in the same way that python does). *I am debating on 'installing' a co-chain as a means of preventing issues with naming conflicts, but I think this will work as is*
+
+**Example**
+
+```Pseudo
+from pages import ratings, client
+
+if ratings(undchain.info) >= client.age:
+	show()
+```
+
+In this example we are importing the ratings section of pages as well as the client profile and from there we are checking to see if this client profile is allowed to see this page.
+
+#### Custom Types
+
+Pseudo introduces new custom types that make coding easier are much easier to understand as well as accurate. One of those types is the decimal type, which is meant to resolve the issue with float accuracy. This is done by creating two of *x* size, with one being the whole number and the other being the decimal number. 
+
+**Example**
+
+```Pseudo
+# Create a decimal number of 32 bits
+token_balance: d32 = 123.456
+big_numba: i64 = 1,234,456
+```
+
+Types are declared in the same way they are in Python (yes you can declare types in Python, but it only helps the intellisense) using the colon (:) symbol. I also showed that you can use the comma to separate large numbers to make them more readable. 
+
+#### New Keywords
+
+##### When
+
+The when keyword is meant to be used for asynchronous process (which are common for UndChain since everything will happen over the network). This provides a structure that makes this easier to read and write when you are waiting on a specific event. Plus it eliminates the need to poll a resource all the time to wait on a specific value.
+
+**Example**
+
+```Pseudo
+from pages import partner
+
+READY: bool = 1
+NICE: i16 = 69
+partner_status: listener = partner.ready
+
+when partner_status == READY:
+	some_method(NICE)
+```
+
+This is not the best example since you would normally say `when partner.ready == READY`, but I also wanted to show off the listener type. The when keyword operates much like an if statement with the exception being it only runs when that event has happened. I will expand this so that you can use this for parallelization in the future rather than just an asynchronous tasks. 
+
+#### Case Insensitive
+
+At this time it is our intent to make the language case insensitive, meaning that the keyword `when` and `WHEN` are the same. This is also true for variable names like `apple` and `Apple`. I don't believe this will cause issue other than coding style debates which will always be a problem.
 
 ## Decentralization
 
@@ -361,6 +424,7 @@ This is going to be basic for now, just a command line that asks what user type 
 	- **Low Trust** - Not sure about this one, we should have it, but I think this should be in addition to the other states.
 
 
+
 ---
 
 # Code Bounties
@@ -371,7 +435,7 @@ One of the ideas I have for UndChain is to make it so that open source software 
 
 UndChain itself has a startup developer fund of 1 million GP as well as 10 million SP. UndChain will also use this fund to support new co-chains since new blockchains coming into UndChain help support the eco system and make UndChain better. 
 
-Currently there are no active bounties at this time, as the system is still under development, but I am going to make some examples of what a warrant should look like. *Note: this is currently being posted in GitHub, but will eventually only exist on UndChain once the Code Ledger side chain goes live*
+Currently there are no active bounties at this time as the system is still under development, but I am going to make some examples of what a warrant should look like. *Note: this is currently being posted in GitHub, but will eventually only exist on UndChain once the Code Ledger side chain goes live*
 
 ## Example of Bounties
 
@@ -492,3 +556,5 @@ Not sure if this will work out well, but I was thinking we could also make real 
 ### Conclusions
 
 This should all be housed inside programs that have a form of revision control so that you can maintain and control projects. Ideally you would have an *organization* (in UndChain) responsible for creating these projects that way you can define roles and positions that you need. *Tip: never skip out on Documentation or Quality Control as it is critical for any successful project...*
+
+
