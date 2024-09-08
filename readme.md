@@ -49,7 +49,8 @@ I wanted to provide some examples of co-chains to help provide a better idea of 
 
 - **Messaging** - I don't have a great name for this just yet and I'm not sure if this protocol should be moved to the main chain since I would like to create an emergency messaging system, but as the name suggests this is a decentralized messaging protocol, this will not only have the ability to perform direct messaging, but also the ability to create groups. This could be used as a basis for a social network or a forum. 
 
-- **Player 2** - This blockchain is focused on helping developers launch decentralized serves that allow their players to connect live based gaming content. This will be fairly difficult to implement as latency will become the most important metric. Another goal of this is to create something called world engine which has the goal of creating a fully simulated world system, so that actions in one area create ripple effects throughout the globe / map. This should also include our Meta space who's goal is to create a open ruleset for how objects and actions happen in the Meta_Space (character sizing / physics)
+- **Player2** - This blockchain is focused on helping developers launch decentralized serves that allow their players to connect live based gaming content. This will be fairly difficult to implement as latency will become the most important metric. Another goal of this is to create something called world engine which has the goal of creating a fully simulated world system, so that actions in one area create ripple effects throughout the globe / map. This should also include our Meta space who's goal is to create a open ruleset for how objects and actions happen in the Meta_Space (character sizing / physics)
+	- To test these features out we will be creating games that utilize this service. Namely the Echoes series of games.
 
 As you can see there are a ton of chain ideas and I am sure more that will need to be developed to make this a full ecosystem. I may not be able to develop everything listed here, but my intention is to do as many as I can that are diverse as possible, so I can adjust the protocol based on the needs of these chains. I have personally found that when you use a product, you pick up on things that you would ordinarily miss. When developing co-chains always try to think of the value not just another asset class. 
 ## Co-chain code
@@ -291,11 +292,15 @@ There is a concern with quantum computing on the rise that traditional cryptogra
 
 #### What is Pseudo?
 
-Pseudo is a Pythonic-style language designed for securely creating real-world programs that run directly on chain within the UndChain protocol. It's main goal is to allow developers (chain owners) a way to execute decentralized applications while maintaining a high level of security, fixability and accuracy. It provides a sandboxed environment that ensures no partner nor validator can exploit the system, protecting personal files and resources during the execution of these scripts. Pseudo is a heavily typed language so you will need to declare a variables type prior to using it.
+Pseudo is a Pythonic-style language designed for securely creating real-world programs that run directly on chain within the UndChain protocol. It's main goal is to allow developers (chain owners) a way to execute decentralized applications while maintaining a high level of security, fixability and accuracy. It provides a sandboxed environment that ensures no partner nor validator can exploit the system, protecting personal files and resources during the execution of these scripts. Pseudo is a heavily typed language so you will need to declare a variables type prior to using it such as: `my_var: i32 = 0`.
 
 ##### Sandbox Environment
 
 Pseudo runs all of it's scripts within a sandboxed environment that is designed to limit access to the hosts (partner or clients) machine, so that malicious code should not be able to access data or resources that are outside the scope that the program can run within. This is done by the partner dedicating portions of their system for UndChain specific tasks; for example when setting up a new worker the user is asked how much of their storage space they want to dedicate to the blockchain (has to be within 4GB segments). At that point the 'working folder' cannot go outside this area. Any attempts to do so will result in a drop in perception score from the chain owner. 
+
+##### On Chain Compilation
+
+Other than having the language create a sandbox environment, another security feature is that Pseudo code is compiled on chain. This means that if there is an attempt to access data outside of the range / scope of this program it will return as an error. The one exception to this rule is when UndChain is being ran on a local network, although technically it's still remote because the partner user type would need to compile the code. 
 
 ##### Co-Chain Extensibility
 
@@ -319,7 +324,7 @@ Pseudo introduces new custom types that make coding easier are much easier to un
 **Example**
 
 ```Pseudo
-# Create a decimal number of 32 bits
+# Create a decimal number of 32 + 32 bits in size
 token_balance: d32 = 123.456
 big_numba: i64 = 1,234,456
 ```
@@ -330,7 +335,7 @@ Types are declared in the same way they are in Python (yes you can declare types
 
 ##### When
 
-The when keyword is meant to be used for asynchronous process (which are common for UndChain since everything will happen over the network). This provides a structure that makes this easier to read and write when you are waiting on a specific event. Plus it eliminates the need to poll a resource all the time to wait on a specific value.
+The **when** keyword is meant to be used for asynchronous process (which are common for UndChain since everything will happen over the network). This provides a structure that makes this easier to read and write when you are waiting on a specific event. Plus it eliminates the need to poll a resource all the time to wait on a specific value.
 
 **Example**
 
