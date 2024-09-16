@@ -1,7 +1,7 @@
 import struct
 import time
 from enum import Enum
-
+from packet_utils import PacketUtils
 
 class PacketType(Enum):
     VALIDATOR_REQUEST = 1
@@ -20,6 +20,8 @@ class PacketType(Enum):
     VALIDATOR_CHANGE_STATE = 14
     VALIDATOR_VOTE = 15
     RETURN_ADDRESS = 16
+    REPORT = 17
+    PERCEPTION_UPDATE = 18
 
 
 class PacketGenerator:
@@ -195,6 +197,34 @@ class PacketGenerator:
         public_ip_bytes = public_ip.encode('utf-8')
         payload = struct.pack(f'!{len(public_ip_bytes)}sI', public_ip_bytes, public_port)
         return header + payload
+    
+    def generate_report_packet(self, reporter: str, reported: str, reason: str) -> bytes:
+        '''
+        Generates a report packet with the reporter's details, 
+        the reported entity, and the reason for the report.
+        '''
+        packet = bytearray()
+        packet.extend(PacketUtils._encode_version("2024.08.12.1"))  # Example version
+        packet.extend(PacketUtils._encode_timestamp())
+        packet.extend(PacketUtils._encode_public_key(reporter))
+        packet.extend(PacketUtils._encode_public_key(reported))
+        packet.extend(PacketUtils._encode_string(reason))
+        packet_type = PacketType.REPORT.value.to_bytes(2, byteorder='big')
+        packet = packet_type + packet
+        return packet
+    
+    def generate_perception_update_packet(self, user_id: str, new_score: int) -> bytes:
+        '''
+        Generates a perception score update packet for a specific user.
+        '''
+        packet = bytearray()
+        packet.extend(PacketUtils._encode_version("2024.09.15.1"))
+        packet.extend(PacketUtils._encode_timestamp())
+        packet.extend(PacketUtils._encode_public_key(user_id))
+        packet.extend(new_score.to_bytes(4, byteorder='big'))  # Assume score is a 4-byte integer.
+        packet_type = PacketType.PERCEPTION_UPDATE.value.to_bytes(2, byteorder='big')
+        packet = packet_type + packet
+        return packet
 
 '''
 Adding a test...
