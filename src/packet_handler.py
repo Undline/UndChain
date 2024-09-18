@@ -41,18 +41,21 @@ class PacketHandler:
         '''
         Receives a packet, decodes it, and calls the appropriate handler
         '''
-        # Extract the first few bytes to identify the packet type
-        packet_type_value = struct.unpack(">H", packet[:2])[0]  # First 2 bytes are packet type (big-endian)
-        packet_type = PacketType(packet_type_value)
+        try:
+            # Extract the first two bytes to identify the packet type
+            packet_type_value = struct.unpack(">H", packet[:2])[0]  # First 2 bytes are packet type (big-endian)
+            packet_type = PacketType(packet_type_value)
 
-        logger.info(f"Received packet of type: {packet_type.name}")
+            logger.info(f"Received packet of type: {packet_type.name}")
 
-        # Delegate to the appropriate handler based on packet type
-        handler = self.handlers.get(packet_type)
-        if handler:
-            handler(packet)
-        else:
-            logger.error(f"Unknown packet type: {packet_type}")
+            # Delegate to the appropriate handler based on packet type
+            handler = self.handlers.get(packet_type)
+            if handler:
+                handler(packet)
+            else:
+                logger.error(f"Unknown packet type: {packet_type}")
+        except Exception as e:
+            logger.error(f"Failed to handle packet: {e}")
 
     def handle_validator_request(self, packet: bytes) -> None:
         '''
@@ -90,7 +93,6 @@ class PacketHandler:
         Handles validator list request packet
         '''
         logger.info("Handling Validator List Request")
-        # Determine if the request is for full list, active only, etc.
         # Unpack modifiers
         include_hash, slice_index = struct.unpack(">BI", packet[2:7])
         logger.info(f"Validator List Request: Include Hash: {include_hash}, Slice Index: {slice_index}")
