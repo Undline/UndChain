@@ -4,6 +4,7 @@ import os
 # Add the src directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
+from typing import Literal
 import unittest
 import struct
 from src.packet_generator import PacketType
@@ -60,7 +61,8 @@ class TestPacketHandler(unittest.TestCase):
         """
         include_hash = True
         slice_index = 0
-        packet = struct.pack(">HBI", PacketType.VALIDATOR_LIST_REQUEST.value, include_hash, slice_index)
+        print(f'Validator list request packet, slice is set at: {slice_index}')
+        packet: bytes = struct.pack(">HBI", PacketType.VALIDATOR_LIST_REQUEST.value, include_hash, slice_index)
         self.handler.handle_packet(packet)
         # Validate the request was decoded correctly.
 
@@ -69,7 +71,8 @@ class TestPacketHandler(unittest.TestCase):
         Test handling a LATENCY packet 
         """
         counter = 12345
-        packet = struct.pack(">HI", PacketType.LATENCY.value, counter)
+        packet: bytes = struct.pack(">HI", PacketType.LATENCY.value, counter)
+        print(f'Validator latency packet: {counter}')
         self.handler.handle_packet(packet)
         # Validate latency packet processing.
 
@@ -79,7 +82,8 @@ class TestPacketHandler(unittest.TestCase):
         """
         ip = "192.168.1.100"
         port = 4444
-        packet = struct.pack(">H", PacketType.RETURN_ADDRESS.value) + f"{ip}:{port}".encode("utf-8")
+        print(f'Validator return address packet IP address:{ip} port:{port}')
+        packet: bytes = struct.pack(">H", PacketType.RETURN_ADDRESS.value) + f"{ip}:{port}".encode("utf-8")
         self.handler.handle_packet(packet)
         # Validate return address decoding.
 
@@ -87,11 +91,11 @@ class TestPacketHandler(unittest.TestCase):
         """ 
         Test handling a REPORT packet 
         """
-        reporter = PacketUtils._encode_public_key("reporter_pub_key")
-        reported = PacketUtils._encode_public_key("reported_pub_key")
-        reason = PacketUtils._encode_string("Violation of rules")
-
-        packet = struct.pack(">H", PacketType.REPORT.value) + reporter + reported + reason
+        reporter: bytearray = PacketUtils._encode_public_key("reporter_pub_key")
+        reported: bytearray = PacketUtils._encode_public_key("reported_pub_key")
+        reason: bytearray = PacketUtils._encode_string("Violation of rules")
+        print(f'Validator report packet. validator reporting: {reporter} Validator getting reported: {reported}, what they did wrong: {reason}')
+        packet: bytes = struct.pack(">H", PacketType.REPORT.value) + reporter + reported + reason
         self.handler.handle_packet(packet)
         # Validate report packet processing.
 
@@ -99,7 +103,8 @@ class TestPacketHandler(unittest.TestCase):
         """ 
         Test handling of an unknown or invalid packet type 
         """
-        invalid_packet = struct.pack(">H", 9999)  # Invalid packet type
+        invalid_packet: bytes = struct.pack(">H", 9999)  # Invalid packet type
+        print(f'Testing invalid packet: 9999')
         self.handler.handle_packet(invalid_packet)
         # Check that the handler logs an error for an unknown packet type.
 
@@ -107,7 +112,8 @@ class TestPacketHandler(unittest.TestCase):
         """ 
         Test handling an empty packet 
         """
-        empty_packet = b""
+        empty_packet: Literal[b""] = b""
+        print(f'testing empty packet')
         self.handler.handle_packet(empty_packet)
         # Validate the empty packet handling.
 
@@ -115,6 +121,7 @@ class TestPacketHandler(unittest.TestCase):
         """ 
         Test handling a truncated packet 
         """
+        print('Testing incomplete packets')
         truncated_packet: bytes = struct.pack(">H", PacketType.VALIDATOR_REQUEST.value)
         self.handler.handle_packet(truncated_packet)
         # Ensure it handles incomplete packets without crashing.
@@ -125,7 +132,7 @@ class TestPacketHandler(unittest.TestCase):
         """
         user_id: bytearray = PacketUtils._encode_public_key("user123_pub_key")
         new_score: bytes = (100).to_bytes(4, byteorder='big')  # Example score
-
+        print(f'Perception score update for user: {user_id}, new score: {new_score}')
         packet: bytes = struct.pack(">H", PacketType.PERCEPTION_UPDATE.value) + user_id + new_score
         self.handler.handle_packet(packet)
         # Validate perception update packet handling.
