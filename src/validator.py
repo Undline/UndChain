@@ -1,6 +1,8 @@
 from logging import Logger
 from typing import Any, Dict, LiteralString
 from enum import Enum
+import asyncio
+from ip_communication import IPCommunication
 from run_rules import RunRules
 
 from job_file import JobFile
@@ -26,14 +28,15 @@ class Validator:
         self.run = False
         self.is_known_validator: bool = self.check_if_known_validator()
 
-    def start(self) -> None:
+    async def start(self) -> None:
         '''
         This method is responsible for setting up and running
         the validator class until it is terminated.
         '''
 
         logger.info("Starting validator...")
-        self.discover_validators()
+        # look for other validators here
+        await self.discover_validators()
 
         self.set_state(ValidatorState.SYNC)
         # Sync logic here
@@ -95,18 +98,13 @@ class Validator:
         # Implement recovery or notification logic here
         ...
 
-    def discover_validators(self) -> None:
+    async def discover_validators(self) -> None:
         '''
         This method is for discovering other validators or listening for
         incoming requests for validators to join the pool.
         '''
 
-        logger.info("Discovering validators...")
-
-        if self.is_known_validator:
-            logger.info(f'This is a KNOWN validator')
-        else:
-            logger.info(f'This is an UNKNOWN validator.')
+        logger.info("Discovering validators asynchronously...")
 
     def check_if_known_validator(self) -> bool:
         '''
@@ -120,8 +118,11 @@ class Validator:
         return is_known
 
 if __name__ == "__main__":
-    public_key = bytearray("validator_pub_key_3", "utf-8")
-    validator = Validator(public_key, "UndChain.toml")
-    validator.start()
+    async def main() -> None:
+        public_key = bytearray("validator_pub_key_3", "utf-8")
+        validator = Validator(public_key, "UndChain.toml")
+        await validator.start()
 
-    validator.stop()
+        validator.stop()
+
+    asyncio.run(main())
