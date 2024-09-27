@@ -1,4 +1,3 @@
-from logging import Logger
 from typing import Any, Dict, LiteralString
 from enum import Enum
 import asyncio
@@ -7,6 +6,7 @@ from run_rules import RunRules
 
 from job_file import JobFile
 
+from logging import Logger
 from logger_util import setup_logger
 logger: Logger = setup_logger('Validator', 'validator.log')
 
