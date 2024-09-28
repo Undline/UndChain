@@ -39,7 +39,7 @@ class IPCommunication(AbstractCommunication):
             route = self.get_route(recipient)
 
         ip_address: None | str = route.get('ip')
-        port:None | str = route.get('port')
+        port:None | int = route.get('port')
         method: str = route.get('method', 'TCP')
 
         if not ip_address or not port:
@@ -62,7 +62,7 @@ class IPCommunication(AbstractCommunication):
             IPCommunication.active_connections += 1
             logger.debug(f'Active connections: {IPCommunication.active_connections}')
         except Exception as e:
-            logger.exception(f'Failed to connect to {ip_address}:{port} suing {method}: {e}')
+            logger.exception(f'Failed to connect to {ip_address}:{port} using {method}: {e}')
             self.socket = None
 
     async def start_listener(self, host: str, port: int) -> None:

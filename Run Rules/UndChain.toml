@@ -11,15 +11,15 @@ max = 10
 
 [[known_validators]]
 public_key = "validator_pub_key_1"
-contact = {method = "TCP", route = "127.0.0.1:4444"}
+contact = {method = "TCP", ip = "127.0.0.1", port = 4444}
 
 [[known_validators]]
 public_key = "validator_pub_key_2"
-contact = {method = "TCP", route = "127.0.0.1:4445"}
+contact = {method = "TCP", ip = "127.0.0.1", port = 4444}
 
 [[known_validators]]
 public_key = "validator_pub_key_3"
-contact = {method = "TCP", route = "127.0.0.1:4446"}
+contact = {method = "TCP", ip = "127.0.0.1", port = 4444}
 
 # Only up to 44% of max_validators can be known
 # For max = 10, up to 4 known validators

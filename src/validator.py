@@ -107,7 +107,7 @@ class Validator:
 
         logger.info("Discovering validators asynchronously...")
 
-        known_validators = self.run_rules.get_known_validator_keys()
+        known_validators: list[str] = self.run_rules.get_known_validator_keys()
         for validator_key in known_validators:
             if validator_key == self.public_key.decode('utf-8'):
                 logger.info(f'You are a known validator {validator_key}, so we are not contacting ourselves')
@@ -120,9 +120,8 @@ class Validator:
             if contact_info:
                 try:
                     logger.info(f'Initializing communication with {validator_key} using {contact_info["method"]}')
-                    # TODO getting an error here. Why?
-                    comm = CommunicationFactory.create_communication(contact_info['method'], "2024.09.28.1", "UndChain")
-                    await comm.connect(bytearray(validator_key, 'utf-8'), contact_info['route']) # type: ignore
+                    comm = CommunicationFactory.create_communication(contact_info["method"], "2024.09.28.1", "UndChain")
+                    await comm.connect(bytearray(validator_key, 'utf-8'), contact_info) # type: ignore
                 except Exception as e:
                     logger.error(f'Failed to connect to validator {validator_key}: {e}')
             else:
