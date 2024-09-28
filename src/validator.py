@@ -1,7 +1,7 @@
 from typing import Any, Dict, LiteralString
 from enum import Enum
 import asyncio
-from ip_communication import IPCommunication
+from communication_factory import CommunicationFactory
 from run_rules import RunRules
 
 from job_file import JobFile
@@ -27,6 +27,7 @@ class Validator:
         logger.info(f"Rules for {rules_file} have been loaded")
         self.run = False
         self.is_known_validator: bool = self.check_if_known_validator()
+
 
     async def start(self) -> None:
         '''
@@ -106,6 +107,45 @@ class Validator:
 
         logger.info("Discovering validators asynchronously...")
 
+        known_validators = self.run_rules.get_known_validator_keys()
+        for validator_key in known_validators:
+            if validator_key == self.public_key.decode('utf-8'):
+                logger.info(f'You are a known validator {validator_key}, so we are not contacting ourselves')
+                continue
+
+            logger.info(f'Attempting to connect to validator: {validator_key}')
+
+            # Get contact info for this validator
+            contact_info: dict[str, str] = self.get_contact_info(validator_key)
+            if contact_info:
+                try:
+                    logger.info(f'Initializing communication with {validator_key} using {contact_info["method"]}')
+                    # TODO getting an error here. Why?
+                    comm = CommunicationFactory.create_communication(contact_info['method'], "2024.09.28.1", "UndChain")
+                    await comm.connect(bytearray(validator_key, 'utf-8'), contact_info['route']) # type: ignore
+                except Exception as e:
+                    logger.error(f'Failed to connect to validator {validator_key}: {e}')
+            else:
+                logger.error(f'Failed to retrieve contact info for validator {validator_key}')
+
+
+    def get_contact_info(self, public_key: str) -> dict:
+        '''
+        Retrieves the contact information for a validator from the run rules
+        based on the public key being passed in.
+
+        Returns:
+            Dictionary with the type of communication and the route
+        '''
+        known_validators = self.run_rules.get_known_validators()
+
+        for validator in known_validators:
+            if validator['public_key'] == public_key:
+                logger.info(f'Found contact info for public key {public_key}: {validator["contact"]}')
+                return validator['contact']
+            
+        raise ValueError(f'Validator with public key {public_key} was not found in the rin rules file.')
+    
     def check_if_known_validator(self) -> bool:
         '''
         This method is responsible for determining if this validator is

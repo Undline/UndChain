@@ -95,11 +95,18 @@ class RunRules:
 
         known_validators = self.config["known_validators"]
         return [validator["public_key"] for validator in known_validators]
+    
+    def get_known_validators(self) -> list:
+        return self.config["known_validators"]
 
 # Example Usage
 if __name__ == "__main__":
     run_rules = RunRules("UndChain.toml")
 
+    # Print a list of known validators from the run rules file
+    known_validators = run_rules.get_known_validators()
+    print(f'Known validators: {known_validators}')
+    
     # Fetching job file structure for the base job file
     job_file_structure: Dict[str, Any] = run_rules.get_job_file_structure()
     print("Job File Structure:", job_file_structure)
