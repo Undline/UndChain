@@ -104,7 +104,7 @@ class IPCommunication(AbstractCommunication):
                 try:
                     message: bytes = await asyncio.get_event_loop().sock_recv(user_socket, 1024)
                     if not message:
-                        logger.error(f'Not a message. User {address} disconnected')
+                        logger.warning(f'Not a message. User {address} disconnected')
                         break
                     logger.info(f'Received message from {address}: {message.decode("utf-8")}')
                     response: bytes | None = self.handle_message(message, address)
