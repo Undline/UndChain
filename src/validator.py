@@ -36,6 +36,12 @@ class Validator:
         '''
 
         logger.info("Starting validator...")
+
+        # Start the lsitener in the background
+        comm = CommunicationFactory.create_communication("TCP", "2024.09.28.1", "UndChain")
+        # Need to grab our IP info later
+        asyncio.create_task(comm.start_listener("127.0.0.1", 4446)) # type: ignore 
+
         # look for other validators here
         await self.discover_validators()
 
@@ -108,6 +114,8 @@ class Validator:
         logger.info("Discovering validators asynchronously...")
 
         known_validators: list[str] = self.run_rules.get_known_validator_keys()
+        tasks = [] # Collect tasks for connecting validators
+
         for validator_key in known_validators:
             if validator_key == self.public_key.decode('utf-8'):
                 logger.info(f'You are a known validator {validator_key}, so we are not contacting ourselves')
@@ -121,12 +129,24 @@ class Validator:
                 try:
                     logger.info(f'Initializing communication with {validator_key} using {contact_info["method"]}')
                     comm = CommunicationFactory.create_communication(contact_info["method"], "2024.09.28.1", "UndChain")
-                    await comm.connect(bytearray(validator_key, 'utf-8'), contact_info) # type: ignore
+                    tasks.append(self.connect_to_validator(comm, validator_key, contact_info))
+                    #await comm.connect(bytearray(validator_key, 'utf-8'), contact_info) # type: ignore
                 except Exception as e:
                     logger.error(f'Failed to connect to validator {validator_key}: {e}')
             else:
                 logger.error(f'Failed to retrieve contact info for validator {validator_key}')
 
+        # Await all of the gathered tasks
+        if tasks:
+            await asyncio.gather(*tasks)
+        else:
+            logger.info("No other validators to connect to...")
+
+    async def connect_to_validator(self, comm, validator_key, contact_info):
+        try:
+            await comm.connect(bytearray(validator_key, 'utf-8'), contact_info) # type: ignore
+        except Exception as e:
+            logger.error(f'Failed to connect to validator {validator_key}: {e}')
 
     def get_contact_info(self, public_key: str) -> dict:
         '''
