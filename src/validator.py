@@ -27,7 +27,7 @@ class Validator:
         logger.info(f"Rules for {rules_file} have been loaded")
         self.run = False
         self.is_known_validator: bool = self.check_if_known_validator()
-
+        self.comm = None
 
     async def start(self) -> None:
         '''
@@ -37,10 +37,10 @@ class Validator:
 
         logger.info("Starting validator...")
 
-        # Start the lsitener in the background
-        comm = CommunicationFactory.create_communication("TCP", "2024.09.28.1", "UndChain")
+        # Start the listener in the background
+        self.comm = CommunicationFactory.create_communication("TCP", "2024.09.28.1", "UndChain")
         # Need to grab our IP info later
-        asyncio.create_task(comm.start_listener("127.0.0.1", 4446)) # type: ignore 
+        asyncio.create_task(self.comm.start_listener("127.0.0.1", 4446)) # type: ignore 
 
         # look for other validators here
         await self.discover_validators()
@@ -61,6 +61,12 @@ class Validator:
 
         self.run = False
         logger.info(f"shutting down the validator.")
+
+        try:
+            self.comm.disconnect() # type: ignore
+            logger.info(f'Successfully stopped listening')
+        except Exception as e:
+            logger.error(f'Failed to stop validator from listening. Inside Validator:stop()')
         
 
     def set_state(self, new_state: ValidatorState) -> None:
