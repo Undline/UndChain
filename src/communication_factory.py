@@ -1,3 +1,4 @@
+from abstract_communication import AbstractCommunication
 from ip_communication import IPCommunication
 # Add more communication methods as they are made here
 
