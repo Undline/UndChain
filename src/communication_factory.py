@@ -15,7 +15,8 @@ class CommunicationFactory:
             Instance of a communication class
         '''
         if method == 'TCP':
-            return IPCommunication(version=version, co_chain_ID=co_chain_ID)
+            return IPCommunication()
+            # return IPCommunication(version=version, co_chain_ID=co_chain_ID)
         # Adding potential communication methods as examples
         elif method == "LoRA":
             # Returns a LoRA communication method

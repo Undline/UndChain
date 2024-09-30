@@ -53,7 +53,7 @@ class Validator:
             # Begin normal operations here
             ...
 
-    def stop(self) -> None:
+    async def stop(self) -> None:
         '''
         This method is responsible for ending the validator loop
         and to communicate to it's peers that it is going offline
@@ -63,7 +63,7 @@ class Validator:
         logger.info(f"shutting down the validator.")
 
         try:
-            self.comm.disconnect() # type: ignore
+            await self.comm.disconnect() # type: ignore
             logger.info(f'Successfully stopped listening')
         except Exception as e:
             logger.error(f'Failed to stop validator from listening. Inside Validator:stop()')
@@ -188,6 +188,6 @@ if __name__ == "__main__":
         validator = Validator(public_key, "UndChain.toml")
         await validator.start()
 
-        validator.stop()
+        await validator.stop()
 
     asyncio.run(main())
