@@ -5,6 +5,9 @@ from abstract_communication import AbstractCommunication
 from communication_factory import CommunicationFactory
 from run_rules import RunRules
 
+from packet_generator import PacketGenerator
+from packet_handler import PacketHandler
+
 from job_file import JobFile
 
 from logging import Logger
@@ -28,7 +31,7 @@ class Validator:
         logger.info(f"Rules for {rules_file} have been loaded")
         self.run = False
         self.is_known_validator: bool = self.check_if_known_validator()
-        self.comm = None
+        self.comm: AbstractCommunication
 
     async def start(self) -> None:
         '''
@@ -39,9 +42,13 @@ class Validator:
         logger.info("Starting validator...")
 
         # Start the listener in the background
-        self.comm = CommunicationFactory.create_communication("TCP")
-        # Need to grab our IP info later
-        asyncio.create_task(self.comm.start_listener("127.0.0.1", 4446)) # type: ignore 
+        try: 
+            self.comm: AbstractCommunication = CommunicationFactory.create_communication("TCP")
+        except ValueError as e:
+            logger.error(f'Fatal error. Unknown communication type: {e}')
+            raise ValueError(e)
+        # Need to grab our real IP info later
+        asyncio.create_task(self.comm.start_listener("127.0.0.1", 4446))  
 
         # look for other validators here
         await self.discover_validators()
@@ -135,7 +142,11 @@ class Validator:
             if contact_info:
                 try:
                     logger.info(f'Initializing communication with {validator_key} using {contact_info["method"]}')
-                    comm: AbstractCommunication | None = CommunicationFactory.create_communication(contact_info["method"])
+                    try:
+                        comm: AbstractCommunication = CommunicationFactory.create_communication(contact_info["method"])
+                    except ValueError as e:
+                        logger.error(f'Fatal error. Unknown communication type: {contact_info["method"]}')
+                        raise ValueError(e)
                     tasks.append(self.connect_to_validator(comm, validator_key, contact_info))
                 except Exception as e:
                     logger.error(f'Failed to connect to validator {validator_key}: {e}')
@@ -148,7 +159,7 @@ class Validator:
         else:
             logger.info("No other validators to connect to...")
 
-    async def connect_to_validator(self, comm, validator_key, contact_info):
+    async def connect_to_validator(self, comm: AbstractCommunication, validator_key, contact_info):
         try:
             await comm.connect(bytearray(validator_key, 'utf-8'), contact_info) # type: ignore
         except Exception as e:
@@ -185,9 +196,14 @@ class Validator:
 if __name__ == "__main__":
     async def main() -> None:
         public_key = bytearray("validator_pub_key_3", "utf-8")
-        validator = Validator(public_key, "UndChain.toml")
-        await validator.start()
-
-        await validator.stop()
+        run_rules_file: str = "UndChain.toml"
+        validator = Validator(public_key, run_rules_file)
+        try:
+            await validator.start()
+        except ValueError as e:
+            logger.error(f'May need to check the run rules for: {run_rules_file} to see if there is a misconfigured communication type')
+            return # End program to prevent undefined behavior. TODO: Create a checker to see where in the TOML file we have the misconfiguration.
+        finally:
+            await validator.stop()
 
     asyncio.run(main())
