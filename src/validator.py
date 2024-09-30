@@ -33,6 +33,9 @@ class Validator:
         self.is_known_validator: bool = self.check_if_known_validator()
         self.comm: AbstractCommunication
 
+        self.packet_generator = PacketGenerator("2024.09.30") # Get this from run rules file
+        self.packet_handler = PacketHandler()
+
     async def start(self) -> None:
         '''
         This method is responsible for setting up and running
