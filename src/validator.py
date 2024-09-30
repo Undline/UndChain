@@ -38,7 +38,7 @@ class Validator:
         logger.info("Starting validator...")
 
         # Start the listener in the background
-        self.comm = CommunicationFactory.create_communication("TCP", "2024.09.28.1", "UndChain")
+        self.comm = CommunicationFactory.create_communication("TCP")
         # Need to grab our IP info later
         asyncio.create_task(self.comm.start_listener("127.0.0.1", 4446)) # type: ignore 
 
@@ -134,7 +134,7 @@ class Validator:
             if contact_info:
                 try:
                     logger.info(f'Initializing communication with {validator_key} using {contact_info["method"]}')
-                    comm = CommunicationFactory.create_communication(contact_info["method"], "2024.09.28.1", "UndChain")
+                    comm = CommunicationFactory.create_communication(contact_info["method"])
                     tasks.append(self.connect_to_validator(comm, validator_key, contact_info))
                     #await comm.connect(bytearray(validator_key, 'utf-8'), contact_info) # type: ignore
                 except Exception as e:

@@ -1,10 +1,12 @@
 from abstract_communication import AbstractCommunication
 from ip_communication import IPCommunication
+
+from crypto_factory import CryptoFactory
 # Add more communication methods as they are made here
 
 class CommunicationFactory:
     @staticmethod
-    def create_communication(method: str, version: str, co_chain_ID: str):
+    def create_communication(method: str):
         '''
         This is a factory method used to create the appropriate class
         based upon the communication method that is passed in. All 
