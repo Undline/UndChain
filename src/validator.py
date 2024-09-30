@@ -1,6 +1,7 @@
 from typing import Any, Dict, LiteralString
 from enum import Enum
 import asyncio
+from abstract_communication import AbstractCommunication
 from communication_factory import CommunicationFactory
 from run_rules import RunRules
 
@@ -134,9 +135,8 @@ class Validator:
             if contact_info:
                 try:
                     logger.info(f'Initializing communication with {validator_key} using {contact_info["method"]}')
-                    comm = CommunicationFactory.create_communication(contact_info["method"])
+                    comm: AbstractCommunication | None = CommunicationFactory.create_communication(contact_info["method"])
                     tasks.append(self.connect_to_validator(comm, validator_key, contact_info))
-                    #await comm.connect(bytearray(validator_key, 'utf-8'), contact_info) # type: ignore
                 except Exception as e:
                     logger.error(f'Failed to connect to validator {validator_key}: {e}')
             else:

@@ -6,7 +6,7 @@ from crypto_factory import CryptoFactory
 
 class CommunicationFactory:
     @staticmethod
-    def create_communication(method: str):
+    def create_communication(method: str) -> AbstractCommunication | None:
         '''
         This is a factory method used to create the appropriate class
         based upon the communication method that is passed in. All 
@@ -18,7 +18,6 @@ class CommunicationFactory:
         '''
         if method == 'TCP':
             return IPCommunication()
-            # return IPCommunication(version=version, co_chain_ID=co_chain_ID)
         # Adding potential communication methods as examples
         elif method == "LoRA":
             # Returns a LoRA communication method
