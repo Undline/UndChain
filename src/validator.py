@@ -33,16 +33,16 @@ class Validator:
         self.is_known_validator: bool = self.check_if_known_validator()
         self.comm: AbstractCommunication
 
-        self.packet_generator = PacketGenerator("2024.09.30") # Get this from run rules file
+        self.packet_generator = PacketGenerator("2024.09.30.1") # Get this from run rules file
         self.packet_handler = PacketHandler()
 
-    async def start(self) -> None:
+    async def start_listener(self) -> None:
         '''
         This method is responsible for setting up and running
-        the validator class until it is terminated.
+        the listener portion of the validator until it's terminated.
         '''
 
-        logger.info("Starting validator...")
+        logger.info("Starting validator listener...")
 
         # Start the listener in the background
         try: 
@@ -51,19 +51,9 @@ class Validator:
             logger.error(f'Fatal error. Unknown communication type: {e}')
             self.state = ValidatorState.ERROR
             raise ValueError(e)
+        
         # Need to grab our real IP info later
-        asyncio.create_task(self.comm.start_listener("127.0.0.1", 4446))  
-
-        # look for other validators here
-        await self.discover_validators()
-
-        self.set_state(ValidatorState.SYNC)
-        # Sync logic here
-        self.set_state(ValidatorState.ACTIVE)
-
-        while self.run:
-            # Begin normal operations here
-            ...
+        asyncio.create_task(self.comm.start_listener("127.0.0.1", 4446))
 
     async def stop(self) -> None:
         '''
@@ -203,12 +193,19 @@ if __name__ == "__main__":
         public_key = bytearray("validator_pub_key_3", "utf-8")
         run_rules_file: str = "UndChain.toml"
         validator = Validator(public_key, run_rules_file)
+
         try:
-            await validator.start()
+            await validator.start_listener()
+            await validator.discover_validators()
+
+            while validator.run:
+                await asyncio.sleep(1)
+
         except ValueError as e:
             logger.error(f'May need to check the run rules for: {run_rules_file} to see if there is a misconfigured communication type')
             return # End program to prevent undefined behavior. TODO: Create a checker to see where in the TOML file we have the misconfiguration.
         finally:
+            print("System listening for new connections...")
             await validator.stop()
 
     asyncio.run(main())
