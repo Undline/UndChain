@@ -49,6 +49,7 @@ class Validator:
             self.comm: AbstractCommunication = CommunicationFactory.create_communication("TCP")
         except ValueError as e:
             logger.error(f'Fatal error. Unknown communication type: {e}')
+            self.state = ValidatorState.ERROR
             raise ValueError(e)
         # Need to grab our real IP info later
         asyncio.create_task(self.comm.start_listener("127.0.0.1", 4446))  
@@ -149,6 +150,7 @@ class Validator:
                         comm: AbstractCommunication = CommunicationFactory.create_communication(contact_info["method"])
                     except ValueError as e:
                         logger.error(f'Fatal error. Unknown communication type: {contact_info["method"]}')
+                        self.state = ValidatorState.ERROR
                         raise ValueError(e)
                     tasks.append(self.connect_to_validator(comm, validator_key, contact_info))
                 except Exception as e:
