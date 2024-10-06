@@ -5,7 +5,7 @@
 
 **Description**: Create the core functions for communications, encryption systems with ability to swap protocols and define the packet structure.
 
-- [ ] Encryption [Encryption Discussion](Encryption_Discussion)
+- [ ] Encryption [Encryption Discussion](Encryption_Discussion.md)
 	- [ ] Modularity using base class and use a factory to decide which to use.
 		- [ ] AES-512
 		- [ ] Kyber
