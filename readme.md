@@ -2,7 +2,7 @@
 
 # What is UndChain
 
-UndChain is a PoU (Proof of Utility) blockchain; that can best be thought of as a decentralized cloud service that anyone can participate with. There are three different utilities that can be performed on the network.
+UndChain is a PoU (Proof of Utility) blockchain; that can best be thought of as a decentralized cloud service in which anyone can participate. There are three different utilities that can be performed on the network, that work together to create similar functionality as conventional cloud service providers.
 
 1. **Computation** - The thought behind this function would be items that either are too complex for a ordinary machine to complete in a reasonable amount of time (training AI models, 3D rendering or DNA sequencing) or something that requires modifying data that must be shared with a group (think servers).
 
@@ -389,49 +389,6 @@ While having a separation of power between the validators who maintain the block
 
 Had a thought while doing some development work in regards to having hot and cold wallets, and since UndChain needs the ability to sign transactions (fairly regularly) I think it may be wise to implement the idea of hot and cold wallets so that users already have that as a additional means of security. What this would mean is that instead of just one public address in a user accounts name you would have two. I need to think more on this and how it should be implemented. I will say for sure that fees between those two wallets will be zero.
 
-
----
-
-# Technical Documentation
-
-Might be wondering why it took this long to get to the technical details; UndChain is very abstract right now and I don't have every technical detail flushed out. 
-
-UndChain uses Python for now; I choose Python due to the ease of development however, it is slow and we will pay a price for that. At this time we will use the standard library so no additional packages are needed.
-
-The plan is to separate each user type in classes that inherit from user. Each type should have it's own messaging system that I am planning on making a state machine to handle different packets. We will start with Validators since they are the first entity that performs any action on chain. 
-
-## Python imports
-
-```Bash
-pip install cryptography
-pip install kivy [full]
-```
-
-#### Cryptography
-
-Using this library since I believe it to be more secure than writing my own. This is used for account creation as well as encrypting and decrypting traffic across the network, signing transactions and creating DH keys. 
-
-#### Kivy
-
-Using this library as a stand in for ForestFox (M3L / GSS interpreter) since that development is going to take more time in order to develop the standard fully. This should be replace with ForestFox which is the UI interpreter for UndChain.
-
-## Main
-
-This is going to be basic for now, just a command line that asks what user type are you. Should also detect if you have a key on the system, if not create one.
-
-## Validator Class 
-
-- Need to create an Enum that has the different states a validator can be in
-	- **Discovery**
-	- **Time Sync**
-	- **Ready**
-	- **Busy**
-	- **Low Trust** - Not sure about this one, we should have it, but I think this should be in addition to the other states.
-
-
-
----
-
 # Code Bounties
 
 In this section I am going to list out the active *bounties* for the UndChain project. The Bounty program is meant to not only list what is needed for chain development, but also provide reward structures for each *contract* that is listed. 
@@ -562,4 +519,9 @@ Not sure if this will work out well, but I was thinking we could also make real 
 
 This should all be housed inside programs that have a form of revision control so that you can maintain and control projects. Ideally you would have an *organization* (in UndChain) responsible for creating these projects that way you can define roles and positions that you need. *Tip: never skip out on Documentation or Quality Control as it is critical for any successful project...*
 
+---
+# Technical Documentation / Roadmap
 
+Follow this link to see the internal roadmap for UndChain to get more in depth knowledge on how the technology works [[Internal UndChain Roadmap]]
+
+We are currently in [[Phase 1]]
