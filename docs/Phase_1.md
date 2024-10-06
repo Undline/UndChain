@@ -14,7 +14,7 @@
 	- [ ] IP Communication
 
 ---
-\
+
 ### Validators
 
 **Description**: Define the validator role and establish inter-validator communication protocols, as well as how validators interact with other user types.
