@@ -520,8 +520,9 @@ Not sure if this will work out well, but I was thinking we could also make real 
 This should all be housed inside programs that have a form of revision control so that you can maintain and control projects. Ideally you would have an *organization* (in UndChain) responsible for creating these projects that way you can define roles and positions that you need. *Tip: never skip out on Documentation or Quality Control as it is critical for any successful project...*
 
 ---
+
 # Technical Documentation / Roadmap
 
-Follow this link to see the internal roadmap for UndChain to get more in depth knowledge on how the technology works [[Internal UndChain Roadmap]]
+Follow this link to see the internal roadmap for UndChain to get more in depth knowledge on how the technology works [Internal UndChain Roadmap](docs/Internal_UndChain_Roadmap.md)
 
-We are currently in [[Phase 1]]
+We are currently in [Phase 1](docs/Phase_1.md)
