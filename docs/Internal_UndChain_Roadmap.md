@@ -1,4 +1,6 @@
 
+# Internal Roadmap
+
 This internal roadmap should correlate with the global roadmap. I assume that during the creation of our internal roadmap we may find things that we may have missed / forgot to call out on the global so some refactoring may need to be done at a later time. 
 
 I think I am going to make these check marks, so that as we go we can check off what has been accomplished. Within each section we will have a discussion file, so that if there are questions we will post it there for anyone to view. *Poor mans forum.*

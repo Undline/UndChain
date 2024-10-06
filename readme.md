@@ -523,6 +523,12 @@ This should all be housed inside programs that have a form of revision control s
 
 # Technical Documentation / Roadmap
 
+### Code Guidelines
+
+Any submitted code should have type definitions as well as doc strings to accompany any new methods. 
+
+### Roadmap
+
 Follow this link to see the internal roadmap for UndChain to get more in depth knowledge on how the technology works [Internal UndChain Roadmap](docs/Internal_UndChain_Roadmap.md)
 
 We are currently in [Phase 1](docs/Phase_1.md)
