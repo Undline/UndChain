@@ -9,9 +9,16 @@
 	- [ ] Modularity using base class and use a factory to decide which to use.
 		- [ ] AES-512
 		- [ ] Kyber
-- [ ] Communication
+		- [ ] Key Generation 
+			- [ ] Storage
+- [ ] Communication [Communication Discussion](Communication_Discussion.md)
 	- [ ] Packet structure
-	- [ ] IP Communication
+		- [ ] Packet Handler
+		- [ ] Packet Generator
+	- [ ] Abstract Communication / Communication Factory
+		- [ ] IP Communication
+			- [ ] TCP - Validators
+			- [ ] UDP - Partners and Clients
 
 ---
 
@@ -19,8 +26,15 @@
 
 **Description**: Define the validator role and establish inter-validator communication protocols, as well as how validators interact with other user types.
 
-- [ ] Discover Validators
+- [ ] Discover Validators Protocol
 	- [ ] Check Run rules
+	- [ ] Identify Validator States
+- [ ] Listen for connections
+	- [ ] Handle incoming messages
+- [ ] Perception Score
+	- [ ] Add
+	- [ ] Reduce
+- [ ] Test
 
 ---
 
@@ -29,7 +43,9 @@
 Description: Define the run rule's structure created by the chain owner for validators and partners to execute on.
 
 - [ ] Run rule structure
-	- [ ] TOML structure
+	- [ ] Known Validators
+	- [ ] Tokenomics structure - fees / payout period
+	- [ ] block generation speed
 
 
 ---
@@ -39,7 +55,14 @@ Description: Define the run rule's structure created by the chain owner for vali
 Description: Establish rules for partner communication to both validators and clients and run chain owner generated code.
 
 - [ ] Get jobs
-	- [ ] Decide if we pool or subscribe for jobs
+	- [ ] Subscribe for jobs by letting validator know we are available
+	- [ ] listen using `when`
+- [ ] Connect with Client(s)
+- [ ] Rules on Storage
+	- [ ] Define how storage is handled
+		- [ ] plot system
+- [ ] Rules on Computation
+- [ ] Rules on Access
 
 ---
 
@@ -48,7 +71,11 @@ Description: Establish rules for partner communication to both validators and cl
 Description: Create the client user type and establish protocol for utility request as well as communication to partners.
 
 - [ ] Request jobs
-	- [ ] Base UI (non-M3L)
+	- [ ] Send job request packet to validator
+	- [ ] handle network response
+- [ ] Connect with partner
+	- [ ] Known partner - TCP
+	- [ ] Independent Partner - UDP
 
 ---
 
@@ -82,7 +109,15 @@ Description: Implement the pages and Auction house co-chains and test those on t
 	- [ ] Define Digital Asset Creation
 - [ ] Pages
 	- [ ] Define how a page is made
+	- [ ] Define how a page is shared by partners
+		- [ ] Sharded
+		- [ ] data acquisition (external data)
+			- [ ] SQeeL
+			- [ ] File / CSV in a set location
+	- [ ] Rating system
 	- [ ] Define AdCoin
+		- [ ] Set token supply to 444 trillion
+		- [ ] Make system that allows other chains to use this token. Protocol
 
 ---
 
