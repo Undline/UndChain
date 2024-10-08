@@ -10,7 +10,9 @@
 		- [ ] AES-512
 		- [ ] Kyber
 		- [ ] Key Generation 
-			- [ ] Storage
+			- [ ] Storage - PEM File
+		- [ ] Cold Wallet
+		- [ ] Hot Wallet
 - [ ] Communication [Communication Discussion](Communication_Discussion.md)
 	- [ ] Packet structure
 		- [ ] Packet Handler
@@ -34,6 +36,10 @@
 - [ ] Perception Score
 	- [ ] Add
 	- [ ] Reduce
+- [ ] Job File
+	- [ ] Add job
+	- [ ] Notify Partner
+	- [ ] Payout File
 - [ ] Test
 
 ---
@@ -76,6 +82,7 @@ Description: Create the client user type and establish protocol for utility requ
 - [ ] Connect with partner
 	- [ ] Known partner - TCP
 	- [ ] Independent Partner - UDP
+		- [ ] packet numbering
 
 ---
 
@@ -85,16 +92,29 @@ Description: Stress the system on a local network and add tests that make each u
 
 - [ ] Intra-network setup
 	- [ ] Identify private IPs as well as their roles
+- [ ] Need to create metrics for system performance
+	- [ ] CPU
+	- [ ] Storage
+	- [ ] Network throughput
 
 ---
 
-### Test
+### Public Test
 
 Description: Set the validators live on the global network, creating a filter for specific users to interact. Create logs for real time debugging.
 
 - [ ] Bare metal or using a provider for Validator?
 	- [ ] What hardware is needed?
 - [ ] Set max accounts to 10k
+- [ ] Need a reporting location (network / storage location)
+	- [ ] logs
+	- [ ] performance metrics
+	- [ ] storage time
+- [ ] Security audit
+	- [ ] Encrypted data is encrypted
+	- [ ] Signatures can only come from the key holder
+	- [ ] double spend attack
+
 
 
 ---
@@ -128,29 +148,118 @@ Description: Implement the graphical user interface to allow standard users the 
 M3L should be thought of like the structure / skeleton of the page while GSS is the style / skin of that page.  
 
 - [ ] M3L Structure
-	- [ ] Structures
+	- [ ] Structures - Pulls Data from archive / Database
+		- [ ] Background / Wallpaper
+			- [ ] Video
+			- [ ] Image
+		- [ ] Calendar
+			- [ ] Date / time / event
 		- [ ] Video Library
 			- [ ] Player
 			- [ ] Collection
 			- [ ] Reaction
 			- [ ] Thumbnail / Preview
-		- [ ] Spreadsheet
+			- [ ] Pagination
+			- [ ] Close Captioning
+			- [ ] AI reader
+				- [ ] Dependent on mimic
+			- [ ] Watch share
+				- [ ] Allow users to stream other content and share revenue
+		- [ ] Table
+			- [ ] Spreadsheets
+				- [ ] Grid System
+				- [ ] Tabs
+		- [ ] Chat
+			- [ ] Reactions
+			- [ ] Bubbles / Chat area
+			- [ ] Edit
+			- [ ] Forum
+				- [ ] Reply
+				- [ ] Reaction
+				- [ ] Share
+		- [ ] Toast / Notifications
+			- [ ] Small notification (lower right hand)
+			- [ ] Alerts (Call to action)
+		- [ ] Map
+			- [ ] POI (point of intrest)
+			- [ ] Grid (longitude / latatude)
+			- [ ] travel paths
+			- [ ] zoom
+			- [ ] Location (you are here)
+		- [ ] Item Grid
+			- [ ] Items
+			- [ ] On action 
+				- [ ] Shopping cart
+				- [ ] Quantity
+				- [ ] Check
+		- [ ] Graphs
+			- [ ] Type
+				- [ ] Timeline / Gant
+				- [ ] Bar
+				- [ ] Pie
+			- [ ] Legend
+			- [ ] Data Source
+		- [ ] License / Contract
+			- [ ] Type / Classification
+			- [ ] Document
+			- [ ] Signature
+			- [ ] Time Stamp
+			- [ ] Approval
+		- [ ] Text Area
+			- [ ] Code Editor
+			- [ ] Rich Text Editor
+			- [ ] Plain Text Editor
+	- [ ] Display Mode - Changes by input type
+		- [ ] Dashboard - Controller
+			- [ ] Scrolls horizontally
+		- [ ] Site - Keyboard and mouse
+			- [ ] Scrolls vertically
+			- [ ] Canvas  / work area
+		- [ ] Application - Touch
+			- [ ] Static
+	- [ ] Forms
+		- [ ] Name
+		- [ ] Contact / Address
+		- [ ] Text Field
+		- [ ] Submit
 	- [ ] Inputs
 		- [ ] Keyboard and mouse
 		- [ ] Controller 🎮
 		- [ ] Touch
 	- [ ] Outputs
 		- [ ] Screen
-			- [ ] On_Size
+			- [ ] Window Size
 		- [ ] Audio
+			- [ ] Notifications
 		- [ ] Haptics
+			- [ ] Hints
+			- [ ] Feedback
+	- [ ] Base UI Elements
+		- [ ] Buttons
+		- [ ] Drop Down
+		- [ ] Radio buttons
+		- [ ] Check lists
+		- [ ] Canvas
+		- [ ] Images
+		- [ ] Video
 - [ ] GSS Structure
 	- [ ] Standard Structure Styling
 		- [ ] Video
 			- [ ] Loading Screen
-			- [ ] Animations
-			- [ ] Colorization
-			- [ ] Highlights
+			- [ ] Pre-roll
+		- [ ] Animations
+		- [ ] Colorization
+		- [ ] Highlights / Glow / Shadows
+- [ ] Rating system
+	- [ ] Score
+	- [ ] parental rating
+	- [ ] content type
+	- [ ] comments
+- [ ] Age Verification System
+	- [ ] Start timer at account creation
+	- [ ] Verified granters
+- [ ] Tracking System
+	- [ ] Feedback metrics on elements that get more attention
 
 ---
 
