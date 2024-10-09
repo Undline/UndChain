@@ -55,6 +55,10 @@ class Validator:
         # Need to grab our real IP info later
         asyncio.create_task(self.comm.start_listener("127.0.0.1", 4446))
 
+        while self.run:
+            message: bytes = await self.comm.receive_message() # Get the message
+            await self.handle_message(message)
+
     async def stop(self) -> None:
         '''
         This method is responsible for ending the validator loop
@@ -80,14 +84,12 @@ class Validator:
         logger.info(f"Transitioning to {new_state.name} state.")
         self.state: ValidatorState = new_state
 
-    def handle_message(self, message: bytearray) -> None:
+    async def handle_message(self, message: bytes) -> None:
         '''
         Logic to handle incoming messages
         '''
 
         logger.info(f"Handling message: {message}")
-        # Implement message handling logic here
-        ...
 
     def send_state_update(self, recipient: bytearray) -> None:
         '''
