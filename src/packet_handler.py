@@ -234,6 +234,17 @@ class PacketHandler:
 
         logger.info(f"Updating perception score for user {user_id} to {new_score}.")
 
+    def get_packet_type(self, packet: bytes) -> PacketType:
+        '''
+        Extracts the packet type from the first twp bytes of the packet.
+        '''
+        try:
+            pack_type_value = struct.unpack(">H", packet[:2])[0] # First two bytes represent the packet type
+            return PacketType(pack_type_value)
+        except Exception as e:
+            logger.error(f'Failed to extract packet type: {e}')
+            raise ValueError(f'Unknown packet type from packet {e}')
+
 # Example use
 if __name__ == "__main__":
     handler = PacketHandler()

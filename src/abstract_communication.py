@@ -21,7 +21,7 @@ class AbstractCommunication(ABC):
         pass
 
     @abstractmethod
-    async def send_message(self, message: bytearray, recipient: bytearray) -> None:
+    async def send_message(self, message: bytes, recipient: bytearray) -> None:
         '''
         Send a message to a recipient.
         '''

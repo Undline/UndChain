@@ -5,7 +5,7 @@ from abstract_communication import AbstractCommunication
 from communication_factory import CommunicationFactory
 from run_rules import RunRules
 
-from packet_generator import PacketGenerator
+from packet_generator import PacketGenerator, PacketType
 from packet_handler import PacketHandler
 
 from job_file import JobFile
@@ -90,6 +90,23 @@ class Validator:
         '''
 
         logger.info(f"Handling message: {message}")
+
+        try:
+            packet_type: PacketType = self.packet_handler.get_packet_type(message)
+
+            if packet_type == PacketType.VALIDATOR_REQUEST:
+                response_packet: bytes = self.packet_generator.generate_validator_confirmation(1) # TODO: Fix Que position
+                await self.comm.send_message(response_packet, self.public_key)
+                logger.info(f"Send validator confirmation...")
+
+            elif PacketType == PacketType.JOB_REQUEST:
+                job_request_data: bytes = message[2:] # Give me the data after the first two bytes
+                response_packet = self.packet_generator.generate_job_file_packet(b'Test Job') # update to actual job file
+                await self.comm.send_message(response_packet, self.public_key)
+                logger.info(f'Handling job request: {job_request_data.decode("utf-8")}')
+
+        except Exception as e:
+            logger.error(f'Failed to process message: {e}')
 
     def send_state_update(self, recipient: bytearray) -> None:
         '''
@@ -204,7 +221,7 @@ if __name__ == "__main__":
                 await asyncio.sleep(1)
 
         except ValueError as e:
-            logger.error(f'May need to check the run rules for: {run_rules_file} to see if there is a misconfigured communication type')
+            logger.error(f'May need to check the run rules file: {run_rules_file} \nThere is a misconfigured communication type')
             return # End program to prevent undefined behavior. TODO: Create a checker to see where in the TOML file we have the misconfiguration.
         finally:
             print("System listening for new connections...")
