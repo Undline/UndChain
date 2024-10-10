@@ -37,7 +37,7 @@ class PacketHandler:
             PacketType.PERCEPTION_UPDATE: self.handle_perception_update_packet,
         }
 
-    def handle_packet(self, packet: bytes) -> None:
+    def handle_packet(self, packet: bytes) -> None | bytes:
         '''
         Receives a packet, decodes it, and calls the appropriate handler
         '''

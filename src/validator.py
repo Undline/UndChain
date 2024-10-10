@@ -86,24 +86,19 @@ class Validator:
 
     async def handle_message(self, message: bytes) -> None:
         '''
-        Logic to handle incoming messages
+        Send message over to the packet handler for processing.
         '''
 
         logger.info(f"Handling message: {message}")
 
         try:
-            packet_type: PacketType = self.packet_handler.get_packet_type(message)
+            response: None | bytes = self.packet_handler.handle_packet(message)
 
-            if packet_type == PacketType.VALIDATOR_REQUEST:
-                response_packet: bytes = self.packet_generator.generate_validator_confirmation(1) # TODO: Fix Que position
-                await self.comm.send_message(response_packet, self.public_key)
-                logger.info(f"Send validator confirmation...")
-
-            elif PacketType == PacketType.JOB_REQUEST:
-                job_request_data: bytes = message[2:] # Give me the data after the first two bytes
-                response_packet = self.packet_generator.generate_job_file_packet(b'Test Job') # update to actual job file
-                await self.comm.send_message(response_packet, self.public_key)
-                logger.info(f'Handling job request: {job_request_data.decode("utf-8")}')
+            if response:
+                await self.comm.send_message(response, bytearray(b'recipient_public_key')) # Need to get teh public key of who we are sending this to
+                logger.info("Response sent back to sender")
+            else:
+                logger.warning("No response sent back for this packet type")
 
         except Exception as e:
             logger.error(f'Failed to process message: {e}')
