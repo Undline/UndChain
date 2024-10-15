@@ -47,7 +47,7 @@ class PacketHandler:
         '''
         try:
             # Extract the first two bytes to identify the packet type
-            packet_type_value = struct.unpack(">H", packet[:2])[0]  # First 2 bytes are packet type (big-endian)
+            packet_type_value = struct.unpack(">B", packet[4:5])[0]  # First 2 bytes are packet type (big-endian)
             packet_type = PacketType(packet_type_value)
 
             logger.info(f"Received packet of type: {packet_type.name}")
