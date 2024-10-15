@@ -26,15 +26,17 @@ class PacketType(Enum):
 
 class PacketGenerator:
     def __init__(self, version: str):
-        """
+        '''
         Initialize the packet generator with the version information in 'YYYY.MM.DD.subversion' format.
-        """
+        '''
+
         self.version = self._parse_version(version)
     
     def _parse_version(self, version: str):
-        """
+        '''
         Parse the version from 'YYYY.MM.DD.subversion' and return it as a tuple of integers.
-        """
+        '''
+        
         year, month, day, sub_version = map(int, version.split('.'))
         return year, month, day, sub_version
 
@@ -63,14 +65,15 @@ class PacketGenerator:
         return header + payload
 
     def generate_validator_confirmation(self, position_in_queue: int) -> bytes:
-        """
+        '''
         Generate a 'validator confirmation' packet, which confirms that the validator is pending.
         Includes:
         - Packet header
         - Position in the queue (4 bytes)
-        """
-        header = self._generate_header(PacketType.VALIDATOR_CONFIRMATION)
-        payload = struct.pack('!I', position_in_queue)  # 4-byte integer for queue position
+        '''
+
+        header: bytes = self._generate_header(PacketType.VALIDATOR_CONFIRMATION)
+        payload: bytes = struct.pack('!I', position_in_queue)  # 4-byte integer for queue position
         return header + payload
 
     def generate_validator_state(self, state: str) -> bytes:

@@ -1,7 +1,9 @@
 import struct
 from logging import Logger
+from typing import Optional
 from packet_generator import PacketType
 from packet_utils import PacketUtils
+from packet_generator import PacketGenerator
 
 from logger_util import setup_logger
 logger: Logger = setup_logger('PacketHandler', 'packet_handler.log')
@@ -12,10 +14,11 @@ class PacketHandler:
     and calls appropriate methods to handle different types of packets.
     '''
     
-    def __init__(self) -> None:
+    def __init__(self, packet_generator: PacketGenerator) -> None:
         '''
         Initialize the packet handler
         '''
+        self.packet_generator: PacketGenerator = packet_generator
         self.handlers = {
             PacketType.VALIDATOR_REQUEST: self.handle_validator_request,
             PacketType.VALIDATOR_CONFIRMATION: self.handle_validator_confirmation,
@@ -37,9 +40,10 @@ class PacketHandler:
             PacketType.PERCEPTION_UPDATE: self.handle_perception_update_packet,
         }
 
-    def handle_packet(self, packet: bytes) -> None | bytes:
+    def handle_packet(self, packet: bytes) -> Optional[bytes] :
         '''
-        Receives a packet, decodes it, and calls the appropriate handler
+        Receives a packet, decodes it, and calls the appropriate handler.
+        Returns a response packet if needed, otherwise None.
         '''
         try:
             # Extract the first two bytes to identify the packet type
@@ -51,22 +55,36 @@ class PacketHandler:
             # Delegate to the appropriate handler based on packet type
             handler = self.handlers.get(packet_type)
             if handler:
-                handler(packet)
+                return handler(packet)
             else:
                 logger.error(f"Unknown packet type: {packet_type}")
+                return None
         except Exception as e:
             logger.error(f"Failed to handle packet: {e}")
+            return None
 
-    def handle_validator_request(self, packet: bytes) -> None:
+    def handle_validator_request(self, packet: bytes) -> Optional[bytes]:
         '''
-        Handles validator request packet
+        Handles validator request packet and returns a confirmation packet
         '''
+
         logger.info("Handling Validator Request")
-        # Unpack the packet and extract the public key and other information
-        public_key = packet[2:].decode("utf-8")
+
+        # Unpack the packet type and public key (skip the first 2 bytes for the packet type)
+        try:
+            packet_type_value = struct.unpack(">H", packet[:2])[0]  # First 2 bytes = packet type
+            public_key = packet[2:].decode("utf-8")  # Remaining bytes = public key
+        except Exception as e:
+            logger.error(f"Failed to unpack the packet: {e}")
+            return None
+
         logger.info(f"Validator request from: {public_key}")
-        # Perform logic to add validator request to the pool
-        ...
+
+        # Generate a response using packet generator
+        confirmation_packet: bytes = self.packet_generator.generate_validator_confirmation(position_in_queue=4)
+        
+        return confirmation_packet
+
 
     def handle_validator_confirmation(self, packet: bytes) -> None:
         '''
@@ -247,7 +265,14 @@ class PacketHandler:
 
 # Example use
 if __name__ == "__main__":
-    handler = PacketHandler()
-    # Simulate receiving a packet
-    sample_packet = struct.pack(">H", PacketType.VALIDATOR_REQUEST.value) + b"validator_pub_key_12345"
-    handler.handle_packet(sample_packet)
+    packet_generator = PacketGenerator("2024.10.09.1")
+    handler = PacketHandler(packet_generator)
+
+    # Simulate generating a VALIDATOR_REQUEST packet using PacketGenerator
+    public_key = b"validator_pub_key_12345"
+    sample_packet: bytes = packet_generator.generate_validator_request(public_key)
+
+    # Now pass the sample packet to the PacketHandler for processing
+    return_packet = handler.handle_packet(sample_packet)
+
+    print(f"Generated return packet: {return_packet}")

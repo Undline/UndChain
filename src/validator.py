@@ -34,7 +34,7 @@ class Validator:
         self.comm: AbstractCommunication
 
         self.packet_generator = PacketGenerator("2024.09.30.1") # Get this from run rules file
-        self.packet_handler = PacketHandler()
+        self.packet_handler = PacketHandler(self.packet_generator)
 
     async def start_listener(self) -> None:
         '''
