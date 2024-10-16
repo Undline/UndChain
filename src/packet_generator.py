@@ -25,14 +25,14 @@ class PacketType(Enum):
 
 
 class PacketGenerator:
-    def __init__(self, version: str):
+    def __init__(self, version: str) -> None:
         '''
         Initialize the packet generator with the version information in 'YYYY.MM.DD.subversion' format.
         '''
 
-        self.version = self._parse_version(version)
+        self.version: tuple[int, int, int, int] = self._parse_version(version)
     
-    def _parse_version(self, version: str):
+    def _parse_version(self, version: str) -> tuple[int, int, int, int]:
         '''
         Parse the version from 'YYYY.MM.DD.subversion' and return it as a tuple of integers.
         '''
@@ -41,18 +41,28 @@ class PacketGenerator:
         return year, month, day, sub_version
 
     def _generate_header(self, packet_type: PacketType) -> bytes:
-        """
+        '''
         Generate the packet header. Header includes:
-        - Version (4 fields packed into 4 bytes)
+        - Version (year as a 16-bit value, month, day, sub_version in 1 byte each)
         - Packet Type (1 byte)
         - Timestamp (8 bytes, UNIX timestamp)
-        """
+        '''
+
         year, month, day, sub_version = self.version
-        version_bytes = struct.pack('!BBBB', year - 2000, month, day, sub_version)
-        packet_type_byte = struct.pack('!B', packet_type.value)
+
+        # Pack the version with 16-bit year, 8-bit month, 8-bit day, and 8-bit sub_version
+        version_bytes: bytes = struct.pack('!HBBB', year, month, day, sub_version)  # 'H' is for 16-bit unsigned short
+        
+        # Pack the packet type as 1 byte
+        packet_type_byte: bytes = struct.pack('!B', packet_type.value)
+        
+        # Pack the current timestamp (64-bit, 8 bytes)
         timestamp = int(time.time())
-        timestamp_bytes: bytes = struct.pack('!Q', timestamp)  # 64-bit timestamp
+        timestamp_bytes: bytes = struct.pack('!Q', timestamp)
+        
+        # Combine everything into the header
         return version_bytes + packet_type_byte + timestamp_bytes
+
 
     def generate_validator_request(self, public_key: bytes) -> bytes:
         """
