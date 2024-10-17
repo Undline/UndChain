@@ -44,8 +44,8 @@ class PacketGenerator:
         '''
         Generate the packet header. Header includes:
         - Version (year as a 16-bit value, month, day, sub_version in 1 byte each)
-        - Packet Type (1 byte)
         - Timestamp (8 bytes, UNIX timestamp)
+        - Packet Type (1 byte)
         '''
 
         year, month, day, sub_version = self.version
@@ -53,23 +53,24 @@ class PacketGenerator:
         # Pack the version with 16-bit year, 8-bit month, 8-bit day, and 8-bit sub_version
         version_bytes: bytes = struct.pack('!HBBB', year, month, day, sub_version)  # 'H' is for 16-bit unsigned short
         
-        # Pack the packet type as 1 byte
-        packet_type_byte: bytes = struct.pack('!B', packet_type.value)
-        
         # Pack the current timestamp (64-bit, 8 bytes)
         timestamp = int(time.time())
         timestamp_bytes: bytes = struct.pack('!Q', timestamp)
+
+        # Pack the packet type as 1 byte
+        packet_type_byte: bytes = struct.pack('!B', packet_type.value)
         
         # Combine everything into the header
         return version_bytes + timestamp_bytes + packet_type_byte 
 
 
     def generate_validator_request(self, public_key: bytes) -> bytes:
-        """
+        '''
         Generate a 'validator request' packet. Includes:
         - Packet header
         - Public key of the validator (variable-length)
-        """
+        '''
+
         header: bytes = self._generate_header(PacketType.VALIDATOR_REQUEST)
         payload: bytes = struct.pack(f'!{len(public_key)}s', public_key)
         return header + payload
