@@ -79,7 +79,7 @@ class PacketHandler:
             # Now pass the remainder of the packet (payload) to the handler
             handler = self.handlers.get(packet_type)
             if handler:
-                return handler(packet[12:])  # Pass the payload
+                return handler(packet[14:])  # Pass the payload
             else:
                 logger.error(f"Unknown packet type: {packet_type}")
                 return None
@@ -91,13 +91,12 @@ class PacketHandler:
         '''
         Handles validator request packet and returns a confirmation packet
         '''
-
+        
         logger.info("Handling Validator Request")
 
-        # Unpack the packet type and public key (skip the first 2 bytes for the packet type)
+        # Unpack the public key (the packet type has already been stripped)
         try:
-            packet_type_value = struct.unpack(">H", packet[:2])[0]  # First 2 bytes = packet type
-            public_key = packet[2:].decode("utf-8")  # Remaining bytes = public key
+            public_key = packet.decode("utf-8")  # The entire payload is the public key
         except Exception as e:
             logger.error(f"Failed to unpack the packet: {e}")
             return None
@@ -109,16 +108,19 @@ class PacketHandler:
         
         return confirmation_packet
 
-
     def handle_validator_confirmation(self, packet: bytes) -> None:
         '''
         Handles validator confirmation packet
         '''
+
         logger.info("Handling Validator Confirmation")
-        # Unpack the confirmation (extract queue position)
-        queue_position = struct.unpack(">I", packet[2:6])[0]
-        logger.info(f"Validator confirmed in queue position: {queue_position}")
-        ...
+        
+        # Unpack the queue position directly (since the payload is already stripped)
+        try:
+            queue_position = struct.unpack(">I", packet[:4])[0]  # First 4 bytes of the payload = queue position
+            logger.info(f"Validator confirmed in queue position: {queue_position}")
+        except Exception as e:
+            logger.error(f"Failed to unpack the packet: {e}")
 
     def handle_validator_state(self, packet: bytes) -> None:
         '''
