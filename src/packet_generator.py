@@ -61,7 +61,7 @@ class PacketGenerator:
         timestamp_bytes: bytes = struct.pack('!Q', timestamp)
         
         # Combine everything into the header
-        return version_bytes + packet_type_byte + timestamp_bytes
+        return version_bytes + timestamp_bytes + packet_type_byte 
 
 
     def generate_validator_request(self, public_key: bytes) -> bytes:

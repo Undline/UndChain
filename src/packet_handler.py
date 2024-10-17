@@ -5,6 +5,8 @@ from packet_generator import PacketType
 from packet_utils import PacketUtils
 from packet_generator import PacketGenerator
 
+from datetime import datetime
+
 from logger_util import setup_logger
 logger: Logger = setup_logger('PacketHandler', 'packet_handler.log')
 
@@ -40,22 +42,44 @@ class PacketHandler:
             PacketType.PERCEPTION_UPDATE: self.handle_perception_update_packet,
         }
 
-    def handle_packet(self, packet: bytes) -> Optional[bytes] :
+    def handle_packet(self, packet: bytes) -> Optional[bytes]:
         '''
         Receives a packet, decodes it, and calls the appropriate handler.
         Returns a response packet if needed, otherwise None.
         '''
         try:
-            # Extract the first two bytes to identify the packet type
-            packet_type_value = struct.unpack(">B", packet[4:5])[0]  # First 2 bytes are packet type (big-endian)
+            # Extract the first 4 bytes for version and 8 bytes for timestamp (keep this data for later use)
+            version_data = struct.unpack('!HBBB', packet[:5])  # 16-bit year, 8-bit month, day, subversion
+            timestamp = struct.unpack('!Q', packet[5:13])[0]  # 64-bit timestamp
+
+            # Store version and timestamp for later use (or logging)
+            self.version_info = {
+                "year": version_data[0],
+                "month": version_data[1],
+                "day": version_data[2],
+                "sub_version": version_data[3],
+                "timestamp": timestamp
+            }
+
+            # Convert the timestamp to a human-readable format
+            human_readable_timestamp: str = datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S UTC')
+
+            logger.info(f"Packet version: {self.version_info}")
+            logger.info(f"Packet timestamp: {human_readable_timestamp}")
+
+            # Now that the version and timestamp are stripped, identify the packet type
+            packet_type_value = struct.unpack('!B', packet[13:14])[0]  # The next byte (14th) is the packet type
             packet_type = PacketType(packet_type_value)
 
             logger.info(f"Received packet of type: {packet_type.name}")
 
-            # Delegate to the appropriate handler based on packet type
+            # Debugging: Print payload in hex format for comparison
+            logger.debug(f"Packet payload: {packet[14:].hex()}")
+
+            # Now pass the remainder of the packet (payload) to the handler
             handler = self.handlers.get(packet_type)
             if handler:
-                return handler(packet)
+                return handler(packet[12:])  # Pass the payload
             else:
                 logger.error(f"Unknown packet type: {packet_type}")
                 return None
@@ -271,8 +295,14 @@ if __name__ == "__main__":
     # Simulate generating a VALIDATOR_REQUEST packet using PacketGenerator
     public_key = b"validator_pub_key_12345"
     sample_packet: bytes = packet_generator.generate_validator_request(public_key)
+    print(f'Sample Packet: {sample_packet}')
 
     # Now pass the sample packet to the PacketHandler for processing
     return_packet = handler.handle_packet(sample_packet)
-
     print(f"Generated return packet: {return_packet}")
+
+    if return_packet:
+        return_packet = handler.handle_packet(return_packet)
+
+        print(f"Interpreted confirmation packet: {return_packet}")
+
