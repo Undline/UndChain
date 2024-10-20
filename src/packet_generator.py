@@ -57,8 +57,8 @@ class PacketGenerator:
         timestamp = int(time.time())
         timestamp_bytes: bytes = struct.pack('!Q', timestamp)
 
-        # Pack the packet type as 1 byte
-        packet_type_byte: bytes = struct.pack('!B', packet_type.value)
+        # Pack the packet type as 2 byte
+        packet_type_byte: bytes = struct.pack('!H', packet_type.value)
         
         # Combine everything into the header
         return version_bytes + timestamp_bytes + packet_type_byte 
