@@ -68,7 +68,7 @@ class PacketHandler:
             logger.info(f"Packet timestamp: {human_readable_timestamp}")
 
             # Now that the version and timestamp are stripped, identify the packet type
-            packet_type_value = struct.unpack('!B', packet[13:14])[0]  # The next byte (14th) is the packet type
+            packet_type_value = struct.unpack('!H', packet[13:15])[0]
             packet_type = PacketType(packet_type_value)
 
             logger.info(f"Received packet of type: {packet_type.name}")
@@ -79,7 +79,7 @@ class PacketHandler:
             # Now pass the remainder of the packet (payload) to the handler
             handler = self.handlers.get(packet_type)
             if handler:
-                return handler(packet[14:])  # Pass the payload
+                return handler(packet[15:])  # Pass the payload
             else:
                 logger.error(f"Unknown packet type: {packet_type}")
                 return None
@@ -91,7 +91,7 @@ class PacketHandler:
         '''
         Handles validator request packet and returns a confirmation packet
         '''
-        
+
         logger.info("Handling Validator Request")
 
         # Unpack the public key (the packet type has already been stripped)
