@@ -74,7 +74,7 @@ class PacketHandler:
             logger.info(f"Received packet of type: {packet_type.name}")
 
             # Debugging: Print payload in hex format for comparison
-            logger.debug(f"Packet payload: {packet[14:].hex()}")
+            logger.debug(f"Packet payload: {packet[15:].hex()}")
 
             # Now pass the remainder of the packet (payload) to the handler
             handler = self.handlers.get(packet_type)
