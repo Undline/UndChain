@@ -1,5 +1,4 @@
 from typing import Dict, List, Optional, TypedDict
-from datetime import datetime
 
 class PartnerSubscription(TypedDict):
     utility: str
@@ -22,13 +21,17 @@ class ValidatorCore:
         self.ledger: List[Dict[str, str]] = []  # Placeholder for blockchain structure (linked list-like)
         self.unas: Dict[str, str] = {}  # UnaS mapping usernames to public keys (UndChain Naming Service)
 
-    def add_validator_to_queue(self, public_key: str) -> None:
-        """
-        Adds a validator's public key to the queue.
+    def add_validator_to_queue(self, public_key: str) -> int:
+        '''
+        Adds a validator's public key to the queue. Returns the position 
+        in the que for the validator to respond with.
         :param public_key: Validator's public key.
-        """
+        '''
+
         if public_key not in self.validator_queue:
             self.validator_queue.append(public_key)
+
+        return self.validator_queue.index(public_key) + 1
     
     def get_validator_position(self, public_key: str) -> Optional[int]:
         """
@@ -146,3 +149,9 @@ if __name__ == "__main__":
     block_data = {"transaction": "user1 pays user2"}
     core.add_block_to_ledger(block_data)
     print("Ledger:", core.ledger)
+
+    # Add a validator and get their position in the queue
+    validator_public_key = "validator_3_pub_key"
+    position: int = core.add_validator_to_queue(validator_public_key)
+    print(f"Validator {validator_public_key} was added at position {position}")
+
