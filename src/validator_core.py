@@ -32,16 +32,6 @@ class ValidatorCore:
             self.validator_queue.append(public_key)
 
         return self.validator_queue.index(public_key) + 1
-    
-    def get_validator_position(self, public_key: str) -> Optional[int]:
-        """
-        Returns the position of a validator in the queue.
-        :param public_key: Validator's public key.
-        :return: Position in queue or None if not found.
-        """
-        if public_key in self.validator_queue:
-            return self.validator_queue.index(public_key) + 1
-        return None
 
     def subscribe_partner(self, partner_key: str, utility: str) -> None:
         """
@@ -127,7 +117,6 @@ if __name__ == "__main__":
     core.add_validator_to_queue("validator_1_pub_key")
     core.add_validator_to_queue("validator_2_pub_key")
     print("Validator Queue:", core.validator_queue)
-    print("Position of validator_1:", core.get_validator_position("validator_1_pub_key"))
 
     # Test partner subscription and availability
     core.subscribe_partner("partner_1_pub_key", "storage")
