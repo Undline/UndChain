@@ -2,6 +2,10 @@ import tomllib
 import os
 from typing import Dict, Any
 
+from logging import Logger
+from logger_util import setup_logger
+logger: Logger = setup_logger('RunRules', 'run_rules.log')
+
 class RunRules:
     def __init__(self, config_filename: str) -> None:
         # Construct the path to the run rules file
@@ -98,6 +102,32 @@ class RunRules:
     
     def get_known_validators(self) -> list:
         return self.config["known_validators"]
+    
+    def get_min_validator_score(self) -> int:
+        '''
+        Obtain the minimum validator perception score required to join
+        the network
+        '''
+
+        score = self.config.get("min_validator_score", 0)
+        if isinstance(score, int):
+            return score
+        else:
+            logger.warning(f"'min_validator_score' is not an integer. Returning default of 420.")
+            return 420
+        
+    def get_min_partner_score(self) -> int:
+        '''
+        Obtain the minimum validator perception score required to join
+        the network
+        '''
+
+        score = self.config.get("min_partner_score", 0)
+        if isinstance(score, int):
+            return score
+        else:
+            logger.warning(f"'min_validator_score' is not an integer. Returning default of 420.")
+            return 420
 
 # Example Usage
 if __name__ == "__main__":
@@ -147,6 +177,12 @@ if __name__ == "__main__":
         "block_time": "2024-08-30T12:34:56Z",
         "job_priority": "high"
     }
+
+    # Test retrieving minimum scores
+    min_validator_score = run_rules.get_min_validator_score()
+    min_partner_score = run_rules.get_min_partner_score()
+    print(f"Minimum Validator Score: {min_validator_score}")
+    print(f"Minimum Partner Score: {min_partner_score}")
     
     # Validate the job file
     is_valid: bool = run_rules.validate_job_file(job_data)
