@@ -1,4 +1,9 @@
-from typing import Dict, List, Optional, TypedDict
+from run_rules import RunRules
+from logging import Logger
+from typing import Any, Dict, List, Optional, TypedDict
+
+from logger_util import setup_logger
+logger: Logger = setup_logger('ValidatorCore', 'validator_core.log')
 
 class PartnerSubscription(TypedDict):
     utility: str
@@ -15,23 +20,34 @@ class ValidatorCore:
         Initialize the core structures used by validators, including the validator queue,
         partner subscription list, perception scores, ledger (blockchain), and UnaS.
         """
-        self.validator_queue: List[str] = []  # Queue of validator public keys waiting for tasks
+        self.validator_queue: List[Dict[str, Any]] = []  # Queue of validator public keys waiting for tasks
         self.partner_subscription_list: Dict[str, PartnerSubscription] = {}  # {partner_key: {utility, busy}}
         self.perception_scores: Dict[str, int] = {}  # Maps user public keys to perception scores
         self.ledger: List[Dict[str, str]] = []  # Placeholder for blockchain structure (linked list-like)
         self.unas: Dict[str, str] = {}  # UnaS mapping usernames to public keys (UndChain Naming Service)
+        self.minimum_perception_score= 444 # TODO: Need to grab this from the run rules file
 
-    def add_validator_to_queue(self, public_key: str) -> int:
+    def add_validator_to_queue(self, public_key: str, latency: float, capacity: int, uptime: float, perception_score: float) -> Optional[int]:
         '''
-        Adds a validator's public key to the queue. Returns the position 
-        in the que for the validator to respond with.
-        :param public_key: Validator's public key.
+        Adds a validator to the queue with its metrics and returns its 1-based position.
+        Returns None if the validator's perception score is below the threshold.
         '''
 
-        if public_key not in self.validator_queue:
-            self.validator_queue.append(public_key)
+        if perception_score < self.minimum_perception_score:
+            logger.warning(f"Validator {public_key} was not added. Perception score ({perception_score}) is below the minimum threshold ({self.minimum_perception_score}).")
+            return None
 
-        return self.validator_queue.index(public_key) + 1
+        validator_data: dict[str, Any] = {
+            "public_key": public_key,
+            "latency": latency,
+            "capacity": capacity,
+            "uptime": uptime,
+            "perception_score": perception_score
+        }
+
+        self.validator_queue.append(validator_data)
+        return len(self.validator_queue)
+
 
     def subscribe_partner(self, partner_key: str, utility: str) -> None:
         """
@@ -114,9 +130,17 @@ if __name__ == "__main__":
     core = ValidatorCore()
 
     # Test validator queue functionality
-    core.add_validator_to_queue("validator_1_pub_key")
-    core.add_validator_to_queue("validator_2_pub_key")
+    position1 = core.add_validator_to_queue("validator_1_pub_key", latency=10.0, capacity=100, uptime=0.99, perception_score=500)
+    position2 = core.add_validator_to_queue("validator_2_pub_key", latency=12.0, capacity=80, uptime=0.97, perception_score=450)
+    
+    # Output validator queue with positions
     print("Validator Queue:", core.validator_queue)
+    print(f"Position of validator_1: {position1}")
+    print(f"Position of validator_2: {position2}")
+
+    # Test validator with low perception score
+    low_score_position = core.add_validator_to_queue("validator_4_pub_key", latency=15.0, capacity=90, uptime=0.98, perception_score=200)
+    print("Position of validator_4 with low perception score:", low_score_position)  # Should be None
 
     # Test partner subscription and availability
     core.subscribe_partner("partner_1_pub_key", "storage")
@@ -135,12 +159,13 @@ if __name__ == "__main__":
     print("Public key for user1:", core.get_unas_mapping("user1"))
 
     # Test ledger/blockchain
-    block_data = {"transaction": "user1 pays user2"}
+    block_data: Dict[str, str] = {"transaction": "user1 pays user2"}
     core.add_block_to_ledger(block_data)
     print("Ledger:", core.ledger)
 
-    # Add a validator and get their position in the queue
+    # Add another validator and get their position in the queue
     validator_public_key = "validator_3_pub_key"
-    position: int = core.add_validator_to_queue(validator_public_key)
-    print(f"Validator {validator_public_key} was added at position {position}")
+    position3 = core.add_validator_to_queue(validator_public_key, latency=9.0, capacity=110, uptime=0.995, perception_score=480)
+    print(f"Validator {validator_public_key} was added at position {position3}")
+
 
