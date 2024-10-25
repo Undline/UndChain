@@ -1,7 +1,7 @@
 from run_rules import RunRules
-from logging import Logger
 from typing import Any, Dict, List, Optional, TypedDict
 
+from logging import Logger
 from logger_util import setup_logger
 logger: Logger = setup_logger('ValidatorCore', 'validator_core.log')
 
