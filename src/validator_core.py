@@ -15,7 +15,7 @@ class ValidatorCore:
     perception scores, the ledger, and UnaS.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, min_perception_score: int) -> None:
         """
         Initialize the core structures used by validators, including the validator queue,
         partner subscription list, perception scores, ledger (blockchain), and UnaS.
@@ -25,7 +25,7 @@ class ValidatorCore:
         self.perception_scores: Dict[str, int] = {}  # Maps user public keys to perception scores
         self.ledger: List[Dict[str, str]] = []  # Placeholder for blockchain structure (linked list-like)
         self.unas: Dict[str, str] = {}  # UnaS mapping usernames to public keys (UndChain Naming Service)
-        self.minimum_perception_score= 444 # TODO: Need to grab this from the run rules file
+        self.minimum_perception_score: int = min_perception_score 
 
     def add_validator_to_queue(self, public_key: str, latency: float, capacity: int, uptime: float, perception_score: float) -> Optional[int]:
         '''
@@ -127,7 +127,7 @@ class ValidatorCore:
 
 # Test the ValidatorCore functionalities
 if __name__ == "__main__":
-    core = ValidatorCore()
+    core = ValidatorCore(400)
 
     # Test validator queue functionality
     position1 = core.add_validator_to_queue("validator_1_pub_key", latency=10.0, capacity=100, uptime=0.99, perception_score=500)
