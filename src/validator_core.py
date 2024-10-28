@@ -130,8 +130,8 @@ if __name__ == "__main__":
     core = ValidatorCore(RunRules("UndChain.toml"))
 
     # Test validator queue functionality
-    position1 = core.add_validator_to_queue("validator_1_pub_key", latency=10.0, capacity=100, uptime=0.99, perception_score=500)
-    position2 = core.add_validator_to_queue("validator_2_pub_key", latency=12.0, capacity=80, uptime=0.97, perception_score=450)
+    position1: int | None = core.add_validator_to_queue("validator_1_pub_key", latency=10.0, capacity=100, uptime=0.99, perception_score=500)
+    position2: int | None = core.add_validator_to_queue("validator_2_pub_key", latency=12.0, capacity=80, uptime=0.97, perception_score=450)
     
     # Output validator queue with positions
     print("Validator Queue:", core.validator_queue)
@@ -139,7 +139,7 @@ if __name__ == "__main__":
     print(f"Position of validator_2: {position2}")
 
     # Test validator with low perception score
-    low_score_position = core.add_validator_to_queue("validator_4_pub_key", latency=15.0, capacity=90, uptime=0.98, perception_score=200)
+    low_score_position: int | None = core.add_validator_to_queue("validator_4_pub_key", latency=15.0, capacity=90, uptime=0.98, perception_score=200)
     print("Position of validator_4 with low perception score:", low_score_position)  # Should be None
 
     # Test partner subscription and availability
@@ -165,7 +165,7 @@ if __name__ == "__main__":
 
     # Add another validator and get their position in the queue
     validator_public_key = "validator_3_pub_key"
-    position3 = core.add_validator_to_queue(validator_public_key, latency=9.0, capacity=110, uptime=0.995, perception_score=480)
+    position3: int | None = core.add_validator_to_queue(validator_public_key, latency=9.0, capacity=110, uptime=0.995, perception_score=480)
     print(f"Validator {validator_public_key} was added at position {position3}")
 
 
