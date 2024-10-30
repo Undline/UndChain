@@ -16,10 +16,11 @@ class ValidatorCore:
     """
 
     def __init__(self, run_rules: RunRules) -> None:
-        """
+        '''
         Initialize the core structures used by validators, including the validator queue,
         partner subscription list, perception scores, ledger (blockchain), and UnaS.
-        """
+        '''
+
         self.validator_queue: List[Dict[str, Any]] = []  # Queue of validator public keys waiting for tasks
         self.partner_subscription_list: Dict[str, PartnerSubscription] = {}  # {partner_key: {utility, busy}}
         self.perception_scores: Dict[str, int] = {}  # Maps user public keys to perception scores
@@ -47,6 +48,14 @@ class ValidatorCore:
 
         self.validator_queue.append(validator_data)
         return len(self.validator_queue)
+    
+    def validator_test(self) -> None:
+        '''
+        This method is meant to handle stress testing between validators so
+        that we can confirm if this validator is capable of handling network
+        loads prior to being active on the network.
+        '''
+        ...
 
 
     def subscribe_partner(self, partner_key: str, utility: str) -> None:
