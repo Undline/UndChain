@@ -49,6 +49,17 @@ class ValidatorCore:
         self.validator_queue.append(validator_data)
         return len(self.validator_queue)
     
+    def return_validator_queue(self, start: int) -> List[dict[str, Any]]:
+        '''
+        This method returns the validator queue starting at position
+        '''
+        
+        # Just to make sure that the starting point is valid
+        if start < 0 or start >= len(self.validator_queue):
+            return []
+        
+        return self.validator_queue[start:]
+    
     def validator_test(self) -> None:
         '''
         This method is meant to handle stress testing between validators so
