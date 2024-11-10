@@ -1,5 +1,3 @@
-*Please note: This is a massive project and everything is still a work in progress, as such we may need to pivot the functionality until the network is fully functional.*
-
 # What is UndChain
 
 UndChain is a PoU (Proof of Utility) blockchain; that can best be thought of as a decentralized cloud service in which anyone can participate. There are three different utilities that can be performed on the network, that work together to create similar functionality as conventional cloud service providers.
@@ -106,9 +104,9 @@ It's important to note that utility does **NOT** have to be completed when a blo
 
 UndChain will have two native tokens associated with it's main chain. At this time I don't have a good name for them so I am calling them UndChain GP and SP. *Although AdCoin is **NOT** apart of the main chain I will discuss it as well since I believe pages will play a major role in this network*
 
-### UndChain GP
+### UndChain UGP
 
-GP will act somewhat like Bitcoin in regards to halving, GP is provided to validators. We will start with a initial token amount of 4,444,444 which will be distributed in development, advertisement and air drops. While I understand this may upset some, it's important to note that the idea is to use this to both promote and reward developments. I will discuss later how these will be distributed. The chain will start with an emission of 4444 tokens per day. Every four years we will experience a 'flooring' which is the same as a halving except we don't use decimals. This will continue until we reach one token per day which that will continue forever. While this does create an infinite supply I believe this is important to help keep validators interested in maintaining the network without charging high fees. Below is a table that shows the proposed floorings:
+UGP will act somewhat like Bitcoin in regards to halving, UGP is provided to validators. We will start with a initial token amount of 4,444,444 which will be distributed in development, advertisement and air drops. While I understand this may upset some, it's important to note that the idea is to use this to both promote and reward developments. I will discuss later how these will be distributed. The chain will start with an emission of 4444 tokens per day. Every four years we will experience a 'flooring' which is the same as a halving except we don't use decimals. This will continue until we reach one token per day which that will continue forever. While this does create an infinite supply I believe this is important to help keep validators interested in maintaining the network without charging high fees. Below is a table that shows the proposed floorings:
 
 |Flooring| Year | Token Per Day| 
 |--- | ---- | -----------------|
@@ -127,9 +125,9 @@ GP will act somewhat like Bitcoin in regards to halving, GP is provided to valid
 |13|48+|1|
 
 tokens_per_day = 4444 // 2 ** flooring_number
-### UndChain SP
+### UndChain USP
 
-SP is the reward system given to partners.  This token will have an initial supply of 44,444,444 tokens. It's emission schedule is voted on by the active partners on chain. Activity will be defined a bit later, but my initial thoughts are that at least one successful transaction per week and a perception score above 444. During this vote you may either double the daily emission or halve the daily emission. I am concerned that partners will always want the emission to go down while users will want it to go up so I need to think of a way to counterbalance these effects. Maybe set the auto fee to do the same?  The initial daily emission of tokens is 4444 per day and the vote to either floor or double the supply happens every four years (a week before GP), so that the event happens at the same time as GP.
+USP is the reward system given to partners.  This token will have an initial supply of 44,444,444 tokens. It's emission schedule is voted on by the active partners on chain. Activity will be defined a bit later, but my initial thoughts are that at least one successful transaction per week and a perception score above 444. During this vote you may either double the daily emission or halve the daily emission. I am concerned that partners will always want the emission to go down while users will want it to go up so I need to think of a way to counterbalance these effects. Maybe set the auto fee to do the same?  The initial daily emission of tokens is 4444 per day and the vote to either floor or double the supply happens every four years (a week before GP), so that the event happens at the same time as GP.
 
 One of the reasons why I wanted the flooring to come to a vote is so that I can test decentralized voting systems that have conditionals that need to be met that have a large impact on the system. If this works well, it could be rolled out as a way to vote for new features / improvements on the main chain. 
 
@@ -268,6 +266,8 @@ Partners can gain perception tokens by
 3. Recovering from a outage 7x (that means the resource has been used 7 times with no problems)
 
 I am concerned about using the block feature as a means of determining a perception score as I am sure it will be used in a poor manner however, clients only hurt themselves when they block other users since that prevents them from using their services. Also, we should consider placing a mechanism that disregards the block if it's noted that client has a abnormally large blocked list. 
+
+In order to make building the perception score more transparent we are introducing the XP system. With this system you will be able to see how much XP you need to get to the next level on your perception score. Along with XP, we will have seasonal events where if a participant meets the goals of the network they can earn XP boosts. 
 
 ### Scaling and Security
 
@@ -520,14 +520,14 @@ Not sure if this will work out well, but I was thinking we could also make real 
 This should all be housed inside programs that have a form of revision control so that you can maintain and control projects. Ideally you would have an *organization* (in UndChain) responsible for creating these projects that way you can define roles and positions that you need. *Tip: never skip out on Documentation or Quality Control as it is critical for any successful project...*
 
 ---
-
 # Technical Documentation / Roadmap
 
-### Code Guidelines
 
-Any submitted code should have type definitions as well as doc strings to accompany any new methods. 
+## Code Guidelines
 
-### Roadmap
+Any submitted code should have type definitions as well as doc strings to accompany any new methods.
+
+## Roadmap
 
 Follow this link to see the internal roadmap for UndChain to get more in depth knowledge on how the technology works [Internal UndChain Roadmap](docs/Internal_UndChain_Roadmap.md)
 
