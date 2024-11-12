@@ -53,7 +53,7 @@ I wanted to provide some examples of co-chains to help provide a better idea of 
 As you can see there are a ton of chain ideas and I am sure more that will need to be developed to make this a full ecosystem. I may not be able to develop everything listed here, but my intention is to do as many as I can that are diverse as possible, so I can adjust the protocol based on the needs of these chains. I have personally found that when you use a product, you pick up on things that you would ordinarily miss. When developing co-chains always try to think of the value not just another asset class. 
 ## Co-chain code
 
-While I believe that the best policy is to have open source code. I will be making the chain so that you can run closed source code, at this time I am not sure on how to do it since there is an inherent risk of a security vulnerability if it's being shared publicly. More thought will have to be put into this at a later time, I just put this here so I wouldn't forget.
+While I believe that the best policy is to have open source code. I will be making the chain so that you can run closed source code, at this time I am not sure on how to do it since there is an inherent risk of a security vulnerability if it's being shared publicly. More thought will have to be put into this at a later time, I just put this here so I wouldn't forget. **Do it using a preferred partner.**
 
 # User Types
 
@@ -108,21 +108,21 @@ UndChain will have two native tokens associated with it's main chain. At this ti
 
 UGP will act somewhat like Bitcoin in regards to halving, UGP is provided to validators. We will start with a initial token amount of 4,444,444 which will be distributed in development, advertisement and air drops. While I understand this may upset some, it's important to note that the idea is to use this to both promote and reward developments. I will discuss later how these will be distributed. The chain will start with an emission of 4444 tokens per day. Every four years we will experience a 'flooring' which is the same as a halving except we don't use decimals. This will continue until we reach one token per day which that will continue forever. While this does create an infinite supply I believe this is important to help keep validators interested in maintaining the network without charging high fees. Below is a table that shows the proposed floorings:
 
-|Flooring| Year | Token Per Day| 
-|--- | ---- | -----------------|
-| 1 | 1 | 4444 |
-| 2 | 4 | 2222 |
-| 3 | 8 |1111|
-| 4 |12|555|
-| 5 |16|277|
-| 6 |20|138|
-| 7 |24|69|
-| 8 |28|34|
-| 9 |32|17|
-| 10 |36|8|
-| 11|40|4|
-| 12 |44|2|
-|13|48+|1|
+| Flooring | Year | Token Per Day |
+| -------- | ---- | ------------- |
+| 1        | 1    | 4444          |
+| 2        | 4    | 2222          |
+| 3        | 8    | 1111          |
+| 4        | 12   | 555           |
+| 5        | 16   | 277           |
+| 6        | 20   | 138           |
+| 7        | 24   | 69            |
+| 8        | 28   | 34            |
+| 9        | 32   | 17            |
+| 10       | 36   | 8             |
+| 11       | 40   | 4             |
+| 12       | 44   | 2             |
+| 13       | 48+  | 1             |
 
 tokens_per_day = 4444 // 2 ** flooring_number
 ### UndChain USP
@@ -151,8 +151,73 @@ Fees should reflect UndChain's core ideals of digital ownership, meaning that no
 
 There could be a time when the auto-fee will be adjusted down via a vote, I only see this happening in cases where the value of the token far exceeds the value of the service. In these cases a vote will take place, but keep note that the fee reduction will be placed on a timer (since I wouldn't think clients would never vote for the fee to go higher). 
 
-## Network Fundamentals
+### Digital Assets on UndChain
 
+In the era of decentralized networks, **digital assets** are the backbone of user engagement, creativity, and commerce. Unlike traditional NFTs, which merely record ownership, UndChain’s assets bring enforceable rights, clear usage terms, and choices for creators and users alike. This section provides an overview of the contract types, enforcement mechanisms, and protections that make UndChain’s digital assets uniquely valuable.
+
+#### Predefined Digital Asset Contracts
+
+Each digital asset on UndChain is governed by a **predefined contract** that determines how it can be used, shared, and monetized. These contracts are color-coded for easy recognition, ensuring transparency for creators and users at all levels. Here’s a summary of the five contract types:
+
+1. **⚪ Unregistered (Gray)**: Basic NFT-like ownership recorded on-chain without enforceable rights or protections.
+    
+    - **Details**: Unregistered assets simply establish ownership on the network but lack any claims or IP protections. If the owner chooses, they may upgrade an unregistered asset to a registered type with full protections later; however, the protections only apply from the reclassification date onward.
+    - **Example**: An artwork uploaded without protections can later be upgraded to ensure royalties on resale, but initial transactions remain unaffected.
+2. **🟩 Rental (Green)**: Limited, single-use access for temporary asset consumption.
+    
+    - **Example**: Renting an e-book, video, or course with limited access rights.
+    - **Key Benefits**: Provides short-term access without resale rights, allowing creators to retain full control over the asset’s use.
+3. **🔵 Single Use + Content Sharing (Blue)**: Unlimited personal use with limited sharing rights for reactions, commentary, and resale with royalties back to the creator.
+    
+    - **Example**: Purchasing a video to enjoy personally, resell with royalties to the creator, or share in a reaction or commentary format (e.g., YouTube reactions).
+    - **Key Benefits**: Supports creative engagement through limited sharing while maintaining control and royalties for the creator.
+4. **🟣 Ownership (Purple)**: Full ownership, granting users the right to share or resell the asset as-is without modifications.
+    
+    - **Example**: Buying a collectible or media asset to keep, share, or resell without altering.
+    - **Key Benefits**: Grants users greater control over the asset while preserving the creator’s original work and intention.
+5. **🟡 Full Use (Gold)**: Complete ownership with the freedom to modify, remix, resell, and use without restriction.
+    
+    - **Example**: Licensing music or an artwork to incorporate into new projects, remix, or resell with modifications.
+    - **Key Benefits**: Highest level of creative freedom, ideal for assets meant for open use, allowing users to fully repurpose the asset as if they created it.
+
+These predefined contracts address the limitations of traditional digital assets, giving both creators and users well-defined rights and responsibilities.
+
+#### Protocol Forks for Ownership and Representation
+
+UndChain’s protocol remains neutral, avoiding mandatory enforcement to reduce network burden. Instead, **protocol forks** enable flexibility and creator-defined enforcement:
+
+- **Ownership Fork**: Sets the asset’s primary owner, governs revenue distribution, and can initiate actions like asset freezes in case of disputes.
+- **Representation Fork**: Allows creators to assign an **enforcement co-chain** (such as an Asset Protection Co-Chain) for handling claims, enforcing rights, and managing disputes if needed.
+
+These forks create the foundation for a decentralized enforcement system, giving creators full control over their level of protection without altering the core protocol.
+
+#### Enforcement Through Asset Protection Co-Chains (APCs)
+
+For creators seeking active protection, **Asset Protection Co-Chains (APCs)** offer an optional enforcement mechanism. APCs provide real-world protections, monitoring assets for unauthorized use, and handling IP claims as required.
+
+- **Claim Sponsors**: In the APC model, claimants select **sponsors** who vouch for claim validity. Sponsors add credibility, ensuring a fair, balanced dispute process. If a user believes they’re wrongfully accused, they can file a counter-claim, backed by their own sponsor.
+- **Revenue Sharing and Partial Ownership**: APCs support partial ownership claims, allowing revenue splits for assets involving multiple contributors, ensuring each creator receives a fair share even if the asset is modified or resold.
+
+#### Built-in User Protections and Decentralized Dispute Resolution
+
+UndChain’s digital asset model includes comprehensive user protections to create a balanced environment:
+
+- **Transparency with Color-Coded Contracts**: Clear asset terms prevent misunderstandings and allow users to make informed decisions.
+- **Accountability in Dispute Resolution**: Both claimants and users are accountable in disputes, with sponsors providing support and verification to prevent misuse.
+- **Modular, Decentralized Enforcement**: Optional APCs and protocol forks allow enforcement and monitoring to evolve without impacting the core protocol, promoting innovation within the UndChain ecosystem.
+
+#### Advantages of Enforceable Digital Assets on UndChain
+
+The UndChain digital asset model brings unique advantages over traditional NFTs and decentralized assets:
+
+- **Clear Rights and Responsibilities**: Predefined contracts outline specific usage rights, empowering creators and users to understand and control asset interactions.
+- **Optional, Effective Enforcement**: By choosing an APC, creators can access a robust IP protection system that operates independently of the main protocol.
+- **Upgrade Flexibility for Unregistered Assets**: Unregistered (Gray) assets offer a straightforward entry point, with the flexibility to upgrade protections as desired.
+- **Future-Proof Flexibility**: The enforcement system, combined with protocol forks, allows the ecosystem to grow, adapt, and incorporate new enforcement mechanisms without requiring protocol changes.
+
+Through enforceable digital assets, UndChain enables a **new standard in digital ownership** for Web4, balancing creator rights with user freedom while remaining scalable and neutral at its core.
+
+## Network Fundamentals
 
 ### Accounts
 
