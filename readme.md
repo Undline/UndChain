@@ -1,3 +1,17 @@
+# Welcome to UndChain!
+
+We're thrilled to have you here! UndChain is building the next generation of decentralized cloud services, and we'd love for you to join us in shaping the future.
+
+### 🛠️ **Developer Discussions & Community Support**
+
+If you're a developer interested in contributing to UndChain, have questions, or simply want to join the discussion with like-minded enthusiasts, we invite you to connect with our community:
+
+- **Telegram**: [Join our Developer Group on Telegram](https://t.me/UndChain_Dev)
+
+Whether you're just curious or ready to jump into development, all are welcome!
+
+---
+
 # What is UndChain
 
 UndChain is a PoU (Proof of Utility) blockchain; that can best be thought of as a decentralized cloud service in which anyone can participate. There are three different utilities that can be performed on the network, that work together to create similar functionality as conventional cloud service providers.
