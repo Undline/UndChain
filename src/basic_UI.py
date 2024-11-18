@@ -4,12 +4,7 @@ that system is in place. I need something at this time that I can use to
 test and make sure that the code written so far flows correctly in a GUI
 based environment.
 '''
-'''
-This is NOT using M3L / GSS and is meant to be a temporary solution until
-that system is in place. I need something at this time that I can use to 
-test and make sure that the code written so far flows correctly in a GUI
-based environment.
-'''
+
 import kivy
 import os
 from kivy.app import App
