@@ -4,7 +4,6 @@ that system is in place. I need something at this time that I can use to
 test and make sure that the code written so far flows correctly in a GUI
 based environment.
 '''
-
 import kivy
 import os
 from kivy.app import App
@@ -312,24 +311,53 @@ class LoginScreen(RelativeLayout):
         pwd = self.password.text.strip()
 
         if uname == "admin" and pwd == "password":
-            self.login_button.text = "Login Successful!"
-            self.login_button.background_color = (0, 0.8, 0, 1)  # Change button color to green
             print("Login successful.")
+            # Animate fade-out
+            fade_out = Animation(opacity=0, duration=0.5)
+            fade_out.bind(on_complete=lambda anim, widget: self.after_successful_login())
+            fade_out.start(self)
         else:
-            self.login_button.text = "Invalid Credentials"
-            self.login_button.background_color = (0.8, 0, 0, 1)  # Change button color to red
             print("Invalid credentials entered.")
+            # Shake the password field
+            self.shake_password_field()
 
-        # Reset the button text and color after 2 seconds
-        Clock.schedule_once(self.reset_login_button, 2)
+    def shake_password_field(self):
+        """
+        Shakes the password TextInput to indicate invalid credentials.
+        """
+        password_field = self.password
+        original_x, original_y = password_field.pos
+        shake_distance = 10  # Pixels to move left and right
+        shake_duration = 0.05  # Duration of each shake movement
 
-    def reset_login_button(self, dt):
+        # Create a sequence of animations to shake the widget
+        anim = Animation(x=original_x - shake_distance, duration=shake_duration) + \
+               Animation(x=original_x + shake_distance, duration=shake_duration) + \
+               Animation(x=original_x - shake_distance, duration=shake_duration) + \
+               Animation(x=original_x + shake_distance, duration=shake_duration) + \
+               Animation(x=original_x, duration=shake_duration)
+        anim.start(password_field)
+        print("Shake animation started on password field.")
+
+    def after_successful_login(self):
         """
-        Resets the login button to its original state.
+        Called after fade-out is complete on successful login.
         """
-        self.login_button.text = "Login"
-        self.login_button.background_color = (0, 0.6, 1, 1)  # Reset to original Electric Blue color
-        print("Login button reset.")
+        # Schedule fade-in after 10 seconds
+        Clock.schedule_once(self.fade_in_widgets, 10)
+        print("Scheduled fade-in after 10 seconds.")
+
+    def fade_in_widgets(self, dt):
+        """
+        Fades in all widgets by resetting opacity and re-animating the LoginScreen.
+        """
+        # Reset opacity to 1
+        self.opacity = 1
+        print("Opacity reset to 1.")
+
+        # Animate the LoginScreen sliding in again
+        self.animate_login_screen()
+        print("Animating LoginScreen back into view.")
 
     def recover_account(self, instance):
         """
@@ -422,11 +450,11 @@ class LoginApp(App):
 
     def focus_username(self, dt):
         try:
-            # Access the RelativeLayout, which is the first child of FloatLayout
+            # Access the RelativeLayout, which is the last child of FloatLayout
             relative_layout = self.root.children[-1]  # FloatLayout's last child is RelativeLayout
             print(f"RelativeLayout children count: {len(relative_layout.children)}")
             if relative_layout.children:
-                # Access the LoginScreen, which is the first child of RelativeLayout
+                # Access the LoginScreen, which is the last child of RelativeLayout
                 login_screen = relative_layout.children[-1]  # RelativeLayout's last child is LoginScreen
                 print("Accessing LoginScreen to set focus on username field.")
                 login_screen.username.focus = True
