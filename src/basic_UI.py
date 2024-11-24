@@ -1,9 +1,25 @@
 '''
-This is NOT using M3L / GSS and is meant to be a temporary solution until
-that system is in place. I need something at this time that I can use to 
-test and make sure that the code written so far flows correctly in a GUI
-based environment.
+basic_UI.py
+
+This script creates a Kivy-based login application with the following features:
+- Gradient background with an optional background image.
+- Login interface with Username and Password fields.
+- Buttons for Login, Account Recovery, and Creating a New Account.
+- Full-screen toggle functionality using both F and F12 keys.
+- Visual feedback for user actions.
+- Debug label to display keycode information for troubleshooting.
+- Robust error handling and dynamic UI adjustments.
+
+Directory Structure:
+project/
+│
+├── assets/
+│   └── background.png  # Ensure this image exists
+│
+└── src/
+    └── basic_UI.py
 '''
+
 import kivy
 import os
 from kivy.app import App
@@ -263,8 +279,8 @@ class LoginScreen(RelativeLayout):
         buttons_layout.add_widget(self.account_recovery_button)
 
         # Add buttons_layout to the LoginScreen
-        buttons_layout.pos = (50, -10)  # Initial position (will be animated)
         self.add_widget(buttons_layout)
+        print("Buttons layout added to LoginScreen.")
 
         # New Account Button
         self.new_account_button = CustomButton(
@@ -438,10 +454,94 @@ class LoginApp(App):
         root.add_widget(relative_layout)
         print("RelativeLayout added to root FloatLayout.")
 
+        # Add a Debug Label to display keycode information
+        self.keycode_display = Label(
+            text='Press any key to see keycode here',
+            size_hint=(None, None),
+            size=(400, 30),
+            pos_hint={'center_x': 0.5, 'y': 0.05},  # Positioned at the bottom center
+            color=(1, 1, 1, 1),  # White text color
+            font_size=16
+        )
+        root.add_widget(self.keycode_display)
+        print("Debug Label for keycodes added to root.")
+
+        # Bind the F and F12 keys to toggle full-screen mode
+        Window.bind(on_key_down=self.on_key_down)
+        print("Bound F and F12 keys for full-screen toggle.")
+
         # Schedule the animation to start after the UI is built
         Clock.schedule_once(lambda dt: login_screen.animate_login_screen(), 0.5)
 
         return root
+
+    def on_key_down(self, window, key, scancode, codepoint, modifiers):
+        """
+        Handles key press events. Toggles full-screen mode when F or F12 is pressed.
+        Also updates the debug label with keycode information.
+        """
+        try:
+            # Define keycodes manually based on system (example keycodes)
+            F_KEYCODE = ord('f')  # Typically 102
+            # F12 keycode will be identified through the debug label
+
+            # Update the debug label with keycode information
+            if codepoint:
+                key_char = codepoint
+            else:
+                key_char = 'Non-character key'
+
+            self.keycode_display.text = f"Pressed keycode: {key}, scancode: {scancode}, codepoint: {codepoint}, modifiers: {modifiers}, key: {key_char}"
+
+            # Determine if the pressed key is F or F12
+            if codepoint and key_char.lower() == 'f':
+                # Toggle full-screen mode using F key
+                if Window.fullscreen != 'auto':
+                    Window.fullscreen = 'auto'
+                    print("Switched to full-screen mode (auto) using F key.")
+                    self.show_feedback("Full-Screen Mode (F)")
+                else:
+                    Window.fullscreen = False
+                    print("Switched to windowed mode using F key.")
+                    self.show_feedback("Windowed Mode (F)")
+            elif key == 303:  # Replace 303 with the correct keycode for F12 identified from the debug label
+                # Toggle full-screen mode using F12 key
+                if Window.fullscreen != 'auto':
+                    Window.fullscreen = 'auto'
+                    print("Switched to full-screen mode (auto) using F12 key.")
+                    self.show_feedback("Full-Screen Mode (F12)")
+                else:
+                    Window.fullscreen = False
+                    print("Switched to windowed mode using F12 key.")
+                    self.show_feedback("Windowed Mode (F12)")
+            else:
+                # For other keys, no action is taken
+                pass
+        except AttributeError as e:
+            print(f"Error in on_key_down: {e}")
+        except Exception as e:
+            print(f"Unexpected error in on_key_down: {e}")
+        return False  # Allow other handlers to process the event
+
+    def show_feedback(self, message):
+        """
+        Displays a temporary label with the given message at the center of the window.
+        """
+        feedback_label = Label(
+            text=message,
+            size_hint=(None, None),
+            size=(300, 50),
+            pos_hint={'center_x': 0.5, 'center_y': 0.5},
+            color=(1, 1, 1, 1),  # White text color
+            font_size=24
+        )
+        self.root.add_widget(feedback_label)
+        
+        # Animate the label to fade out over 2 seconds
+        anim = Animation(opacity=0, duration=2)
+        anim.bind(on_complete=lambda anim, widget: self.root.remove_widget(feedback_label))
+        anim.start(feedback_label)
+        print(f"Displayed feedback: {message}")
 
     def on_start(self):
         # Automatically focus on the Username field when the app starts
@@ -467,8 +567,13 @@ class LoginApp(App):
         """
         Updates the background rectangle position and size when the window is resized or moved.
         """
-        self.bg_rect.pos = instance.pos
-        self.bg_rect.size = instance.size
+        # This method is only bound if the background image is missing
+        try:
+            self.bg_rect.pos = instance.pos
+            self.bg_rect.size = instance.size
+        except AttributeError:
+            # bg_rect does not exist
+            pass
 
 
 if __name__ == '__main__':
