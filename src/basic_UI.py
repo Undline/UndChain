@@ -5,7 +5,7 @@ This script creates a Kivy-based login application with the following features:
 - Gradient background with an optional background image.
 - Login interface with Username and Password fields.
 - Buttons for Login, Account Recovery, and Creating a New Account.
-- Full-screen toggle functionality using both F and F12 keys.
+- Full-screen toggle functionality using the F12 key only.
 - Visual feedback for user actions.
 - Debug label to display keycode information for troubleshooting.
 - Robust error handling and dynamic UI adjustments.
@@ -466,9 +466,9 @@ class LoginApp(App):
         root.add_widget(self.keycode_display)
         print("Debug Label for keycodes added to root.")
 
-        # Bind the F and F12 keys to toggle full-screen mode
+        # Bind only the F12 key to toggle full-screen mode
         Window.bind(on_key_down=self.on_key_down)
-        print("Bound F and F12 keys for full-screen toggle.")
+        print("Bound F12 key for full-screen toggle.")
 
         # Schedule the animation to start after the UI is built
         Clock.schedule_once(lambda dt: login_screen.animate_login_screen(), 0.5)
@@ -477,13 +477,13 @@ class LoginApp(App):
 
     def on_key_down(self, window, key, scancode, codepoint, modifiers):
         """
-        Handles key press events. Toggles full-screen mode when F or F12 is pressed.
+        Handles key press events. Toggles full-screen mode when F12 is pressed.
         Also updates the debug label with keycode information.
         """
         try:
             # Define keycodes manually based on system (example keycodes)
-            F_KEYCODE = ord('f')  # Typically 102
-            # F12 keycode will be identified through the debug label
+            # Removed F_KEYCODE since F key no longer toggles full-screen
+            F12_KEYCODE = 293  # Updated to match your system's keycode for F12
 
             # Update the debug label with keycode information
             if codepoint:
@@ -493,18 +493,8 @@ class LoginApp(App):
 
             self.keycode_display.text = f"Pressed keycode: {key}, scancode: {scancode}, codepoint: {codepoint}, modifiers: {modifiers}, key: {key_char}"
 
-            # Determine if the pressed key is F or F12
-            if codepoint and key_char.lower() == 'f':
-                # Toggle full-screen mode using F key
-                if Window.fullscreen != 'auto':
-                    Window.fullscreen = 'auto'
-                    print("Switched to full-screen mode (auto) using F key.")
-                    self.show_feedback("Full-Screen Mode (F)")
-                else:
-                    Window.fullscreen = False
-                    print("Switched to windowed mode using F key.")
-                    self.show_feedback("Windowed Mode (F)")
-            elif key == 303:  # Replace 303 with the correct keycode for F12 identified from the debug label
+            # Determine if the pressed key is F12
+            if key == F12_KEYCODE:
                 # Toggle full-screen mode using F12 key
                 if Window.fullscreen != 'auto':
                     Window.fullscreen = 'auto'
