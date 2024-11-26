@@ -6,8 +6,8 @@ This script creates a Kivy-based login application with the following features:
 - Login interface with Username and Password fields.
 - Buttons for Login, Account Recovery, and Creating a New Account.
 - Full-screen toggle functionality using the F12 key only.
+- Presentation mode to display key presses using the FeedbackLabel system.
 - Visual feedback for user actions.
-- Debug label to display keycode information for troubleshooting.
 - Robust error handling and dynamic UI adjustments.
 
 Directory Structure:
@@ -23,6 +23,7 @@ project/
 import kivy
 import os
 from kivy.app import App
+from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.boxlayout import BoxLayout
@@ -31,7 +32,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.image import Image
 from kivy.core.window import Window
-from kivy.properties import ObjectProperty, StringProperty, ListProperty
+from kivy.properties import ObjectProperty, StringProperty, ListProperty, NumericProperty
 from kivy.clock import Clock
 from kivy.graphics import Color, Rectangle, RoundedRectangle
 from kivy.animation import Animation
@@ -92,6 +93,43 @@ class GradientBackground(Widget):
                 Rectangle(pos=(self.x, rect_y), size=(self.width, self.height / num_rects))
 
 
+class FeedbackLabel(Label):
+    """
+    A custom Label that displays feedback messages with a semi-transparent background,
+    positioned at the bottom-right corner.
+    """
+    def __init__(self, message, bg_color=(0, 0, 0, 0.5), **kwargs):
+        super(FeedbackLabel, self).__init__(**kwargs)
+        self.text = message
+        self.halign = 'right'
+        self.valign = 'middle'
+        self.text_size = self.size  # Ensures text is right-aligned within the label
+
+        with self.canvas.before:
+            # Semi-transparent background with customizable color
+            Color(*bg_color)
+            self.bg_rect = RoundedRectangle(pos=self.pos, size=self.size, radius=[10, 10, 10, 10])
+
+        # Bind position and size updates to ensure the background stays aligned
+        self.bind(pos=self.update_bg, size=self.update_bg, texture_size=self.update_size)
+
+    def update_bg(self, *args):
+        """
+        Updates the position and size of the background rectangle to match the label.
+        """
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
+
+    def update_size(self, *args):
+        """
+        Updates the size of the label based on the texture size to dynamically adjust width.
+        """
+        # Add some padding to the width
+        padding = 20
+        self.width = self.texture_size[0] + padding
+        self.height = self.texture_size[1] + 10  # Add some vertical padding
+
+
 class CustomLabel(Label):
     """
     A custom Label that left-aligns its text.
@@ -114,8 +152,9 @@ class CustomTextInput(TextInput):
     """
     next_widget = ObjectProperty(None)
 
-    def __init__(self, **kwargs):
+    def __init__(self, password=False, **kwargs):
         super(CustomTextInput, self).__init__(**kwargs)
+        self.password = password  # Enable password masking if True
         self.multiline = False  # Ensure single-line input
         self.size_hint_x = None  # Disable automatic width sizing
         self.size_hint_y = None  # Disable automatic height sizing
@@ -138,11 +177,12 @@ class CustomTextInput(TextInput):
 
         # Add Rounded Corners and Enhanced Background
         with self.canvas.before:
-            self.bg_color = Color(1, 1, 1, 0.3)  # Match background_color
+            Color(1, 1, 1, 0.3)  # Match background_color
             self.bg_rect = RoundedRectangle(
                 pos=self.pos,
                 size=self.size,
-                radius=[10, ])  # Rounded corners with radius 10
+                radius=[10, 10, 10, 10]  # Rounded corners with radius 10
+            )
         self.bind(pos=self.update_bg, size=self.update_bg)
 
         # Debugging: Confirm that foreground_color is set correctly
@@ -217,6 +257,8 @@ class LoginScreen(RelativeLayout):
     """
     The main login screen containing Username and Password fields and multiple buttons.
     """
+    scale = NumericProperty(1.0)  # Property to handle scaling
+
     def __init__(self, **kwargs):
         super(LoginScreen, self).__init__(**kwargs)
         self.size_hint = (None, None)
@@ -231,13 +273,13 @@ class LoginScreen(RelativeLayout):
             size=(200, 40),
             color=(1, 1, 1, 1)  # White text color
         )
-        username_label.pos = (50, 200)  # Initial position (will be animated)
+        username_label.pos = (50, 200)  # Position relative to LoginScreen
         self.add_widget(username_label)
 
         # Username TextInput
         self.username = CustomTextInput()
         self.username.hint_text = "Enter your username"
-        self.username.pos = (50, 150)  # Initial position (will be animated)
+        self.username.pos = (50, 150)  # Position relative to LoginScreen
         self.add_widget(self.username)
 
         # Password Label
@@ -248,13 +290,13 @@ class LoginScreen(RelativeLayout):
             size=(200, 40),
             color=(1, 1, 1, 1)  # White text color
         )
-        password_label.pos = (50, 100)  # Initial position (will be animated)
+        password_label.pos = (50, 100)  # Position relative to LoginScreen
         self.add_widget(password_label)
 
         # Password TextInput
         self.password = CustomTextInput(password=True)
         self.password.hint_text = "Enter your password"
-        self.password.pos = (50, 50)  # Initial position (will be animated)
+        self.password.pos = (50, 50)  # Position relative to LoginScreen
         self.add_widget(self.password)
 
         # Horizontal BoxLayout for Login and Account Recovery Buttons
@@ -263,7 +305,7 @@ class LoginScreen(RelativeLayout):
             spacing=20,
             size_hint=(None, None),
             size=(300, 60),
-            pos=(50, -10)  # Initial position (will be animated)
+            pos=(50, -10)  # Position relative to LoginScreen
         )
 
         # Login Button
@@ -288,7 +330,7 @@ class LoginScreen(RelativeLayout):
         )
         self.new_account_button.size_hint = (None, None)
         self.new_account_button.size = (300, 60)
-        self.new_account_button.pos = (50, -80)  # Initial position (will be animated)
+        self.new_account_button.pos = (50, -80)  # Position relative to LoginScreen
         self.add_widget(self.new_account_button)
 
         # Assign next_widget for Tab navigation
@@ -303,21 +345,18 @@ class LoginScreen(RelativeLayout):
 
     def animate_login_screen(self):
         """
-        Animates the entire LoginScreen to slide in from the left to the center of the window.
+        Animates the LoginScreen with a scale-up effect for added visual appeal.
         """
-        # Define the target position (centered)
-        target_x = (Window.width / 2) - (self.width / 2)
-        target_y = (Window.height / 2) - (self.height / 2)
+        # Reset scale and opacity
+        self.scale = 0.8
+        self.opacity = 1
 
-        # Set the initial position off-screen to the left
-        self.pos = (-self.width, target_y)
-
-        # Create an animation object
-        anim = Animation(x=target_x, duration=1, t='out_cubic')  # 'out_cubic' easing curve
+        # Create scale and fade-in animation
+        anim = Animation(scale=1.0, duration=1, t='out_back')
 
         # Start the animation
         anim.start(self)
-        print("Animation started: LoginScreen sliding in from the left.")
+        print("Animation started: LoginScreen scaling up for presentation.")
 
     def validate_credentials(self, instance):
         """
@@ -371,7 +410,7 @@ class LoginScreen(RelativeLayout):
         self.opacity = 1
         print("Opacity reset to 1.")
 
-        # Animate the LoginScreen sliding in again
+        # Animate the LoginScreen scaling up again
         self.animate_login_screen()
         print("Animating LoginScreen back into view.")
 
@@ -391,6 +430,26 @@ class LoginScreen(RelativeLayout):
 
 
 class LoginApp(App):
+    def __init__(self, **kwargs):
+        super(LoginApp, self).__init__(**kwargs)
+        self.presentation_mode = False  # Flag to track presentation mode
+
+        # Manually define keycode to name mapping for specific keys
+        self.manual_keycode_to_name = {
+            292: 'F11',
+            293: 'F12',
+            13: 'Enter',
+            14: 'Backspace',
+            29: 'Ctrl',        # Left Ctrl
+            3613: 'Ctrl',      # Right Ctrl (verify on your system)
+            42: 'Shift',       # Left Shift
+            54: 'Shift',       # Right Shift
+            56: 'Alt',         # Left Alt
+            57: 'AltGr',       # Right Alt
+            58: 'CapsLock',
+            # Add more keycodes and their corresponding names as needed
+        }
+
     def build(self):
         # Ensure the application starts in windowed mode with a predefined size
         Window.fullscreen = False  # Start in windowed mode
@@ -418,7 +477,7 @@ class LoginApp(App):
             # Optionally, handle missing image by displaying a message or using a default color
             with root.canvas.before:
                 Color(0.1, 0.1, 0.1, 1)  # Slightly off-black color
-                root_bg = RoundedRectangle(pos=root.pos, size=root.size, radius=[0,])
+                root_bg = RoundedRectangle(pos=root.pos, size=root.size, radius=[0, 0, 0, 0])
             root.bind(pos=self.update_canvas, size=self.update_canvas)
             root.add_widget(Label(
                 text='Background Image Missing',
@@ -441,61 +500,59 @@ class LoginApp(App):
             root.add_widget(background_image)
             print("Background image added over GradientBackground.")
 
-        # Centered LoginScreen using RelativeLayout
-        relative_layout = RelativeLayout(
+        # Centered LoginScreen using AnchorLayout
+        anchor_layout = AnchorLayout(
+            anchor_x='center',
+            anchor_y='center',
             size_hint=(1, 1)
         )
-        print("RelativeLayout created for positioning LoginScreen.")
+        print("AnchorLayout created for positioning LoginScreen.")
 
-        login_screen = LoginScreen()
-        relative_layout.add_widget(login_screen)
-        print("LoginScreen added to RelativeLayout.")
+        self.login_screen = LoginScreen()
+        anchor_layout.add_widget(self.login_screen)
+        print("LoginScreen added to AnchorLayout.")
 
-        root.add_widget(relative_layout)
-        print("RelativeLayout added to root FloatLayout.")
+        root.add_widget(anchor_layout)
+        print("AnchorLayout added to root FloatLayout.")
 
-        # Add a Debug Label to display keycode information
-        self.keycode_display = Label(
-            text='Press any key to see keycode here',
-            size_hint=(None, None),
-            size=(400, 30),
-            pos_hint={'center_x': 0.5, 'y': 0.05},  # Positioned at the bottom center
-            color=(1, 1, 1, 1),  # White text color
-            font_size=16
-        )
-        root.add_widget(self.keycode_display)
-        print("Debug Label for keycodes added to root.")
+        # Removed the debug label section as per user request
 
-        # Bind only the F12 key to toggle full-screen mode
+        # Bind only the F12 key to toggle full-screen mode and F11 to toggle presentation mode
         Window.bind(on_key_down=self.on_key_down)
-        print("Bound F12 key for full-screen toggle.")
+        print("Bound F12 and F11 keys for full-screen and presentation mode toggles.")
+
+        # Bind to window size changes to re-center the LoginScreen if needed
+        Window.bind(on_resize=self.on_window_resize)
+        print("Bound on_resize event to handle window size changes.")
 
         # Schedule the animation to start after the UI is built
-        Clock.schedule_once(lambda dt: login_screen.animate_login_screen(), 0.5)
+        Clock.schedule_once(lambda dt: self.login_screen.animate_login_screen(), 0.5)
 
         return root
 
+    def on_window_resize(self, window, width, height):
+        """
+        Handles window resize events to ensure that the LoginScreen remains centered.
+        Replays the start animation for added visual effect.
+        """
+        print(f"Window resized to width: {width}, height: {height}. Repositioning LoginScreen.")
+        # Replay the animation to add fun
+        self.login_screen.animate_login_screen()
+
     def on_key_down(self, window, key, scancode, codepoint, modifiers):
         """
-        Handles key press events. Toggles full-screen mode when F12 is pressed.
-        Also updates the debug label with keycode information.
+        Handles key press events.
+        - F12: Toggles full-screen mode.
+        - F11: Toggles presentation mode.
+        - Other keys: If in presentation mode, display key presses.
         """
         try:
             # Define keycodes manually based on system (example keycodes)
-            # Removed F_KEYCODE since F key no longer toggles full-screen
-            F12_KEYCODE = 293  # Updated to match your system's keycode for F12
+            F12_KEYCODE = 293  # Adjust based on your system's keycode for F12
+            F11_KEYCODE = 292  # Adjust based on your system's keycode for F11
 
-            # Update the debug label with keycode information
-            if codepoint:
-                key_char = codepoint
-            else:
-                key_char = 'Non-character key'
-
-            self.keycode_display.text = f"Pressed keycode: {key}, scancode: {scancode}, codepoint: {codepoint}, modifiers: {modifiers}, key: {key_char}"
-
-            # Determine if the pressed key is F12
+            # Handle F12 key for full-screen toggle
             if key == F12_KEYCODE:
-                # Toggle full-screen mode using F12 key
                 if Window.fullscreen != 'auto':
                     Window.fullscreen = 'auto'
                     print("Switched to full-screen mode (auto) using F12 key.")
@@ -504,26 +561,50 @@ class LoginApp(App):
                     Window.fullscreen = False
                     print("Switched to windowed mode using F12 key.")
                     self.show_feedback("Windowed Mode (F12)")
-            else:
-                # For other keys, no action is taken
-                pass
+
+            # Handle F11 key for presentation mode toggle
+            elif key == F11_KEYCODE:
+                self.presentation_mode = not self.presentation_mode
+                mode = "ON" if self.presentation_mode else "OFF"
+                print(f"Presentation Mode toggled {mode} using F11 key.")
+                self.show_feedback(f"Presentation Mode {mode} (F11)")
+
+            # Handle other keys in presentation mode
+            elif self.presentation_mode:
+                # Exclude certain keys from being displayed
+                excluded_keys = ['F11', 'F12', 'Tab', 'Enter', 'Shift', 'Ctrl', 'Alt', 'CapsLock']
+
+                if codepoint:
+                    # Display the character as typed, preserving case
+                    display_text = f"{codepoint}"
+                    self.show_feedback(display_text)
+                else:
+                    # Attempt to get the key name from manual mapping
+                    key_name = self.manual_keycode_to_name.get(key, 'Unknown')
+                    if key_name not in excluded_keys:
+                        display_text = f"{key_name}"
+                        self.show_feedback(display_text)
+
         except AttributeError as e:
             print(f"Error in on_key_down: {e}")
         except Exception as e:
             print(f"Unexpected error in on_key_down: {e}")
+
         return False  # Allow other handlers to process the event
 
-    def show_feedback(self, message):
+    def show_feedback(self, message, bg_color=(0, 0, 0, 0.5)):
         """
-        Displays a temporary label with the given message at the center of the window.
+        Displays a temporary label with the given message at the bottom-right corner of the window,
+        with a semi-transparent background and slight margins.
         """
-        feedback_label = Label(
-            text=message,
+        feedback_label = FeedbackLabel(
+            message=message,
+            bg_color=bg_color,
             size_hint=(None, None),
             size=(300, 50),
-            pos_hint={'center_x': 0.5, 'center_y': 0.5},
+            pos_hint={'right': 0.95, 'y': 0.05},  # Positioned near bottom-right
             color=(1, 1, 1, 1),  # White text color
-            font_size=24
+            font_size=24,
         )
         self.root.add_widget(feedback_label)
         
@@ -534,24 +615,24 @@ class LoginApp(App):
         print(f"Displayed feedback: {message}")
 
     def on_start(self):
-        # Automatically focus on the Username field when the app starts
-        Clock.schedule_once(self.focus_username, 1.0)  # Adjusted to align with animation timing
+        """
+        Called when the application starts. Sets focus to the username text box.
+        """
+        # Schedule focus after a short delay to ensure all widgets are loaded
+        Clock.schedule_once(self.focus_username, 1.0)
         print("Application started. Scheduling focus on username field.")
 
     def focus_username(self, dt):
+        """
+        Sets focus to the username text box.
+        """
         try:
-            # Access the RelativeLayout, which is the last child of FloatLayout
-            relative_layout = self.root.children[-1]  # FloatLayout's last child is RelativeLayout
-            print(f"RelativeLayout children count: {len(relative_layout.children)}")
-            if relative_layout.children:
-                # Access the LoginScreen, which is the last child of RelativeLayout
-                login_screen = relative_layout.children[-1]  # RelativeLayout's last child is LoginScreen
-                print("Accessing LoginScreen to set focus on username field.")
-                login_screen.username.focus = True
-            else:
-                print("RelativeLayout has no children to set focus on.")
-        except Exception as e:
-            print(f"Error in focus_username: {e}")
+            print(f"Login Screen Reference: {self.login_screen}")
+            print(f"Username TextInput Reference: {self.login_screen.username}")
+            self.login_screen.username.focus = True
+            print("Username text box focused.")
+        except AttributeError as e:
+            print(f"Error focusing username: {e}")
 
     def update_canvas(self, instance, value):
         """
