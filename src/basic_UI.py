@@ -1,14 +1,16 @@
-'''
-basic_UI.py
+# basic_UI.py
 
+"""
 This script creates a Kivy-based login application with the following features:
 - Gradient background with an optional background image.
 - Login interface with Username and Password fields.
 - Buttons for Login, Account Recovery, and Creating a New Account.
 - Full-screen toggle functionality using the F12 key only.
 - Presentation mode to display key presses using the FeedbackLabel system.
+- Help screen that pops up when pressing F1.
 - Visual feedback for user actions.
 - Robust error handling and dynamic UI adjustments.
+- Debugger label at the bottom to display key press information.
 
 Directory Structure:
 project/
@@ -18,7 +20,7 @@ project/
 │
 └── src/
     └── basic_UI.py
-'''
+"""
 
 import kivy
 import os
@@ -37,9 +39,15 @@ from kivy.clock import Clock
 from kivy.graphics import Color, Rectangle, RoundedRectangle
 from kivy.animation import Animation
 from kivy.uix.widget import Widget
+from kivy.uix.modalview import ModalView
+from kivy.uix.scrollview import ScrollView
 
 kivy.require('2.3.0')  # Ensure the Kivy version is at least 2.3.0
 
+
+# -------------------------------
+# Background and Feedback Widgets
+# -------------------------------
 
 class GradientBackground(Widget):
     """
@@ -235,6 +243,12 @@ class CustomButton(Button):
         # Bind the text property to update_size whenever it changes
         self.bind(text=self.update_size)
 
+        # Optional: Add rounded corners
+        with self.canvas.before:
+            Color(*self.background_color)
+            self.bg_rect = RoundedRectangle(pos=self.pos, size=self.size, radius=[10, 10, 10, 10])
+        self.bind(pos=self.update_bg, size=self.update_bg)
+
     def update_size(self, *args):
         """
         Updates the size of the button based on the text content, adding margins.
@@ -252,6 +266,75 @@ class CustomButton(Button):
         self.width = text_width + margin_x
         self.height = text_height + margin_y
 
+    def update_bg(self, *args):
+        """
+        Updates the background rectangle position and size when the button is moved or resized.
+        """
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
+
+
+# -------------------------------
+# Help Popup
+# -------------------------------
+
+class HelpPopup(ModalView):
+    """
+    A popup window that provides contextual help information to the user.
+    """
+    def __init__(self, help_text, **kwargs):
+        super(HelpPopup, self).__init__(**kwargs)
+        self.size_hint = (0.8, 0.8)  # Slightly smaller than the window
+        self.auto_dismiss = False  # Prevent dismissal by clicking outside
+
+        # Semi-transparent dark background
+        with self.canvas.before:
+            Color(0, 0, 0, 0.7)
+            self.bg = Rectangle(pos=self.pos, size=self.size)
+        self.bind(pos=self.update_bg, size=self.update_bg)
+
+        # Content layout
+        content = BoxLayout(orientation='vertical', padding=20, spacing=20)
+
+        # ScrollView for Help Text
+        scroll_view = ScrollView(size_hint=(1, 0.9))
+        help_label = Label(
+            text=help_text,
+            halign='left',
+            valign='top',
+            text_size=(self.width - 40, None),
+            markup=True,
+            font_size=18
+        )
+        help_label.bind(width=self.update_help_text_size)
+        scroll_view.add_widget(help_label)
+        content.add_widget(scroll_view)
+
+        # Close Button
+        close_button = Button(
+            text='Close',
+            size_hint=(None, None),
+            size=(100, 50),
+            pos_hint={'center_x': 0.5},
+            font_size=18,
+            bold=True
+        )
+        close_button.bind(on_press=self.dismiss)
+        content.add_widget(close_button)
+
+        self.add_widget(content)
+
+    def update_help_text_size(self, instance, value):
+        instance.text_size = (value - 40, None)
+
+    def update_bg(self, *args):
+        self.bg.pos = self.pos
+        self.bg.size = self.size
+
+
+# -------------------------------
+# Login Screen
+# -------------------------------
 
 class LoginScreen(RelativeLayout):
     """
@@ -265,6 +348,7 @@ class LoginScreen(RelativeLayout):
         self.size = (400, 300)  # Adjust size as needed
 
         # Initialize child widgets
+
         # Username Label
         username_label = CustomLabel(
             text='Username:',
@@ -429,26 +513,37 @@ class LoginScreen(RelativeLayout):
         # Implement new account creation logic here
 
 
+# -------------------------------
+# Main Application
+# -------------------------------
+
 class LoginApp(App):
     def __init__(self, **kwargs):
         super(LoginApp, self).__init__(**kwargs)
         self.presentation_mode = False  # Flag to track presentation mode
+        self.help_popup = None  # Reference to the current HelpPopup instance
 
         # Manually define keycode to name mapping for specific keys
         self.manual_keycode_to_name = {
+            282: 'F1',          # Common keycode for F1
+            283: 'F2',          # Keycode for F2
             292: 'F11',
             293: 'F12',
             13: 'Enter',
-            14: 'Backspace',
-            29: 'Ctrl',        # Left Ctrl
-            3613: 'Ctrl',      # Right Ctrl (verify on your system)
-            42: 'Shift',       # Left Shift
-            54: 'Shift',       # Right Shift
-            56: 'Alt',         # Left Alt
-            57: 'AltGr',       # Right Alt
-            58: 'CapsLock',
+            8: 'Backspace',
+            303: 'Ctrl',        # Right Ctrl
+            304: 'Shift',       # Left Shift
+            305: 'Ctrl',        # Left Ctrl (verify if correct)
+            306: 'Shift',       # Right Shift (verify if correct)
+            307: 'AltGr',       # Right Alt
+            308: 'Alt',         # Left Alt
+            301: 'CapsLock',
+            27: 'Escape',       # Escape key
             # Add more keycodes and their corresponding names as needed
         }
+
+        # Initialize a reference for the debugger label
+        self.debug_label = None
 
     def build(self):
         # Ensure the application starts in windowed mode with a predefined size
@@ -492,7 +587,7 @@ class LoginApp(App):
             background_image = Image(
                 source=background_image_path,
                 allow_stretch=True,
-                keep_ratio=True,
+                keep_ratio=True,  # Maintain aspect ratio to avoid distortion
                 size_hint=(1, 1),
                 pos_hint={'center_x': 0.5, 'center_y': 0.5},
                 color=(1, 1, 1, 0.5)  # 0.5 opacity for transparency
@@ -515,15 +610,28 @@ class LoginApp(App):
         root.add_widget(anchor_layout)
         print("AnchorLayout added to root FloatLayout.")
 
-        # Removed the debug label section as per user request
-
-        # Bind only the F12 key to toggle full-screen mode and F11 to toggle presentation mode
+        # Bind F12, F11, and F1 keys for full-screen, presentation mode, and help screen toggles
         Window.bind(on_key_down=self.on_key_down)
-        print("Bound F12 and F11 keys for full-screen and presentation mode toggles.")
+        print("Bound F12, F11, and F1 keys for full-screen, presentation mode, and help screen toggles.")
 
         # Bind to window size changes to re-center the LoginScreen if needed
         Window.bind(on_resize=self.on_window_resize)
         print("Bound on_resize event to handle window size changes.")
+
+        # Add the debugger label at the bottom of the window
+        self.debug_label = Label(
+            text='Press keys to see keycode information here.',
+            size_hint=(1, None),
+            height=30,
+            pos_hint={'x': 0, 'y': 0},
+            halign='center',
+            valign='middle',
+            color=(1, 1, 1, 1),  # White text color
+            font_size=14
+        )
+        self.debug_label.bind(size=self.debug_label.setter('text_size'))
+        root.add_widget(self.debug_label)
+        print("Debugger Label added to root FloatLayout.")
 
         # Schedule the animation to start after the UI is built
         Clock.schedule_once(lambda dt: self.login_screen.animate_login_screen(), 0.5)
@@ -536,7 +644,7 @@ class LoginApp(App):
         Replays the start animation for added visual effect.
         """
         print(f"Window resized to width: {width}, height: {height}. Repositioning LoginScreen.")
-        # Replay the animation to add fun
+        # Replay the animation to add visual effect
         self.login_screen.animate_login_screen()
 
     def on_key_down(self, window, key, scancode, codepoint, modifiers):
@@ -544,12 +652,21 @@ class LoginApp(App):
         Handles key press events.
         - F12: Toggles full-screen mode.
         - F11: Toggles presentation mode.
+        - F1: Toggles the help screen.
+        - Escape: Closes the help screen if open.
         - Other keys: If in presentation mode, display key presses.
         """
         try:
             # Define keycodes manually based on system (example keycodes)
             F12_KEYCODE = 293  # Adjust based on your system's keycode for F12
             F11_KEYCODE = 292  # Adjust based on your system's keycode for F11
+            F1_KEYCODE = 282    # Updated keycode for F1
+            ESCAPE_KEYCODE = 27  # Common keycode for Escape
+
+            # Prepare key press information
+            key_info = f"Key Pressed: key={key}, scancode={scancode}, codepoint='{codepoint}', modifiers={modifiers}"
+            print(key_info)
+            self.debug_label.text = key_info  # Update the debugger label
 
             # Handle F12 key for full-screen toggle
             if key == F12_KEYCODE:
@@ -561,6 +678,7 @@ class LoginApp(App):
                     Window.fullscreen = False
                     print("Switched to windowed mode using F12 key.")
                     self.show_feedback("Windowed Mode (F12)")
+                return True  # Indicate that the event has been handled
 
             # Handle F11 key for presentation mode toggle
             elif key == F11_KEYCODE:
@@ -568,11 +686,34 @@ class LoginApp(App):
                 mode = "ON" if self.presentation_mode else "OFF"
                 print(f"Presentation Mode toggled {mode} using F11 key.")
                 self.show_feedback(f"Presentation Mode {mode} (F11)")
+                return True  # Indicate that the event has been handled
+
+            # Handle F1 key for help screen toggle
+            elif key == F1_KEYCODE:
+                if self.help_popup and self.help_popup.parent:
+                    # Help popup is open; close it
+                    self.help_popup.dismiss()
+                    print("Help screen closed using F1 key.")
+                    self.show_feedback("Help Screen Closed (F1)")
+                else:
+                    # Help popup is not open; open it
+                    self.open_help_popup()
+                    print("Help screen opened using F1 key.")
+                    self.show_feedback("Help Screen (F1)")
+                return True  # Indicate that the event has been handled
+
+            # Handle Escape key to close help popup if open
+            elif key == ESCAPE_KEYCODE:
+                if self.help_popup and self.help_popup.parent:
+                    self.help_popup.dismiss()
+                    print("Help screen closed using Escape key.")
+                    self.show_feedback("Help Screen Closed (Escape)")
+                    return True  # Indicate that the event has been handled
 
             # Handle other keys in presentation mode
             elif self.presentation_mode:
                 # Exclude certain keys from being displayed
-                excluded_keys = ['F11', 'F12', 'Tab', 'Enter', 'Shift', 'Ctrl', 'Alt', 'CapsLock']
+                excluded_keys = ['F11', 'F12', 'F1', 'Tab', 'Enter', 'Shift', 'Ctrl', 'Alt', 'CapsLock', 'Escape']
 
                 if codepoint:
                     # Display the character as typed, preserving case
@@ -646,6 +787,46 @@ class LoginApp(App):
             # bg_rect does not exist
             pass
 
+    def open_help_popup(self):
+        """
+        Opens the help popup overlay with contextual help based on current focus.
+        """
+        # For simplicity, we'll assume we're always on the LoginScreen
+        help_text = (
+            "[b]Welcome to the Login Application![/b]\n\n"
+            "Here's how to use the application:\n\n"
+            "[b]1. Login:[/b]\n"
+            "- Enter your username and password in the respective fields.\n"
+            "- Click the 'Login' button to access your account.\n\n"
+            "[b]2. Create New Account:[/b]\n"
+            "- If you don't have an account, click the 'Create New Account' button.\n"
+            "- Follow the prompts to set up your new account.\n\n"
+            "[b]3. Recover Account:[/b]\n"
+            "- If you've forgotten your password, click the 'Recover Account' button.\n"
+            "- Enter your recovery phrase to regain access.\n\n"
+            "[b]4. Keyboard Shortcuts:[/b]\n"
+            "- [color=ff0000]F12[/color]: Toggle full-screen mode.\n"
+            "- [color=ff0000]F11[/color]: Toggle presentation mode.\n"
+            "- [color=ff0000]F1[/color]: Open this help screen.\n"
+        )
+
+        # Create and open the HelpPopup instance
+        self.help_popup = HelpPopup(help_text=help_text)
+        self.help_popup.bind(on_dismiss=self.on_help_popup_dismiss)
+        self.help_popup.open()
+        print("HelpPopup instance created and opened.")
+
+    def on_help_popup_dismiss(self, popup):
+        """
+        Callback when the HelpPopup is dismissed.
+        """
+        self.help_popup = None
+        print("HelpPopup instance dismissed and reference cleared.")
+
+
+# -------------------------------
+# Run the Application
+# -------------------------------
 
 if __name__ == '__main__':
     LoginApp().run()
