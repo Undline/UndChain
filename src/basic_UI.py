@@ -12,20 +12,13 @@ This script creates a Kivy-based login application with the following features:
 - Visual feedback for user actions.
 - Robust error handling and dynamic UI adjustments.
 - Debugger label at the bottom to display key press information.
-
-Directory Structure:
-project/
-│
-├── assets/
-│   └── background.png  # Ensure this image exists
-│
-└── src/
-    └── basic_UI.py
+- Custom HelpPopup with basic semi-transparent background, rounded corners, fade-in/out animations, and typewriter text effect.
 """
 
 import kivy
 import os
 import configparser  # Use Python's standard configparser
+from functools import partial  # For scheduling functions with arguments
 from kivy.app import App
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
@@ -166,10 +159,10 @@ class CustomTextInput(TextInput):
     def __init__(self, password=False, **kwargs):
         super(CustomTextInput, self).__init__(**kwargs)
         self.password = password  # Enable password masking if True
-        self.multiline = False  # Ensure single-line input
-        self.size_hint_x = None  # Disable automatic width sizing
-        self.size_hint_y = None  # Disable automatic height sizing
-        self.font_size = 24  # Set font size
+        self.multiline = False    # Ensure single-line input
+        self.size_hint_x = None   # Disable automatic width sizing
+        self.size_hint_y = None   # Disable automatic height sizing
+        self.font_size = 24       # Set font size
 
         # Set a reasonable fixed width based on character count
         # Approximate average character width: 0.6 * font_size
@@ -182,9 +175,9 @@ class CustomTextInput(TextInput):
 
         # Styling: Semi-transparent white background with black text
         self.background_normal = ''  # Remove default background
-        self.background_active = ''  # Remove default active background
+        self.background_active = ''   # Remove default active background
         self.background_color = (1, 1, 1, 0.3)  # Semi-transparent white for background
-        self.foreground_color = (0, 0, 0, 1)  # Black text color for contrast
+        self.foreground_color = (0, 0, 0, 1)   # Black text color for contrast
 
         # Add Rounded Corners and Enhanced Background
         with self.canvas.before:
@@ -229,8 +222,8 @@ class CustomButton(Button):
         super(CustomButton, self).__init__(**kwargs)
         self.size_hint_x = None  # Disable automatic width sizing
         self.size_hint_y = None  # Disable automatic height sizing
-        self.font_size = 24  # Set font size
-        self.bold = True  # Make text bold
+        self.font_size = 24       # Set font size
+        self.bold = True          # Make text bold
 
         # Define Electric Blue color
         self.electric_blue = (0, 0.6, 1, 1)  # Electric Blue RGBA
@@ -281,19 +274,26 @@ class CustomButton(Button):
 # Help Popup
 # -------------------------------
 
-class HelpPopup(ModalView):
+class CustomHelpPopup(ModalView):
     """
-    A popup window that provides contextual help information to the user.
+    A popup window that provides contextual help information to the user with a basic semi-transparent background.
+    Includes fade-in and fade-out animations, and a typewriter text animation.
     """
     def __init__(self, help_text, **kwargs):
-        super(HelpPopup, self).__init__(**kwargs)
+        super(CustomHelpPopup, self).__init__(**kwargs)
         self.size_hint = (0.8, 0.8)  # Slightly smaller than the window
-        self.auto_dismiss = False  # Prevent dismissal by clicking outside
+        self.auto_dismiss = False    # Prevent dismissal by clicking outside
+        self.opacity = 0             # Start fully transparent for fade-in effect
 
-        # Semi-transparent dark background
+        self.full_text = help_text  # Store the complete help text
+        self.typed_text = ""        # Initialize as empty
+
         with self.canvas.before:
-            Color(0, 0, 0, 0.7)
-            self.bg = Rectangle(pos=self.pos, size=self.size)
+            # Semi-transparent background
+            Color(0.1, 0.1, 0.1, 0.8)  # Dark semi-transparent color
+            self.bg_rect = RoundedRectangle(pos=self.pos, size=self.size, radius=[20, 20, 20, 20])
+
+        # Bind the update_bg method to position and size changes
         self.bind(pos=self.update_bg, size=self.update_bg)
 
         # Content layout
@@ -301,16 +301,17 @@ class HelpPopup(ModalView):
 
         # ScrollView for Help Text
         scroll_view = ScrollView(size_hint=(1, 0.9))
-        help_label = Label(
-            text=help_text,
+        self.help_label = Label(
+            text="",
             halign='left',
             valign='top',
             text_size=(self.width - 40, None),
             markup=True,
-            font_size=18
+            font_size=18,
+            color=(1, 1, 1, 1)  # White text color for contrast
         )
-        help_label.bind(width=self.update_help_text_size)
-        scroll_view.add_widget(help_label)
+        self.help_label.bind(width=self.update_help_text_size)
+        scroll_view.add_widget(self.help_label)
         content.add_widget(scroll_view)
 
         # Close Button
@@ -320,19 +321,86 @@ class HelpPopup(ModalView):
             size=(100, 50),
             pos_hint={'center_x': 0.5},
             font_size=18,
-            bold=True
+            bold=True,
+            background_color=(0.2, 0.6, 0.86, 0.8),  # Electric Blue with some transparency
+            background_normal=''  # Remove default background
         )
-        close_button.bind(on_press=self.dismiss)
+        close_button.bind(on_press=self.fade_out_and_dismiss)
         content.add_widget(close_button)
 
         self.add_widget(content)
 
-    def update_help_text_size(self, instance, value):
-        instance.text_size = (value - 40, None)
-
     def update_bg(self, *args):
-        self.bg.pos = self.pos
-        self.bg.size = self.size
+        """
+        Updates the position and size of the background rectangle to match the popup.
+        """
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
+
+    def on_open(self):
+        """
+        Called when the popup is opened. Starts the fade-in and typewriter animations.
+        """
+        super(CustomHelpPopup, self).on_open()
+        self.help_label.text = ""  # Clear existing text
+        self.start_typing()        # Begin typewriter animation
+        self.start_fade_in()       # Begin fade-in animation
+
+    def start_fade_in(self):
+        """
+        Animates the popup's opacity from 0 to 1.
+        """
+        anim = Animation(opacity=1, duration=0.5)
+        anim.start(self)
+        print("CustomHelpPopup fade-in animation started.")
+
+    def start_typing(self):
+        """
+        Starts the typewriter effect to reveal the help text character by character with easing.
+        """
+        total_duration = 3.0  # Total duration for typing animation in seconds
+        total_chars = len(self.full_text)
+
+        if total_chars == 0:
+            return  # No text to display
+
+        for i in range(1, total_chars + 1):
+            progress = i / total_chars
+            eased_progress = self.ease_in_out_cubic(progress)
+            scheduled_time = eased_progress * total_duration
+            # Schedule the update_text method with the current index
+            Clock.schedule_once(partial(self.update_text, i), scheduled_time)
+
+    def update_text(self, idx, dt):
+        """
+        Updates the help_label's text up to the specified index.
+        """
+        self.typed_text = self.full_text[:idx]
+        self.help_label.text = self.typed_text
+
+    def ease_in_out_cubic(self, x):
+        """
+        Cubic ease-in-out function for smooth animation.
+        """
+        if x < 0.5:
+            return 4 * x ** 3
+        else:
+            return 1 - pow(-2 * x + 2, 3) / 2
+
+    def fade_out_and_dismiss(self, instance):
+        """
+        Starts the fade-out animation and dismisses the popup after completion.
+        """
+        anim = Animation(opacity=0, duration=0.5)
+        anim.bind(on_complete=lambda anim, widget: self.dismiss())
+        anim.start(self)
+        print("CustomHelpPopup fade-out animation started.")
+
+    def update_help_text_size(self, instance, value):
+        """
+        Updates the text_size of the help_label to ensure proper text wrapping.
+        """
+        instance.text_size = (value - 40, None)
 
 
 # -------------------------------
@@ -526,9 +594,9 @@ class LoginScreen(RelativeLayout):
         """
         Called after fade-out is complete on successful login.
         """
-        # Schedule fade-in after x seconds
-        Clock.schedule_once(self.fade_in_widgets, 5)
-        print("Scheduled fade-in after 5 seconds.")
+        # Schedule fade-in after 10 seconds
+        Clock.schedule_once(self.fade_in_widgets, 10)
+        print("Scheduled fade-in after 10 seconds.")
 
     def fade_in_widgets(self, dt):
         """
@@ -565,7 +633,7 @@ class LoginApp(App):
     def __init__(self, **kwargs):
         super(LoginApp, self).__init__(**kwargs)
         self.presentation_mode = False  # Flag to track presentation mode
-        self.help_popup = None  # Reference to the current HelpPopup instance
+        self.help_popup = None          # Reference to the current CustomHelpPopup instance
 
         # Initialize ConfigParser
         self.config = configparser.ConfigParser()
@@ -666,7 +734,7 @@ class LoginApp(App):
         script_dir = os.path.dirname(os.path.abspath(__file__))
         assets_dir = os.path.join(script_dir, '..', 'assets')
         background_image_path = os.path.join(assets_dir, 'background.png')  # Ensure correct file name and extension
-        background_image_path = os.path.normpath(background_image_path)  # Normalize the path
+        background_image_path = os.path.normpath(background_image_path)    # Normalize the path
 
         if not os.path.exists(background_image_path):
             print(f"Background image not found at {background_image_path}")
@@ -718,7 +786,7 @@ class LoginApp(App):
             self.login_screen.remember_checkbox.active = True  # Set the checkbox as active
             print("Pre-filled the username field with the saved username.")
 
-        # Bind F12, F11, and F1 keys for full-screen, presentation mode, and help screen toggles
+        # Bind F12, F11, F1, and Escape keys for full-screen, presentation mode, and help screen toggles
         Window.bind(on_key_down=self.on_key_down)
         print("Bound F12, F11, F1, and Escape keys for full-screen, presentation mode, and help screen toggles.")
 
@@ -768,7 +836,7 @@ class LoginApp(App):
             # Define keycodes manually based on system (example keycodes)
             F12_KEYCODE = 293  # Adjust based on your system's keycode for F12
             F11_KEYCODE = 292  # Adjust based on your system's keycode for F11
-            F1_KEYCODE = 282    # Updated keycode for F1
+            F1_KEYCODE = 282    # Keycode for F1
             ESCAPE_KEYCODE = 27  # Common keycode for Escape
 
             # Prepare key press information
@@ -800,7 +868,7 @@ class LoginApp(App):
             elif key == F1_KEYCODE:
                 if self.help_popup and self.help_popup.parent:
                     # Help popup is open; close it
-                    self.help_popup.dismiss()
+                    self.help_popup.fade_out_and_dismiss(None)
                     print("Help screen closed using F1 key.")
                     self.show_feedback("Help Screen Closed (F1)")
                 else:
@@ -813,7 +881,7 @@ class LoginApp(App):
             # Handle Escape key to close help popup if open
             elif key == ESCAPE_KEYCODE:
                 if self.help_popup and self.help_popup.parent:
-                    self.help_popup.dismiss()
+                    self.help_popup.fade_out_and_dismiss(None)
                     print("Help screen closed using Escape key.")
                     self.show_feedback("Help Screen Closed (Escape)")
                     return True  # Indicate that the event has been handled
@@ -897,39 +965,39 @@ class LoginApp(App):
 
     def open_help_popup(self):
         """
-        Opens the help popup overlay with contextual help based on current focus.
+        Opens the help popup overlay with contextual help based on current focus, including fade-in and typewriter animations.
         """
         # For simplicity, we'll assume we're always on the LoginScreen
         help_text = (
             "[b]Welcome to the Login Application![/b]\n\n"
             "Here's how to use the application:\n\n"
             "[b]1. Login:[/b]\n"
-            "- Enter your username and password in the respective fields.\n"
-            "- Click the 'Login' button to access your account.\n\n"
+            "    • Enter your username and password in the respective fields.\n"
+            "    • Click the 'Login' button to access your account.\n\n"
             "[b]2. Create New Account:[/b]\n"
-            "- If you don't have an account, click the 'Create New Account' button.\n"
-            "- Follow the prompts to set up your new account.\n\n"
+            "    • If you don't have an account, click the 'Create New Account' button.\n"
+            "    • Follow the prompts to set up your new account.\n\n"
             "[b]3. Recover Account:[/b]\n"
-            "- If you've forgotten your password, click the 'Recover Account' button.\n"
-            "- Enter your recovery phrase to regain access.\n\n"
+            "    • If you've forgotten your password, click the 'Recover Account' button.\n"
+            "    • Enter your recovery phrase to regain access.\n\n"
             "[b]4. Keyboard Shortcuts:[/b]\n"
-            "- [color=ff0000]F12[/color]: Toggle full-screen mode.\n"
-            "- [color=ff0000]F11[/color]: Toggle presentation mode.\n"
-            "- [color=ff0000]F1[/color]: Open this help screen.\n"
+            "    • [color=ff0000]F12[/color]: Toggle full-screen mode.\n"
+            "    • [color=ff0000]F11[/color]: Toggle presentation mode.\n"
+            "    • [color=ff0000]F1[/color]: Open this help screen.\n"
         )
 
-        # Create and open the HelpPopup instance
-        self.help_popup = HelpPopup(help_text=help_text)
+        # Create and open the CustomHelpPopup instance
+        self.help_popup = CustomHelpPopup(help_text=help_text)
         self.help_popup.bind(on_dismiss=self.on_help_popup_dismiss)
         self.help_popup.open()
-        print("HelpPopup instance created and opened.")
+        print("CustomHelpPopup instance created and opened.")
 
     def on_help_popup_dismiss(self, popup):
         """
-        Callback when the HelpPopup is dismissed.
+        Callback when the CustomHelpPopup is dismissed.
         """
         self.help_popup = None
-        print("HelpPopup instance dismissed and reference cleared.")
+        print("CustomHelpPopup instance dismissed and reference cleared.")
 
 
 # -------------------------------
