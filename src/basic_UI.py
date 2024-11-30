@@ -4,10 +4,11 @@
 This script creates a Kivy-based login application with the following features:
 - Gradient background with an optional background image.
 - Login interface with Username and Password fields.
+- "Remember Me" checkbox to remember the username on the current machine.
 - Buttons for Login, Account Recovery, and Creating a New Account.
-- Full-screen toggle functionality using the F12 key only.
+- Full-screen toggle functionality using the F12 key.
 - Presentation mode to display key presses using the FeedbackLabel system.
-- Help screen that pops up when pressing F1.
+- Help screen that pops up when pressing F1 and can be closed with F1 or Escape.
 - Visual feedback for user actions.
 - Robust error handling and dynamic UI adjustments.
 - Debugger label at the bottom to display key press information.
@@ -24,6 +25,7 @@ project/
 
 import kivy
 import os
+import configparser  # Use Python's standard configparser
 from kivy.app import App
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
@@ -32,6 +34,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from kivy.uix.checkbox import CheckBox
 from kivy.uix.image import Image
 from kivy.core.window import Window
 from kivy.properties import ObjectProperty, StringProperty, ListProperty, NumericProperty
@@ -338,14 +341,14 @@ class HelpPopup(ModalView):
 
 class LoginScreen(RelativeLayout):
     """
-    The main login screen containing Username and Password fields and multiple buttons.
+    The main login screen containing Username and Password fields, "Remember Me" checkbox, and multiple buttons.
     """
     scale = NumericProperty(1.0)  # Property to handle scaling
 
     def __init__(self, **kwargs):
         super(LoginScreen, self).__init__(**kwargs)
         self.size_hint = (None, None)
-        self.size = (400, 300)  # Adjust size as needed
+        self.size = (400, 500)  # Increased height to accommodate checkbox and additional spacing
 
         # Initialize child widgets
 
@@ -357,13 +360,13 @@ class LoginScreen(RelativeLayout):
             size=(200, 40),
             color=(1, 1, 1, 1)  # White text color
         )
-        username_label.pos = (50, 200)  # Position relative to LoginScreen
+        username_label.pos = (50, 400)  # Adjusted position
         self.add_widget(username_label)
 
         # Username TextInput
         self.username = CustomTextInput()
         self.username.hint_text = "Enter your username"
-        self.username.pos = (50, 150)  # Position relative to LoginScreen
+        self.username.pos = (50, 350)  # Adjusted position
         self.add_widget(self.username)
 
         # Password Label
@@ -374,14 +377,35 @@ class LoginScreen(RelativeLayout):
             size=(200, 40),
             color=(1, 1, 1, 1)  # White text color
         )
-        password_label.pos = (50, 100)  # Position relative to LoginScreen
+        password_label.pos = (50, 300)  # Adjusted position
         self.add_widget(password_label)
 
         # Password TextInput
         self.password = CustomTextInput(password=True)
         self.password.hint_text = "Enter your password"
-        self.password.pos = (50, 50)  # Position relative to LoginScreen
+        self.password.pos = (50, 250)  # Adjusted position
         self.add_widget(self.password)
+
+        # "Remember Me" Checkbox and Label
+        remember_layout = BoxLayout(
+            orientation='horizontal',
+            spacing=10,
+            size_hint=(None, None),
+            size=(200, 40),
+            pos=(50, 200)  # Position relative to LoginScreen
+        )
+
+        self.remember_checkbox = CheckBox(active=False)
+        remember_label = CustomLabel(
+            text='Remember Me',
+            font_size=20,
+            size_hint=(None, None),
+            size=(150, 40),
+            color=(1, 1, 1, 1)  # White text color
+        )
+        remember_layout.add_widget(self.remember_checkbox)
+        remember_layout.add_widget(remember_label)
+        self.add_widget(remember_layout)
 
         # Horizontal BoxLayout for Login and Account Recovery Buttons
         buttons_layout = BoxLayout(
@@ -389,7 +413,7 @@ class LoginScreen(RelativeLayout):
             spacing=20,
             size_hint=(None, None),
             size=(300, 60),
-            pos=(50, -10)  # Position relative to LoginScreen
+            pos=(50, 150)  # Adjusted position
         )
 
         # Login Button
@@ -414,11 +438,12 @@ class LoginScreen(RelativeLayout):
         )
         self.new_account_button.size_hint = (None, None)
         self.new_account_button.size = (300, 60)
-        self.new_account_button.pos = (50, -80)  # Position relative to LoginScreen
+        self.new_account_button.pos = (50, 80)  # Adjusted position for vertical spacing
         self.add_widget(self.new_account_button)
 
         # Assign next_widget for Tab navigation
         self.username.next_widget = self.password
+        self.password.next_widget = self.remember_checkbox  # Next widget after password is the checkbox
 
         # Bind buttons to their respective methods
         self.login_button.bind(on_press=self.validate_credentials)
@@ -451,6 +476,25 @@ class LoginScreen(RelativeLayout):
 
         if uname == "admin" and pwd == "password":
             print("Login successful.")
+
+            # If "Remember Me" is checked, save the username
+            app = App.get_running_app()
+            if self.remember_checkbox.active:
+                app.save_username(uname)
+                print("Username saved for future sessions.")
+            else:
+                app.clear_username()
+                print("Username not saved.")
+
+            # Clear the password field
+            self.password.text = ""
+            print("Password field cleared.")
+
+            # If "Remember Me" is not checked, clear the username field
+            if not self.remember_checkbox.active:
+                self.username.text = ""
+                print("Username field cleared because 'Remember Me' is not checked.")
+
             # Animate fade-out
             fade_out = Animation(opacity=0, duration=0.5)
             fade_out.bind(on_complete=lambda anim, widget: self.after_successful_login())
@@ -482,9 +526,9 @@ class LoginScreen(RelativeLayout):
         """
         Called after fade-out is complete on successful login.
         """
-        # Schedule fade-in after 10 seconds
-        Clock.schedule_once(self.fade_in_widgets, 10)
-        print("Scheduled fade-in after 10 seconds.")
+        # Schedule fade-in after x seconds
+        Clock.schedule_once(self.fade_in_widgets, 5)
+        print("Scheduled fade-in after 5 seconds.")
 
     def fade_in_widgets(self, dt):
         """
@@ -523,6 +567,22 @@ class LoginApp(App):
         self.presentation_mode = False  # Flag to track presentation mode
         self.help_popup = None  # Reference to the current HelpPopup instance
 
+        # Initialize ConfigParser
+        self.config = configparser.ConfigParser()
+        self.config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.ini')
+        self.config.read(self.config_path)
+
+        # Ensure the [user] section exists
+        if not self.config.has_section('user'):
+            self.config.add_section('user')
+            # Write the config to create the 'user' section in config.ini
+            try:
+                with open(self.config_path, 'w') as configfile:
+                    self.config.write(configfile)
+                print("Created '[user]' section in config.ini.")
+            except Exception as e:
+                print(f"Failed to create '[user]' section in config.ini: {e}")
+
         # Manually define keycode to name mapping for specific keys
         self.manual_keycode_to_name = {
             282: 'F1',          # Common keycode for F1
@@ -544,6 +604,47 @@ class LoginApp(App):
 
         # Initialize a reference for the debugger label
         self.debug_label = None
+
+    def save_username(self, username):
+        """
+        Saves the username to the config file under the [user] section.
+        """
+        if not self.config.has_section('user'):
+            self.config.add_section('user')
+            print("Added '[user]' section to config.ini.")
+
+        self.config.set('user', 'username', username)
+        try:
+            with open(self.config_path, 'w') as configfile:
+                self.config.write(configfile)
+            print(f"Username '{username}' saved to config.ini.")
+        except Exception as e:
+            print(f"Failed to save username to config.ini: {e}")
+
+    def load_username(self):
+        """
+        Loads the username from the config file if it exists.
+        """
+        if self.config.has_option('user', 'username'):
+            username = self.config.get('user', 'username')
+            print(f"Loaded username from config.ini: {username}")
+            return username
+        else:
+            print("No saved username found in config.ini.")
+            return ''
+
+    def clear_username(self):
+        """
+        Clears the saved username from the config file.
+        """
+        if self.config.has_option('user', 'username'):
+            self.config.remove_option('user', 'username')
+            try:
+                with open(self.config_path, 'w') as configfile:
+                    self.config.write(configfile)
+                print("Cleared saved username from config.ini.")
+            except Exception as e:
+                print(f"Failed to clear username from config.ini: {e}")
 
     def build(self):
         # Ensure the application starts in windowed mode with a predefined size
@@ -610,9 +711,16 @@ class LoginApp(App):
         root.add_widget(anchor_layout)
         print("AnchorLayout added to root FloatLayout.")
 
+        # Load the saved username and set it in the username field
+        saved_username = self.load_username()
+        if saved_username:
+            self.login_screen.username.text = saved_username
+            self.login_screen.remember_checkbox.active = True  # Set the checkbox as active
+            print("Pre-filled the username field with the saved username.")
+
         # Bind F12, F11, and F1 keys for full-screen, presentation mode, and help screen toggles
         Window.bind(on_key_down=self.on_key_down)
-        print("Bound F12, F11, and F1 keys for full-screen, presentation mode, and help screen toggles.")
+        print("Bound F12, F11, F1, and Escape keys for full-screen, presentation mode, and help screen toggles.")
 
         # Bind to window size changes to re-center the LoginScreen if needed
         Window.bind(on_resize=self.on_window_resize)
