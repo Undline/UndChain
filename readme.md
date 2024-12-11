@@ -94,6 +94,8 @@ I wanted to provide some examples of co-chains to help provide a better idea of 
 11. **Perception Score**:
     
     - Tracks and evaluates user behavior to identify trustworthy participants and mitigate bad actors.
+    - Implements a XP system that tracks how close a user is to the next level in their perception score.
+    - Implements a seasonal reward system that incentivize validators and partners to provide specific resources to the network.
 12. **Activity Metrics and Ratings**:
     
     - Maintains standardized metrics for co-chain activity and performance.
