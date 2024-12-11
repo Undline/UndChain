@@ -42,29 +42,89 @@ The purpose of utilizing co-chains rather than having layer 2 blockchains are mu
 
 ## Examples of Co-Chains
 
-I wanted to provide some examples of co-chains to help provide a better idea of what a co-chain could look like.
+I wanted to provide some examples of co-chains to help provide a better idea of what a co-chain could look like. The plan is to build co-chains so that I can test and make sure that the core protocol works well with a various needs. 
 
-- **Main Chain** - This co-chain is responsible for creating the messaging protocols that go between various user types. It sets up two tokens, one for validators and the other for partners. Compiler for the Pseudo programing language, it creates an alias system that allows users to have user names that could be used for easier transactions (user names begin with an @). It sets the rules to create chain rules, which includes several options such as developer compensation, tokenomics and preferred validators. It maintains the block time for the chain and it stores the link that go across multiple networks. There will be more details on all this later since the main chain's code is here. There is also a protocol for digital asset assignment meaning that one or more users can own a digital asset and make fees off of it's use (think Music where you have the writer and the music as two separate but required pieces to create the DA); there should also be a way to make groups that can be used as a user.  Create a emergency message system that the chain owner can use to contact all users of that chain. Perception score which helps identify bad actors on the network. Convergence which helps with the blockchain getting too large. Licenses framework to show how to write licenses for the chain (allows users to see what they can and cannot do on chain). Subscriptions, this system allows users to pay using a subscription model that expires on a defined date; this will make budgeting easier for users. Open transaction, this keeps a digital asset transaction with the same end user open in the event something like a tip is to be given. *Does the main chain need to keep a list of the known validators of other chains?*
+- **Main Chain** - The Main Chain serves as the foundation of UndChain, coordinating critical protocols, utilities, and governance across the network. Its responsibilities include:
+
+1. **Messaging and Communication**:
+    
+    - Establishes base messaging protocols to facilitate interaction between user types (validators, partners, and clients).
+    - Introduces an **emergency messaging system** that allows chain owners to broadcast critical updates to all users.
+2. **Token Management**:
+    
+    - Supports two native tokens:
+        - **UGP (UndChain Gold Piece)**: A connection token enabling interactions with validators.
+        - **USP (UndChain Silver Piece)**: A utility token for partners to perform tasks across co-chains.
+3. **Alias System (UnaS)**:
+    
+    - Provides users with customizable usernames (e.g., `@username`) for simplified transactions and easier identification.
+4. **Chain Rules Framework**:
+    
+    - Sets the format for defining co-chain-specific rules, including:
+        - Developer compensation.
+        - Tokenomics structure.
+        - Validator preferences.
+5. **Interoperability and Subnet Management**:
+    
+    - Stores contact information for co-chains, ensuring seamless redirection to updated versions.
+    - Maintains cross-network links for interoperability across multiple networks and subnets.
+6. **Digital Asset Management**:
+    
+    - Enables **digital asset assignment**, allowing one or more users to co-own assets and share fees (e.g., between a songwriter and a musician).
+    - Supports user groups to collectively manage assets.
+    - Introduces **Open Transactions**, keeping asset transactions active for ongoing exchanges (e.g., tips or recurring contributions).
+    - Implements **Standard Digital Asset Contracts**, a predefined system for defining asset rights and restrictions.
+    - Introduces the **Digital Asset Protection (DAP) Protocol**, allowing assets to be protected and claims to be enforced both on and off-chain.
+7. **Security Protocols**:
+    
+    - **Will Protocol**: Allows users to predefine where their digital assets should go if their account becomes inactive for a user-defined period.
+    - **Freeze Protocol**: Locks an account to prevent any transactions if a breach is suspected, activating the Will Protocol if necessary.
+    - **Limiter Protocol**: Sets transaction limits or delay timers for assets, minimizing losses during potential account compromise.
+8. **Licenses and Contracts**:
+    
+    - Provides a framework for creating:
+        - Digital Asset Contracts (e.g., usage rights and restrictions).
+        - Terms of Use for individual co-chains.
+9. **Subscription Model**:
+    
+    - Implements a subscription system, enabling users to pay recurring fees for co-chain services with predefined expiration dates.
+10. **Redemption System**:
+    
+    - Allows users to generate unique codes that others can redeem for assets, similar to prepaid or gift cards.
+11. **Perception Score**:
+    
+    - Tracks and evaluates user behavior to identify trustworthy participants and mitigate bad actors.
+12. **Activity Metrics and Ratings**:
+    
+    - Maintains standardized metrics for co-chain activity and performance.
+    - Implements a rating system for users to assess co-chains’ reliability.
+13. **Convergence Protocol**:
+    
+    - Prevents blockchain size from becoming unmanageable by consolidating historical data into a new genesis block while preserving data integrity.
+14. **Block Time and Synchronization**:
+    
+    - Establishes and maintains consistent block time across the network to ensure synchronization.
 
 - **Mimic** - This is our AI chain, in here we create very specific models that are great at a particular task then link that up to a hypervisor that directs the incoming request to the correct model. *The reason for many small models rather than one monolithic model is so it's easier to change and can run on various hardware*
 
 - **Pages** - This is our Web 4 system that delivers something similar to webpages, but instead of HTML and CSS you have **M3L** and **GSS**. The advantages of those markups is they allow a single component to be updated rather than an entire document so it's less load on the network. The goal is to also get rid of cookies so you're not helping companies track your habits online. This also introduces AdCoin which is used for pulling up different pages; you can trade for it or earn it by interacting with ads. This also sets up UnaS (UndChain naming service) which will be responsible for resolving names from addresses, much like how DNS works today. There is also a protocol called Adult_Swim which is a verification system to know if a particular user is above a set age. There will also be a content rating system to help both classify content as well as promote it. 
 	- *Make a sanitation system inside M3L to help with limiting the value of data going into Pseudo*
 
-- **Will** - This chain serves as an emergency backup system in the event that either you lose your keys or you pass away. The idea is that you set a threshold of time to transpire where you have no network activity. If this occurs a smart contract (per your instructions) executes and transmits your digital assets to the wallet(s) of your choosing. We will also be creating a 'compromised' button so that if you notice your account is hacked you can hit this button and it will freeze your account (you won't be able to make transactions). You may also set withdraw limits that can go off at a set interval of your choosing (either total daily or per transaction). A Will takes up to seven days in order to take effect, but if a freeze is hit during that time the Will is ignored and the previous one is used (or the assets are locked) *I am debating on this being on the main chain, I think this could be a core feature.*
+- **Auction House** - This is where you can trade and mint new digital assets on the network. It effectively acts like a digital market place. Users can set pre-defined prices or have others bid on their digital assets. This is also where users can swap tokens on the network. Eventually this will also have bridges to other blockchains so that wrapped tokens can be swapped between the main chain and this one.
 
 - **Live** - This is our decentralized audio / video streaming system; this will be our first attempt at making a system who's goal is to have low latency system that is designed to be interactive between the provider and the participant (think live chat and a streamer). Live will target AV1 encoding since it has no royalty fees and it uses less bandwidth.
 
-- **Code Ledger** - This is a software repository system that is specifically built for Pseudo since we need a means of tracking changes to the code from a specific user and pay them out accordingly based on what the chain rules state. Haven't spoke on this, but the idea is that you can earn tokens by contributing code to project and depending on the impact you get rewarded. There is also a bounty system for new developments. Once of the features I am looking to implement is a in-line messaging system as an example, you're working in a team and have a question about a function I want the ability for you to post your question / comment in code that can later be answered by someone else. In doing this we should be able to answer any future questions from new developers.
+- **Code Ledger** - This is a software repository system that is specifically built for Pseudo since we need a means of tracking changes to the code from a specific user and pay them out accordingly based on what the chain rules state. It also stores the compiler for Pseudo. Haven't spoke on this, but the idea is that you can earn tokens by contributing code to project and depending on the impact you get rewarded. There is also a bounty system for new developments. Once of the features I am looking to implement is a in-line messaging system as an example, you're working in a team and have a question about a function I want the ability for you to post your question / comment in code that can later be answered by someone else. In doing this we should be able to answer any future questions from new developers.
 
 - **SQeeL** - This is UndChain's SQL system for creating and maintaining decentralized databases on chain. This will have the ability to either be a public database or it can be private with a shared key. One example for a public database would be a video content library where you need to store not only the video, but tags such as upload dates, gene, duration and previews. An example for a private database would be a manufacturing item database where you store the item ICN, cost, warehouse location and quantity.
 
 - **Smack** (Social Media Application for Curators and Keepers) - Smack redefines decentralized messaging and social interaction. This versatile protocol supports direct messaging, group creation, and scalable applications such as forums or social networks. Its user-centric approach ensures that your profile and content are never tied to a single platform. If you’re removed from one curator’s system (think Facebook or X), you retain your connections and ownership. Smack introduces two key roles: **curators**, platforms who publish your works, and **keepers** users who maintain full ownership and control. Smack also offers the potential for emergency messaging, ensuring reliable communication during critical situations.
 
-- **Player2** - This blockchain is focused on helping developers launch decentralized serves that allow their players to connect live based gaming content. This will be fairly difficult to implement as latency will become the most important metric. Another goal of this is to create something called world engine which has the goal of creating a fully simulated world system, so that actions in one area create ripple effects throughout the globe / map. This should also include our Meta space who's goal is to create a open ruleset for how objects and actions happen in the Meta_Space (character sizing / physics)
+- **Player2** - This blockchain is focused on helping developers launch decentralized serves that allow their players to connect live based gaming content. This will be fairly difficult to implement as latency will become the most important metric. Another goal of this is to create something called world engine which has the goal of creating a fully simulated world system, so that actions in one area create ripple effects throughout the globe / map. This should also include our Meta space who's goal is to create a open rule set for how objects and actions happen in the Meta_Space (character sizing / physics)
 	- To test these features out we will be creating games that utilize this service. Namely the Echoes series of games.
 
 As you can see there are a ton of chain ideas and I am sure more that will need to be developed to make this a full ecosystem. I may not be able to develop everything listed here, but my intention is to do as many as I can that are diverse as possible, so I can adjust the protocol based on the needs of these chains. I have personally found that when you use a product, you pick up on things that you would ordinarily miss. When developing co-chains always try to think of the value not just another asset class. 
+
 ## Co-chain code
 
 While I believe that the best policy is to have open source code. I will be making the chain so that you can run closed source code, at this time I am not sure on how to do it since there is an inherent risk of a security vulnerability if it's being shared publicly. More thought will have to be put into this at a later time, I just put this here so I wouldn't forget. **Do it using a preferred partner.**
