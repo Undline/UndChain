@@ -157,6 +157,12 @@ Mimic redefines AI for decentralized networks, combining modularity, scalability
 
 - **Pages** is UndChain’s decentralized Web4 system, offering a modern alternative to traditional web technologies. Replacing HTML and CSS with **M3L** (Multi-Media Markup Language) and **GSS** (Global Style Sheets), Pages provides a scalable, efficient, and privacy-centric experience for both creators and users.
 
+**Legacy Domain Protection**
+
+UndChain respects legacy (HTTP) domain names ending in **.com**, **.org**, **.gov**, **.edu**, and **.net**. These domains are reserved exclusively for their rightful owners as registered on the traditional internet to prevent impersonation and fraud. This ensures that trusted brands and institutions retain their identity in the transition to decentralized web technologies.
+
+All other domain types (e.g., **.io**, **.xyz**) are not automatically recognized or reserved within the UndChain ecosystem. This boundary is established to maintain clarity and fairness while minimizing complexity.
+
 #### **Key Features:**
 
 1. **Efficient Content Delivery**
