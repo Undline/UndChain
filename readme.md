@@ -155,8 +155,44 @@ I wanted to provide some examples of co-chains to help provide a better idea of 
 
 Mimic redefines AI for decentralized networks, combining modularity, scalability, and user empowerment. It’s not just an AI service—it’s a foundation for innovation, creativity, and community-driven progress on UndChain.
 
-- **Pages** - This is our Web 4 system that delivers something similar to webpages, but instead of HTML and CSS you have **M3L** and **GSS**. The advantages of those markups is they allow a single component to be updated rather than an entire document so it's less load on the network. The goal is to also get rid of cookies so you're not helping companies track your habits online. This also introduces AdCoin which is used for pulling up different pages; you can trade for it or earn it by interacting with ads. This also sets up UnaS (UndChain naming service) which will be responsible for resolving names from addresses, much like how DNS works today. There is also a protocol called Adult_Swim which is a verification system to know if a particular user is above a set age. There will also be a content rating system to help both classify content as well as promote it. 
-	- *Make a sanitation system inside M3L to help with limiting the value of data going into Pseudo*
+- **Pages** is UndChain’s decentralized Web4 system, offering a modern alternative to traditional web technologies. Replacing HTML and CSS with **M3L** (Multi-Media Markup Language) and **GSS** (Global Style Sheets), Pages provides a scalable, efficient, and privacy-centric experience for both creators and users.
+
+#### **Key Features:**
+
+1. **Efficient Content Delivery**
+    
+    - **M3L** and **GSS** revolutionize how content is served by allowing updates to individual components rather than entire documents, significantly reducing network load.
+    - Dynamic scaling ensures that popular pages are hosted across multiple partners based on demand and region, maintaining uptime and low latency even during high traffic.
+2. **Advanced Content Types**
+    
+    - Unlike HTML, **M3L** supports more advanced content types, such as **video**, **chat**, and **canvas**, enabling developers to build richer, more interactive applications directly on the Pages co-chain.
+    - M3L is designed for modularity and efficiency, referencing content locations dynamically rather than embedding them, reducing redundancy and improving scalability.
+3. **Tailored User Experience**
+    
+    - Pages includes a **featured content section** personalized to each user’s interests. This section is fully editable, giving users control over the recommendations they see.
+    - Content is also **classified and rated** to ensure users know what to expect from a site. Ratings are especially useful for identifying mature content or categorizing pages by their intended audience.
+4. **Page Rating System**
+    
+    - Users can **rate pages**, helping to maintain honesty and accountability. If creators falsely claim their pages are safer than they are, they receive a penalty to their perception score. Similarly, users who submit false negative claims about a page’s rating will also experience a decrease in their perception score.
+    - Only ratings from users with **reputable perception scores** are taken seriously, ensuring the system rewards fairness and transparency.
+5. **Privacy by Design**
+    
+    - By eliminating cookies and intrusive tracking methods, Pages protects user privacy while still providing a seamless browsing experience.
+    - The platform leverages decentralized systems to ensure user data remains secure and under their control.
+6. **AdCoin: The Native Token**
+    
+    - AdCoin is the native utility token for Pages, enabling a frictionless user experience. Users can choose to earn AdCoin by interacting with ads, assisting in **Mimic AI model training** (e.g., teaching AI how to draw or solve logical problems), or purchase it directly to support an ad-free browsing experience.
+    - AdCoin integration across the network ensures seamless monetization options for creators and users alike.
+7. **Age Verification and Content Control**
+    
+    - The **Adult_Swim Protocol** introduces a decentralized age verification system. Instead of storing user data, it uses markers to verify whether an account holder meets age requirements.
+    - Verified entities can grant age status, but any organization providing false records loses its ability to verify accounts, and all associated accounts lose their status. The UndChain organization can act as the default age verifier but primarily delegates this function to trusted entities.
+8. **Seamless Integration with Web4**
+    
+    - Pages works seamlessly with other UndChain co-chains, leveraging **M3L** and **GSS** to enable powerful tools like Mimic-powered assistants. These assistants can guide users through the network, troubleshoot issues, and provide real-time help for specific features in the apps they support.
+9. **Content Reaction System**
+    
+    - Pages includes built-in tools for users to react to and interact with content. This feedback helps site owners gauge audience sentiment and improve their offerings. For example, news articles and videos can be rated positively or negatively, providing valuable insights.
 
 - **Auction House** - This is where you can trade and mint new digital assets on the network. It effectively acts like a digital market place. Users can set pre-defined prices or have others bid on their digital assets. This is also where users can swap tokens on the network. Eventually this will also have bridges to other blockchains so that wrapped tokens can be swapped between the main chain and this one.
 
