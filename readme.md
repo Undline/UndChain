@@ -200,7 +200,80 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
     
     - Pages includes built-in tools for users to react to and interact with content. This feedback helps site owners gauge audience sentiment and improve their offerings. For example, news articles and videos can be rated positively or negatively, providing valuable insights.
 
-- **Auction House** - This is where you can trade and mint new digital assets on the network. It effectively acts like a digital market place. Users can set pre-defined prices or have others bid on their digital assets. This is also where users can swap tokens on the network. Eventually this will also have bridges to other blockchains so that wrapped tokens can be swapped between the main chain and this one.
+- **Auction House** - The Auction House co-chain is UndChain’s decentralized marketplace for minting, trading, and protecting digital assets. It uses **USP** (UndChain Silver Piece) as the default transaction token, ensuring seamless interoperability across the network. Users can seamlessly swap other registered tokens like AdCoin for USP at checkout.
+
+---
+
+### **Key Features**
+
+1. **Digital Asset Contracts**:
+    
+    - Assets are minted using UndChain’s **standard Digital Asset Contracts**:
+        - **Gray (Unregistered)**: Default for unprotected assets.
+        - **Green (Rental)**: Allows limited-use rentals with royalties sent to the creator.
+        - **Blue (Single Use + Sharing)**: Enables personal use and sharing, with a kickback for creators when shared content generates value.
+        - **Purple (Ownership)**: Allows reselling and distribution but restricts modifications.
+        - **Gold (Full Use)**: Complete ownership, including rights to resell, modify, and monetize.
+    - Certain categories of assets, like **music, videos, or games**, automatically integrate **royalty payments** for creators.
+    - Asset metadata includes ratings, version history, and licensing terms to help buyers make informed decisions.
+2. **Fraud Detection and Claims**:
+    
+    - The Auction House connects users to **Digital Asset Protection Providers (DAPPs)**, who handle protection, disputes, and enforcement actions.
+    - Filing a claim requires a **fee**, with the amount determined by the **perception score** of the claimant. Users with lower scores pay higher fees to discourage abuse.
+    - Winning claims result in asset ownership being transferred to the rightful owner, along with the claim fee. False claims reduce the claimant’s perception score and reward the accused with the fee.
+    - **RWA Protection**: Digital assets proven to infringe on real-world copyrights (RWAs) are transferred to rightful owners or destroyed.
+3. **Trust and Transparency**:
+    
+    - Sellers are classified visually on the Auction House based on their **perception score**:
+        - High-trust sellers are marked with a **verified badge** or highlighted visually for buyers.
+        - Low-trust sellers have clear **warnings or indicators** near their listings.
+    - Listings display whether the seller is the **original creator** or a **reseller** of the asset, helping buyers identify primary sources.
+    - All transactions, bids, and claims are stored **on-chain** for full transparency.
+4. **Resale Royalties and Sharing Incentives**:
+    
+    - **Green and Blue Contracts** integrate royalty systems:
+        - **Green Contracts**: Suitable for rentals (e.g., short-term music, video, or asset licensing). Creators receive royalties on repeated rentals.
+        - **Blue Contracts**: Allow creators to benefit from content sharing (e.g., reaction videos or embedded content), receiving a share of generated revenue.
+    - Creators can automate royalty payments through smart enforcement using DAPPs.
+5. **Fraud Prevention and AI Support**:
+    
+    - The Auction House leverages **Mimic AI** to scan for duplicates, unauthorized content, or stolen RWAs.
+    - Buyers receive warnings if flagged assets are listed for sale, ensuring informed purchases.
+6. **Buyer Protections**:
+    
+    - Buyers are encouraged to research sellers’ **perception scores** and **transaction histories**.
+    - If a purchased asset is later proven to infringe an RWA, buyers can **file claims** for compensation against sellers through the DAPP system.
+7. **Subscription Features**:
+    
+    - Sellers can opt for premium subscriptions to gain tools such as featured listings, detailed analytics, and automated pricing suggestions.
+
+---
+
+### **How It Works**
+
+The Auction House offers a fair, transparent, and decentralized experience for creators, buyers, and sellers:
+
+1. **Creators** mint assets using standard contracts, protecting ownership and enabling monetization.
+2. **Buyers** purchase or bid on verified assets, with tools to check seller trust levels and asset legitimacy.
+3. **Resellers** can list assets while ensuring creators receive royalties if applicable.
+4. **DAPPs** ensure claims, enforcement, and disputes are handled without UndChain involvement, preserving decentralization.
+
+---
+
+### **Visual Seller Classification**
+
+To improve trust and clarity, sellers will be visually classified:
+
+- **Verified Sellers**: Creators or trusted resellers with high perception scores receive a **verified badge** and enhanced listing visibility.
+- **Warning Sellers**: Sellers with low perception scores or flagged histories have **warnings** displayed near their listings.
+
+**Perception scores** are dynamic and affected by seller behavior, claims, and buyer feedback.
+
+---
+
+### **Final Notes**
+
+The Auction House ensures that digital assets remain protected, accessible, and monetizable through a robust and decentralized system. It empowers creators with tools to enforce ownership, buyers with transparency, and the network with fraud prevention mechanisms.
 
 - **Live** - This is our decentralized audio / video streaming system; this will be our first attempt at making a system who's goal is to have low latency system that is designed to be interactive between the provider and the participant (think live chat and a streamer). Live will target AV1 encoding since it has no royalty fees and it uses less bandwidth.
 
