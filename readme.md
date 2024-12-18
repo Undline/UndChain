@@ -275,7 +275,89 @@ To improve trust and clarity, sellers will be visually classified:
 
 The Auction House ensures that digital assets remain protected, accessible, and monetizable through a robust and decentralized system. It empowers creators with tools to enforce ownership, buyers with transparency, and the network with fraud prevention mechanisms.
 
-- **Live** - This is our decentralized audio / video streaming system; this will be our first attempt at making a system who's goal is to have low latency system that is designed to be interactive between the provider and the participant (think live chat and a streamer). Live will target AV1 encoding since it has no royalty fees and it uses less bandwidth.
+- **Live** - is UndChain’s dedicated decentralized audio/video streaming co-chain, built to deliver **low-latency**, **interactive streaming**, and enhanced accessibility while empowering creators to retain ownership and monetization of their content. Its modular design integrates directly into other co-chains like **Pages** and **Smack**, with advanced tools for user interaction, adaptive scaling, and intelligent AI integration through **Mimic**.
+
+---
+
+### **Key Features**
+
+1. **Decentralized Streaming with Low Latency**
+    
+    - Live targets **AV1 encoding**, a royalty-free, bandwidth-efficient codec, enabling smooth, low-latency streaming with minimal resource consumption.
+    - Designed for interactive experiences, Live powers **real-time events**, including live chat, reactions, and audience engagement.
+2. **Dynamic Content Distribution**
+    
+    - Live leverages a **spread protocol** that dynamically scales streams based on **popularity** and **regional demand**, ensuring high-traffic content is delivered efficiently.
+    - Content distribution happens organically as partners prioritize high-demand streams, enhancing availability and reducing latency for end users.
+3. **Interactive Streaming Applications**
+    
+    - Live supports **advanced user interactivity**, allowing content to respond to viewer actions within the stream. Examples include:
+        - **Clickable Video Interactions**: Users can click specific areas of the video to trigger events (e.g., playing different videos or navigating a decision tree). This system allows developers to create interactive video-based applications like **choose-your-path games** or **interactive learning tools**—serving as a precursor to **Player2**.
+        - **Dynamic Polls**: Streamers can integrate real-time polls and feedback mechanisms to gauge audience sentiment and preferences.
+    - **Audience-Driven Content**: Viewers’ actions and interactions can influence the flow or content of the stream, creating a uniquely immersive experience.
+4. **Intelligent AI Integration with Mimic**
+    
+    - Live incorporates **Mimic**, UndChain’s AI co-chain, to enhance content accessibility and usability:
+        - **Screen Reading**: When users pause a stream, Mimic analyzes the screen to enable text recognition. Users can copy and paste relevant text, such as captions, notes, or displayed information.
+        - **Closed Captioning**: Mimic automatically generates real-time captions, making streams accessible to a broader audience, including those with hearing impairments.
+        - **Intelligent Insights**: Mimic can assist streamers by analyzing viewer behaviors and content interactions, helping optimize future broadcasts.
+5. **Screen Sharing with M3L Efficiency**
+    
+    - Live introduces a **screen share system** designed for bandwidth optimization and seamless interactivity:
+        - Instead of streaming raw video, Live transmits the **M3L (Multi-Media Markup Language)** structure of the shared screen to recipients. This significantly reduces bandwidth usage while ensuring clarity.
+        - **Audio Support**: While M3L handles visual elements, audio streams separately to maintain synchronization.
+        - **Content Sharing**: If the shared screen plays a video, Live ensures all users pull the video from the same source, eliminating redundancy and maintaining efficiency.
+    - This feature is ideal for **tutorials**, **collaborative workflows**, and **interactive presentations**, where precise, low-bandwidth screen sharing is essential.
+6. **Full Ownership and Monetization**
+    
+    - Streams and recorded broadcasts are tokenized as **digital assets**, enabling creators to maintain ownership, set pricing models, and monetize their content.
+    - Creators can define **royalty structures** for specific content types like music, video, or interactive streams, ensuring they earn revenue whenever their assets are reused or resold.
+    - Revenue-sharing mechanisms allow creators and collaborators to split earnings transparently.
+7. **Integration with Pages and Smack**
+    
+    - **Pages**: Streamers can embed Live broadcasts directly into M3L-based web pages for seamless Web4 integration.
+    - **Smack**: Live supports video uploads and sharing within decentralized social media applications.
+8. **Regional and Adaptive Scaling**
+    
+    - Popular content is redistributed to local partners dynamically, enhancing performance and reducing latency.
+    - Partners are incentivized to prioritize streams with high demand, aligning with UndChain’s decentralized resource-sharing model.
+9. **Monetization with USP and AdCoin**
+    
+    - Live content can be monetized using:
+        - **USP**: The native utility token for Live transactions.
+        - **AdCoin**: Can be swapped for USP or earned through network ad hubs.
+    - Users benefit from flexible payment options, while streamers enjoy consistent monetization streams.
+10. **Content Ratings and User Safety**
+    
+
+- Live adheres to UndChain’s **content rating system**, ensuring streams are appropriately classified.
+- Stream creators can implement **age restrictions** for sensitive content using the Adult_Swim protocol, which verifies users’ eligibility without exposing personal data.
+
+---
+
+### **Use Cases**
+
+- **Interactive Streaming Platforms**: Live alternatives to Twitch, YouTube Live, or webinar services with enhanced interactivity.
+- **Choose-Your-Path Applications**: Interactive games, training tools, or learning modules where viewers’ choices guide the video content.
+- **Tutorial and Collaborative Workflows**: Efficient, low-bandwidth screen sharing for educational and professional use.
+- **Content Accessibility**: Closed captioning, screen text recognition, and content optimization with Mimic integration.
+- **Content Monetization**: Pay-per-view, subscription models, and royalty-based earnings for creators.
+
+---
+
+### **Why Live Stands Out**
+
+Live combines decentralized streaming, low latency, interactive features, and AI-driven enhancements to deliver a streaming platform unlike any other. It empowers creators, enriches viewer experiences, and integrates seamlessly into UndChain’s broader Web4 ecosystem. Whether embedded in Pages, used on Smack, or powering standalone applications, Live provides the tools to build the next generation of interactive, decentralized streaming solutions.
+
+---
+
+### **Developer Focus: Building with Live**
+
+Live demonstrates how UndChain’s co-chains work together to create powerful, interconnected systems. By integrating components like **Mimic’s AI tools**, **Pages’ content distribution**, and **Smack’s social sharing features**, Live showcases the flexibility and modularity developers can leverage when building their own co-chains.
+
+With UndChain, developers are encouraged to think beyond isolated systems—creating dynamic, interoperable applications that scale effortlessly and provide unmatched user experiences.
+
+---
 
 - **Code Ledger** - This is a software repository system that is specifically built for Pseudo since we need a means of tracking changes to the code from a specific user and pay them out accordingly based on what the chain rules state. It also stores the compiler for Pseudo. Haven't spoke on this, but the idea is that you can earn tokens by contributing code to project and depending on the impact you get rewarded. There is also a bounty system for new developments. Once of the features I am looking to implement is a in-line messaging system as an example, you're working in a team and have a question about a function I want the ability for you to post your question / comment in code that can later be answered by someone else. In doing this we should be able to answer any future questions from new developers.
 
