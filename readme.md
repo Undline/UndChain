@@ -687,9 +687,11 @@ Player2 is more than a co-chain; it’s the cornerstone of a decentralized gamin
 
 As you can see there are a ton of chain ideas and I am sure more that will need to be developed to make this a full ecosystem. I may not be able to develop everything listed here, but my intention is to do as many as I can that are diverse as possible, so I can adjust the protocol based on the needs of these chains. I have personally found that when you use a product, you pick up on things that you would ordinarily miss. When developing co-chains always try to think of the value not just another asset class. 
 
-## Co-chain code
+## Open vs. Closed Source
 
-While I believe that the best policy is to have open source code. I will be making the chain so that you can run closed source code, at this time I am not sure on how to do it since there is an inherent risk of a security vulnerability if it's being shared publicly. More thought will have to be put into this at a later time, I just put this here so I wouldn't forget. **Do it using a preferred partner.**
+While I firmly believe in the principles of open-source development, UndChain also provides the flexibility to run closed-source code. This capability is achieved through **Preferred Partners**, systems that execute chain owner code directly without requiring compilation by the Code Ledger co-chain. However, implementing closed-source systems introduces challenges, particularly regarding security and transparency, as public scrutiny of the code is limited.
+
+This approach may seem to contrast with the ideals of decentralization, but UndChain is designed to go beyond rigid definitions. By blending the strengths of both decentralized and centralized systems, UndChain ensures developers have the freedom to use the tools that best meet the unique requirements of their applications. Whether it’s full transparency through open-source projects or the tailored control of closed-source solutions, UndChain is built for the future—empowering developers to innovate without compromise.
 
 # User Types
 
