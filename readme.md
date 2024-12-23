@@ -11,7 +11,6 @@ If you're a developer interested in contributing to UndChain, have questions, or
 Whether you're just curious or ready to jump into development, all are welcome!
 
 ---
-
 # What is UndChain
 
 UndChain is a PoU (Proof of Utility) blockchain; that can best be thought of as a decentralized cloud service in which anyone can participate. There are three different utilities that can be performed on the network, that work together to create similar functionality as conventional cloud service providers.
@@ -40,19 +39,45 @@ The purpose of utilizing co-chains rather than having layer 2 blockchains are mu
 
 4. I think it's better than saying layer two; you're a creator on this network not a leach and you should be recognized for it. Even the main chain is a co-chain. *Note: I will do some verbiage changes in here that I believe are more accurate and beneficial to the industry.*
 
-## Examples of Co-Chains
+## Understanding Co-Chains: Building Blocks of UndChain
 
-I wanted to provide some examples of co-chains to help provide a better idea of what a co-chain could look like. The plan is to build co-chains so that I can test and make sure that the core protocol works well with a various needs. 
+Co-chains are specialized blockchain applications built on UndChain’s decentralized protocol. They enable developers to create targeted solutions, each tailored to specific use cases, while still integrating seamlessly with the broader ecosystem. To illustrate their potential, I’ve designed several foundational co-chains. These not only add value to the network but also serve as practical examples for developers aiming to build on UndChain.
 
-- **Main Chain** - The Main Chain serves as the foundation of UndChain, coordinating critical protocols, utilities, and governance across the network. Its responsibilities include:
+### Why I’m Building These Co-Chains
+
+As the creator of UndChain, my goal is to demonstrate how co-chains can unlock innovative solutions. By developing these foundational co-chains, I aim to:
+
+1. **Showcase Efficient Data Management:**  
+    Demonstrate how to store, access, and interact with data on the network in a secure and efficient manner.
+    
+2. **Promote Token Standardization:**  
+    Provide examples of token creation while encouraging developers to use existing tokens like USP to reduce market fragmentation and maintain interoperability.
+    
+3. **Highlight Co-Chain Collaboration:**  
+    Illustrate how co-chains can integrate and expand upon one another to create complex, interdependent systems (e.g., using Live with Smack or Player2).
+    
+4. **Inspire Developer Creativity:**  
+    Present co-chains that provide tangible value to users, showcasing how developers can design systems that drive engagement, adoption, and utility.
+    
+5. **Encourage Best Practices:**  
+    Serve as a blueprint for building secure, scalable, and sustainable blockchain applications that align with user needs and network goals.
+    
+
+### A Platform for Innovation
+
+These co-chains are not just standalone solutions; they are stepping stones for developers. By integrating and iterating on the concepts presented, developers can reduce duplication, enhance functionality, and focus on creating new value for the ecosystem. Whether it’s a decentralized streaming platform, a social media protocol, or a robust marketplace, the possibilities are endless when co-chains work together.
+
+### Main Chain
+
+The Main Chain serves as the foundation of UndChain, coordinating critical protocols, utilities, and governance across the network. Its responsibilities include:
 
 1. **Messaging and Communication**:
     
-    - Establishes base messaging protocols to facilitate interaction between user types (validators, partners, and clients).
-    - Introduces an **emergency messaging system** that allows chain owners to broadcast critical updates to all users.
+    - Establishes base peer to peer messaging protocols to facilitate interaction between user types (validators, partners, and clients).
+    - Introduces an **emergency messaging system** that allows chain owners to broadcast critical updates and alert messages to all users on the network.
 2. **Token Management**:
     
-    - Supports two native tokens:
+    - Creates two native tokens:
         - **UGP (UndChain Gold Piece)**: A connection token enabling interactions with validators.
         - **USP (UndChain Silver Piece)**: A utility token for partners to perform tasks across co-chains.
 3. **Alias System (UnaS)**:
@@ -94,8 +119,6 @@ I wanted to provide some examples of co-chains to help provide a better idea of 
 11. **Perception Score**:
     
     - Tracks and evaluates user behavior to identify trustworthy participants and mitigate bad actors.
-    - Implements a XP system that tracks how close a user is to the next level in their perception score.
-    - Implements a seasonal reward system that incentivize validators and partners to provide specific resources to the network.
 12. **Activity Metrics and Ratings**:
     
     - Maintains standardized metrics for co-chain activity and performance.
@@ -107,7 +130,9 @@ I wanted to provide some examples of co-chains to help provide a better idea of 
     
     - Establishes and maintains consistent block time across the network to ensure synchronization.
 
-- **Mimic** - This is UndChain’s dedicated AI co-chain, designed to revolutionize how artificial intelligence is deployed and used across decentralized networks. The Mimic co-chain focuses on creating **specialized AI models** tailored for specific tasks, ensuring efficiency, modularity, and adaptability. These models are connected to a **hypervisor system**, which intelligently routes incoming requests to the appropriate AI for seamless performance.
+### Mimic
+
+Mimic is UndChain’s dedicated AI co-chain, designed to revolutionize how artificial intelligence is deployed and used across decentralized networks. The Mimic co-chain focuses on creating **specialized AI models** tailored for specific tasks, ensuring efficiency, modularity, and adaptability. These models are connected to a **hypervisor system**, which intelligently routes incoming requests to the appropriate AI for seamless performance.
 
 **Key Features:**
 
@@ -155,7 +180,9 @@ I wanted to provide some examples of co-chains to help provide a better idea of 
 
 Mimic redefines AI for decentralized networks, combining modularity, scalability, and user empowerment. It’s not just an AI service—it’s a foundation for innovation, creativity, and community-driven progress on UndChain.
 
-- **Pages** is UndChain’s decentralized Web4 system, offering a modern alternative to traditional web technologies. Replacing HTML and CSS with **M3L** (Multi-Media Markup Language) and **GSS** (Global Style Sheets), Pages provides a scalable, efficient, and privacy-centric experience for both creators and users.
+### **Pages (Decentralized Web Platform)**
+
+**Pages** is UndChain’s decentralized Web4 system, offering a modern alternative to traditional web technologies. Replacing HTML and CSS with **M3L** (Multi-Media Markup Language) and **GSS** (Global Style Sheets), Pages provides a scalable, efficient, and privacy-centric experience for both creators and users. 
 
 **Legacy Domain Protection**
 
@@ -274,6 +301,8 @@ To improve trust and clarity, sellers will be visually classified:
 ### **Final Notes**
 
 The Auction House ensures that digital assets remain protected, accessible, and monetizable through a robust and decentralized system. It empowers creators with tools to enforce ownership, buyers with transparency, and the network with fraud prevention mechanisms.
+
+---
 
 - **Live** - is UndChain’s dedicated decentralized audio/video streaming co-chain, built to deliver **low-latency**, **interactive streaming**, and enhanced accessibility while empowering creators to retain ownership and monetization of their content. Its modular design integrates directly into other co-chains like **Pages** and **Smack**, with advanced tools for user interaction, adaptive scaling, and intelligent AI integration through **Mimic**.
 
@@ -451,64 +480,8 @@ With Code Ledger, UndChain doesn’t just provide a decentralized alternative to
 
 ---
 
-- **SQeeL** - is UndChain’s decentralized SQL database system, designed for creating and managing on-chain databases with seamless scalability, robust user features, and enhanced developer tools. Built to balance power and usability, SQeeL transforms decentralized database management into a streamlined, interactive experience.
 
-Key Features
-1. Intuitive Spreadsheet-Like Interface
-
-Offers a familiar, spreadsheet-inspired interface for visual data interaction, editing, and querying.
-Supports both raw SQL queries and visual interaction with tables, similar to Excel or Google Sheets.
-Includes dynamic graphing tools (bar charts, line graphs, heatmaps) for instant data visualization.
-2. Dynamic AI Assistance (Powered by Mimic)
-
-Query Optimization: Mimic suggests optimizations, flags inefficient queries, and recommends schema improvements.
-Graph Insights: Mimic analyzes graph data to highlight trends, anomalies, and usage patterns.
-Interactive Tutorials: Developers can access Mimic-driven tutorials on SQeeL features, query writing, and best practices.
-3. Cross-Chain Data Linking
-
-Seamlessly integrates databases with other UndChain co-chains, enriching datasets without duplication.
-Example: Pull user profiles from Smack, transaction data from the Auction House, or content metadata from Pages.
-4. Real-Time Collaboration
-
-Teams can collaborate on databases with permission-based access control.
-Screen sharing from Live enables pair programming, code reviews, or interactive troubleshooting.
-5. Snapshot System and Audit Logs
-
-Snapshots: Immutable “snapshots” of databases for backups or archival purposes, stored as digital assets.
-Audit Logs: Logs all changes (row insertion, updates, or deletion) immutably on-chain for transparency.
-6. Decentralized Data Storage
-
-Integrates natively with UndChain’s decentralized storage providers for secure and redundant storage.
-7. Data Monetization Marketplace
-
-Enables public or private datasets to be monetized as digital assets through subscriptions or pay-per-query models.
-8. Module Marketplace
-
-Introduces a marketplace for reusable database modules categorized and monetized as digital assets.
-Mimic recommends modules based on project needs, streamlining development.
-9. Forking and Licensing
-
-Respects UndChain’s digital asset contracts for proper licensing and monetization.
-Allows databases or modules to be forked for customization while adhering to creator licensing terms.
-10. Clone Protocol (External Data Ingestion System)
-
-Integration with SQeeL: SQeeL incorporates the Clone Protocol to bring external datasets from Web2 or Web3 systems into UndChain’s decentralized infrastructure.
-Targeted Data Collection: Users can target APIs, databases, CSV files, or public-facing systems for ingestion.
-Data Standardization: Formats imported data to align with SQeeL standards for seamless integration.
-Advanced Scraping: Extracts data from structured or semi-structured systems with authentication support.
-Dynamic Updates: Supports real-time updates from dynamic data sources like stock prices or news feeds.
-Monetization of Imported Data: Imported datasets can be stored, analyzed, and monetized within SQeeL.
-Compliance and Audit Trails: Logs all imports immutably on-chain with source and licensing details.
-11. Interactive Tutorials and Mimic Integration
-
-Includes Mimic-powered interactive tutorials for new users to learn database management and query building.
-Mimic assists with automated tagging, schema optimization, and training for advanced users.
-Why SQeeL?
-SQeeL revolutionizes decentralized database management by combining powerful SQL capabilities, visual interfaces, and AI-driven assistance. With tools for collaboration, monetization, and external data integration, SQeeL empowers developers, creators, and enterprises alike.
-
-Whether managing public datasets, private repositories, or interactive applications, SQeeL transforms data storage and interaction into a streamlined, scalable experience on UndChain.
-
----
+- **SQeeL** - This is UndChain's SQL system for creating and maintaining decentralized databases on chain. This will have the ability to either be a public database or it can be private with a shared key. One example for a public database would be a video content library where you need to store not only the video, but tags such as upload dates, gene, duration and previews. An example for a private database would be a manufacturing item database where you store the item ICN, cost, warehouse location and quantity.
 
 - **SMACK (Social Media Application for Curators and Keepers)** - Smack redefines decentralized messaging and social interaction, offering a robust protocol for communication, community building, and content ownership. Smack is not a social media system but rather a **protocol** that enables platforms and creators to build decentralized applications and networks tailored to their needs.
 
@@ -588,8 +561,6 @@ Whether managing public datasets, private repositories, or interactive applicati
 Smack empowers creators (keepers) and platforms (curators) to build decentralized networks and social ecosystems while respecting user ownership and privacy. Its flexibility allows for seamless integration into applications, enabling unique monetization and interaction models.
 
 With tools for personalized content discovery, transparent propagation, and adaptive moderation, Smack creates a fair, user-centric ecosystem. It is the foundation for enabling the next generation of decentralized social applications where users and creators truly own their digital presence.
-
----
 
 - **Player2** - is UndChain’s innovative co-chain designed to revolutionize gaming through decentralized technology, immersive storytelling, and cutting-edge tools for developers and players. From multiplayer experiences to single-player narratives, Player2 empowers creators to build the next generation of games while offering players unparalleled ownership and interactivity.
 
@@ -729,12 +700,10 @@ To spark inspiration for future development, here are a few ideas for co-chains 
 11. **Supply Chain Management**  
     A CRM (Customer Resource Management) system that allows users to track and monitor manufactured goods over an entire organization. This system could provide manufacturing instructions, estimate material usage and plan accordingly and provide real time tracking that could be provided to customers. 
 
-12. **Decentralized Music and Video Streaming Services**
-This co-chain enables creators and platforms to host music and video content in a decentralized ecosystem. By integrating features from Live, it facilitates seamless content streaming with robust scalability and low latency. The use of rental digital asset contracts allows content providers to define specific usage rights, such as viewing-only or limited-time access, ensuring creators maintain control over their work while providing users with a seamless experience.
+12. **Decentralized Music and Video Streaming Services**  
+	This co-chain enables creators and platforms to host music and video content in a decentralized ecosystem. By integrating features from **Live**, it facilitates seamless content streaming with robust scalability and low latency. The use of **rental digital asset contracts** allows content providers to define specific usage rights, such as viewing-only or limited-time access, ensuring creators maintain control over their work while providing users with a seamless experience.
 
-This co-chain paves the way for decentralized streaming platforms—think of it as a blockchain-powered alternative to services like Netflix or Spotify—where content ownership, control, and monetization are shifted back to the creators and their audiences. Additionally, creators can use the built-in functionality of Pages to host their libraries and leverage AdCoin for monetization options.
-
-
+	This co-chain paves the way for decentralized streaming platforms—think of it as a blockchain-powered alternative to services like Netflix or Spotify—where content ownership, control, and monetization are shifted back to the creators and their audiences. Additionally, creators can use the built-in functionality of Pages to host their libraries and leverage AdCoin for monetization options.
 ## Open vs. Closed Source
 
 While I firmly believe in the principles of open-source development, UndChain also provides the flexibility to run closed-source code. This capability is achieved through **Preferred Partners**, systems that execute chain owner code directly without requiring compilation by the Code Ledger co-chain. However, implementing closed-source systems introduces challenges, particularly regarding security and transparency, as public scrutiny of the code is limited.
@@ -983,7 +952,7 @@ The idea behind the perception score is so that a validator or client can judge 
 
 #### Perception Score - Loss
 
-Validators can lose their perception score if
+Validators can loose their perception score if
 
 1. They provide false records of transactional events
 2. They do not maintain up to date user / job / work / payout files
@@ -1034,7 +1003,7 @@ I believe that this blockchain is going to get large fast even with some of the 
 
 ### Security
 
-There is a concern with quantum computing on the rise that traditional cryptographic algorithms may become obsolete. If history tells us anything is that it's a matter of when a cryptographic algorithm will be cracked rather than if. Because of that potential danger, UndChain can modulate and / or change it's cryptographic algorithm. *This is why we have usernames rather than just use public keys* Initially we will use standard AES encryption since that is industry standard and seems like it should work for quite a while longer. When we are close to that algorithm being compromised we will initiate a crypto swap. This will notify users to generate a new public / private key pair using a more secure cryptographic algorithm. The user then responds with the public key to the new protocol and signs it with the current private key so we know it comes from them. The Validators then update the users file to reflect the new public key and on the day of go live we use those signatures instead. If a user fails to update their keys then during the next transaction we initiate a forced key migration (which sounds worse than what it is, basically we send a emergency message back saying to update the key). If that fails, then we allow the account to continue, but notify them that the account is high risk and can be compromised at anytime. UndChain should NEVER force a user to update their keys, but should warn them of the danger of not doing so. *Important to note, once we reach zero day (meaning the attack is live) we do not allow the user to change the key since we don't know if it's them. Instead they can use the freeze feature and hopefully it will go to a updated account. Or they can lose their digital assets if and when someone cracks their account.*
+There is a concern with quantum computing on the rise that traditional cryptographic algorithms may become obsolete. If history tells us anything is that it's a matter of when a cryptographic algorithm will be cracked rather than if. Because of that potential danger, UndChain can modulate and / or change it's cryptographic algorithm. *This is why we have usernames rather than just use public keys* Initially we will use standard AES encryption since that is industry standard and seems like it should work for quite a while longer. When we are close to that algorithm being compromised we will initiate a crypto swap. This will notify users to generate a new public / private key pair using a more secure cryptographic algorithm. The user then responds with the public key to the new protocol and signs it with the current private key so we know it comes from them. The Validators then update the users file to reflect the new public key and on the day of go live we use those signatures instead. If a user fails to update their keys then during the next transaction we initiate a forced key migration (which sounds worse than what it is, basically we send a emergency message back saying to update the key). If that fails, then we allow the account to continue, but notify them that the account is high risk and can be compromised at anytime. UndChain should NEVER force a user to update their keys, but should warn them of the danger of not doing so. *Important to note, once we reach zero day (meaning the attack is live) we do not allow the user to change the key since we don't know if it's them. Instead they can use the freeze feature and hopefully it will go to a updated account. Or they can loose their digital assets if and when someone cracks their account.*
 
 - Interesting thought would be to allow users to update their key at anytime, but I am not sure why anyone would do this. The validator has to mark the active public key anyway so it wouldn't matter if they did update their keys. 
 	- Could lead to an attack if users are constantly updating their keys. Maybe charge for out of sequence key update?
@@ -1121,7 +1090,7 @@ Validators are only as authoritative as clients allow them to be, if a group of 
 
 #### Partners
 
-What use is a partner that is never used? If a partner is not being utilized then they are just burning electricity for no tokens and just like validators partners can lose perception score if they are providing no utility. Unlike partners, a chain owner cannot remove them from the chain from providing utility (I don't think its necessary). Partners can drop in perception if they claim to perform utility and either cannot perform the utility as promised or doesn't do it at all. The validator has the choice to not provide a partner with work *only if* they have a proven track of being unreliable.
+What use is a partner that is never used? If a partner is not being utilized then they are just burning electricity for no tokens and just like validators partners can loose perception score if they are providing no utility. Unlike partners, a chain owner cannot remove them from the chain from providing utility (I don't think its necessary). Partners can drop in perception if they claim to perform utility and either cannot perform the utility as promised or doesn't do it at all. The validator has the choice to not provide a partner with work *only if* they have a proven track of being unreliable.
 
 #### Clients
 
@@ -1130,7 +1099,7 @@ It is illegal on UndChain to not process a transaction regardless of how poorly 
 
 ### Latency / Cost
 
-While a balance of power is key that doesn't completely ensure decentralization, so another method we use is latency. Along with affecting your perception score, having a low response time (or cost) makes you more preferred on the network and in the case of partners, gives higher rewards. This encourages the network to be more spread out since if you are closer to the client (assuming the same hardware and networking) then it will guarantee you win the latency game. Remember that latency is how fast you can respond to a clients request. You could be right next door to your client using LoFi, but if it takes you 10ms to process a request that another partner a state away can process in 1ms then you will lose. 
+While a balance of power is key that doesn't completely ensure decentralization, so another method we use is latency. Along with affecting your perception score, having a low response time (or cost) makes you more preferred on the network and in the case of partners, gives higher rewards. This encourages the network to be more spread out since if you are closer to the client (assuming the same hardware and networking) then it will guarantee you win the latency game. Remember that latency is how fast you can respond to a clients request. You could be right next door to your client using LoFi, but if it takes you 10ms to process a request that another partner a state away can process in 1ms then you will loose. 
 
 ### Pool-less Protocol
 
