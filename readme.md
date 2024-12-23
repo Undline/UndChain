@@ -130,6 +130,7 @@ The Main Chain serves as the foundation of UndChain, coordinating critical proto
     
     - Establishes and maintains consistent block time across the network to ensure synchronization.
 
+---
 ### Mimic
 
 Mimic is UndChain’s dedicated AI co-chain, designed to revolutionize how artificial intelligence is deployed and used across decentralized networks. The Mimic co-chain focuses on creating **specialized AI models** tailored for specific tasks, ensuring efficiency, modularity, and adaptability. These models are connected to a **hypervisor system**, which intelligently routes incoming requests to the appropriate AI for seamless performance.
@@ -180,7 +181,8 @@ Mimic is UndChain’s dedicated AI co-chain, designed to revolutionize how artif
 
 Mimic redefines AI for decentralized networks, combining modularity, scalability, and user empowerment. It’s not just an AI service—it’s a foundation for innovation, creativity, and community-driven progress on UndChain.
 
-### **Pages (Decentralized Web Platform)**
+---
+### Pages (Decentralized Web Platform)
 
 **Pages** is UndChain’s decentralized Web4 system, offering a modern alternative to traditional web technologies. Replacing HTML and CSS with **M3L** (Multi-Media Markup Language) and **GSS** (Global Style Sheets), Pages provides a scalable, efficient, and privacy-centric experience for both creators and users. 
 
@@ -190,7 +192,7 @@ UndChain respects legacy (HTTP) domain names ending in **.com**, **.org**, **.go
 
 All other domain types (e.g., **.io**, **.xyz**) are not automatically recognized or reserved within the UndChain ecosystem. This boundary is established to maintain clarity and fairness while minimizing complexity.
 
-#### **Key Features:**
+#### Key Features:
 
 1. **Efficient Content Delivery**
     
@@ -229,9 +231,7 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
 
 - **Auction House** - The Auction House co-chain is UndChain’s decentralized marketplace for minting, trading, and protecting digital assets. It uses **USP** (UndChain Silver Piece) as the default transaction token, ensuring seamless interoperability across the network. Users can seamlessly swap other registered tokens like AdCoin for USP at checkout.
 
----
-
-### **Key Features**
+#### Key Features
 
 1. **Digital Asset Contracts**:
     
@@ -274,9 +274,7 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
     
     - Sellers can opt for premium subscriptions to gain tools such as featured listings, detailed analytics, and automated pricing suggestions.
 
----
-
-### **How It Works**
+#### How It Works
 
 The Auction House offers a fair, transparent, and decentralized experience for creators, buyers, and sellers:
 
@@ -285,9 +283,7 @@ The Auction House offers a fair, transparent, and decentralized experience for c
 3. **Resellers** can list assets while ensuring creators receive royalties if applicable.
 4. **DAPPs** ensure claims, enforcement, and disputes are handled without UndChain involvement, preserving decentralization.
 
----
-
-### **Visual Seller Classification**
+#### Visual Seller Classification
 
 To improve trust and clarity, sellers will be visually classified:
 
@@ -296,19 +292,19 @@ To improve trust and clarity, sellers will be visually classified:
 
 **Perception scores** are dynamic and affected by seller behavior, claims, and buyer feedback.
 
----
-
-### **Final Notes**
+#### Final Notes
 
 The Auction House ensures that digital assets remain protected, accessible, and monetizable through a robust and decentralized system. It empowers creators with tools to enforce ownership, buyers with transparency, and the network with fraud prevention mechanisms.
 
 ---
 
-- **Live** - is UndChain’s dedicated decentralized audio/video streaming co-chain, built to deliver **low-latency**, **interactive streaming**, and enhanced accessibility while empowering creators to retain ownership and monetization of their content. Its modular design integrates directly into other co-chains like **Pages** and **Smack**, with advanced tools for user interaction, adaptive scaling, and intelligent AI integration through **Mimic**.
+### Live 
+
+Live is UndChain’s dedicated decentralized audio/video streaming co-chain, built to deliver **low-latency**, **interactive streaming**, and enhanced accessibility while empowering creators to retain ownership and monetization of their content. Its modular design integrates directly into other co-chains like **Pages** and **Smack**, with advanced tools for user interaction, adaptive scaling, and intelligent AI integration through **Mimic**.
 
 ---
 
-### **Key Features**
+#### Key Features
 
 1. **Decentralized Streaming with Low Latency**
     
@@ -362,9 +358,7 @@ The Auction House ensures that digital assets remain protected, accessible, and 
 - Live adheres to UndChain’s **content rating system**, ensuring streams are appropriately classified.
 - Stream creators can implement **age restrictions** for sensitive content using the Adult_Swim protocol, which verifies users’ eligibility without exposing personal data.
 
----
-
-### **Use Cases**
+#### Use Cases
 
 - **Interactive Streaming Platforms**: Live alternatives to Twitch, YouTube Live, or webinar services with enhanced interactivity.
 - **Choose-Your-Path Applications**: Interactive games, training tools, or learning modules where viewers’ choices guide the video content.
@@ -372,15 +366,11 @@ The Auction House ensures that digital assets remain protected, accessible, and 
 - **Content Accessibility**: Closed captioning, screen text recognition, and content optimization with Mimic integration.
 - **Content Monetization**: Pay-per-view, subscription models, and royalty-based earnings for creators.
 
----
-
-### **Why Live Stands Out**
+#### Why Live Stands Out
 
 Live combines decentralized streaming, low latency, interactive features, and AI-driven enhancements to deliver a streaming platform unlike any other. It empowers creators, enriches viewer experiences, and integrates seamlessly into UndChain’s broader Web4 ecosystem. Whether embedded in Pages, used on Smack, or powering standalone applications, Live provides the tools to build the next generation of interactive, decentralized streaming solutions.
 
----
-
-### **Developer Focus: Building with Live**
+#### Developer Focus: Building with Live
 
 Live demonstrates how UndChain’s co-chains work together to create powerful, interconnected systems. By integrating components like **Mimic’s AI tools**, **Pages’ content distribution**, and **Smack’s social sharing features**, Live showcases the flexibility and modularity developers can leverage when building their own co-chains.
 
@@ -388,11 +378,11 @@ With UndChain, developers are encouraged to think beyond isolated systems—crea
 
 ---
 
-- **Code Ledger** - is the heart of software development on UndChain, specifically designed for Pseudo. It combines decentralized collaboration, code verification, interactive education, and monetization into one seamless experience for developers. Code Ledger isn’t just a repository—it’s a **living ecosystem** that rewards innovation, encourages learning, and ensures secure development.
+### Code Ledger 
 
----
+Code ledger is the heart of software development on UndChain, specifically designed for Pseudo. It combines decentralized collaboration, code verification, interactive education, and monetization into one seamless experience for developers. Code Ledger isn’t just a repository—it’s a **living ecosystem** that rewards innovation, encourages learning, and ensures secure development.
 
-### **Key Features**
+#### Key Features
 
 1. **Date-Based Versioning**
     
@@ -461,9 +451,7 @@ With UndChain, developers are encouraged to think beyond isolated systems—crea
     - Trusted status when conducting audits or reviews.
 - This system rewards contributors who consistently deliver quality code and act with integrity, further strengthening trust within the Code Ledger ecosystem.
 
----
-
-### **Why Code Ledger Matters**
+#### Why Code Ledger Matters
 
 Code Ledger sets a new standard for decentralized software development by:
 
@@ -472,22 +460,20 @@ Code Ledger sets a new standard for decentralized software development by:
 - **Driving Innovation**: Features like milestone funding, a module marketplace, and interactive tutorials encourage creativity and collaboration.
 - **Integrating the Ecosystem**: By importing modules from co-chains like **Live** and **Mimic**, developers can focus on building unique solutions without reinventing the wheel.
 
----
-
-### **Final Thoughts**
+#### Final Thoughts
 
 With Code Ledger, UndChain doesn’t just provide a decentralized alternative to platforms like GitHub—it builds an **evolutionary system** that rewards developers, fosters innovation, and ensures secure, scalable development for the future. It’s the ultimate toolkit for building the decentralized applications of tomorrow.
 
 ---
+### SQeeL
 
+SQeeL is UndChain's SQL system for creating and maintaining decentralized databases on chain. This will have the ability to either be a public database or it can be private with a shared key. One example for a public database would be a video content library where you need to store not only the video, but tags such as upload dates, gene, duration and previews. An example for a private database would be a manufacturing item database where you store the item ICN, cost, warehouse location and quantity.
 
-- **SQeeL** - This is UndChain's SQL system for creating and maintaining decentralized databases on chain. This will have the ability to either be a public database or it can be private with a shared key. One example for a public database would be a video content library where you need to store not only the video, but tags such as upload dates, gene, duration and previews. An example for a private database would be a manufacturing item database where you store the item ICN, cost, warehouse location and quantity.
+### SMACK (Social Media Application for Curators and Keepers)
 
-- **SMACK (Social Media Application for Curators and Keepers)** - Smack redefines decentralized messaging and social interaction, offering a robust protocol for communication, community building, and content ownership. Smack is not a social media system but rather a **protocol** that enables platforms and creators to build decentralized applications and networks tailored to their needs.
+Smack redefines decentralized messaging and social interaction, offering a robust protocol for communication, community building, and content ownership. Smack is not a social media system but rather a **protocol** that enables platforms and creators to build decentralized applications and networks tailored to their needs.
 
----
-
-### **Key Features**
+#### Key Features
 
 **1. Decentralized Messaging and Social Interaction**
 
@@ -554,21 +540,21 @@ With Code Ledger, UndChain doesn’t just provide a decentralized alternative to
 
 - Uses UndChain’s dynamic spread protocol to scale content delivery based on demand and region, ensuring smooth interaction even during high traffic.
 
----
-
-### **Why Smack?**
+#### Why Smack?
 
 Smack empowers creators (keepers) and platforms (curators) to build decentralized networks and social ecosystems while respecting user ownership and privacy. Its flexibility allows for seamless integration into applications, enabling unique monetization and interaction models.
 
 With tools for personalized content discovery, transparent propagation, and adaptive moderation, Smack creates a fair, user-centric ecosystem. It is the foundation for enabling the next generation of decentralized social applications where users and creators truly own their digital presence.
 
-- **Player2** - is UndChain’s innovative co-chain designed to revolutionize gaming through decentralized technology, immersive storytelling, and cutting-edge tools for developers and players. From multiplayer experiences to single-player narratives, Player2 empowers creators to build the next generation of games while offering players unparalleled ownership and interactivity.
+---
+
+### Player2
+
+Player2 is UndChain’s innovative co-chain designed to revolutionize gaming through decentralized technology, immersive storytelling, and cutting-edge tools for developers and players. From multiplayer experiences to single-player narratives, Player2 empowers creators to build the next generation of games while offering players unparalleled ownership and interactivity.
 
 At the core of Player2 is the **Echoes Trilogy**, a showcase of Player2’s capabilities that spans generations and genres. This episodic RPG series invites players to explore rich worlds, confront legendary adversaries, and shape the fate of interconnected stories across time and space.
 
----
-
-### **Key Features of Player2**
+#### Key Features of Player2
 
 1. **Decentralized Gaming Infrastructure**  
     Player2 enables developers to host live game servers on decentralized networks, ensuring global scalability, low latency, and resilience against downtime or interference.
@@ -599,15 +585,12 @@ At the core of Player2 is the **Echoes Trilogy**, a showcase of Player2’s capa
     Player2 supports a decentralized gaming hardware ecosystem, enabling users to share idle gaming PCs and earn rewards while powering the network.
 
 	Players can also leverage low-powered devices that sync with high-performance PCs on the network, delivering a premium gaming experience without requiring personal investment in high-end hardware.
-    
 
----
-
-### **The Echoes Trilogy**
+#### The Echoes Trilogy
 
 The **Echoes Trilogy** demonstrates Player2’s potential, combining compelling storytelling, cooperative gameplay, and groundbreaking technology.
 
-#### **Game 1: Echoes of the Past**
+##### Game 1: Echoes of the Past
 
 In a medieval-inspired world, _Echoes of the Past_ follows Eldin as he confronts a neighboring kingdom consumed by corruption.
 
@@ -616,7 +599,7 @@ In a medieval-inspired world, _Echoes of the Past_ follows Eldin as he confronts
     - Episodic chapters introduce immediate challenges while slowly unraveling a deeper, darker mystery tied to the magical power sword.
     - Forge alliances with unique companions and battle to restore balance to a world on the brink of darkness.
 
-#### **Game 2: Echoes of Fate**
+##### Game 2: Echoes of Fate
 
 Set in a Western-themed frontier, _Echoes of Fate_ follows three brothers as they navigate a world filled with moral dilemmas and an unfolding legacy.
 
@@ -625,7 +608,7 @@ Set in a Western-themed frontier, _Echoes of Fate_ follows three brothers as the
     - Encounter unique mechanics such as horseback combat and large-scale battles.
     - A mysterious antagonist pulls the brothers deeper into the secrets of their ancestors.
 
-#### **Game 3: Echoes of Destiny**
+##### Game 3: Echoes of Destiny
 
 In a modern world with some futuristic aspects, _Echoes of Destiny_ ties the trilogy together in an epic finale.
 
@@ -634,9 +617,7 @@ In a modern world with some futuristic aspects, _Echoes of Destiny_ ties the tri
     - Prepare for the ultimate confrontation as players face off against a malevolent force that threatens the fabric of reality.
     - Meaningful choices shape the outcome of the trilogy, offering a personalized conclusion to this generational story.
 
----
-
-### **Why Choose Player2?**
+#### Why Choose Player2?
 
 1. **For Developers:**  
     Player2 provides robust tools to create multiplayer and single-player games with decentralized infrastructure, ensuring resilience, scalability, and seamless integration with UndChain’s ecosystem.
@@ -648,8 +629,6 @@ In a modern world with some futuristic aspects, _Echoes of Destiny_ ties the tri
     Player2 sets the foundation for a decentralized gaming ecosystem that prioritizes fairness, creativity, and innovation.
     
 
----
-
 Player2 is more than a co-chain; it’s the cornerstone of a decentralized gaming future. With tools for developers, rewards for contributors, and unforgettable experiences for players, Player2 invites you to shape the next era of gaming.
 
 ---
@@ -660,7 +639,7 @@ As you can see, UndChain offers an expansive framework for developing diverse co
 
 Through firsthand experience in building these systems, I’ve learned that actively using a product uncovers insights that might otherwise be missed. My hope is that developers approach their creations with a focus on delivering tangible value—not just another asset class—to enhance the ecosystem as a whole.
 
-### **Potential Co-Chain Ideas**
+#### Potential Co-Chain Ideas
 
 To spark inspiration for future development, here are a few ideas for co-chains that I believe could thrive on UndChain:
 
