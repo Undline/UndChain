@@ -229,7 +229,14 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
     
     - Pages includes built-in tools for users to react to and interact with content. This feedback helps site owners gauge audience sentiment and improve their offerings. For example, news articles and videos can be rated positively or negatively, providing valuable insights.
 
-- **Auction House** - The Auction House co-chain is UndChain’s decentralized marketplace for minting, trading, and protecting digital assets. It uses **USP** (UndChain Silver Piece) as the default transaction token, ensuring seamless interoperability across the network. Users can seamlessly swap other registered tokens like AdCoin for USP at checkout.
+10. **Integrated A / B Testing**
+
+	- Pages provides users the ability to do A / B testing, allowing developers the ability to run two different sites to see which gets the most interaction.
+
+---
+### Auction House 
+
+The Auction House co-chain is UndChain’s decentralized marketplace for minting, trading, and protecting digital assets on the network. It uses **USP** (UndChain Silver Piece) as the default transaction token, ensuring seamless interoperability across the network. Users can seamlessly swap other registered tokens like AdCoin for USP at checkout.
 
 #### Key Features
 
@@ -273,6 +280,10 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
 7. **Subscription Features**:
     
     - Sellers can opt for premium subscriptions to gain tools such as featured listings, detailed analytics, and automated pricing suggestions.
+    
+8. **Monetization Features**
+
+	- The Auction house introduces referral links as well as a coupon code system which gives sellers the ability to provide discounts or incentivize influencers the ability to receive a commission from a sale.
 
 #### How It Works
 
@@ -301,8 +312,6 @@ The Auction House ensures that digital assets remain protected, accessible, and 
 ### Live 
 
 Live is UndChain’s dedicated decentralized audio/video streaming co-chain, built to deliver **low-latency**, **interactive streaming**, and enhanced accessibility while empowering creators to retain ownership and monetization of their content. Its modular design integrates directly into other co-chains like **Pages** and **Smack**, with advanced tools for user interaction, adaptive scaling, and intelligent AI integration through **Mimic**.
-
----
 
 #### Key Features
 
