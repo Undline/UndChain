@@ -11,7 +11,7 @@ If you're a developer interested in contributing to UndChain, have questions, or
 Whether you're just curious or ready to jump into development, all are welcome!
 
 ---
-# What is UndChain
+# What is UndChain?
 
 UndChain is a PoU (Proof of Utility) blockchain; that can best be thought of as a decentralized cloud service in which anyone can participate. There are three different utilities that can be performed on the network, that work together to create similar functionality as conventional cloud service providers.
 
@@ -21,23 +21,23 @@ UndChain is a PoU (Proof of Utility) blockchain; that can best be thought of as 
 
 3. **Access** - This is a functionality that will be expanded more in the future, but for now think of this as the ability to have access to specialty equipment in a specific location such as linking two or more users together, surrogates or VPN like services. When fully realized it is meant to replace the IP protocol by enable secure communications that are digital signed from the source.
 
- When mixing these three utility types this will enable a full cloud experience that can do things such as spin up gaming servers, webpages and virtual computers. What makes this different than the way the internet is ran today is that anyone can participate and earn rewards for providing utility to the network. This reduces the need for missive data centers and spreads out computational resources throughout the network. This will **NOT** eliminate centralized services, in fact there will be ways (via access) in which you can still direct to a centralized service. The goal of the network is to allow both the centralized and the decentralized systems to co-exist and allow the consumer to choose.
+ When mixing these three utility types this will enable a full cloud experience that can do things such as spin up gaming servers, webpages and virtual computers. What makes this different than the way the internet is ran today is that anyone can participate and earn rewards for providing utility to the network. This reduces the need for massive data centers and spreads out computational resources throughout a geographic area. This will **NOT** eliminate centralized services, in fact there will be ways (via access) in which you can still direct to a centralized service. The goal of the network is to allow both the centralized and the decentralized systems to co-exist and allow the consumer to choose.
 
 # Co-Chains
 
-Co-Chains is how the network expands it's abilities and services. Anyone can own a co-chain, in fact there is a classification of user called chain owners mentioned later. The goal of a co-chain should be to expand the functionality of the network and not to make new coins as such it is up to the chain owner if they wish to create a new token or use the blockchain's native token. The chain owner can still set their fees even with the native chains token just as they can with their own. The difference is you cannot control the emission rate nor the quantity. The goal in doing this is to attempt to reduce the amount of tokens that go in circulation. It also simplifies the usability of the blockchain the less swaps that need to be performed at the action house. 
+Co-Chains is how the network expands it's abilities and services. Anyone can create and own a co-chain, in fact there is a classification of user called **chain owners** mentioned later. The goal of a co-chain is to expand the functionality of the network and not to make new coins, as such it is up to the chain owner if they wish to create a new token or use the blockchain's native utility token (USP). The chain owner can still set their fees even with the native chains token just as they can with their own. The difference is you cannot control the emission rate nor the quantity. The goal in doing this is to reduce the amount of tokens that go in circulation. It also simplifies the usability of the blockchain the less swaps that need to be performed at the action house. 
 
 ## Why Co-Chains?
 
-The purpose of utilizing co-chains rather than having layer 2 blockchains are multifaceted
+The purpose of utilizing co-chains rather than having traditional layer 2 blockchains are multifaceted:
 
-1. It allows for better security since at each block completion a co-chain blends it's hash with a co-chain it's linked to, which reduces the risk of a attack on the network.
+1. It allows for better security since at each block completion a co-chain blends it's hash with a co-chain it's linked to, this reduces the risk of a attack on the network.
 
 2. It expands Pseudo (UndChain's Pythonic programing language), by allowing others to import functions from other chains. You can choose to private a function or set fees on it. Remember you own it...
 
-3. It provides a sense of ownership for your work and allows you to monetize on it so you can continue to make it better and help you with your personal goals. The goal of UndChain is digital ownership. 
+3. It provides a sense of ownership for your work and allows you to monetize on it so you can continue to make it better and help you with your personal goals. You can also transfer ownership of a co-chain to another user on the network.  
 
-4. I think it's better than saying layer two; you're a creator on this network not a leach and you should be recognized for it. Even the main chain is a co-chain. *Note: I will do some verbiage changes in here that I believe are more accurate and beneficial to the industry.*
+4. Personally it's better than saying layer two; you're a creator on this network and providing value, you should be recognized for it. Even the main chain is a co-chain. *Note: There will be some verbiage changes in here that I believe are more accurate and beneficial to the industry.*
 
 ## Understanding Co-Chains: Building Blocks of UndChain
 
@@ -48,7 +48,7 @@ Co-chains are specialized blockchain applications built on UndChain’s decentra
 As the creator of UndChain, my goal is to demonstrate how co-chains can unlock innovative solutions. By developing these foundational co-chains, I aim to:
 
 1. **Showcase Efficient Data Management:**  
-    Demonstrate how to store, access, and interact with data on the network in a secure and efficient manner.
+    Demonstrate how to use storage, computation and access, to interact with the network in a secure and efficient manner.
     
 2. **Promote Token Standardization:**  
     Provide examples of token creation while encouraging developers to use existing tokens like USP to reduce market fragmentation and maintain interoperability.
@@ -80,10 +80,12 @@ The Main Chain serves as the foundation of UndChain, coordinating critical proto
     - Creates two native tokens:
         - **UGP (UndChain Gold Piece)**: A connection token enabling interactions with validators.
         - **USP (UndChain Silver Piece)**: A utility token for partners to perform tasks across co-chains.
-3. **Alias System (UnaS)**:
+	        - This is the token that can be overridden with a require collateral which will be paid out to users in the event that liquidity is removed from the token in a short time frame (UndChain's anti-rug protocol). *When we create AdCoin I will show how this process will work.*
+1. **Alias System (UnaS)**:
     
     - Provides users with customizable usernames (e.g., `@username`) for simplified transactions and easier identification.
-4. **Chain Rules Framework**:
+    - This system is case insensitive so users won't have to worry if any potion is capitalized or not.
+1. **Chain Rules Framework**:
     
     - Sets the format for defining co-chain-specific rules, including:
         - Developer compensation.
@@ -129,6 +131,9 @@ The Main Chain serves as the foundation of UndChain, coordinating critical proto
 14. **Block Time and Synchronization**:
     
     - Establishes and maintains consistent block time across the network to ensure synchronization.
+15. **Address book other co-chains:**
+
+	- Stores the validator addresses (contact information) for other co-chains so that if a user doesn't have that information stored in their system, they can request it.
 
 ---
 ### Mimic
@@ -154,7 +159,7 @@ Mimic is UndChain’s dedicated AI co-chain, designed to revolutionize how artif
     - Users can train and deploy their own models on Mimic, transforming them into digital assets. These models can be monetized, shared, or enhanced by others in the community, enabling a decentralized marketplace for AI innovation.
 5. **Hardware Adaptability**
     
-    - Mimic’s design ensures that models can run on a wide range of hardware, from high-performance GPUs to more modest devices. This makes AI capabilities accessible to a broader audience and avoids centralization on specialized infrastructure.
+    - Mimic’s design ensures that models can run on a wide range of hardware, from high-performance GPUs, NPUs, FPGAs and to more modest devices. This makes AI capabilities accessible to a broader audience and avoids centralization on specialized infrastructure.
 6. **Privacy-Focused AI**
     
     - Mimic prioritizes user privacy by ensuring that all data used for training or inference remains secure and decentralized. Users retain control over their inputs, and models operate within strict privacy constraints.
@@ -216,7 +221,7 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
     - The platform leverages decentralized systems to ensure user data remains secure and under their control.
 6. **AdCoin: The Native Token**
     
-    - AdCoin is the native utility token for Pages, enabling a frictionless user experience. Users can choose to earn AdCoin by interacting with ads, assisting in **Mimic AI model training** (e.g., teaching AI how to draw or solve logical problems), or purchase it directly to support an ad-free browsing experience.
+    - AdCoin is the native utility token for Pages, enabling a frictionless user experience. Users can choose to earn AdCoin by interacting with ads, assisting in **Mimic AI model training** (e.g., teaching AI how to draw or solve logical problems), or swap with other in network tokens to support an ad-free browsing experience.
     - AdCoin integration across the network ensures seamless monetization options for creators and users alike.
 7. **Age Verification and Content Control**
     
@@ -236,13 +241,13 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
 ---
 ### Auction House 
 
-The Auction House co-chain is UndChain’s decentralized marketplace for minting, trading, and protecting digital assets on the network. It uses **USP** (UndChain Silver Piece) as the default transaction token, ensuring seamless interoperability across the network. Users can seamlessly swap other registered tokens like AdCoin for USP at checkout.
+The Auction House co-chain is UndChain’s decentralized marketplace for minting, trading, and protecting digital assets on the network. It uses **USP** (UndChain Silver Piece) as the default transaction token. Users can seamlessly swap other registered tokens like AdCoin for USP at checkout.
 
 #### Key Features
 
 1. **Digital Asset Contracts**:
     
-    - Assets are minted using UndChain’s **standard Digital Asset Contracts**:
+    - Assets are minted using UndChain’s **standard Digital Asset Contracts** as defined by the main chain. Those assets are as follows:
         - **Gray (Unregistered)**: Default for unprotected assets.
         - **Green (Rental)**: Allows limited-use rentals with royalties sent to the creator.
         - **Blue (Single Use + Sharing)**: Enables personal use and sharing, with a kickback for creators when shared content generates value.
@@ -271,7 +276,8 @@ The Auction House co-chain is UndChain’s decentralized marketplace for minting
     - Creators can automate royalty payments through smart enforcement using DAPPs.
 5. **Fraud Prevention and AI Support**:
     
-    - The Auction House leverages **Mimic AI** to scan for duplicates, unauthorized content, or stolen RWAs.
+    - The Auction House leverages **Mimic AI** to scan for duplicates, unauthorized content, or stolen RWAs. This is used as a warning system to the creator to let them know they *MAY* have created a copyright work. The creator will then respond to that as to why it's not which can be used if the asset is challenged in the future. 
+	    - *Note: This does not apply to gray assets as they do not hold any protections on the network*
     - Buyers receive warnings if flagged assets are listed for sale, ensuring informed purchases.
 6. **Buyer Protections**:
     
@@ -290,8 +296,11 @@ The Auction House co-chain is UndChain’s decentralized marketplace for minting
 The Auction House offers a fair, transparent, and decentralized experience for creators, buyers, and sellers:
 
 1. **Creators** mint assets using standard contracts, protecting ownership and enabling monetization.
+
 2. **Buyers** purchase or bid on verified assets, with tools to check seller trust levels and asset legitimacy.
+
 3. **Resellers** can list assets while ensuring creators receive royalties if applicable.
+
 4. **DAPPs** ensure claims, enforcement, and disputes are handled without UndChain involvement, preserving decentralization.
 
 #### Visual Seller Classification
@@ -309,16 +318,16 @@ The Auction House ensures that digital assets remain protected, accessible, and 
 
 ---
 
-### Live 
+### Live - Decentralized Real Time Streaming
 
-Live is UndChain’s dedicated decentralized audio/video streaming co-chain, built to deliver **low-latency**, **interactive streaming**, and enhanced accessibility while empowering creators to retain ownership and monetization of their content. Its modular design integrates directly into other co-chains like **Pages** and **Smack**, with advanced tools for user interaction, adaptive scaling, and intelligent AI integration through **Mimic**.
+The Live co-chain is UndChain’s dedicated decentralized audio/video streaming co-chain, built to deliver **low-latency**, **interactive streaming**, and enhanced accessibility while empowering creators to retain ownership and monetization of their content. Its modular design integrates directly into other co-chains like **Pages** and **Smack**, with advanced tools for user interaction, adaptive scaling, and intelligent AI integration through **Mimic**.
 
 #### Key Features
 
 1. **Decentralized Streaming with Low Latency**
     
     - Live targets **AV1 encoding**, a royalty-free, bandwidth-efficient codec, enabling smooth, low-latency streaming with minimal resource consumption.
-    - Designed for interactive experiences, Live powers **real-time events**, including live chat, reactions, and audience engagement.
+    - Designed for interactive experiences, Live powers **real-time events**, including live chat, reactions, and audience engagement (reactions or polling).
 2. **Dynamic Content Distribution**
     
     - Live leverages a **spread protocol** that dynamically scales streams based on **popularity** and **regional demand**, ensuring high-traffic content is delivered efficiently.
