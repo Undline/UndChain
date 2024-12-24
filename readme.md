@@ -354,6 +354,7 @@ The Live co-chain is UndChain’s dedicated decentralized audio/video streaming 
 6. **Full Ownership and Monetization**
     
     - Streams and recorded broadcasts are tokenized as **digital assets**, enabling creators to maintain ownership, set pricing models, and monetize their content.
+	    - This will be done with the assistance of the Auction House co-chain.
     - Creators can define **royalty structures** for specific content types like music, video, or interactive streams, ensuring they earn revenue whenever their assets are reused or resold.
     - Revenue-sharing mechanisms allow creators and collaborators to split earnings transparently.
 7. **Integration with Pages and Smack**
@@ -368,17 +369,16 @@ The Live co-chain is UndChain’s dedicated decentralized audio/video streaming 
     
     - Live content can be monetized using:
         - **USP**: The native utility token for Live transactions.
-        - **AdCoin**: Can be swapped for USP or earned through network ad hubs.
+        - **AdCoin**: Can be swapped for USP or earned through network 'ad hubs'.
     - Users benefit from flexible payment options, while streamers enjoy consistent monetization streams.
 10. **Content Ratings and User Safety**
     
-
-- Live adheres to UndChain’s **content rating system**, ensuring streams are appropriately classified.
-- Stream creators can implement **age restrictions** for sensitive content using the Adult_Swim protocol, which verifies users’ eligibility without exposing personal data.
+	- Live adheres to UndChain’s **content rating system**, ensuring streams are appropriately classified.
+	- Stream creators can implement **age restrictions** for sensitive content using the Adult_Swim protocol, which verifies users’ eligibility without exposing personal data.
 
 #### Use Cases
 
-- **Interactive Streaming Platforms**: Live alternatives to Twitch, YouTube Live, or webinar services with enhanced interactivity.
+- **Interactive Streaming Platforms**: Live alternatives to Twitch, YouTube Live broadcasts, or webinar services with enhanced interactivity.
 - **Choose-Your-Path Applications**: Interactive games, training tools, or learning modules where viewers’ choices guide the video content.
 - **Tutorial and Collaborative Workflows**: Efficient, low-bandwidth screen sharing for educational and professional use.
 - **Content Accessibility**: Closed captioning, screen text recognition, and content optimization with Mimic integration.
