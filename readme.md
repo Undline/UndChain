@@ -788,38 +788,50 @@ UndChain features four distinct user types, each designed to balance power and e
     - By participating in this process, clients help secure the network while benefiting from its decentralized services.
 
 ---
+
 # Block Generation
 
-Blocks will be generated using block time rather than size, I have a concern that the size of the chain may expand too fast, due to this so items such as job files, work files and payout lists once completed will be stored by the partners. There is also a process called **The Convergence** that consolidates the chain; this is explained more later when we discuss encryption standards. Each block is generated in three stages and each of those stages have three steps each. *It's important to note that I considered each stage to be hashed and sent to a co-chain, I have decided not to do that since I think that it's overkill.* 
+Blocks on UndChain are generated using a fixed block time rather than size to ensure consistent and predictable operation. This design choice mitigates the risk of rapid chain expansion by offloading completed items such as job files, work files, and payout lists to partners for storage. Additionally, a process called **The Convergence** consolidates the chain to optimize storage and performance; this is explained further in the encryption standards section. Each block is generated in three distinct stages, with each stage consisting of three steps.
 
-The timing will have to be experimental in the beginning, we **MUST** have blocks that are long enough to allow a sufficient number of job requests to occur while maintain a network that is responsive to the client. I think we should target 44 seconds per block. Please note that while the block may not complete in 44 seconds the job request should propagate quickly so that a confirmed transaction may occur. 
+The timing of block generation will initially be experimental. Blocks need to be long enough to accommodate a sufficient number of job requests while maintaining responsiveness for users. The current target is **44 seconds per block**. While blocks finalize at this interval, transaction propagation is near-instantaneous, providing users with a fast and seamless experience.
 
-### Stage 1 - Initialize 
+### **Transaction Throughput and Responsiveness**
 
-1. **Request** - In this first step we have a client requesting service for a utility, going to the validators. The validators then place this in a job file, so that the utility can be performed by a partner.
+UndChain decouples transaction placement from block finalization. Transactions are processed and placed in the **job file** almost immediately after being initiated, allowing clients and partners to proceed without waiting for block finalization.
 
-2. **Link** - In the second step a partner(s) contacts the validator(s) stating that they have resources to perform the requested utility. *Please note this may seem repetitive considering the next stage. This is here to show that we don't just hold the job until the stage is complete.*
+This approach ensures:
 
-3. **Sync Jobs** - In this step we sync this blocks job file with the other validators on this chain. 
+1. **High Transaction Throughput (TPS):** The network can process a significant number of transactions per second by leveraging real-time job file updates.
+2. **Responsive User Experience:** Transactions are swiftly propagated to validators, enabling rapid initiation of utility tasks.
+3. **Scalability:** Validators and partners dynamically distribute workloads to maintain system responsiveness even under high demand.
 
-### Stage 2 - Link
+---
 
-1. **Search** - In this step the work that was posted previously in the job file is either waiting on a partner to respond *or* the Validator knows the partner, and contacts them.
+### **Stage 1 - Initialize**
 
-2. **Partner(s) Found** - Once a sufficient number of partners respond we then initiate the connection swap. The means of communication depends on both the chain and the user, at this time I think it's wise to go through a proxy in order to avoid the possibility of a DDoS attack.
+1. **Request:** A client submits a service request to the validators. Validators record this request in a job file, enabling partners to identify and fulfill the required utility.
+2. **Link:** Partners signal their availability to the validators, indicating they can perform the requested utility. This step helps maintain a steady flow of tasks to eligible partners.
+3. **Sync Jobs:** Validators synchronize the job file for the current block with other validators to ensure consistency across the chain.
 
-3. **Connection Established** - In this step we add the connection as well as the block number we connected on (needed for payout later), to the **work file**. Validator listens for hashes from other co-chains it's connected to. 
+### **Stage 2 - Link**
 
+1. **Search:** Validators actively monitor for available partners to fulfill job requests or directly contact known partners for specific tasks.
+2. **Partner(s) Found:** Upon receiving sufficient responses, validators establish a connection between the client and selected partners. Proxies may be employed to safeguard against potential DDoS attacks.
+3. **Connection Established:** The connection details and corresponding block number are recorded in the **work file**. Validators also listen for relevant hashes from interconnected co-chains.
 
-### Stage 3 - Utility Complete
+### **Stage 3 - Utility Complete**
 
-It's important to note that utility does **NOT** have to be completed when a block ends, in fact it rarely will. Utility completion either completes when the partner or the client end transmission, or when a payout period has been reached (every 4 hours on the main chain).
+Utility tasks are not required to conclude within a single block and may span multiple blocks. Completion occurs either when the client or partner terminates the transmission or at predefined payout intervals (e.g., every 4 hours on the main chain).
 
-1. **Receipt** - Either the client or partner show the receipt of the utility, this could be as simple as a signature from both entities or some transactional information in plain text, but a signature from both **MUST** exist for it to be valid. It's best if both partner and client submit the receipt to the validators since either party could choose not to send it. 
+1. **Receipt:** Both the client and partner must submit a receipt of the utility. This receipt, signed by both parties, serves as verification of the transaction. Submissions from both parties are recommended to ensure redundancy.
+2. **Utility Complete:** Validators mark the utility task as complete, recording the completion block and appending the transaction receipt. _Note: Receipts must remain under 128 characters to optimize storage, though they may link to larger off-chain files._
+3. **Payout:** At the chain owner’s defined intervals, payouts are processed. Transactions not included in the current payout are appended to the **pay sheet** for inclusion in the next interval. Validators hash the payout data and append it to the block, sharing the hash with interconnected co-chains.
 
-2. **Utility Complete** - The validator marks the utility as complete along with the block it was completed on and appends the receipt of the transaction. *Note: Receipts must be less than 128 characters (size constraints). You could place a link to a file on chain that allows you to make your receipt as large as you want.* 
+---
 
-3. **Payout** - This happens at an interval that is defined by the chain owner (main chain is every 4 hours). If no payout occurs then we append this to the **pay sheet**. Validators then hash the transactions and append that to the block, this hash is also shared with co-chains.  
+### **Note on Adjustments**
+
+Block timing and related parameters may be adjusted based on real-world data to ensure optimal transaction throughput and storage efficiency. This iterative approach ensures UndChain remains both responsive and sustainable as the network grows.
 
 ## Tokenomics
 
