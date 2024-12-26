@@ -459,15 +459,15 @@ Code ledger is the heart of software development on UndChain, specifically desig
     - By streaming the **M3L content** of a developer’s screen instead of video, Live ensures minimal bandwidth usage and a lag-free experience.
 10.  **Perception Score for Contributors**
 
-- Developers’ contributions are reflected in their **Perception Score** based on:
-    - Successful code merges and accepted contributions.
-    - Positive peer audits or reviews from trusted developers.
-    - Community adoption of their modules or projects.
-- A higher Perception Score unlocks more opportunities for developers, such as:
-    - Eligibility for high-impact project bounties.
-    - Faster approvals for code merges.
-    - Trusted status when conducting audits or reviews.
-- This system rewards contributors who consistently deliver quality code and act with integrity, further strengthening trust within the Code Ledger ecosystem.
+    - Developers’ contributions are reflected in their **Perception Score** based on:
+        - Successful code merges and accepted contributions.
+        - Positive peer audits or reviews from trusted developers.
+        - Community adoption of their modules or projects.
+    - A higher Perception Score unlocks more opportunities for developers, such as:
+        - Eligibility for high-impact project bounties.
+        - Faster approvals for code merges.
+        - Trusted status when conducting audits or reviews.
+    - This system rewards contributors who consistently deliver quality code and act with integrity, further strengthening trust within the Code Ledger ecosystem.
 
 #### Why Code Ledger Matters
 
@@ -759,18 +759,35 @@ While I firmly believe in the principles of open-source development, UndChain al
 
 This approach may seem to contrast with the ideals of decentralization, but UndChain is designed to go beyond rigid definitions. By blending the strengths of both decentralized and centralized systems, UndChain ensures developers have the freedom to use the tools that best meet the unique requirements of their applications. Whether it’s full transparency through open-source projects or the tailored control of closed-source solutions, UndChain is built for the future—empowering developers to innovate without compromise.
 
-# User Types
+---
+# User Types in UndChain
 
-In UndChain there are four different user types; this is done to create a separation of powers so that no one entity could jeopardize the chain. 
+UndChain features four distinct user types, each designed to balance power and ensure no single entity can compromise the integrity of the chain. Here's how they function:
 
-1. **Chain Owner** - It's probably best to think of Chain Owners as developers. This group is responsible for creating the functionality of the chain as well as setting the tokenomics (fees). When a chain is developed and active the chain owner will receive a digital asset indicating the ownership of that chain. This allows the chain to be transferred to another owner(s). Chain owners may select who they are partnered with, at this time I believe the limit will be two. Chain owners are also able to select preferred validators (I'd say in most cases it would be themselves) and how many validators they will have on the network, with the minimum being three. *yep, I already know what you're worried about, it gets addressed later.* 
+1. **Chain Owners**  
+    Chain Owners are the architects of a co-chain. They define its functionality, tokenomics (fees), and governance rules. Upon launching a chain, owners receive a digital asset certifying their ownership, which can be transferred or shared with up to two additional partners. Owners also select **preferred validators** (often themselves) and determine the number of validators on their network, with a minimum of three.  
+    _Concerns about centralization? Don't worry; safeguards are in place._
+    
+2. **Validators**  
+    Validators act as the backbone of the network, akin to routers. Their responsibilities include:
+    
+    - Connecting clients with partners to fulfill requests.
+    - Validating and recording transactions, ensuring data integrity.
+    - Maintaining the **Users File**, a secure directory mapping usernames to public keys.  
+        Validators play a crucial role in keeping the network functional, secure, and efficient.
+3. **Partners**  
+    Partners are UndChain’s equivalent of miners, but instead of solving cryptographic puzzles, they perform meaningful tasks in three utility categories: computation, storage, and access.
+    
+    - Partners collaborate with validators by fulfilling jobs listed in the **Jobs File**.
+    - After completing a task, they sign a receipt with the client, ensuring transparency and accountability.  
+        Partners are essential for driving the decentralized cloud services that UndChain provides.
+4. **Clients**  
+    Clients are the end-users of UndChain’s resources, engaging with services for entertainment, productivity, or business. They’re not merely consumers but an integral part of the chain's security.
+    
+    - Clients sign receipts upon completing transactions, ensuring trust and verifying job fulfillment.
+    - By participating in this process, clients help secure the network while benefiting from its decentralized services.
 
-2. **Validators** - Think of Validators as routers and are responsible for taking a user request and connecting them with an appropriate resource. This is mainly meant to link clients and partners together. They are also responsible for keeping up with utility payout and they validate the traffic going between users. They also maintain the **users file** which is a repository of usernames with the public keys that are associated with it. 
- 
-3. **Partners** - This classification of users can be best thought of as the miners for this blockchain, however instead of hashing random numbers they focus on the three utility types. They work closely with validators to receive jobs from the jobs file and then either work directly or through a proxy with the client in order to complete that utility. Once it's completed, they sign a receipt with the client indicating the job was completed successfully. 
-
-4. **Clients** - The client on UndChain are what would normally be known as users who utilize the resources on the chain. These are normal people who interact with the services for entertainment or business. The clients however is not simply a by product, but a apart of how the chain secures itself since the client must sign a receipt at the end of a transaction. 
-
+---
 # Block Generation
 
 Blocks will be generated using block time rather than size, I have a concern that the size of the chain may expand too fast, due to this so items such as job files, work files and payout lists once completed will be stored by the partners. There is also a process called **The Convergence** that consolidates the chain; this is explained more later when we discuss encryption standards. Each block is generated in three stages and each of those stages have three steps each. *It's important to note that I considered each stage to be hashed and sent to a co-chain, I have decided not to do that since I think that it's overkill.* 
