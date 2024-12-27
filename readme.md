@@ -833,6 +833,8 @@ Utility tasks are not required to conclude within a single block and may span mu
 
 Block timing and related parameters may be adjusted based on real-world data to ensure optimal transaction throughput and storage efficiency. This iterative approach ensures UndChain remains both responsive and sustainable as the network grows.
 
+---
+
 ## Tokenomics
 
 UndChain will have two native tokens associated with it's main chain. At this time I don't have a good name for them so I am calling them UndChain GP and SP. *Although AdCoin is **NOT** apart of the main chain I will discuss it as well since I believe pages will play a major role in this network*
