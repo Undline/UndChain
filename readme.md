@@ -839,9 +839,17 @@ Block timing and related parameters may be adjusted based on real-world data to 
 
 UndChain features two primary tokens on its main chain—UndChain Gold Piece (UGP) and UndChain Silver Piece (USP)—designed to incentivize validators and partners. Additionally, AdCoin plays a significant role in the Pages co-chain as a utility token for accessing content.
 
-### UndChain UGP
+### UndChain Gold Piece (UGP)
 
-UGP will act somewhat like Bitcoin in regards to halving, UGP is provided to validators. We will start with a initial token amount of 4,444,444 which will be distributed in development, advertisement and air drops. While I understand this may upset some, it's important to note that the idea is to use this to both promote and reward developments. I will discuss later how these will be distributed. The chain will start with an emission of 4444 tokens per day. Every four years we will experience a 'flooring' which is the same as a halving except we don't use decimals. This will continue until we reach one token per day which that will continue forever. While this does create an infinite supply I believe this is important to help keep validators interested in maintaining the network without charging high fees. Below is a table that shows the proposed floorings:
+UGP is the primary token for validators and follows a deflationary model similar to Bitcoin, with periodic reductions in daily emissions, referred to as **floorings**. This token ensures validators are compensated for their efforts in maintaining the network, promoting long-term sustainability and low fees.
+
+#### Key Features:
+
+1. **Initial Supply:** 4,444,444 UGP will be minted at launch for development, advertising, and airdrops.
+2. **Daily Emission:** Starts at **4,444 tokens per day** and reduces every four years via floorings until it stabilizes at **1 token per day** indefinitely.
+3. **Infinite Supply Model:** While an infinite supply exists, the diminishing emissions ensure gradual token scarcity, encouraging network stability without inflating fees.
+
+#### Flooring Schedule:
 
 | Flooring | Year | Token Per Day |
 | -------- | ---- | ------------- |
