@@ -837,7 +837,7 @@ Block timing and related parameters may be adjusted based on real-world data to 
 
 ## Tokenomics
 
-UndChain will have two native tokens associated with it's main chain. At this time I don't have a good name for them so I am calling them UndChain GP and SP. *Although AdCoin is **NOT** apart of the main chain I will discuss it as well since I believe pages will play a major role in this network*
+UndChain features two primary tokens on its main chain—UndChain Gold Piece (UGP) and UndChain Silver Piece (USP)—designed to incentivize validators and partners. Additionally, AdCoin plays a significant role in the Pages co-chain as a utility token for accessing content.
 
 ### UndChain UGP
 
