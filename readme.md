@@ -837,7 +837,7 @@ Block timing and related parameters may be adjusted based on real-world data to 
 
 ## Tokenomics
 
-UndChain features two primary tokens on its main chain—UndChain Gold Piece (UGP) and UndChain Silver Piece (USP)—designed to incentivize validators and partners. Additionally, AdCoin plays a significant role in the Pages co-chain as a utility token for accessing content.
+UndChain features two primary tokens on its main chain—**UndChain Gold Piece (UGP)** and **UndChain Silver Piece (USP)**—designed to incentivize validators and partners. Additionally, **AdCoin** will be created to show developers how to override USP; it also plays a significant role in the Pages co-chain as a utility token for accessing content.
 
 ### UndChain Gold Piece (UGP)
 
@@ -867,7 +867,6 @@ UGP is the primary token for validators and follows a deflationary model similar
 | 12       | 44   | 2             |
 | 13       | 48+  | 1             |
 
-tokens_per_day = 4444 // 2 ** flooring_number
 ### UndChain USP
 
 USP is the reward system given to partners.  This token will have an initial supply of 44,444,444 tokens. It's emission schedule is voted on by the active partners on chain. Activity will be defined a bit later, but my initial thoughts are that at least one successful transaction per week and a perception score above 444. During this vote you may either double the daily emission or halve the daily emission. I am concerned that partners will always want the emission to go down while users will want it to go up so I need to think of a way to counterbalance these effects. Maybe set the auto fee to do the same?  The initial daily emission of tokens is 4444 per day and the vote to either floor or double the supply happens every four years (a week before GP), so that the event happens at the same time as GP.
