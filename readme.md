@@ -826,6 +826,7 @@ Utility tasks are not required to conclude within a single block and may span mu
 1. **Receipt:** Both the client and partner must submit a receipt of the utility. This receipt, signed by both parties, serves as verification of the transaction. Submissions from both parties are recommended to ensure redundancy.
 2. **Utility Complete:** Validators mark the utility task as complete, recording the completion block and appending the transaction receipt. _Note: Receipts must remain under 128 characters to optimize storage, though they may link to larger off-chain files._
 3. **Payout:** At the chain owner’s defined intervals, payouts are processed. Transactions not included in the current payout are appended to the **pay sheet** for inclusion in the next interval. Validators hash the payout data and append it to the block, sharing the hash with interconnected co-chains.
+4. **Subscription Model**: UGP will introduce the subscription style model system. If users choose they can subscribe to UndChain's services for a flat rate which allows near infinite requests. *There is an anti-spam system*
 
 ---
 
@@ -838,6 +839,8 @@ Block timing and related parameters may be adjusted based on real-world data to 
 ## Tokenomics
 
 UndChain features two primary tokens on its main chain—**UndChain Gold Piece (UGP)** and **UndChain Silver Piece (USP)**—designed to incentivize validators and partners. Additionally, **AdCoin** will be created to show developers how to override USP; it also plays a significant role in the Pages co-chain as a utility token for accessing content.
+
+*NOTE: The blockchain experienced a soft launch on April 24, 2024. All token emission from this date until the blockchain goes live are effectively burned meaning they will not go in circulation.*
 
 ### UndChain Gold Piece (UGP)
 
@@ -867,11 +870,24 @@ UGP is the primary token for validators and follows a deflationary model similar
 | 12       | 44   | 2             |
 | 13       | 48+  | 1             |
 
+---
+
 ### UndChain USP
 
-USP is the reward system given to partners.  This token will have an initial supply of 44,444,444 tokens. It's emission schedule is voted on by the active partners on chain. Activity will be defined a bit later, but my initial thoughts are that at least one successful transaction per week and a perception score above 444. During this vote you may either double the daily emission or halve the daily emission. I am concerned that partners will always want the emission to go down while users will want it to go up so I need to think of a way to counterbalance these effects. Maybe set the auto fee to do the same?  The initial daily emission of tokens is 4444 per day and the vote to either floor or double the supply happens every four years (a week before GP), so that the event happens at the same time as GP.
+### UndChain Silver Piece (USP)
 
-One of the reasons why I wanted the flooring to come to a vote is so that I can test decentralized voting systems that have conditionals that need to be met that have a large impact on the system. If this works well, it could be rolled out as a way to vote for new features / improvements on the main chain. 
+USP is the reward token for partners who provide computational, storage, and access services. Unlike UGP, its emission schedule is **dynamically voted on** by active partners.
+
+#### Key Features:
+
+1. **Initial Supply:** 44,444,444 USP minted at launch.
+2. **Daily Emission:** Starts at **4,444 tokens per day**, with periodic adjustments based on partner voting.
+3. **Voting Mechanism:** Partners can vote every four years to either halve or double the emission rate.
+4. **Eligibility:** Voting eligibility requires at least one successful transaction per week and a perception score above **444**.
+
+This dynamic emission model tests decentralized voting mechanisms, potentially expanding to other governance areas on UndChain.
+
+---
 
 ### Ad Coin
 
