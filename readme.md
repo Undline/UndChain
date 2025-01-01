@@ -838,78 +838,99 @@ Block timing and related parameters may be adjusted based on real-world data to 
 
 ## Tokenomics
 
-UndChain features two primary tokens on its main chain—**UndChain Gold Piece (UGP)** and **UndChain Silver Piece (USP)**—designed to incentivize validators and partners. Additionally, **AdCoin** will be created to show developers how to override USP; it also plays a significant role in the Pages co-chain as a utility token for accessing content.
+UndChain employs two primary utility tokens on its main chain—**UndChain Gold Piece (UGP)** and **UndChain Silver Piece (USP)**—to incentivize validators and partners. Additionally, **AdCoin**, a token specific to the Pages co-chain, demonstrates how developers can implement custom tokens to override USP for specific functionalities.
 
-*NOTE: The blockchain experienced a soft launch on April 24, 2024. All token emission from this date until the blockchain goes live are effectively burned meaning they will not go in circulation.*
+_Note: The blockchain experienced a soft launch on April 24, 2024. All token emissions from this date until the network officially launches are effectively burned and will not enter circulation._
+
+---
 
 ### UndChain Gold Piece (UGP)
 
-UGP is the primary token for validators and follows a deflationary model similar to Bitcoin, with periodic reductions in daily emissions, referred to as **floorings**. This token ensures validators are compensated for their efforts in maintaining the network, promoting long-term sustainability and low fees.
+UGP serves as the primary reward token for validators, following a deflationary model inspired by Bitcoin. It introduces periodic reductions in daily emissions, referred to as **floorings**, to promote long-term sustainability and maintain validator interest without inflating fees.
 
-#### Key Features:
+#### Key Features
 
-1. **Initial Supply:** 4,444,444 UGP will be minted at launch for development, advertising, and airdrops.
-2. **Daily Emission:** Starts at **4,444 tokens per day** and reduces every four years via floorings until it stabilizes at **1 token per day** indefinitely.
-3. **Infinite Supply Model:** While an infinite supply exists, the diminishing emissions ensure gradual token scarcity, encouraging network stability without inflating fees.
+1. **Initial Supply:** 4,444,444 UGP minted at launch for development, advertising, and airdrops.
+2. **Daily Emission:** Begins at **4,444 tokens per day** and reduces every four years through floorings until it stabilizes at **1 token per day** indefinitely.
+3. **Subscription Model:** UGP introduces a subscription-based system, enabling users to pay a flat rate for nearly unlimited requests while implementing anti-spam measures to protect the network.
+4. **Infinite Supply Model:** The diminishing emissions ensure gradual token scarcity while maintaining validator incentives.
 
-#### Flooring Schedule:
+#### **Flooring Schedule**
 
-| Flooring | Year | Token Per Day |
-| -------- | ---- | ------------- |
-| 1        | 1    | 4444          |
-| 2        | 4    | 2222          |
-| 3        | 8    | 1111          |
-| 4        | 12   | 555           |
-| 5        | 16   | 277           |
-| 6        | 20   | 138           |
-| 7        | 24   | 69            |
-| 8        | 28   | 34            |
-| 9        | 32   | 17            |
-| 10       | 36   | 8             |
-| 11       | 40   | 4             |
-| 12       | 44   | 2             |
-| 13       | 48+  | 1             |
+|Flooring|Year|Tokens Per Day|
+|---|---|---|
+|1|1|4,444|
+|2|4|2,222|
+|3|8|1,111|
+|4|12|555|
+|5|16|277|
+|6|20|138|
+|7|24|69|
+|8|28|34|
+|9|32|17|
+|10|36|8|
+|11|40|4|
+|12|44|2|
+|13+|48+|1|
 
 ---
-
-### UndChain USP
 
 ### UndChain Silver Piece (USP)
 
-USP is the reward token for partners who provide computational, storage, and access services. Unlike UGP, its emission schedule is **dynamically voted on** by active partners.
+USP rewards partners for providing computational, storage, and access services. Unlike UGP, USP’s emission schedule is dynamically adjusted through voting by active partners.
 
-#### Key Features:
+#### Key Features
 
 1. **Initial Supply:** 44,444,444 USP minted at launch.
-2. **Daily Emission:** Starts at **4,444 tokens per day**, with periodic adjustments based on partner voting.
-3. **Voting Mechanism:** Partners can vote every four years to either halve or double the emission rate.
-4. **Eligibility:** Voting eligibility requires at least one successful transaction per week and a perception score above **444**.
+2. **Daily Emission:** Begins at **4,444 tokens per day** with periodic adjustments through partner voting.
+3. **Voting Mechanism:** Partners vote every four years to either halve or double the emission rate.
+4. **Eligibility for Voting:** Partners must complete at least one transaction per week and maintain a perception score above **444** to participate in the vote.
 
-This dynamic emission model tests decentralized voting mechanisms, potentially expanding to other governance areas on UndChain.
+This dynamic voting mechanism enables decentralized governance and can serve as a testing ground for broader governance features across UndChain.
 
 ---
 
-### Ad Coin
+### AdCoin
 
-Again Ad Coin really shouldn't be on here since it's apart of the pages chain. Ad Coin has an initial supply of 4 trillion tokens, the reason for this is because accessing content on a site should be cheep and I envision that it should only cost a couple Ad Coin. All Ad Coin will be created at the start of the chain and will be shared across a couple eco systems as well as air dropped so that users can use the chain immediately. Not sure if it's going to be given when you create an account or if it's part of the onboarding process (so you can learn how to earn tokens rather than purchase and use them). 
+AdCoin is the native token of the Pages co-chain and integrates into other systems, such as Mimic, to facilitate user rewards and microtransactions.
 
-At a later time I will generate 444,444,444,444 more tokens. The idea is to test out a token generator system that takes the new tokens minted and splits them (based on percentage) to the token holders. So let's say there were 100 tokens and @Bob had 90 and @Sally had 10, if a token generator event occurs where we minted 10 more tokens, @Bob would then have 99 tokens and @Sally would have 11.
+#### Key Features
+
+1. **Initial Supply:** 4 trillion AdCoin minted at launch to ensure accessibility and affordability.
+2. **Utility:** Designed for micro-transactions, rewarding users for interacting with ads or classifying content, and granting access to various co-chain functionalities.
+3. **Onboarding Support:** Distributed through airdrops and tutorials to educate new users on earning and spending AdCoin.
+4. **Burn Mechanism:** During halving events, users can vote to implement a burn mechanism to reduce AdCoin supply.
+
+---
 
 ### Token Guidelines
 
-All tokens on the chain will be divisible up to 12 decimal places, we will use the standard way to identify low values as the metric system (mili, micro, nano, pico), for example in order to send a transaction on chain @Jerry requests 100p of GP to provide the service. I think that is a lot easier than having a long decimal number and I'm not going to make up a weird name for sub-dividing tokens.
+- **Decimal Precision:** All tokens are divisible up to **12 decimal places** for precision, using metric prefixes (e.g., milli, micro, nano). For instance, **100µ UGP** represents **0.0001 UGP**.
+- **Cross-Chain Token Sharing:** Tokens like UGP and USP are distributed across co-chains based on transaction volume, ensuring equitable rewards for contributors.
+- **Burn Address:** A dedicated burn address, reserved as `@Burn`, is built into the protocol to enable irreversible token destruction.
 
-Again, please refrain from making a bunch of tokens on chain. If you are connected to the main chain you have access to GP and SP by default. This is done by creating a token share across chains. This share is dependent on how many transactions take place on the chain. So, if `MainChain` chain does 10 transactions and `Pages` does 100 (and we assume a daily amount of 4444) then `MainChain` would get 444.4 tokens to distribute to it's validators and `Pages` would get 3,999.6.
-
-There will also be a dedicated `burn` address that can be used by any chain for any token. With the expressed function to only allow incoming transactions and no outgoing transactions. This will be rooted in the base protocol to not allow this address to send transactions, you can (like any other address view it's balance). Need to take a lot of care in designing this so that it cannot be compromised (**since its a big honey pot**). 
+---
 
 ### Fees
 
-Fees should reflect UndChain's core ideals of digital ownership, meaning that not only do you own your digital assets, but you also own your labor. Because of this partners are free to set any fee they wish on the service provided (independent of the chain owner). The chain owner can only set a percentage of the fee you collect so if you choose to collect no fee then the chain owner would not receive anything from you as a partner. With that there is an auto-fee system that I believe most people will use since it takes in chain usage and value of the token.
+UndChain’s fee system reflects its core principles of digital ownership and fairness:
 
-There could be a time when the auto-fee will be adjusted down via a vote, I only see this happening in cases where the value of the token far exceeds the value of the service. In these cases a vote will take place, but keep note that the fee reduction will be placed on a timer (since I wouldn't think clients would never vote for the fee to go higher). 
+1. **Partner-Set Fees:** Partners can independently set fees for services, with a portion allocated to the chain owner. Validators cannot set fees.
+2. **Network Suggested Fee:** Partners can opt for a network-suggested fee based on what the UndChain protocol recommends.
+3. **Auto-Fee System:** Dynamically adjusts fees based on token value and network activity.
+4. **Fee Reduction Voting:** Users and partners can vote to reduce fees temporarily if token values become overinflated.
+5. **No-Fee Model:** Partners and co-chains can opt to charge no fees, though this forfeits emission-based rewards. This supports non-profit initiatives.
 
-### Digital Assets on UndChain
+---
+
+### Transaction and Scalability Considerations
+
+1. **Encouraging Collaboration:** Developers are incentivized to use established tokens like USP to minimize market fragmentation.
+2. **Scalable Design:** Token-sharing mechanisms ensure rewards align with chain activity, promoting a sustainable ecosystem.
+
+---
+
+## Digital Assets on UndChain
 
 In the era of decentralized networks, **digital assets** are the backbone of user engagement, creativity, and commerce. Unlike traditional NFTs, which merely record ownership, UndChain’s assets bring enforceable rights, clear usage terms, and choices for creators and users alike. This section provides an overview of the contract types, enforcement mechanisms, and protections that make UndChain’s digital assets uniquely valuable.
 
