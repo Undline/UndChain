@@ -986,6 +986,63 @@ UndChain’s **Digital Asset Guardians (DAGs)** are independent entities respons
 
 Without an enforcement mechanism, digital asset contracts are meaningless. DAGs bring legitimacy to UndChain’s asset system by offering active protections and reliable dispute resolution. By combining DAG oversight with Mimic’s AI-driven insights, UndChain ensures a balanced ecosystem that empowers creators and protects consumers.
 
+### Claim Filing and Dispute Resolution
+
+To ensure transparency and fairness, UndChain incorporates a decentralized process for filing and resolving claims regarding digital assets. This system operates independently through DAGs and is supported by the protocol's foundational tools.
+
+#### Filing a Claim:
+
+1. **Initiating a Claim:**  
+    Creators or rights holders can file a claim via a DAG. To initiate, they must:
+    
+    - Provide evidence supporting their ownership or IP rights (e.g., copyright documentation, timestamps, or original work).
+    - Pay a **claim fee** (determined by the DAG and dependent on their perception score) to discourage frivolous claims.
+2. **Sponsor Involvement:**  
+    Claimants select a **sponsor**, an independent DAG member or organization, to vouch for their claim’s validity. Sponsors validate the provided evidence and enhance the credibility of the claim.
+    
+3. **Notifying the Asset Owner:**  
+    Upon filing, the current asset owner is notified and given a set period (e.g., 7-14 days) to respond. The asset in question may be temporarily frozen to prevent transfers or modifications during the dispute.
+    
+
+#### Responding to a Claim:
+
+1. **Providing Evidence:**  
+    The accused owner can contest the claim by presenting their own evidence, such as proofs of prior creation or purchase.
+    
+2. **Counter-Claim Filing:**  
+    If the accused believes the claim is false or malicious, they can file a **counter-claim**, which also requires a fee based on their perception score.
+    
+3. **Resolution through DAGs:**  
+    DAGs mediate the process by reviewing evidence, consulting sponsors, and reaching a verdict. All findings and outcomes are transparently logged on-chain.
+    
+
+#### Resolution and Outcomes:
+
+1. **Valid Claim:**  
+    If the claim is deemed valid:
+    
+    - The asset is transferred to the rightful owner.
+    - The claim fee is returned to the claimant.
+    - The original owner may face a **perception score penalty** for knowingly or unknowingly minting an infringing asset.
+2. **Invalid Claim:**  
+    If the claim is rejected:
+    
+    - The claim fee is awarded to the accused owner as compensation.
+    - The claimant’s perception score is penalized to discourage baseless claims.
+3. **Legal Escalation:**  
+    In cases involving significant legal implications, DAGs may require both parties to identify themselves and comply with jurisdictional laws.
+    
+
+#### Mimic’s Role in Disputes:
+
+Mimic aids both parties during the claim process:
+
+- **Claimant Support:** Mimic assists in gathering evidence and preparing documentation for the claim.
+- **Owner Support:** Mimic helps owners compile counter-evidence and verify timestamps or metadata.
+- **Transparency Tools:** Mimic provides clear, accessible overviews of claim details and outcomes for all stakeholders.
+
+---
+
 #### Protocol Forks for Ownership and Representation
 
 UndChain’s protocol remains neutral, avoiding mandatory enforcement to reduce network burden. Instead, **protocol forks** enable flexibility and creator-defined enforcement:
