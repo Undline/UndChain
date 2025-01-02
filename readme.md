@@ -1077,7 +1077,7 @@ Through enforceable digital assets, UndChain enables a **new standard in digital
 
 ### Accounts
 
-Anyone can generate an account on UndChain just as they can with any other blockchain, by generating a public/private key pair. Once you have generated your keys, simply send in a new user request message. Usernames, which begin with an @ symbol (e.g., @Undline, @Joe, @Sue_Storm), provide an easy means of transferring digital assets using a name instead of a long public key. These names are resolved on the validators' end using UnaS (UndChain Naming System), which acts like DNS.
+Anyone can generate an account on UndChain just as they can with any other blockchain, by generating a public/private key pair. Once you have generated your keys, simply send in a new user request message. Usernames, which begin with an @ symbol (e.g., @Undline), provide an easy means of transferring digital assets using a name instead of a long public key. These names are resolved on the validators' end using UnaS (UndChain Naming System), which acts like DNS.
 
 While usernames are not a requirement, public keys are necessary for adding you to the public ledger and allowing other users to reach you. This ensures that even new users without tokens can still participate and interact on the network. Users can receive tokens through drops or earn them by actively participating in the network.
 
