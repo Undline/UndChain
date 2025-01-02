@@ -942,7 +942,7 @@ Each digital asset on UndChain is governed by a **predefined contract** that det
     
     - **Details**: Unregistered assets simply establish ownership on the network but lack any claims or IP protections. If the owner chooses, they may upgrade an unregistered asset to a registered type with full protections later; however, the protections only apply from the reclassification date onward.
     - **Example**: An artwork uploaded without protections can later be upgraded to ensure royalties on resale, but initial transactions remain unaffected.
-2. **🟩 Rental (Green)**: Limited, single-use access for temporary asset consumption.
+2. **🟢 Rental (Green)**: Limited, single-use access for temporary asset consumption.
     
     - **Example**: Renting an e-book, video, or course with limited access rights.
     - **Key Benefits**: Provides short-term access without resale rights, allowing creators to retain full control over the asset’s use.
@@ -961,40 +961,60 @@ Each digital asset on UndChain is governed by a **predefined contract** that det
 
 These predefined contracts address the limitations of traditional digital assets, giving both creators and users well-defined rights and responsibilities.
 
+#### Enforcement Through Digital Asset Guardians (DAGs)
+
+UndChain’s **Digital Asset Guardians (DAGs)** are independent entities responsible for enforcing the network’s Digital Asset Program. By bridging decentralized principles with real-world compliance, DAGs ensure that asset contracts are meaningful and actionable.
+
+#### Key Roles of DAGs:
+
+1. **Asset Validation:** DAGs verify that digital assets comply with UndChain's standards and terms. This includes monitoring for unauthorized use or duplication of existing works.
+2. **Dispute Resolution:** DAGs mediate disputes between creators and claimants, providing a fair and balanced resolution mechanism.
+3. **Revenue Distribution:** For assets with multiple contributors or shared ownership, DAGs oversee revenue splits to ensure fair compensation.
+
+#### Mimic’s Role in Enforcement:
+
+- **Duplicate Detection:** Mimic analyzes digital assets for potential duplicates, flagging works that may infringe on existing copyrights.
+- **Consumer Warnings:** If a duplicate is detected, Mimic provides a warning visible to potential buyers, along with the creator's response.
+- **Neutral Role:** Mimic does not block minting but empowers consumers with transparent information, enabling informed decisions.
+
+#### Consumer Protections:
+
+- **Transparency:** Buyers can see warnings and creator responses directly on the asset's listing.
+- **Accountability:** Creators minting flagged works must provide an explanation, fostering trust and reducing misuse.
+
+#### Why DAGs Are Essential
+
+Without an enforcement mechanism, digital asset contracts are meaningless. DAGs bring legitimacy to UndChain’s asset system by offering active protections and reliable dispute resolution. By combining DAG oversight with Mimic’s AI-driven insights, UndChain ensures a balanced ecosystem that empowers creators and protects consumers.
+
 #### Protocol Forks for Ownership and Representation
 
 UndChain’s protocol remains neutral, avoiding mandatory enforcement to reduce network burden. Instead, **protocol forks** enable flexibility and creator-defined enforcement:
 
-- **Ownership Fork**: Sets the asset’s primary owner, governs revenue distribution, and can initiate actions like asset freezes in case of disputes.
-- **Representation Fork**: Allows creators to assign an **enforcement co-chain** (such as an Asset Protection Co-Chain) for handling claims, enforcing rights, and managing disputes if needed.
+- **Ownership Fork:** Sets the asset’s primary owner, governs revenue distribution, and can initiate actions like asset freezes in case of disputes.
+- **Representation Fork:** Allows creators to assign an **enforcement mechanism** (such as DAGs) for handling claims, enforcing rights, and managing disputes if needed.
 
 These forks create the foundation for a decentralized enforcement system, giving creators full control over their level of protection without altering the core protocol.
-
-#### Enforcement Through Asset Protection Co-Chains (APCs)
-
-For creators seeking active protection, **Asset Protection Co-Chains (APCs)** offer an optional enforcement mechanism. APCs provide real-world protections, monitoring assets for unauthorized use, and handling IP claims as required.
-
-- **Claim Sponsors**: In the APC model, claimants select **sponsors** who vouch for claim validity. Sponsors add credibility, ensuring a fair, balanced dispute process. If a user believes they’re wrongfully accused, they can file a counter-claim, backed by their own sponsor.
-- **Revenue Sharing and Partial Ownership**: APCs support partial ownership claims, allowing revenue splits for assets involving multiple contributors, ensuring each creator receives a fair share even if the asset is modified or resold.
 
 #### Built-in User Protections and Decentralized Dispute Resolution
 
 UndChain’s digital asset model includes comprehensive user protections to create a balanced environment:
 
-- **Transparency with Color-Coded Contracts**: Clear asset terms prevent misunderstandings and allow users to make informed decisions.
-- **Accountability in Dispute Resolution**: Both claimants and users are accountable in disputes, with sponsors providing support and verification to prevent misuse.
-- **Modular, Decentralized Enforcement**: Optional APCs and protocol forks allow enforcement and monitoring to evolve without impacting the core protocol, promoting innovation within the UndChain ecosystem.
+- **Transparency with Color-Coded Contracts:** Clear asset terms prevent misunderstandings and allow users to make informed decisions.
+- **Accountability in Dispute Resolution:** Both claimants and users are accountable in disputes, with sponsors providing support and verification to prevent misuse.
+- **Modular, Decentralized Enforcement:** Optional DAGs and protocol forks allow enforcement and monitoring to evolve without impacting the core protocol, promoting innovation within the UndChain ecosystem.
 
 #### Advantages of Enforceable Digital Assets on UndChain
 
 The UndChain digital asset model brings unique advantages over traditional NFTs and decentralized assets:
 
-- **Clear Rights and Responsibilities**: Predefined contracts outline specific usage rights, empowering creators and users to understand and control asset interactions.
-- **Optional, Effective Enforcement**: By choosing an APC, creators can access a robust IP protection system that operates independently of the main protocol.
-- **Upgrade Flexibility for Unregistered Assets**: Unregistered (Gray) assets offer a straightforward entry point, with the flexibility to upgrade protections as desired.
-- **Future-Proof Flexibility**: The enforcement system, combined with protocol forks, allows the ecosystem to grow, adapt, and incorporate new enforcement mechanisms without requiring protocol changes.
+- **Clear Rights and Responsibilities:** Predefined contracts outline specific usage rights, empowering creators and users to understand and control asset interactions.
+- **Optional, Effective Enforcement:** By choosing DAGs, creators can access a robust IP protection system that operates independently of the main protocol.
+- **Upgrade Flexibility for Unregistered Assets:** Unregistered (Gray) assets offer a straightforward entry point, with the flexibility to upgrade protections as desired.
+- **Future-Proof Flexibility:** The enforcement system, combined with protocol forks, allows the ecosystem to grow, adapt, and incorporate new enforcement mechanisms without requiring protocol changes.
 
 Through enforceable digital assets, UndChain enables a **new standard in digital ownership** for Web4, balancing creator rights with user freedom while remaining scalable and neutral at its core.
+
+---
 
 ## Network Fundamentals
 
