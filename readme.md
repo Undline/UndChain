@@ -8,9 +8,10 @@ If you're a developer interested in contributing to UndChain, have questions, or
 
 - **Telegram**: [Join our Developer Group on Telegram](https://t.me/UndChain_Dev)
 
-Whether you're just curious or ready to jump into development, all are welcome!
+Whether you're just curious or ready to jump into development, join the group and start asking questions.
 
 ---
+
 # What is UndChain?
 
 UndChain is a PoU (Proof of Utility) blockchain; that can best be thought of as a decentralized cloud service in which anyone can participate. There are three different utilities that can be performed on the network, that work together to create similar functionality as conventional cloud service providers.
