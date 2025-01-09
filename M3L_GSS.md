@@ -1660,6 +1660,7 @@ This appendix provides a comprehensive listing of all widgets supported by M3L a
 | `on_enter`  | Fires when the text box gains focus.                                        | `on_enter = [{ show_help = "Enter a unique username." }]`                                                                                   |
 | `on_next`   | Handles navigation to the next widget in the flow.                         | `on_next = "password_field"`                                                                                                                |
 | `on_submit` | Fires when the user confirms input (e.g., pressing Enter).                 | `on_submit = [{ validate = "min_length", value = 3 }, { intent = "search", target = "SQeeL://Auction_House/search" }]`                  |
+| `on_error`  | Triggers actions when an error specific to the widget occurs.              | `on_error = [{ display = "tooltip", message = "This field is required." }]`                                                               |
 
 ---
 
@@ -1678,6 +1679,9 @@ on_exit = [
     { validate = "regex", pattern = "^[a-zA-Z0-9_]+$", error_message = "Only alphanumeric characters allowed." }
 ]
 on_next = "password_field"
+on_error = [
+    { display = "tooltip", message = "This field is required." }
+]
 ```
 
 ---
@@ -1708,12 +1712,18 @@ border-color = "#FF0000"
 
 [text_box.waiting]
 background-image = "loading_spinner.gif"
+
+[text_box.error.tooltip]
+background-color = "#FFDDDD"
+color = "#FF0000"
+padding = "0.25rem"
+border-radius = "3px"
 ```
 
 ---
 
 ### **Key Features and Recommendations**
-- **Rich Event Handling**: Leverage `on_input`, `on_exit`, `on_enter`, `on_next`, and `on_submit` for dynamic interactions and seamless user experiences.
+- **Rich Event Handling**: Leverage `on_input`, `on_exit`, `on_enter`, `on_next`, `on_submit`, and `on_error` for dynamic interactions and seamless user experiences.
 - **Validation Options**: Support for client-side and co-chain validation ensures flexibility and scalability.
 - **Dynamic Feedback**: Integrate GSS rules for valid, invalid, and waiting states to provide real-time feedback.
 - **Accessibility**: Use ARIA roles and descriptions to enhance usability for assistive technologies.
