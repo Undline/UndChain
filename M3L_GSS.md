@@ -1628,237 +1628,103 @@ GSS files that fully implement all available widgets in the current version of M
 Future-proofing in M3L and GSS is achieved through thoughtful design choices, such as placeholder fields for co-chains, modular high-order widgets, versioning in M3L files, and incentives for comprehensive GSS files. By planning for advancements like VR and BMI support, the system remains adaptable and forward-looking, empowering developers to create applications that stand the test of time while maintaining strict security and consistency.
 
 ---
+---
 
 # Appendix: Widgets
 
 ## Overview
+This appendix provides a comprehensive listing of all widgets supported by M3L and GSS, including their types, examples, and styling options. Widgets are categorized into **low-level widgets** (basic building blocks). Each widget includes a detailed description, example usage in M3L, and corresponding styling in GSS to help developers understand its purpose and implementation. 
 
-This appendix provides a comprehensive listing of all widgets supported by M3L and GSS, including their types, examples, and styling options. Widgets are categorized into **low-level widgets** (basic building blocks). Each widget includes a detailed description, example usage in M3L, and corresponding styling in GSS to help developers understand its purpose and implementation. Note: All setting and value entries are **not case-sensitive**; they are converted to lowercase during processing, ensuring consistent handling and easing development.
+**Note**: All setting and value entries are **not case-sensitive**; they are converted to lowercase during processing, ensuring consistent handling and easing development.
 
 ---
 
 ## Low-Level Widgets
 
-### **1. Button**
-
-- **Description**: A core interactive element that triggers actions or navigates to other sections/pages. Buttons can display labels and optionally include icons for additional context. Multiple button types include default, call-to-action (CTA), muted, and icon buttons.
+### **Text Box**
+- **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
-    - Form submission.
-    - Navigation to another page.
-    - Triggering modal popups or dynamic content updates.
+  - Collecting user input (e.g., usernames, emails).
+  - Real-time validation (e.g., regex, min/max length).
+  - Dynamic interactions (e.g., triggering co-chain requests).
 
-**Example M3L:**
+---
 
+#### **Core Fields**
+| Field       | Description                                                                 | Example                                                                                                                                       |
+|-------------|-----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| `label`     | A descriptive title or prompt for the text box. Rendered via GSS styling.  | `label = "Enter Username"`                                                                                                                  |
+| `placeholder`| Text displayed inside the box when it is empty.                           | `placeholder = "Enter your username"`                                                                                                       |
+| `on_input`  | Triggers actions as the user types.                                         | `on_input = [{ validate = "regex", pattern = "^[a-zA-Z0-9_]+$" }, { after_idle = "2s", intent = "check_availability", target = "UndChain://UnaS/namecheck" }]` |
+| `on_exit`   | Triggers actions when the user leaves the text box.                        | `on_exit = [{ validate = "regex", pattern = "^[^@\s]+@[^@\s]+\.[^@\s]+$" }]`                                                        |
+| `on_enter`  | Fires when the text box gains focus.                                        | `on_enter = [{ show_help = "Enter a unique username." }]`                                                                                   |
+| `on_next`   | Handles navigation to the next widget in the flow.                         | `on_next = "password_field"`                                                                                                                |
+| `on_submit` | Fires when the user confirms input (e.g., pressing Enter).                 | `on_submit = [{ validate = "min_length", value = 3 }, { intent = "search", target = "SQeeL://Auction_House/search" }]`                  |
+
+---
+
+#### **Example M3L Implementation**
 ```toml
 [[layout.container.content]]
-type = "button"
-intention = "accept"
-label = "Submit"
-style = "cta"
-```
-
-**Example GSS:**
-
-```toml
-[button]
-background-color = "#007BFF"
-color = "#fff"
-padding = "1rem 2rem"
-border-radius = "0.5rem"
-hover.background-color = "#0056b3"
-[button.animation]
-entrance = "fade-in"
-duration = "1s"
-interaction = "scale-up"
-
-[button.cta]
-background = "linear-gradient(90deg, #FF7E5F, #FD3A84)"
-color = "#fff"
-padding = "1.25rem 2.5rem"
-font-weight = "bold"
-border-radius = "0.5rem"
-hover.background = "linear-gradient(90deg, #FD3A84, #FF7E5F)"
-
-[button.muted]
-background-color = "#e0e0e0"
-color = "#666"
-padding = "1rem"
-border-radius = "0.5rem"
-hover.background-color = "#d6d6d6"
-
-[button.icon]
-size = "3rem"
-color = "#333"
-hover.color = "#007BFF"
+type = "text_box"
+label = "Username"
+placeholder = "Enter your username"
+on_input = [
+    { validate = "no_special_chars", error_message = "Special characters are not allowed." },
+    { min_length = 3, error_message = "Must be at least 3 characters." },
+    { after_idle = "2s", intent = "check_availability", target = "UndChain://UnaS/namecheck", error_message = "Username is unavailable." }
+]
+on_exit = [
+    { validate = "regex", pattern = "^[a-zA-Z0-9_]+$", error_message = "Only alphanumeric characters allowed." }
+]
+on_next = "password_field"
 ```
 
 ---
 
-### **2. Icon**
-
-- **Description**: Displays scalable SVG icons for navigation, emphasis, or desktop-like application interactions. Icons can be styled dynamically based on user interaction (e.g., hover effects).
-- **Use Cases**:
-    - Application icons in a virtual desktop environment.
-    - Visual cues for navigation buttons or action triggers.
-
-**Example M3L:**
-
+#### **Example GSS Implementation**
 ```toml
-[[layout.container.content]]
-type = "icon"
-source = "@Undline/assets/app_icon.svg"
-intention = "navigate"
-target = "@Undline/my_app.m3l"
-```
-
-**Example GSS:**
-
-```toml
-[icon]
-size = "3rem"
-hover.size = "3.5rem"
+[text_box]
+font-family = "Arial, sans-serif"
+border = "1px solid #ccc"
+border-radius = "5px"
+padding = "0.5rem"
 color = "#333"
-hover.color = "#007BFF"
-[icon.animation]
-entrance = "zoom-in"
-duration = "0.5s"
-interaction = "rotate"
-```
 
----
-
-### **3. Text**
-
-- **Description**: Displays textual content, including headings, paragraphs, and lists. Styles can vary depending on the assigned `style` field, such as `header`, `subheader`, `H1`, or `H2`.
-- **Use Cases**:
-    - Page titles and subtitles.
-    - Body content and instructions.
-    - Descriptive text in tooltips or modals.
-
-**Example M3L:**
-
-```toml
-# Using semantic names
-[[layout.container.content]]
-type = "text"
-content = "Welcome to the platform!"
-style = "header"
-
-# Using traditional H1-H5 format
-[[layout.container.content]]
-type = "text"
-content = "Explore Our Features"
-style = "H1"
-
-# Pulling text from external sources
-[[layout.container.content]]
-type = "text"
-source = "@Undline/header.txt"
-style = "sub-header"
-```
-
-**Example GSS:**
-
-```toml
-# Semantic styles
-[text.header]
-font-size = "2.5rem"
-color = "#333"
-font-weight = "bold"
-
-[text.sub-header]
-font-size = "2rem"
-color = "#555"
-font-weight = "normal"
-
-[text.paragraph]
+[text_box.label]
 font-size = "1rem"
 color = "#666"
-line-height = "1.5"
+padding-bottom = "0.25rem"
 
-# Traditional H1-H5 mapping
-[text.H1]
-font-size = "2.5rem"
-color = "#333"
-font-weight = "bold"
+[text_box.placeholder]
+color = "#aaa"
+font-style = "italic"
 
-[text.H2]
-font-size = "2rem"
-color = "#555"
-font-weight = "normal"
+[text_box.valid]
+border-color = "#00FF00"
 
-[text.H3]
-font-size = "1.75rem"
-color = "#555"
-font-weight = "normal"
+[text_box.invalid]
+border-color = "#FF0000"
+
+[text_box.waiting]
+background-image = "loading_spinner.gif"
 ```
 
 ---
 
-### **4. Tooltip**
-
-- **Description**: Provides additional information when hovering over or focusing on a widget. Tooltips enhance accessibility and user understanding of UI elements.
-- **Use Cases**:
-    - Explaining button functionality.
-    - Displaying additional context for form fields.
-    - Offering inline help for complex interactions.
-
-**Example M3L:**
-
-```toml
-[[layout.container.content]]
-type = "tooltip"
-content = "This is a tooltip example."
-```
-
-**Example GSS:**
-
-```toml
-[tooltip]
-background-color = "#000"
-color = "#fff"
-font-size = "0.75rem"
-padding = "0.5rem"
-border-radius = "0.25rem"
-[tooltip.animation]
-entrance = "fade-in"
-duration = "0.3s"
-exit = "fade-out"
-```
+### **Key Features and Recommendations**
+- **Rich Event Handling**: Leverage `on_input`, `on_exit`, `on_enter`, `on_next`, and `on_submit` for dynamic interactions and seamless user experiences.
+- **Validation Options**: Support for client-side and co-chain validation ensures flexibility and scalability.
+- **Dynamic Feedback**: Integrate GSS rules for valid, invalid, and waiting states to provide real-time feedback.
+- **Accessibility**: Use ARIA roles and descriptions to enhance usability for assistive technologies.
 
 ---
 
-### **5. Progress Bar**
-
-- **Description**: Displays progress for tasks like file uploads or downloads. Progress bars dynamically update as tasks complete.
-- **Use Cases**:
-    - File uploads.
-    - Download progress.
-    - Process tracking in forms.
-
-**Example M3L:**
-
-```toml
-[[layout.container.content]]
-type = "progress_bar"
-value = 50
-max = 100
-```
-
-**Example GSS:**
-
-```toml
-[progress_bar]
-background-color = "#e0e0e0"
-filled-color = "#007BFF"
-height = "0.5rem"
-border-radius = "0.25rem"
-[progress_bar.animation]
-interaction = "pulse"
-duration = "1.5s"
-```
-
----
+### **Additional Recommendations for Flexibility**
+1. **Custom Error Messages**: Allow developers to specify tailored messages for validation failures.
+2. **Dynamic Placeholders**: Fetch placeholder text dynamically via co-chains for context-aware prompts.
+3. **Prefilled Values**: Add a `default_value` field to initialize the text box with preset data.
+4. **Event Throttling**: Introduce a `throttle` option to limit rapid event triggering (e.g., `throttle = "500ms"`).
 
 ---
 
