@@ -204,6 +204,7 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
     
     - **M3L** and **GSS** revolutionize how content is served by allowing updates to individual components rather than entire documents, significantly reducing network load.
     - Dynamic scaling ensures that popular pages are hosted across multiple partners based on demand and region, maintaining uptime and low latency even during high traffic.
+    - To learn more about M3L and GSS: [M3L and GSS Documentation](M3L_GSS.md)
 2. **Advanced Content Types**
     
     - Unlike HTML, **M3L** supports more advanced content types, such as **video**, **chat**, and **canvas**, enabling developers to build richer, more interactive applications directly on the Pages co-chain.
