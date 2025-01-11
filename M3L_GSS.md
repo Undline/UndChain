@@ -1773,7 +1773,7 @@ border-radius = "3px"
 ---
 
 ### **Key Features and Recommendations**
-- **Rich Event Handling**: Leverage `on_input`, `on_exit`, `on_enter`, `on_next`, `on_submit`, and `on_error` for dynamic interactions and seamless user experiences.
+- **Rich Event Handling**: Leverage `on_input`, `on_exit`, `on_enter`, `on_next`, `on_submit` and `on_error` for dynamic interactions and seamless user experiences.
 - **Password Handling**: Use the `password` field for secure input, the `mask_symbol` for custom masking, and integrated buttons for toggling visibility.
 - **Validation Options**: Support for client-side and co-chain validation ensures flexibility and scalability.
 - **Dynamic Feedback**: Integrate GSS rules for valid, invalid, and waiting states to provide real-time feedback.
@@ -1788,6 +1788,177 @@ border-radius = "3px"
 4. **Event Throttling**: Introduce a `throttle` option to limit rapid event triggering (e.g., `throttle = "500ms"`).
 
 ---
+
+### **Text Area**
+- **Description**: A text area allows users to input multi-line text, making it ideal for feedback, comments, or larger bodies of text. This widget supports dynamic interactivity, validation, and user-friendly features like auto-expansion.
+- **Use Cases**:
+  - Collecting detailed user feedback or comments.
+  - Enabling users to write multi-line notes or descriptions.
+  - Integrating dynamic features like autosave or live character count.
+
+---
+
+#### **Core Fields**
+| **Field**           | **Description**                                                                 | **Example**                                                                                                                         |
+|---------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `label`             | A descriptive title or prompt for the text area. Rendered via GSS styling.      | `label = "Write Your Feedback"`                                                                                                   |
+| `placeholder`       | Text displayed when the area is empty.                                          | `placeholder = "Enter your feedback here..."`                                                                                     |
+| `default_value`     | Pre-fills the text area with initial data.                                       | `default_value = "I love M3L and GSS!"`                                                                                            |
+| `max_length`        | Limits the total number of characters allowed.                                  | `max_length = 500`                                                                                                                 |
+| `min_length`        | Specifies the minimum number of characters required.                           | `min_length = 10`                                                                                                                  |
+| `min_lines`         | Sets the minimum number of lines the text area displays initially.             | `min_lines = 1`                                                                                                                    |
+| `resizable`         | Allows users to resize the text area.                                           | `resizable = true`                                                                                                                 |
+| `scrollable`        | Adds scrollbars if the content overflows.                                       | `scrollable = true`                                                                                                                |
+| `collapsed`         | Specifies whether the text area starts collapsed.                              | `collapsed = true`                                                                                                                 |
+| `collapsed_lines`   | Defines the number of lines shown when collapsed.                               | `collapsed_lines = 3`                                                                                                              |
+| `max_lines`         | Sets the maximum number of lines the text area can grow to when expanded.      | `max_lines = 10`                                                                                                                   |
+| `spellcheck`        | Enables or disables spellchecking.                                              | `spellcheck = true`                                                                                                                |
+| `read_only`         | Prevents the user from modifying the content.                                   | `read_only = true`                                                                                                                 |
+| `case_transform`    | Automatically transforms input to uppercase, lowercase, or capitalize each word.| `case_transform = "capitalize"`                                                                                                    |
+| `character_count`   | Displays a live character count below the text area.                           | `character_count = true`                                                                                                           |
+| `autosave`          | Automatically saves content after a set interval.                              | `autosave = { interval = "5s", target = "SQeeL://Notes/Save" }`                                                                  |
+| `undo_redo`         | Enables undo and redo functionality for the text area.                         | `undo_redo = true`                                                                                                                 |
+| `on_input`          | Triggers actions as the user types.                                             | `on_input = [{ validate = "regex", pattern = "^[a-zA-Z0-9\s]+$" }]`                                                              |
+| `on_submit`         | Fires when the user confirms input (e.g., pressing Enter with `submit = true`). | `on_submit = [{ intent = "submit_comment", target = "SQeeL://Comments/Submit" }]`                                                  |
+| `on_error`          | Triggers actions when an error specific to the widget occurs.                  | `on_error = [{ display = "tooltip", message = "Comment must be at least 10 characters." }]`                                        |
+| `onscreen_keyboard` | Activates an on-screen keyboard when the text area gains focus.                | `onscreen_keyboard = true`                                                                                                          |
+| `on_enter`          | Triggers actions when the text area gains focus.                              | `on_enter = [{ highlight_border = true }]`                                                                                          |
+| `on_exit`           | Fires actions when the text area loses focus.                                 | `on_exit = [{ autosave = true }]`                                                                                                   |
+| `on_highlight`      | Detects when text within the area is highlighted and triggers an action.       | `on_highlight = [{ show_menu = "mini-menu" }]`                                                                                     |
+| `on_next`           | Handles navigation to the next widget in the flow (e.g., via Tab key).         | `on_next = "next_widget_id"`                                                                                                       |
+
+---
+
+#### **Core Styling Parameters**
+| **Parameter**          | **Description**                                              | **Example**                                    |
+|------------------------|-------------------------------------------------------------|-----------------------------------------------|
+| `font-family`          | Defines the font of the text inside the area.               | `font-family = "Verdana, sans-serif"`        |
+| `font-size`            | Sets the size of the text.                                  | `font-size = "1rem"`                         |
+| `font-color`           | Sets the font color of the text inside the area.            | `font-color = "#333"`                        |
+| `background-color`     | Sets the background color of the area.                      | `background-color = "#fff"`                  |
+| `border`               | Specifies the border style, width, and color.               | `border = "1px solid #ddd"`                  |
+| `border-radius`        | Rounds the corners of the text area.                        | `border-radius = "8px"`                      |
+| `padding`              | Sets the padding inside the area.                           | `padding = "1rem"`                           |
+| `placeholder.color`    | Sets the color of the placeholder text.                     | `placeholder.color = "#aaa"`                 |
+| `scrollbar.color`      | Sets the color of the scrollbar for scrollable areas.       | `scrollbar.color = "#ccc"`                   |
+| `resize.handle.style`  | Styles the resize handle when `resizable = true`.           | `resize.handle.style = "width: 8px; color: #444;"` |
+| `collapsed.height`     | Sets the height of the collapsed text area.                 | `collapsed.height = "3rem"`                  |
+| `expanded.height`      | Sets the height of the expanded text area.                  | `expanded.height = "10rem"`                  |
+| `character_count.style`| Styles the character count displayed below the text area.   | `character_count.style = "font-size: 0.9rem; color: #666;"` |
+| `touch.focus_indicator`| Sets styling for when the text area is focused on touch devices. | `touch.focus_indicator = "border: 2px solid #007BFF;"` |
+
+---
+
+#### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "text_area"
+label = "Write Your Feedback"
+placeholder = "Enter your feedback here..."
+default_value = ""
+max_length = 500
+min_length = 10
+min_lines = 1
+resizable = true
+scrollable = true
+collapsed = true
+collapsed_lines = 3
+max_lines = 10
+spellcheck = true
+character_count = true
+autosave = { interval = "5s", target = "SQeeL://Feedback/Save" }
+onscreen_keyboard = true
+on_input = [
+    { validate = "min_length", value = 10, error_message = "Feedback must be at least 10 characters." },
+    { validate = "regex", pattern = "^[a-zA-Z0-9\s.,!?]+$", error_message = "Only alphanumeric characters, spaces, and punctuation are allowed." }
+]
+on_enter = [
+    { highlight_border = true }
+]
+on_exit = [
+    { autosave = true }
+]
+on_highlight = [
+    { show_menu = "mini-menu" }
+]
+on_next = "next_widget_id"
+on_submit = [
+    { intent = "submit_feedback", target = "SQeeL://Feedback/Submit" }
+]
+on_error = [
+    { display = "tooltip", message = "Feedback submission failed. Try again." }
+]
+```
+
+---
+
+#### **Example GSS Implementation**
+```toml
+[text_area]
+font-family = "Verdana, sans-serif"
+border = "1px solid #ddd"
+border-radius = "8px"
+padding = "1rem"
+font-color = "#333"
+background-color = "#fff"
+
+[text_area.label]
+font-size = "1rem"
+color = "#444"
+padding-bottom = "0.5rem"
+
+[text_area.placeholder]
+color = "#aaa"
+font-style = "italic"
+
+[text_area.character_count]
+font-size = "0.9rem"
+color = "#666"
+margin-top = "0.25rem"
+
+[text_area.valid]
+border-color = "#00FF00"
+
+[text_area.invalid]
+border-color = "#FF0000"
+
+[text_area.scrollbar]
+color = "#ccc"
+
+[text_area.resize.handle]
+width = "8px"
+color = "#444"
+
+[text_area.collapsed]
+height = "3rem"
+
+[text_area.expanded]
+height = "10rem"
+
+[text_area.touch.focus_indicator]
+border = "2px solid #007BFF"
+background-color = "#f0f8ff"
+```
+
+---
+
+### **Key Features and Recommendations**
+- **Rich Event Handling**: Leverage `on_input`, `on_submit`, `on_error`, `on_enter`, `on_exit`, `on_highlight`, and `on_next` for dynamic interactions and seamless user experiences.
+- **Collapsible Design**: Use the `collapsed` parameter to save space while still allowing expandable text entry.
+- **Dynamic Feedback**: Integrate GSS rules for valid, invalid, and waiting states to provide real-time feedback.
+- **Autosave and Undo/Redo**: Automatically save progress and allow users to undo/redo changes for better usability.
+- **Accessibility**: Use ARIA roles and descriptions to enhance usability for assistive technologies.
+- **Touch Optimization**: Parameters like `onscreen_keyboard` ensure smooth interaction on touch devices.
+
+---
+
+#### **Notes**
+- **Width Behavior**: The width of the text area is defined by the total width of the widget's containing element.
+- **Height Behavior**: If `min_lines` and `max_lines` are not defined, the height of the text area defaults to the height of the containing widget.
+
+---
+
+
 
 ## Summary
 
