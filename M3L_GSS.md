@@ -1660,6 +1660,12 @@ This appendix provides a comprehensive listing of all widgets supported by M3L a
 | `password`      | Masks the input text for secure password entry.                            | `password = true`                                                                                                                             |
 | `integrated_button` | Adds an interactive button inside the text box (e.g., toggle password visibility). | `integrated_button = { icon = "@Undline/assets/show_icon.svg", action = "toggle_visibility" }`                                            |
 | `mask_symbol`   | Allows customization of the masking symbol for password fields.            | `mask_symbol = "•" or `mask_symbol = "🔒"`                                                                                                |
+| `autocomplete`  | Suggests previously entered values as the user types.                      | `autocomplete = true`                                                                                                                         |
+| `spellcheck`    | Enables or disables spellchecking for the input field.                     | `spellcheck = true`                                                                                                                           |
+| `read_only`     | Prevents the user from modifying the text box value.                       | `read_only = true`                                                                                                                            |
+| `max_length`    | Limits the number of characters a user can enter.                          | `max_length = 100`                                                                                                                            |
+| `min_length`    | Specifies the minimum number of characters required.                       | `min_length = 5`                                                                                                                              |
+| `case_transform`| Automatically transforms the input (e.g., uppercase, lowercase).           | `case_transform = "uppercase"`                                                                                                              |
 | `on_input`      | Triggers actions as the user types.                                         | `on_input = [{ validate = "regex", pattern = "^[a-zA-Z0-9_]+$" }, { after_idle = "2s", intent = "check_availability", target = "UndChain://UnaS/namecheck" }]` |
 | `on_exit`       | Triggers actions when the user leaves the text box.                        | `on_exit = [{ validate = "regex", pattern = "^[^@\s]+@[^@\s]+\.[^@\s]+$" }]`                                                        |
 | `on_enter`      | Fires when the text box gains focus.                                        | `on_enter = [{ show_help = "Enter a unique username." }]`                                                                                   |
@@ -1693,6 +1699,11 @@ placeholder = "Enter your password"
 default_value = ""
 password = true
 mask_symbol = "🔒"
+autocomplete = true
+spellcheck = false
+read_only = false
+max_length = 20
+case_transform = "uppercase"
 integrated_button = { icon = "@Undline/assets/show_icon.svg", action = "toggle_visibility" }
 on_input = [
     { validate = "min_length", value = 8, error_message = "Password must be at least 8 characters." },
