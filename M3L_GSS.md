@@ -1645,22 +1645,42 @@ This appendix provides a comprehensive listing of all widgets supported by M3L a
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
   - Collecting user input (e.g., usernames, emails).
+  - Password entry with secure visibility controls.
   - Real-time validation (e.g., regex, min/max length).
   - Dynamic interactions (e.g., triggering co-chain requests).
 
 ---
 
 #### **Core Fields**
-| Field       | Description                                                                 | Example                                                                                                                                       |
-|-------------|-----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| `label`     | A descriptive title or prompt for the text box. Rendered via GSS styling.  | `label = "Enter Username"`                                                                                                                  |
-| `placeholder`| Text displayed inside the box when it is empty.                           | `placeholder = "Enter your username"`                                                                                                       |
-| `on_input`  | Triggers actions as the user types.                                         | `on_input = [{ validate = "regex", pattern = "^[a-zA-Z0-9_]+$" }, { after_idle = "2s", intent = "check_availability", target = "UndChain://UnaS/namecheck" }]` |
-| `on_exit`   | Triggers actions when the user leaves the text box.                        | `on_exit = [{ validate = "regex", pattern = "^[^@\s]+@[^@\s]+\.[^@\s]+$" }]`                                                        |
-| `on_enter`  | Fires when the text box gains focus.                                        | `on_enter = [{ show_help = "Enter a unique username." }]`                                                                                   |
-| `on_next`   | Handles navigation to the next widget in the flow.                         | `on_next = "password_field"`                                                                                                                |
-| `on_submit` | Fires when the user confirms input (e.g., pressing Enter).                 | `on_submit = [{ validate = "min_length", value = 3 }, { intent = "search", target = "SQeeL://Auction_House/search" }]`                  |
-| `on_error`  | Triggers actions when an error specific to the widget occurs.              | `on_error = [{ display = "tooltip", message = "This field is required." }]`                                                               |
+| Field           | Description                                                                 | Example                                                                                                                                       |
+|------------------|-----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| `label`         | A descriptive title or prompt for the text box. Rendered via GSS styling.  | `label = "Enter Username"`                                                                                                                  |
+| `placeholder`   | Text displayed inside the box when it is empty.                            | `placeholder = "Enter your username"`                                                                                                       |
+| `default_value` | Pre-fills the text box with initial data.                                   | `default_value = "JohnDoe123"`                                                                                                |
+| `password`      | Masks the input text for secure password entry.                            | `password = true`                                                                                                                             |
+| `integrated_button` | Adds an interactive button inside the text box (e.g., toggle password visibility). | `integrated_button = { icon = "@Undline/assets/show_icon.svg", action = "toggle_visibility" }`                                            |
+| `mask_symbol`   | Allows customization of the masking symbol for password fields.            | `mask_symbol = "•" or `mask_symbol = "🔒"`                                                                                                |
+| `on_input`      | Triggers actions as the user types.                                         | `on_input = [{ validate = "regex", pattern = "^[a-zA-Z0-9_]+$" }, { after_idle = "2s", intent = "check_availability", target = "UndChain://UnaS/namecheck" }]` |
+| `on_exit`       | Triggers actions when the user leaves the text box.                        | `on_exit = [{ validate = "regex", pattern = "^[^@\s]+@[^@\s]+\.[^@\s]+$" }]`                                                        |
+| `on_enter`      | Fires when the text box gains focus.                                        | `on_enter = [{ show_help = "Enter a unique username." }]`                                                                                   |
+| `on_next`       | Handles navigation to the next widget in the flow.                         | `on_next = "password_field"`                                                                                                                |
+| `on_submit`     | Fires when the user confirms input (e.g., pressing Enter).                 | `on_submit = [{ validate = "min_length", value = 3 }, { intent = "search", target = "SQeeL://Auction_House/search" }]`                  |
+| `on_error`      | Triggers actions when an error specific to the widget occurs.              | `on_error = [{ display = "tooltip", message = "This field is required." }]`                                                               |
+
+---
+
+#### **Core Styling Parameters**
+| Parameter           | Description                                             | Example                                        |
+|---------------------|---------------------------------------------------------|------------------------------------------------|
+| `font-family`       | Defines the font of the text inside the box.            | `font-family = "Arial, sans-serif"`          |
+| `font-size`         | Sets the size of the text.                              | `font-size = "1rem"`                         |
+| `color`             | Sets the text color.                                    | `color = "#333"`                              |
+| `background-color`  | Defines the background color of the text box.           | `background-color = "#fff"`                  |
+| `border`            | Specifies the border style, width, and color.           | `border = "1px solid #ccc"`                  |
+| `border-radius`     | Rounds the corners of the text box.                     | `border-radius = "5px"`                      |
+| `padding`           | Defines the padding inside the text box.                | `padding = "0.5rem"`                         |
+| `placeholder.color` | Sets the color of the placeholder text.                 | `placeholder.color = "#aaa"`                 |
+| `mask_symbol.style` | Defines the styling for the mask symbol in password fields. | `mask_symbol.style = "font-size: 1.2rem; color: #444;"`             |
 
 ---
 
@@ -1668,19 +1688,24 @@ This appendix provides a comprehensive listing of all widgets supported by M3L a
 ```toml
 [[layout.container.content]]
 type = "text_box"
-label = "Username"
-placeholder = "Enter your username"
+label = "Password"
+placeholder = "Enter your password"
+default_value = ""
+password = true
+mask_symbol = "🔒"
+integrated_button = { icon = "@Undline/assets/show_icon.svg", action = "toggle_visibility" }
 on_input = [
-    { validate = "no_special_chars", error_message = "Special characters are not allowed." },
-    { min_length = 3, error_message = "Must be at least 3 characters." },
-    { after_idle = "2s", intent = "check_availability", target = "UndChain://UnaS/namecheck", error_message = "Username is unavailable." }
+    { validate = "min_length", value = 8, error_message = "Password must be at least 8 characters." },
+    { validate = "regex", pattern = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", error_message = "Password must include letters and numbers." }
 ]
 on_exit = [
-    { validate = "regex", pattern = "^[a-zA-Z0-9_]+$", error_message = "Only alphanumeric characters allowed." }
+    { validate = "regex", pattern = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", error_message = "Password must include letters and numbers." }
 ]
-on_next = "password_field"
+on_submit = [
+    { intent = "submit_password", target = "UndChain://Account/Create" }
+]
 on_error = [
-    { display = "tooltip", message = "This field is required." }
+    { display = "tooltip", message = "Password does not meet requirements." }
 ]
 ```
 
@@ -1694,10 +1719,11 @@ border = "1px solid #ccc"
 border-radius = "5px"
 padding = "0.5rem"
 color = "#333"
+background-color = "#fff"
 
 [text_box.label]
 font-size = "1rem"
-color = "#666"
+color = "#444"
 padding-bottom = "0.25rem"
 
 [text_box.placeholder]
@@ -1713,6 +1739,19 @@ border-color = "#FF0000"
 [text_box.waiting]
 background-image = "loading_spinner.gif"
 
+[text_box.integrated_button]
+position = "absolute"
+right = "1rem"
+top = "50%"
+transform = "translateY(-50%)"
+width = "1.5rem"
+height = "1.5rem"
+cursor = "pointer"
+
+[text_box.mask_symbol]
+font-size = "1.2rem"
+color = "#444"
+
 [text_box.error.tooltip]
 background-color = "#FFDDDD"
 color = "#FF0000"
@@ -1724,6 +1763,7 @@ border-radius = "3px"
 
 ### **Key Features and Recommendations**
 - **Rich Event Handling**: Leverage `on_input`, `on_exit`, `on_enter`, `on_next`, `on_submit`, and `on_error` for dynamic interactions and seamless user experiences.
+- **Password Handling**: Use the `password` field for secure input, the `mask_symbol` for custom masking, and integrated buttons for toggling visibility.
 - **Validation Options**: Support for client-side and co-chain validation ensures flexibility and scalability.
 - **Dynamic Feedback**: Integrate GSS rules for valid, invalid, and waiting states to provide real-time feedback.
 - **Accessibility**: Use ARIA roles and descriptions to enhance usability for assistive technologies.
@@ -1733,7 +1773,7 @@ border-radius = "3px"
 ### **Additional Recommendations for Flexibility**
 1. **Custom Error Messages**: Allow developers to specify tailored messages for validation failures.
 2. **Dynamic Placeholders**: Fetch placeholder text dynamically via co-chains for context-aware prompts.
-3. **Prefilled Values**: Add a `default_value` field to initialize the text box with preset data.
+3. **Integrated Widgets**: Expand `integrated_button` functionality for multi-action icons.
 4. **Event Throttling**: Introduce a `throttle` option to limit rapid event triggering (e.g., `throttle = "500ms"`).
 
 ---
