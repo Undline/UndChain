@@ -1682,9 +1682,12 @@ x = "0"
 y = "0"
 z = "0"
 
-[[layout.container.content.child]]
-type = "button"
-label = "Submit"
+children = [
+    {
+        type = "button",
+        label = "Submit"
+    }
+]
 ```
 
 ---
@@ -1717,9 +1720,12 @@ z = "0"
 margin = "10px"
 padding = "5px"
 
-[[layout.container.content.child]]
-type = "image"
-src = "@Undline/assets/logo.png"
+children = [
+    {
+        type = "image",
+        src = "@Undline/assets/logo.png"
+    }
+]
 ```
 
 ---
@@ -1746,12 +1752,15 @@ z = "0"
 margin = "10px"
 padding = "5px"
 
-[[layout.container.content.child]]
-type = "text"
-content = "Welcome to M3L!"
-x = "50px"
-y = "100px"
-z = "1"
+children = [
+    {
+        type = "text",
+        content = "Welcome to M3L!",
+        x = "50px",
+        y = "100px",
+        z = "1"
+    }
+]
 ```
 
 ---
@@ -1781,9 +1790,12 @@ align_items = "center"
 margin = "15px"
 padding = "10px"
 
-[[layout.container.content.child]]
-type = "button"
-label = "Buy Now"
+children = [
+    {
+        type = "button",
+        label = "Buy Now"
+    }
+]
 ```
 
 ---
@@ -1800,23 +1812,30 @@ direction = "row"
 wrap = true
 justify_content = "space-around"
 
-[[layout.container.content.child]]
-type = "frame"
-frame_type = "grid"
-rows = 2
-columns = 3
-gap = "5px"
-
-[[layout.container.content.child.child]]
-type = "frame"
-frame_type = "relative"
-anchor = "top-left"
-offset_x = "10px"
-offset_y = "5px"
-
-[[layout.container.content.child.child.child]]
-type = "text"
-content = "Nested Text"
+children = [
+    {
+        type = "frame",
+        frame_type = "grid",
+        rows = 2,
+        columns = 3,
+        gap = "5px",
+        children = [
+            {
+                type = "frame",
+                frame_type = "relative",
+                anchor = "top-left",
+                offset_x = "10px",
+                offset_y = "5px",
+                children = [
+                    {
+                        type = "text",
+                        content = "Nested Text"
+                    }
+                ]
+            }
+        ]
+    }
+]
 ```
 
 ---
