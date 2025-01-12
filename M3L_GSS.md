@@ -1801,9 +1801,9 @@ children = [
 ---
 
 ### **Nesting Frames**
-Frames can be nested to create advanced layouts. For example, a Flex Frame might contain a Grid Frame, which itself contains Relative Frames for individual widget placement.
+Frames can be nested to create advanced layouts. For example, a Flex Frame might contain a Grid Frame, which itself contains Relative Frames for individual widget placement. For deeply nested layouts, it is recommended to use external files for `children` after three levels of nesting.
 
-**Example**:
+**Example Hybrid**:
 ```toml
 [[layout.container.content]]
 type = "frame"
@@ -1819,21 +1819,7 @@ children = [
         rows = 2,
         columns = 3,
         gap = "5px",
-        children = [
-            {
-                type = "frame",
-                frame_type = "relative",
-                anchor = "top-left",
-                offset_x = "10px",
-                offset_y = "5px",
-                children = [
-                    {
-                        type = "text",
-                        content = "Nested Text"
-                    }
-                ]
-            }
-        ]
+        children = "@path/to/nested_children.gss"
     }
 ]
 ```
@@ -1844,6 +1830,7 @@ children = [
 - Use `z` for future 3D implementation. It is ignored for now but ensures compatibility with future features.
 - Leverage nested frames for complex layouts and modular designs.
 - Combine frame types (e.g., Grid within Flex) for maximum flexibility and responsiveness.
+- For deeply nested layouts, use external files for `children` to enhance readability and maintainability.
 
 ---
 
