@@ -1,5 +1,5 @@
 
-### **Documentation Structure for M3L and GSS**
+# **Documentation Structure for M3L and GSS**
 
 #### **1. Introduction**
 
