@@ -1834,6 +1834,136 @@ children = [
 
 ---
 
+### **Button Widget**
+
+Buttons are versatile widgets that trigger actions or navigate users through the interface. They support multiple predefined types and rich customization options, including animations and interactive effects.
+
+---
+
+### **Button Types**
+1. **Primary Button (CTA)**:
+   - Highlights the main action for users (e.g., "Submit" or "Proceed").
+2. **Secondary Button (Muted)**:
+   - Used for supporting or less critical actions (e.g., "Cancel" or "Go Back").
+3. **Image Button**:
+   - Uses an image as the button surface while retaining full button functionality.
+4. **Confirmation Button**:
+   - Requires an additional step to confirm the action (e.g., click-and-hold).
+5. **Toggle Button**:
+   - Allows switching between two states, such as ON/OFF.
+6. **Floating Action Button**:
+   - A circular button designed for key actions with optional drag functionality.
+
+---
+
+### **Core Fields**
+| **Field**       | **Description**                                                                 | **Example**                            |
+|-----------------|---------------------------------------------------------------------------------|----------------------------------------|
+| `label`         | Text displayed on the button (if applicable).                                   | `label = "Submit"`                     |
+| `icon`          | Path to the icon or image for the button surface.                               | `icon = "@Undline/assets/icon.svg"`    |
+| `type`          | Specifies the button type (`primary`, `secondary`, `icon`, `confirmation`, `toggle`, `floating`). | `type = "confirmation"`                |
+| `action`        | Action triggered when the button is clicked.                                    | `action = "purchase"`                  |
+| `target`        | Target resource or page for the action (if applicable).                         | `target = "@Undline/api/buy"`          |
+| `tooltip`       | Text displayed when hovering over the button.                                   | `tooltip = "Click to Purchase"`        |
+| `confirmation`  | Enables a two-step confirmation process.                                        | `confirmation = true`                  |
+| `click_and_hold`| Triggers an action after holding the button for a set duration (in ms).          | `click_and_hold = 2000`                |
+| `disabled`      | Disables the button, preventing interaction.                                    | `disabled = true`                      |
+| `loading`       | Shows a loading animation when the button is pressed until the action resolves. | `loading = true`                       |
+| `state`         | Defines the button’s current state (`default`, `active`, `focused`).            | `state = "default"`                    |
+| `boundary`      | Defines the boundary area for floating buttons.                                | `boundary = { top = "10px", bottom = "10px", left = "10px", right = "10px" }` |
+| `font`          | Defines font properties such as type and size.                                 | `font = { family = "Arial", size = "1rem" }` |
+| `background`    | Supports gradient colors or images for the button background.                  | `background = { type = "gradient", colors = ["#007BFF", "#0056b3"] }` |
+| `border`        | Defines the border style, width, and color.                                     | `border = "1px solid #007BFF"`         |
+| `border_radius` | Rounds the corners of the button.                                               | `border_radius = "5px"`                |
+| `shadow`        | Adds drop shadow effects to the button.                                         | `shadow = { color = "#000", blur = "5px", offset_x = "2px", offset_y = "2px" }` |
+
+---
+
+### **Animation Parameters**
+Animations enhance user experience by providing visual feedback. Designers can use predefined animations or define custom ones.
+
+| **Parameter**       | **Description**                                              | **Example**                               |
+|---------------------|--------------------------------------------------------------|-------------------------------------------|
+| `entrance.animation`| Defines the animation when the button appears.               | `entrance.animation = "fade-in"`          |
+| `hover.animation`   | Specifies the animation when the button is hovered over.     | `hover.animation = "scale-up"`            |
+| `click.animation`   | Defines the animation triggered on click or interaction.     | `click.animation = "progress-fill"`       |
+| `exit.animation`    | Specifies the animation when the button exits.               | `exit.animation = "fade-out"`             |
+| `duration`          | Duration of the animation (in seconds).                      | `duration = "1s"`                         |
+| `timing_function`   | Specifies easing for the animation.                          | `timing_function = "ease-in-out"`         |
+| `custom_animation`  | Allows developers to define their animations using custom logic. | `custom_animation = { steps = [{ opacity = "0" }, { opacity = "1" }], duration = "2s" }` |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "button"
+label = "Submit"
+type = "confirmation"
+action = "purchase"
+target = "@Undline/api/buy"
+tooltip = "Hold to Confirm Purchase"
+confirmation = true
+click_and_hold = 2000
+boundary = { top = "10px", bottom = "10px", left = "10px", right = "10px" }
+
+font = { family = "Arial", size = "1rem" }
+background = { type = "gradient", colors = ["#007BFF", "#0056b3"] }
+shadow = { color = "#000", blur = "5px", offset_x = "2px", offset_y = "2px" }
+border = "1px solid #007BFF"
+border_radius = "5px"
+
+on_click = [
+    { intent = "start_purchase", target = "@Undline/api/buy" }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[button.primary]
+background-color = "#007BFF"
+color = "#FFFFFF"
+border = "1px solid #007BFF"
+border-radius = "5px"
+padding = "10px 20px"
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+
+[button.primary.hover]
+background-color = "#0056b3"
+
+[button.primary.animation]
+entrance.animation = "fade-in"
+hover.animation = "scale-up"
+click.animation = "progress-fill"
+exit.animation = "fade-out"
+duration = "1s"
+timing_function = "ease-in-out"
+
+[button.floating]
+background = { type = "gradient", colors = ["#FF5733", "#FF4500"] }
+color = "#FFFFFF"
+border-radius = "50%"
+shadow.color = "#000"
+shadow.blur = "10px"
+position = { x = "50px", y = "50px" }
+boundary = { top = "0px", bottom = "0px", left = "0px", right = "0px" }
+
+[button.floating.draggable]
+cursor = "grab"
+
+[button.custom_animation]
+steps = [
+    { opacity = "0" },
+    { opacity = "1" }
+]
+duration = "2s"
+```
+
+---
+
 ### **Text Box**
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
