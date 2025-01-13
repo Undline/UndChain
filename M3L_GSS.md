@@ -2095,20 +2095,12 @@ border-radius = "3px"
 
 ---
 
-### **Key Features and Recommendations**
+### **Key Features**
 - **Rich Event Handling**: Leverage `on_input`, `on_exit`, `on_enter`, `on_next`, `on_submit` and `on_error` for dynamic interactions and seamless user experiences.
 - **Password Handling**: Use the `password` field for secure input, the `mask_symbol` for custom masking, and integrated buttons for toggling visibility.
 - **Validation Options**: Support for client-side and co-chain validation ensures flexibility and scalability.
 - **Dynamic Feedback**: Integrate GSS rules for valid, invalid, and waiting states to provide real-time feedback.
 - **Accessibility**: Use ARIA roles and descriptions to enhance usability for assistive technologies.
-
----
-
-### **Additional Recommendations for Flexibility**
-1. **Custom Error Messages**: Allow developers to specify tailored messages for validation failures.
-2. **Dynamic Placeholders**: Fetch placeholder text dynamically via co-chains for context-aware prompts.
-3. **Integrated Widgets**: Expand `integrated_button` functionality for multi-action icons.
-4. **Event Throttling**: Introduce a `throttle` option to limit rapid event triggering (e.g., `throttle = "500ms"`).
 
 ---
 
@@ -2265,7 +2257,7 @@ background-color = "#f0f8ff"
 
 ---
 
-### **Key Features and Recommendations**
+### **Key Features**
 - **Rich Event Handling**: Leverage `on_input`, `on_submit`, `on_error`, `on_enter`, `on_exit`, `on_highlight`, and `on_next` for dynamic interactions and seamless user experiences.
 - **Collapsible Design**: Use the `collapsed` parameter to save space while still allowing expandable text entry.
 - **Dynamic Feedback**: Integrate GSS rules for valid, invalid, and waiting states to provide real-time feedback.
