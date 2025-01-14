@@ -127,12 +127,11 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Button**: Image buttons, confirmation buttons, call-to-action buttons, and muted buttons.
 - **Text**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
 - **Text Box**: Allows for single-line user input.
+- **Text Area**: Multi-line input for larger text blocks.
 - **Checkbox**: For binary selections.
 - **Radio Button**: Allows a single selection from multiple options.
-- **Switch**: For toggling states (e.g., on/off).
 - **Input Box (Text Bar)**: Similar to a text box but styled for search or form input.
 - **Scroll Area**: Indicates additional content is available via scroll or pan.
-- **Text Area**: Multi-line input for larger text blocks.
 - **Drop Menu**: A dropdown list of options.
 - **Sliders**: For selecting a value or range within a spectrum.
 - **Tooltip**: Provides contextual information when a user hovers or focuses on an element.
@@ -2446,6 +2445,143 @@ background-color = "#f0f8ff"
 
 ---
 
+### **Checkbox Widget**
+
+Checkboxes are versatile widgets for binary or ternary selections (checked, unchecked, and indeterminate). They support custom styling, animations, and advanced interactions for hierarchical structures (parent-child relationships).
+
+---
+
+### **Core Features**
+1. **Customizable Check Style**:
+   - GSS developers can define the appearance of the checkmark (e.g., ✔, X, custom icons, or even animations).
+   - Option to use images or SVGs for the checkmark.
+
+2. **State Management**:
+   - **Checked**: Indicates the checkbox is selected.
+   - **Unchecked**: Indicates the checkbox is unselected.
+   - **Indeterminate**: Used for parent-child relationships when only some child checkboxes are selected.
+
+3. **Keyboard Navigation**:
+   - By default, the `spacebar` toggles the checkbox state, but GSS developers can override this behavior.
+
+4. **Interactive Events**:
+   - Supports events like `on_click`, `on_hover`, and `on_change`.
+
+5. **Accessibility**:
+   - Labels for screen readers (e.g., `aria-label` equivalent).
+   - Fully operable with keyboard input.
+
+---
+
+### **Proposed Fields**
+| **Field**       | **Description**                                                             | **Example**                              |
+|-----------------|-----------------------------------------------------------------------------|------------------------------------------|
+| `label`         | Text displayed next to the checkbox.                                        | `label = "Subscribe to newsletter"`      |
+| `state`         | Current state of the checkbox (`checked`, `unchecked`, `indeterminate`).    | `state = "checked"`                      |
+| `group`         | Groups multiple checkboxes for logical association.                        | `group = "preferences"`                  |
+| `animations`    | Animations for state transitions (check/uncheck).                          | `animations = { check = "bounce", uncheck = "fade-out" }` |
+| `tooltip`       | Tooltip displayed on hover.                                                | `tooltip = "Click to subscribe"`         |
+| `disabled`      | Disables the checkbox, preventing interaction.                             | `disabled = true`                        |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**        | **Description**                                                      | **Example**                              |
+|----------------------|----------------------------------------------------------------------|------------------------------------------|
+| `font-family`        | Defines the font for the checkbox label.                            | `font-family = "Arial, sans-serif"`      |
+| `font-size`          | Defines the size of the label text.                                 | `font-size = "1rem"`                     |
+| `font-color`         | Color of the label text.                                            | `font-color = "#333"`                    |
+| `checkmark`          | Defines the style of the checkmark (e.g., ✔, X, image).             | `checkmark = "✔"`                        |
+| `checkmark.color`    | Color of the checkmark.                                             | `checkmark.color = "#007BFF"`            |
+| `checkmark.size`     | Size of the checkmark relative to the box.                          | `checkmark.size = "80%"`                 |
+| `box.size`           | Size of the checkbox itself.                                        | `box.size = "20px"`                      |
+| `box.border`         | Border style of the checkbox.                                       | `box.border = "1px solid #333"`          |
+| `box.background`     | Background color of the checkbox when unchecked.                   | `box.background = "#FFF"`                |
+| `box.hover.background` | Background color of the checkbox on hover.                        | `box.hover.background = "#EEE"`          |
+| `box.indeterminate`  | Styling for the indeterminate state (e.g., dash or icon).           | `box.indeterminate = "-"`                |
+| `animations.check`   | Animation applied when the checkbox is checked.                    | `animations.check = "bounce"`            |
+| `animations.uncheck` | Animation applied when the checkbox is unchecked.                  | `animations.uncheck = "fade-out"`        |
+
+---
+
+### **Example M3L Implementation**
+#### **Parent-Child Group Example**
+```toml
+[[layout.container.content]]
+id = "parent-checkbox"
+type = "checkbox"
+label = "All notifications"
+state = "indeterminate"
+children = [
+    {
+        id = "child-email",
+        type = "checkbox",
+        label = "Email notifications",
+        state = "checked"
+    },
+    {
+        id = "child-push",
+        type = "checkbox",
+        label = "Push notifications",
+        state = "unchecked"
+    }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[checkbox]
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+font-color = "#333"
+box.size = "20px"
+box.border = "1px solid #333"
+box.background = "#FFF"
+box.hover.background = "#EEE"
+
+[checkbox.checkmark]
+content = "✔"
+color = "#007BFF"
+size = "80%"
+
+[checkbox.indeterminate]
+content = "-"
+color = "#FFA500"
+
+[checkbox.animations]
+check = "bounce"
+uncheck = "fade-out"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Parent-Child Relationships**:
+   - Parent checkboxes automatically toggle all child checkboxes.
+   - Indeterminate state updates dynamically based on child selections.
+
+2. **Keyboard Navigation**:
+   - By default, `spacebar` toggles the checkbox state. GSS developers can redefine this behavior for custom accessibility setups.
+
+3. **Future Node Animation Placeholder**:
+   - Parallel animations could enable dynamic effects (e.g., glow and bounce simultaneously).
+   - **Example Hypothetical**:
+     ```toml
+     [checkbox.animations.parallel]
+     nodes = [
+         { type = "glow", color = "#007BFF", duration = "0.3s" },
+         { type = "bounce", duration = "0.5s" }
+     ]
+     ```
+
+---
+
+### **Conclusion**
+Checkboxes provide a flexible solution for binary and ternary selection scenarios. By supporting advanced features like animations, parent-child relationships, and customizable styling, they can adapt to various application needs. Future enhancements, such as node-based animations, promise even greater creative possibilities for GSS developers.
+
+---
 
 
 ## Summary
