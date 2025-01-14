@@ -1964,6 +1964,179 @@ duration = "2s"
 
 ---
 
+### **Text Widget**
+
+The Text Widget serves as a fundamental low-level component for displaying and styling text. It supports headers, paragraphs, lists, highlighter text, hyperlinks, tables, and breaks, with rich customization options for styling, interactivity, and animations.
+
+---
+
+### **Core Text Types**
+1. **Headers (H1–H5)**:
+   - Structured headings for content hierarchy.
+   - Ranges from large, primary titles (H1) to smaller subheadings (H5).
+2. **Paragraph Text**:
+   - Used for general content, such as articles or descriptive text.
+3. **Lists**:
+   - **Ordered Lists**: Numbered sequences for instructions or steps.
+   - **Unordered Lists**: Bullet points for non-sequential items.
+4. **Highlighter Text**:
+   - Emphasizes specific words or phrases with a background color.
+5. **Hyperlinks**:
+   - Inline or block-level links to other pages or resources, with default tooltips displaying the link destination.
+6. **Tables**:
+   - Used to display structured data in rows and columns.
+   - Supports header rows, alignment, and custom styling for each cell.
+7. **Breaks (Lines)**:
+   - Horizontal rules or decorative breaks to separate sections of content.
+
+---
+
+### **Proposed Fields**
+| **Field**       | **Description**                                                            | **Example**                                    |
+|-----------------|----------------------------------------------------------------------------|-----------------------------------------------|
+| `type`          | Specifies the text type (`header`, `paragraph`, `list`, `highlighter`, `link`, `table`, `break`). | `type = "header"`                             |
+| `content`       | The actual text to be displayed.                                           | `content = "Welcome to M3L!"`                 |
+| `style`         | Indicates the text style (e.g., H1-H5, or `paragraph`, `ordered`, etc.).   | `style = "H1"`                                |
+| `href`          | Specifies the hyperlink destination (only for `type = "link"`).            | `href = "@Undline/page.m3l"`                  |
+| `highlight`     | Enables background highlighting with a specified color (for highlighter).  | `highlight = "#FFFF00"`                       |
+| `list_style`    | Defines the marker style for lists (bullet, number, Roman numeral).         | `list_style = "bullet"`                       |
+| `font`          | Specifies the font family and size.                                        | `font = { family = "Verdana", size = "1rem" }` |
+| `alignment`     | Sets text alignment (e.g., left, center, right, justify).                  | `alignment = "center"`                        |
+| `line_spacing`  | Adjusts the spacing between lines of text.                                | `line_spacing = "1.5"`                         |
+| `letter_spacing`| Adjusts the spacing between letters.                                       | `letter_spacing = "0.1em"`                    |
+| `selectable`    | Allows the text to be selected for copying.                                | `selectable = true`                            |
+| `table_data`    | Defines the structure and content of a table (only for `type = "table"`). | `table_data = [ { row = ["Name", "Age"] }, { row = ["Alice", "30"] } ]` |
+| `line_style`    | Specifies the appearance of a break line (only for `type = "break"`).     | `line_style = { color = "#333", thickness = "2px" }` |
+| `animations`    | Defines enter/exit animations for text elements.                          | `animations = { enter = "fade-in", exit = "fade-out", duration = "1s" }` |
+
+---
+
+### **Intents and Events**
+| **Intent/Event** | **Description**                                                                 | **Example**                                   |
+|------------------|---------------------------------------------------------------------------------|-----------------------------------------------|
+| `on_click`       | Triggered when the text (e.g., a hyperlink) is clicked.                        | `on_click = [{ navigate = "@Undline/page.m3l" }]` |
+| `on_hover`       | Triggered when the text is hovered over (e.g., to show a tooltip).             | `on_hover = [{ tooltip = "Learn more at this link." }]` |
+| `on_focus`       | Triggered when the text gains focus (e.g., via Tab navigation).                 | `on_focus = [{ animate = "underline" }]`     |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**      | **Description**                                                            | **Example**                                   |
+|--------------------|----------------------------------------------------------------------------|-----------------------------------------------|
+| `font-family`      | Defines the font type for the text.                                        | `font-family = "Verdana, sans-serif"`         |
+| `font-size`        | Sets the font size.                                                       | `font-size = "1.5rem"`                        |
+| `font-color`       | Defines the color of the text.                                             | `font-color = "#333"`                         |
+| `background-color` | Sets a background color (useful for highlighter text).                    | `background-color = "#FFFF00"`                |
+| `text-decoration`  | Applies underline, strikethrough, or none.                                | `text-decoration = "underline"`               |
+| `alignment`        | Aligns text horizontally.                                                 | `alignment = "justify"`                       |
+| `line-spacing`     | Adjusts the spacing between lines of text.                                | `line-spacing = "1.5"`                         |
+| `letter-spacing`   | Adjusts the spacing between letters.                                       | `letter-spacing = "0.1em"`                    |
+| `list-style-type`  | Defines the list marker style (circle, square, decimal).                  | `list-style-type = "circle"`                  |
+| `hover.color`      | Changes the text color on hover.                                          | `hover.color = "#007BFF"`                     |
+| `table.border`     | Defines the border style for a table.                                      | `table.border = "1px solid #333"`             |
+| `table.header`     | Specifies styles for table headers.                                       | `table.header = { background-color = "#EEE" }` |
+| `break.color`      | Defines the color of a break line.                                         | `break.color = "#333"`                        |
+| `break.thickness`  | Defines the thickness of a break line.                                     | `break.thickness = "2px"`                     |
+| `animations.enter` | Animation type for text entry (e.g., fade-in, typewriter).                | `animations.enter = "typewriter"`             |
+| `animations.exit`  | Animation type for text exit (e.g., fade-out, slide).                     | `animations.exit = "fade-out"`                |
+| `animations.duration` | Duration of the animation.                                              | `animations.duration = "1s"`                  |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "text"
+style = "H1"
+content = "Welcome to M3L!"
+font = { family = "Verdana", size = "2rem" }
+alignment = "center"
+selectable = true
+animations = { enter = "fade-in", exit = "fade-out", duration = "1s" }
+
+[[layout.container.content]]
+type = "text"
+style = "paragraph"
+content = "This is an example paragraph for demonstrating M3L text widgets."
+font = { family = "Arial", size = "1rem" }
+alignment = "justify"
+line_spacing = "1.5"
+letter_spacing = "0.05em"
+selectable = true
+
+[[layout.container.content]]
+type = "text"
+style = "link"
+content = "Click here to learn more."
+href = "@Undline/learn_more.m3l"
+selectable = true
+
+[[layout.container.content]]
+type = "text"
+style = "table"
+table_data = [
+    { row = ["Name", "Age"] },
+    { row = ["Alice", "30"] },
+    { row = ["Bob", "25"] }
+]
+
+[[layout.container.content]]
+type = "text"
+style = "break"
+line_style = { color = "#333", thickness = "2px" }
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[text.header]
+font-family = "Verdana, sans-serif"
+font-size = "2rem"
+font-color = "#333"
+alignment = "center"
+animations.enter = "fade-in"
+animations.exit = "fade-out"
+animations.duration = "1s"
+
+[text.paragraph]
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+font-color = "#666"
+line-spacing = "1.5"
+letter-spacing = "0.05em"
+
+[text.link]
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+font-color = "#007BFF"
+text-decoration = "underline"
+
+[text.link.hover]
+font-color = "#0056b3"
+
+[text.table]
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+font-color = "#333"
+table.border = "1px solid #333"
+table.header = { background-color = "#EEE" }
+
+[text.break]
+break.color = "#333"
+break.thickness = "2px"
+```
+
+---
+
+### **Additional Considerations**
+- **UTF Support**: The M3L system fully supports UTF, enabling the use of multi-language text and non-ASCII characters.
+- **Tooltips for Hyperlinks**: By default, tooltips display the hyperlink destination, enhancing user clarity.
+- **Editable Text**: Not included by design; use a Text Area widget for editable content.
+- **Animated Emojis**: Currently not implemented, but future extensions could enable animation for emoji or specific inline text elements.
+
+---
+
 ### **Text Box**
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
