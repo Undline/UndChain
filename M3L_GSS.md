@@ -2583,6 +2583,126 @@ Checkboxes provide a flexible solution for binary and ternary selection scenario
 
 ---
 
+### **Radio Button Widget**
+
+Radio buttons are versatile widgets that allow users to select a single option from multiple choices within a group. They share many similarities with checkboxes but are mutually exclusive within their group.
+
+---
+
+### **Core Features**
+1. **Single Selection Per Group**:
+   - Radio buttons within the same group allow only one selection at a time.
+
+2. **Customizable Selection Style**:
+   - GSS developers can define the appearance of the selection indicator (e.g., filled circle, checkmark, custom SVG).
+
+3. **Keyboard Navigation**:
+   - By default, `arrow keys` navigate between options, and `spacebar` selects an option.
+
+4. **State Management**:
+   - Tracks the currently selected option within a group.
+
+5. **Interactive Events**:
+   - Supports events like `on_click`, `on_hover`, `on_change`, `on_enter`, and `on_exit`.
+
+6. **Accessibility**:
+   - Labels for screen readers (e.g., `aria-label` equivalent).
+   - Fully operable with keyboard input.
+
+---
+
+### **Proposed Fields**
+| **Field**       | **Description**                                                | **Example**                              |
+|-----------------|----------------------------------------------------------------|------------------------------------------|
+| `label`         | Text displayed next to the radio button.                       | `label = "Option 1"`                     |
+| `state`         | Current state of the radio button (`selected`, `unselected`).  | `state = "selected"`                     |
+| `group`         | Defines the group the radio button belongs to.                | `group = "choices"`                      |
+| `tooltip`       | Tooltip displayed on hover.                                   | `tooltip = "Select this option"`         |
+| `disabled`      | Disables the radio button, preventing interaction.            | `disabled = true`                        |
+| `animations`    | Animations for state transitions (select/unselect).           | `animations = { select = "pulse", unselect = "fade-out" }` |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**          | **Description**                                                    | **Example**                              |
+|------------------------|--------------------------------------------------------------------|------------------------------------------|
+| `font-family`          | Defines the font for the radio button label.                      | `font-family = "Arial, sans-serif"`      |
+| `font-size`            | Defines the size of the label text.                               | `font-size = "1rem"`                     |
+| `font-color`           | Color of the label text.                                          | `font-color = "#333"`                    |
+| `indicator`            | Defines the style of the selection indicator.                    | `indicator = "circle"`                   |
+| `indicator.color`      | Color of the selection indicator.                                | `indicator.color = "#007BFF"`            |
+| `indicator.size`       | Size of the indicator relative to the radio button.              | `indicator.size = "80%"`                 |
+| `indicator.svg`        | Path to a custom SVG for the selection indicator.                | `indicator.svg = "@assets/selector.svg"` |
+| `box.size`             | Size of the radio button itself.                                 | `box.size = "20px"`                      |
+| `box.border`           | Border style of the radio button.                                | `box.border = "1px solid #333"`          |
+| `box.background`       | Background color of the radio button when unselected.            | `box.background = "#FFF"`                |
+| `box.hover.background` | Background color of the radio button on hover.                   | `box.hover.background = "#EEE"`          |
+| `animations.select`    | Animation applied when the radio button is selected.             | `animations.select = "pulse"`            |
+| `animations.unselect`  | Animation applied when the radio button is unselected.           | `animations.unselect = "fade-out"`       |
+| `animations.enter`     | Animation triggered when the radio button gains focus.           | `animations.enter = "glow"`              |
+| `animations.exit`      | Animation triggered when the radio button loses focus.           | `animations.exit = "fade-out"`           |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "radio_button"
+group = "choices"
+children = [
+    {
+        label = "Option 1",
+        state = "selected",
+        tooltip = "Select Option 1",
+        animations = { select = "pulse", unselect = "fade-out", enter = "glow", exit = "fade-out" }
+    },
+    {
+        label = "Option 2",
+        state = "unselected",
+        tooltip = "Select Option 2",
+        animations = { select = "pulse", unselect = "fade-out", enter = "glow", exit = "fade-out" }
+    },
+    {
+        label = "Option 3",
+        state = "unselected",
+        tooltip = "Select Option 3",
+        animations = { select = "pulse", unselect = "fade-out", enter = "glow", exit = "fade-out" }
+    }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[radio_button]
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+font-color = "#333"
+box.size = "20px"
+box.border = "1px solid #333"
+box.background = "#FFF"
+box.hover.background = "#EEE"
+
+[radio_button.indicator]
+style = "circle"
+color = "#007BFF"
+size = "80%"
+svg = "@assets/selector.svg"
+
+[radio_button.animations]
+select = "pulse"
+unselect = "fade-out"
+enter = "glow"
+exit = "fade-out"
+```
+
+---
+
+### **Conclusion**
+Radio buttons provide an intuitive solution for single-selection scenarios. With features like animations, custom indicators, and advanced accessibility options, they offer a highly customizable and interactive user experience.
+
+---
 
 ## Summary
 
