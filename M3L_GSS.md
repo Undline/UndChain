@@ -130,7 +130,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Text Area**: Multi-line input for larger text blocks.
 - **Checkbox**: For binary selections.
 - **Radio Button**: Allows a single selection from multiple options.
-- **Input Box (Text Bar)**: Similar to a text box but styled for search or form input.
+- **Navigation Box (Text Bar)**: A widget designed for displaying and interacting with breadcrumbs, helping users navigate hierarchical structures such as file systems, page directories, or web navigation paths.
 - **Scroll Area**: Indicates additional content is available via scroll or pan.
 - **Drop Menu**: A dropdown list of options.
 - **Sliders**: For selecting a value or range within a spectrum.
