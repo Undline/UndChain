@@ -2704,6 +2704,146 @@ Radio buttons provide an intuitive solution for single-selection scenarios. With
 
 ---
 
+### **Navigation Box Widget**
+
+The Navigation Box Widget provides an intuitive and customizable interface for displaying breadcrumbs, helping users navigate hierarchical structures such as file systems, web directories, or dynamic folder paths.
+
+---
+
+### **Core Features**
+
+1. **Breadcrumb Display**:
+
+   - Dynamically generate breadcrumbs based on the current navigation path.
+   - Each breadcrumb is customizable to be interactive, static, or styled for visual emphasis.
+
+2. **Custom Separator Support**:
+
+   - Allows designers to specify custom separators (e.g., `/`, `>`, `|`, icons, or SVGs).
+   - Default separator: `/`.
+
+3. **Truncation and Overflow Handling**:
+
+   - Automatically truncates paths that exceed the character limit of the navigation bar.
+   - Supports scrolling or a special "more" SVG/icon to indicate hidden paths.
+   - Optional animation for truncation (e.g., sliding folders into the "more" area).
+
+4. **Dynamic Data Integration**:
+
+   - Supports fuzzy finding for user input when typing a path.
+   - Dynamically updates breadcrumbs based on changes to the navigation path. Useful in cases where a folder or directory has many folders and users are manually typing out a path.
+
+5. **Interactive Events**:
+
+   - Supports events like `on_click`, `on_hover`, `on_focus`, `on_enter`, and `on_exit`.
+   - Flexible enough to accommodate keyboard, mouse, touch, and controller inputs.
+
+6. **Accessibility**:
+
+   - Provides screen reader-friendly labels for breadcrumbs and separators.
+   - Fully supports keyboard and controller navigation.
+
+---
+
+### **Proposed Fields**
+
+| **Field**     | **Description**                                             | **Example**                                                                          |
+| ------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `path`        | The current navigation path as an array of nodes.           | `path = ["@username", "Documents", "Projects"]`                                      |
+| `separator`   | The character, icon, or SVG separating breadcrumbs.         | `separator = ">"`                                                                    |
+| `interactive` | Determines if breadcrumbs are clickable or static.          | `interactive = true`                                                                 |
+| `tooltip`     | Tooltip for each breadcrumb, showing additional context.    | `tooltip = "Click to return to Home"`                                                |
+| `animations`  | Animations for adding, removing, or truncating breadcrumbs. | `animations = { enter = "slide-right", exit = "fade-out", truncate = "slide-left" }` |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**         | **Description**                                              | **Example**                                 |
+| --------------------- | ------------------------------------------------------------ | ------------------------------------------- |
+| `font-family`         | Defines the font for breadcrumb text.                        | `font-family = "Arial, sans-serif"`         |
+| `font-size`           | Defines the size of breadcrumb text.                         | `font-size = "1rem"`                        |
+| `font-color`          | Color of breadcrumb text.                                    | `font-color = "#333"`                       |
+| `hover.color`         | Color of breadcrumb text on hover.                           | `hover.color = "#007BFF"`                   |
+| `separator.style`     | Style of the separator symbol (e.g., font, color, SVG path). | `separator.style = { font-color = "#999" }` |
+| `animations.enter`    | Animation applied when a breadcrumb is added.                | `animations.enter = "slide-right"`          |
+| `animations.exit`     | Animation applied when a breadcrumb is removed.              | `animations.exit = "fade-out"`              |
+| `animations.truncate` | Animation applied when truncating breadcrumbs.               | `animations.truncate = "slide-left"`        |
+| `overflow.icon`       | Icon or SVG used to indicate truncated paths.                | `overflow.icon = "@assets/more.svg"`        |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "navigation_box"
+path = ["Home", "Documents", "Projects"]
+separator = "/"
+interactive = true
+animations = { enter = "slide-right", exit = "fade-out", truncate = "slide-left" }
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[navigation_box]
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+font-color = "#333"
+
+[navigation_box.separator]
+style = "/"
+font-color = "#999"
+
+[navigation_box.animations]
+enter = "slide-right"
+exit = "fade-out"
+truncate = "slide-left"
+
+[navigation_box.hover]
+font-color = "#007BFF"
+
+[navigation_box.overflow]
+icon = "@assets/more.svg"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Input Adaptability**:
+
+   - GSS developers can redefine how users interact with breadcrumbs (e.g., clicking, hovering, or using keyboard/controller shortcuts).
+
+2. **Dynamic Path Updates**:
+
+   - Integration with co-chains (e.g., Pages) to fetch and update navigation paths dynamically.
+
+3. **Fuzzy Finding**:
+
+   - Enable users to type a path manually and suggest completions based on available folders.
+
+4. **Truncation Enhancements**:
+
+   - Allow users to interact with truncated paths by clicking the "more" icon to expand hidden breadcrumbs.
+
+5. **Custom Separators**:
+
+   - Support for SVGs or complex icons as separators for highly customized designs.
+
+---
+
+### **Conclusion**
+
+The Navigation Box Widget provides an essential tool for hierarchical navigation. With support for advanced animations, custom separators, and dynamic updates, it adapts seamlessly to both static and dynamic navigation scenarios. The flexibility of GSS ensures a consistent yet customizable user experience across devices and input types.
+
+---
+
+
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
