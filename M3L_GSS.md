@@ -139,7 +139,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Cards**: Compact content containers often used for showcasing assets or information.
 - **Posters**: Larger cards that dominate the view, particularly on mobile.
 - **Window**: Defines the background and foreground containers for widgets (like a frame).
-- **Canvas**: A flexible draw area for custom shapes or graphics.
+- **Screenshot**: A flexible draw area for custom shapes or graphics, which is useful when users need to share what they see on screen.
 - **Carousel**: Automatically cycles through various content, like images or promotions.
 - **Toolbar**: Houses multiple buttons or tools for modifying a target section.
 - **Floating Menu**: Context-sensitive menu that activates on events (e.g., right-click, hover).
@@ -176,6 +176,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **News Feed**: Displays content in a scrollable feed with filters.
 - **Wizard Widget**: Guides users through multi-step processes or settings.
 - **Dashboard**: Aggregates widgets like graphs and spreadsheets for data visualization and navigation.
+- **Paint**: High level paint widget that allows users to draw custom shapes on screen. Includes layers, a object panel, the ability to imagine using Mimic and save on chain.
 
 ### Why Use M3L and GSS?
 
@@ -4051,6 +4052,116 @@ resize = "smooth"
 
 ### **Conclusion**
 The Window Widget is a foundational element for M3L forms, providing a structured and interactive container for other widgets. With support for draggable, resizable, and customizable options, it offers a flexible and visually consistent experience for developers and users alike.
+
+---
+
+### **Screenshot Widget**
+
+The Screenshot Widget provides a flexible area for capturing and annotating screen content. It is designed for highlighting, freeform drawing, and sharing visual feedback. While primarily used for capturing on-screen elements, it can also serve as a tool for collaborative workflows and visual problem-solving.
+
+---
+
+### **Core Features**
+1. **Screen Capture**:
+   - Captures the visible area or a specific region of the screen.
+   - Provides options for capturing entire frames or focused widgets.
+
+2. **Annotation Tools**:
+   - Support for freeform drawing, highlighting, and shape-based annotations.
+   - Tools include brushes, highlighters, and text insertion.
+
+3. **Undo/Redo Functionality**:
+   - Tracks user actions to enable seamless undo and redo.
+
+4. **Save and Share Options**:
+   - Export annotations to formats like PNG or SVG.
+   - Includes sharing functionality for collaborative workflows.
+
+5. **Interactive States**:
+   - Events like `on_capture`, `on_draw`, and `on_highlight` for enhanced interactivity.
+
+6. **Styling Options**:
+   - Customize background, brush styles, and annotation colors.
+
+---
+
+### **Proposed Fields**
+| **Field**           | **Description**                                                       | **Example**                              |
+|---------------------|-----------------------------------------------------------------------|------------------------------------------|
+| `capture_area`      | Defines the area to capture (full screen, region, or widget).         | `capture_area = "full_screen"`         |
+| `annotation_tools`  | Enables tools like brushes and highlighters.                        | `annotation_tools = [ "brush", "highlighter", "text" ]` |
+| `default_tool`      | Sets the default tool for annotations.                              | `default_tool = "brush"`               |
+| `undo_redo`         | Enables undo and redo functionality.                                | `undo_redo = true`                       |
+| `save_options`      | Defines export formats and sharing options.                         | `save_options = [ "PNG", "SVG" ]`      |
+| `dimensions`        | Width and height of the capture area.                               | `dimensions = { width = "800px", height = "600px" }` |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**             | **Description**                                                   | **Example**                              |
+|---------------------------|-------------------------------------------------------------------|------------------------------------------|
+| `screenshot.background`   | Background color or image for the capture area.                  | `screenshot.background = "#FFF"`      |
+| `screenshot.border`       | Border styling for the screenshot area.                         | `screenshot.border = "1px solid #CCC"` |
+| `annotation.brush.color`  | Default color for the brush tool.                               | `annotation.brush.color = "#000"`      |
+| `annotation.brush.size`   | Default size for the brush tool.                                | `annotation.brush.size = "5px"`        |
+| `annotation.highlight.color` | Default color for the highlighter tool.                      | `annotation.highlight.color = "#FF0"`  |
+| `annotation.text.font`    | Font style for text annotations.                                | `annotation.text.font = "14px Arial"`  |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "screenshot"
+capture_area = "region"
+annotation_tools = [ "brush", "highlighter", "text" ]
+default_tool = "brush"
+undo_redo = true
+save_options = [ "PNG", "SVG" ]
+dimensions = { width = "800px", height = "600px" }
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[screenshot]
+background = "#FFF"
+border = "1px solid #CCC"
+
+[annotation.brush]
+color = "#000"
+size = "5px"
+
+[annotation.highlight]
+color = "#FF0"
+
+[annotation.text]
+font = "14px Arial"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Dynamic Capture Areas**:
+   - Allow users to dynamically resize or select specific regions for capture.
+
+2. **Integration with Mimic**:
+   - Save screenshots and annotations to Mimic for contextual analysis or feedback.
+
+3. **Collaborative Sharing**:
+   - Include real-time sharing options for collaborative workflows.
+
+4. **Custom Annotations**:
+   - Enable users to create and save custom annotation styles or presets.
+
+5. **Accessibility Enhancements**:
+   - Ensure screen reader compatibility and keyboard navigation for annotation tools.
+
+---
+
+### **Conclusion**
+The Screenshot Widget bridges functionality and usability by combining screen capture with advanced annotation tools. With options for saving, sharing, and Mimic integration, it supports collaborative workflows and enhances visual communication for developers and end-users alike.
 
 ---
 
