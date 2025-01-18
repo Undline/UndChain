@@ -2983,7 +2983,178 @@ The Scroll Area Widget provides a versatile and visually appealing solution for 
 
 ---
 
+### **Drop Menu Widget**
 
+The Drop Menu Widget provides a versatile way to present a collapsible list of options for selection. It supports single or multi-option selection, dynamic content, advanced interactivity, and now includes both visual and audio animation support for enhanced engagement.
+
+---
+
+### **Core Features**
+1. **Single or Multi-Select**:
+   - Supports single-option or multi-option selection.
+   - Multi-select menus can include checkboxes or toggles for selection.
+
+2. **Grouped Options**:
+   - Allows grouping of related options under headers.
+   - Supports dividers for logical separation of option groups.
+
+3. **Customizable Behavior**:
+   - Define whether the menu opens on hover, click, or another interaction.
+   - Optionally allow the menu to remain open after a selection.
+
+4. **Dynamic Content**:
+   - Fetch options dynamically from co-chains or APIs.
+   - Auto-update when the data source changes.
+   - Example: Place the co-chain link in the `options` field to fetch options dynamically.
+
+5. **Searchable Menus**:
+   - Auto-completes or jumps to options as the user begins typing.
+
+6. **Images and Colors for Options**:
+   - Allows options to include images or icons next to text.
+   - Supports color-coded options or groups for better visual distinction.
+
+7. **Animations (Visual and Audio)**:
+   - Smooth animations for menu opening, closing, item highlighting, and selection.
+   - Audio can be defined as a "parallel animation" within the animation configuration.
+
+8. **Interactive Events**:
+   - Events like `on_open`, `on_close`, `on_item_hover`, and `on_item_select` for granular interactivity.
+
+9. **Accessibility**:
+   - Keyboard and controller navigable.
+   - Screen reader-friendly labels for each option.
+
+10. **Overflow Handling**:
+    - Automatically scrolls or truncates long option lists.
+
+---
+
+### **Proposed Fields**
+| **Field**          | **Description**                                                        | **Example**                              |
+|--------------------|------------------------------------------------------------------------|------------------------------------------|
+| `options`          | An array of options or a link to a data source.                       | `options = ["Option 1", "Option 2"]`     |
+| `multi_select`     | Enables multi-option selection.                                       | `multi_select = false`                   |
+| `default`          | The default selected option(s).                                       | `default = "Option 1"`                   |
+| `placeholder`      | Text displayed when no option is selected.                            | `placeholder = "Select an option"`       |
+| `grouped_options`  | Logical grouping of options with headers or dividers.                 | `grouped_options = true`                 |
+| `open_behavior`    | Defines the behavior for opening the menu (`hover`, `click`).         | `open_behavior = "click"`                |
+| `animations`       | Animations for opening, closing, and highlighting, including audio.   | `animations = { open = { type = "fade-in", audio = "open.wav" }, close = { type = "fade-out", audio = "close.wav" }, on_item_hover = { type = "scale-up", audio = "hover.wav" }, on_item_select = { type = "pulse", audio = "select.wav" } }` |
+| `searchable`       | Enables a search feature for large option sets.                      | `searchable = true`                      |
+| `max_height`       | Maximum height for the dropdown menu before enabling scrolling.       | `max_height = "200px"`                   |
+| `option_images`    | Includes images or icons next to text in options.                    | `option_images = true`                   |
+| `option_colors`    | Assigns colors to specific options or groups.                        | `option_colors = true`                   |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**          | **Description**                                                    | **Example**                              |
+|------------------------|--------------------------------------------------------------------|------------------------------------------|
+| `menu.font-family`     | Defines the font for menu text.                                   | `menu.font-family = "Arial, sans-serif"` |
+| `menu.font-size`       | Defines the size of menu text.                                    | `menu.font-size = "1rem"`                |
+| `menu.background`      | Background color of the dropdown menu.                           | `menu.background = "#FFF"`               |
+| `menu.border`          | Border style of the dropdown menu.                               | `menu.border = "1px solid #333"`         |
+| `menu.hover.background`| Background color of menu items on hover.                         | `menu.hover.background = "#EEE"`         |
+| `menu.selected.color`  | Color of selected menu items.                                     | `menu.selected.color = "#007BFF"`        |
+| `menu.option.image`    | Styling for images/icons next to options.                        | `menu.option.image = { size = "16px" }`  |
+| `menu.option.color`    | Styling for color-coded options.                                 | `menu.option.color = "#FF5733"`          |
+| `group.header.style`   | Styling for grouped option headers.                              | `group.header.style = { font-weight = "bold" }` |
+| `group.divider.style`  | Styling for dividers between option groups.                      | `group.divider.style = { color = "#CCC" }` |
+| `animations.open`      | Animation applied when the menu opens.                           | `animations.open = { type = "fade-in", audio = "open.wav" }` |
+| `animations.close`     | Animation applied when the menu closes.                          | `animations.close = { type = "fade-out", audio = "close.wav" }` |
+| `animations.on_item_hover` | Animation applied when an item is hovered over.              | `animations.on_item_hover = { type = "scale-up", audio = "hover.wav" }` |
+| `animations.on_item_select`| Animation applied when an item is selected.                  | `animations.on_item_select = { type = "pulse", audio = "select.wav" }` |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "drop_menu"
+placeholder = "Select an option"
+multi_select = true
+default = ["Option 1"]
+open_behavior = "click"
+searchable = true
+options = [
+    { group = "Favorites", options = [
+        { text = "Option 1", image = "@assets/icon1.png", color = "#FF5733" },
+        { text = "Option 2", image = "@assets/icon2.png", color = "#33FF57" }
+    ] },
+    { group = "More Options", options = [
+        { text = "Option 3", image = "@assets/icon3.png", color = "#3357FF" },
+        { text = "Option 4", image = "@assets/icon4.png", color = "#5733FF" }
+    ] }
+]
+animations = { open = { type = "fade-in", audio = "open.wav" }, close = { type = "fade-out", audio = "close.wav" }, on_item_hover = { type = "scale-up", audio = "hover.wav" }, on_item_select = { type = "pulse", audio = "select.wav" } }
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[drop_menu]
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+background = "#FFF"
+border = "1px solid #333"
+
+[drop_menu.menu.hover]
+background = "#EEE"
+
+[drop_menu.menu.selected]
+color = "#007BFF"
+
+[menu.option.image]
+size = "16px"
+
+[menu.option.color]
+default = "#FF5733"
+hover = "#007BFF"
+
+[group.header]
+style = { font-weight = "bold", font-size = "1.2rem" }
+
+[group.divider]
+style = { color = "#CCC", thickness = "1px" }
+
+[drop_menu.animations]
+open = { type = "fade-in", audio = "open.wav" }
+close = { type = "fade-out", audio = "close.wav" }
+on_item_hover = { type = "scale-up", audio = "hover.wav" }
+on_item_select = { type = "pulse", audio = "select.wav" }
+```
+
+---
+
+### **Advanced Considerations**
+1. **Searchable Menus**:
+   - Auto-completes or jumps to options as the user begins typing.
+
+2. **Grouped Options**:
+   - Logical separation for improved user clarity.
+   - Dividers and headers to visually distinguish sections.
+
+3. **Dynamic Content**:
+   - Fetch menu options dynamically from co-chains or APIs.
+   - Place the link in the `options` field to enable dynamic fetching.
+
+4. **Custom Option Styling**:
+   - Allow GSS developers to style individual options uniquely.
+   - Include options for images/icons and color-coding.
+
+5. **Multi-Device Compatibility**:
+   - Ensure intuitive behavior across mouse, touch, and controller inputs.
+
+6. **Audio Feedback as Parallel Animation**:
+   - Integrate audio cues within the animation configuration for streamlined implementation and synchronized effects.
+
+---
+
+### **Conclusion**
+The Drop Menu Widget offers a highly flexible and interactive solution for presenting selectable options. With features like grouping, animations, dynamic data, search capabilities, and visual/audio enhancements, it adapts seamlessly to various use cases while ensuring an engaging user experience across all devices and input methods.
+
+---
 
 ## Summary
 
