@@ -3286,6 +3286,141 @@ The Item Grid Widget offers a robust and interactive way to organize and manage 
 
 ---
 
+### **Slider Widget**
+
+The Slider Widget is a versatile component for selecting values or ranges within a defined spectrum. It supports advanced interactivity, dynamic range updates, and input-specific behavior to enhance usability across devices.
+
+---
+
+### **Core Features**
+1. **Single Value and Range Selection**:
+   - Supports a single slider for choosing one value or a dual slider with multiple thumbs for defining ranges.
+
+2. **Dynamic Ranges**:
+   - Min and max values can be dynamically linked to external sources, such as UndChain locations.
+
+3. **Custom Markers and Snapping**:
+   - Allow custom markers or breaks on the slider track.
+   - Enable snapping to predefined values for precision.
+
+4. **Labels and Tooltips**:
+   - Display current value(s) above the slider.
+   - Optionally include labels for min, max, and intermediate values.
+
+5. **Input-Specific Behavior**:
+   - Tailored sensitivity and easing for controllers, keyboard arrow keys, mouse, and touch inputs.
+
+6. **Visual, Audio, and Haptic Feedback**:
+   - Optional audio cues for changes in value, such as clicks or tones.
+   - Smooth animations for slider interactions, including entrance and exit effects.
+   - Haptic feedback for compatible devices to enhance the tactile experience.
+
+7. **Interactive Events**:
+   - Events like `on_change`, `on_drag_start`, `on_drag_end`, `on_enter`, and `on_exit`.
+
+8. **Accessibility**:
+   - Fully keyboard and controller navigable.
+   - Screen reader-friendly descriptions for values and labels.
+
+---
+
+### **Proposed Fields**
+| **Field**          | **Description**                                                       | **Example**                               |
+|--------------------|-----------------------------------------------------------------------|-------------------------------------------|
+| `min`              | Minimum value for the slider.                                        | `min = 0`                                 |
+| `max`              | Maximum value for the slider.                                        | `max = 100`                               |
+| `step`             | Incremental step value for adjustments.                             | `step = 1`                                |
+| `value`            | Current value of the slider (for single slider).                    | `value = 50`                              |
+| `range`            | Current range values (for dual sliders).                            | `range = { start = 20, end = 80 }`        |
+| `tooltip`          | Enables tooltips to display current value(s).                       | `tooltip = true`                          |
+| `labels`           | Enables labels for min, max, and intermediate values.               | `labels = true`                           |
+| `gradient_fill`    | Defines a color gradient for the slider track.                      | `gradient_fill = "linear-gradient(to right, #007BFF, #00FF00)"` |
+| `markers`          | Predefined markers or breaks on the slider.                        | `markers = [0, 25, 50, 75, 100]`          |
+| `snap_to_markers`  | Enables snapping to the nearest marker value.                       | `snap_to_markers = true`                  |
+| `feedback`         | Feedback options including audio and haptics for interactions.       | `feedback = { audio = { change = "beep.wav" }, haptic = { intensity = "medium" } }` |
+| `animations`       | Animations for slider interactions (e.g., entrance, exit, and thumb movement). | `animations = { entrance = "fade-in", exit = "fade-out", thumb_move = "ease-in-out" }` |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**            | **Description**                                                   | **Example**                              |
+|--------------------------|-------------------------------------------------------------------|------------------------------------------|
+| `slider.track.height`    | Height of the slider track.                                       | `slider.track.height = "6px"`          |
+| `slider.track.color`     | Default color of the slider track.                               | `slider.track.color = "#CCC"`          |
+| `slider.fill.color`      | Color of the filled portion of the slider.                       | `slider.fill.color = "#007BFF"`        |
+| `slider.thumb.size`      | Size of the slider thumb.                                        | `slider.thumb.size = "16px"`           |
+| `slider.thumb.color`     | Color of the slider thumb.                                       | `slider.thumb.color = "#FFF"`          |
+| `slider.thumb.hover`     | Hover effect for the slider thumb.                              | `slider.thumb.hover = "glow"`          |
+| `tooltip.background`     | Background color of the tooltip.                                | `tooltip.background = "#000"`          |
+| `tooltip.font.color`     | Font color of the tooltip.                                       | `tooltip.font.color = "#FFF"`          |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "slider"
+min = 0
+max = 100
+step = 1
+value = 50
+tooltip = true
+labels = true
+gradient_fill = "linear-gradient(to right, #007BFF, #00FF00)"
+markers = [0, 25, 50, 75, 100]
+snap_to_markers = true
+feedback = { audio = { change = "beep.wav" }, haptic = { intensity = "medium" } }
+animations = { entrance = "fade-in", exit = "fade-out", thumb_move = "ease-in-out" }
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[slider.track]
+height = "6px"
+color = "#CCC"
+fill.color = "#007BFF"
+
+[slider.thumb]
+size = "16px"
+color = "#FFF"
+hover = "glow"
+
+[tooltip]
+background = "#000"
+font.color = "#FFF"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Dynamic Range Updates**:
+   - Min and max values can update dynamically by linking to external sources, such as co-chains on UndChain.
+
+2. **Dual Sliders with Multiple Thumbs**:
+   - Support for two or more thumbs to define multiple ranges.
+
+3. **Custom Markers and Snapping**:
+   - Allow snapping to predefined markers for precise selection.
+
+4. **Input-Specific Behavior**:
+   - Easing curves for keyboard arrow keys, controllers, and touch interactions.
+
+5. **Enhanced Animations**:
+   - Entrance and exit animations for smoother transitions.
+   - Dynamic animations for thumb movement and snapping.
+
+6. **Haptic Feedback Integration**:
+   - Provide tactile responses for interactions to enhance user experience on compatible devices.
+
+---
+
+### **Conclusion**
+The Slider Widget is a highly customizable and interactive component for selecting values or ranges. With features like dynamic ranges, custom markers, snapping, enhanced animations, and feedback options (audio and haptics), it adapts seamlessly to various use cases while ensuring an engaging user experience across all input devices.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
