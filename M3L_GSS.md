@@ -3925,7 +3925,134 @@ The Poster Widget builds on the flexibility of the Card Widget, offering a detai
 
 ---
 
+### **Window Widget**
 
+The Window Widget simulates a window within the GSS environment. It is primarily used for development and design purposes but also serves as the foundational container for all M3L forms. Windows include interactive title bars, standard controls (close, minimize, maximize), and a defined area for embedding other widgets.
+
+---
+
+### **Core Features**
+1. **Title Bar**:
+   - Includes a title, and standard controls: close, minimize, and maximize buttons.
+
+2. **Container Area**:
+   - Provides a defined area for embedding any widget type.
+   - Supports advanced layout configurations (e.g., grid, flex).
+
+3. **Draggable and Resizable**:
+   - Windows can be moved and resized for enhanced interactivity.
+
+4. **Styling Options**:
+   - Fully customizable title bar and container appearance.
+
+5. **Interactive States**:
+   - Supports `on_close`, `on_minimize`, `on_maximize`, `on_drag`, and `on_resize` events.
+
+6. **Accessibility Enhancements**:
+   - Includes keyboard shortcuts and screen reader-friendly descriptions for controls.
+
+---
+
+### **Proposed Fields**
+| **Field**           | **Description**                                                       | **Example**                              |
+|---------------------|-----------------------------------------------------------------------|------------------------------------------|
+| `title`             | Text to display in the window title bar.                            | `title = "Settings"`                   |
+| `controls`          | Enables or disables title bar controls (close, minimize, maximize). | `controls = { close = true, minimize = true, maximize = true }` |
+| `draggable`         | Allows the window to be moved by dragging the title bar.            | `draggable = true`                      |
+| `resizable`         | Allows the window to be resized.                                     | `resizable = true`                      |
+| `layout`            | Layout for widgets inside the window (`grid`, `flex`, etc.).        | `layout = "grid"`                      |
+| `content`           | Array of widgets embedded in the window.                            | `content = [ { type = "text", value = "App Settings" } ]` |
+| `border`            | Border styling for the window.                                       | `border = "1px solid #CCC"`            |
+| `shadow`            | Shadow effect for the window.                                        | `shadow = "5px 5px 10px rgba(0,0,0,0.3)"` |
+| `background`        | Background styling for the window.                                  | `background = "#FFF"`                  |
+| `animation`         | Animations for opening, closing, or resizing the window.            | `animation = { open = "fade-in", close = "fade-out" }` |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**             | **Description**                                                   | **Example**                              |
+|---------------------------|-------------------------------------------------------------------|------------------------------------------|
+| `window.border`           | Border style for the window.                                      | `window.border = "1px solid #CCC"`    |
+| `window.shadow`           | Shadow effect for the window.                                    | `window.shadow = "5px 5px 10px rgba(0,0,0,0.3)"` |
+| `window.background`       | Background styling for the window.                               | `window.background = "#FFF"`          |
+| `window.titlebar.height`  | Height of the title bar.                                          | `window.titlebar.height = "30px"`     |
+| `window.titlebar.color`   | Background color of the title bar.                               | `window.titlebar.color = "#007BFF"`   |
+| `window.title.font`       | Font style for the title text.                                   | `window.title.font = "bold 14px Arial"` |
+| `window.controls.style`   | Styling for the close, minimize, and maximize buttons.           | `window.controls.style = "flat"`      |
+| `window.animation.open`   | Animation for opening the window.                                | `window.animation.open = "fade-in"`   |
+| `window.animation.close`  | Animation for closing the window.                                | `window.animation.close = "fade-out"` |
+| `window.animation.resize` | Animation for resizing the window.                               | `window.animation.resize = "smooth"`  |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "window"
+title = "Settings"
+controls = { close = true, minimize = true, maximize = true }
+draggable = true
+resizable = true
+layout = "grid"
+border = "1px solid #CCC"
+shadow = "5px 5px 10px rgba(0,0,0,0.3)"
+background = "#FFF"
+animation = { open = "fade-in", close = "fade-out" }
+content = [
+    { type = "text", value = "Application Settings" },
+    { type = "button", label = "Save Changes" }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[window]
+border = "1px solid #CCC"
+shadow = "5px 5px 10px rgba(0,0,0,0.3)"
+background = "#FFF"
+
+[window.titlebar]
+height = "30px"
+color = "#007BFF"
+
+[window.title]
+font = "bold 14px Arial"
+
+[window.controls]
+style = "flat"
+
+[window.animation]
+open = "fade-in"
+close = "fade-out"
+resize = "smooth"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Device-Specific Behavior**:
+   - Adapt draggable and resizable functionality based on the input device (e.g., touch vs. mouse).
+
+2. **Custom Controls**:
+   - Allow developers to define custom actions or styles for title bar buttons.
+
+3. **Dynamic Content Loading**:
+   - Support loading additional widgets or data dynamically into the window.
+
+4. **Nested Windows**:
+   - Enable windows within windows for advanced UI scenarios like modal dialogs.
+
+5. **Accessibility Enhancements**:
+   - Ensure windows are keyboard navigable and screen reader compatible.
+
+---
+
+### **Conclusion**
+The Window Widget is a foundational element for M3L forms, providing a structured and interactive container for other widgets. With support for draggable, resizable, and customizable options, it offers a flexible and visually consistent experience for developers and users alike.
+
+---
 
 ## Summary
 
