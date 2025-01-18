@@ -2842,6 +2842,147 @@ The Navigation Box Widget provides an essential tool for hierarchical navigation
 
 ---
 
+### **Scroll Area Widget**
+
+The Scroll Area Widget provides an intuitive way to navigate additional content within a limited space. It supports vertical, horizontal, or bidirectional scrolling and offers extensive customization options for behavior, appearance, and interactivity.
+
+---
+
+### **Core Features**
+1. **Orientation**:
+   - Supports vertical, horizontal, or both directions for scrolling.
+
+2. **Customizable Scrollbars**:
+   - Options for scrollbar visibility (always visible, auto-hide after inactivity, or hidden).
+   - Styleable scrollbar appearance, including size, color, gradients, patterns, and even images with repeating patterns.
+   - Supports active scrollbars that change visually based on scroll progress (e.g., gradients).
+
+3. **Easing and Smooth Scrolling**:
+   - Allows GSS designers to define easing effects for a custom scrolling feel.
+   - Supports different easing curves (e.g., linear, ease-in, ease-out).
+
+4. **Interactive Events**:
+   - Events like `on_scroll`, `on_scroll_end`, `on_scroll_start`, `on_reach_end`, `on_enter`, and `on_exit`.
+   - Example: `on_enter` could trigger a subtle wiggle animation to hint at scrollability.
+
+5. **Infinite Scroll Support**:
+   - Dynamically loads additional content as users scroll, with visual indicators for infinite scrolling.
+
+6. **Responsive Design**:
+   - Automatically adjusts to the available view area, ensuring compatibility across devices and orientations.
+
+7. **Accessibility**:
+   - Provides clear indicators for scrollable areas and supports keyboard and controller navigation.
+
+---
+
+### **Proposed Fields**
+| **Field**          | **Description**                                                        | **Example**                            |
+|--------------------|------------------------------------------------------------------------|----------------------------------------|
+| `orientation`      | Defines the scroll direction (`vertical`, `horizontal`, or `both`).    | `orientation = "vertical"`             |
+| `scrollbar`        | Configures scrollbar behavior (`visible`, `hidden`, or `auto-hide`).   | `scrollbar = "auto-hide"`              |
+| `easing`           | Defines the easing effect for scrolling.                              | `easing = "ease-in-out"`               |
+| `scroll_speed`     | Adjusts the speed of the scroll.                                       | `scroll_speed = "normal"`              |
+| `infinite_scroll`  | Enables infinite scrolling, dynamically loading more content.          | `infinite_scroll = true`               |
+| `padding`          | Padding around the scrollable content.                                | `padding = "10px"`                     |
+| `margin`           | Margin around the scroll area container.                              | `margin = "15px"`                      |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**          | **Description**                                                    | **Example**                            |
+|------------------------|--------------------------------------------------------------------|----------------------------------------|
+| `scrollbar.size`       | Size (thickness) of the scrollbar.                                | `scrollbar.size = "8px"`               |
+| `scrollbar.color`      | Color of the scrollbar.                                           | `scrollbar.color = "#333"`             |
+| `scrollbar.track.color`| Color of the scrollbar track.                                     | `scrollbar.track.color = "#EEE"`       |
+| `scrollbar.pattern`    | Image or pattern used for the scrollbar.                         | `scrollbar.pattern = "@assets/bar.png"`|
+| `scrollbar.gradient`   | Gradient for the scrollbar that changes with scroll position.     | `scrollbar.gradient = "linear-gradient(to bottom, #007BFF, #FFF)"` |
+| `easing`               | Defines the easing curve for scrolling behavior.                 | `easing = "ease-in-out"`               |
+| `scrollbar.auto-hide`  | Duration before the scrollbar auto-hides (if enabled).            | `scrollbar.auto-hide = "2s"`           |
+| `animations.enter`     | Animation applied when the scroll area is entered.                | `animations.enter = "wiggle"`          |
+| `animations.exit`      | Animation applied when the scroll area is exited.                 | `animations.exit = "fade-out"`         |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "scroll_area"
+orientation = "vertical"
+scrollbar = "auto-hide"
+easing = "ease-in-out"
+scroll_speed = "normal"
+infinite_scroll = true
+padding = "10px"
+margin = "15px"
+
+children = [
+    {
+        type = "text",
+        content = "This is some scrollable content.",
+        style = "paragraph"
+    },
+    {
+        type = "text",
+        content = "Keep scrolling to see more.",
+        style = "paragraph"
+    }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[scroll_area]
+padding = "10px"
+margin = "15px"
+
+[scroll_area.scrollbar]
+size = "8px"
+color = "#333"
+track.color = "#EEE"
+pattern = "@assets/bar.png"
+gradient = "linear-gradient(to bottom, #007BFF, #FFF)"
+auto-hide = "2s"
+
+[scroll_area.easing]
+easing = "ease-in-out"
+
+[scroll_area.animations]
+enter = "wiggle"
+exit = "fade-out"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Infinite Scroll Enhancements**:
+   - Allow visual indicators (e.g., "Loading..." or spinners) during content fetch.
+   - GSS designers can customize styles for loading indicators.
+
+2. **Custom Scrollbar Design**:
+   - Include support for SVGs, animations, and dynamic patterns for the scrollbar.
+
+3. **Truncation Enhancements**:
+   - Automatically adjust the scroll area’s dimensions based on the parent container.
+
+4. **Event Handling**:
+   - Add support for events like:
+     - `on_scroll_start`: Triggered when scrolling begins.
+     - `on_scroll_end`: Triggered when scrolling stops.
+     - `on_reach_end`: Triggered when the user scrolls to the end of the content.
+
+5. **Cross-Device Compatibility**:
+   - Ensure smooth and intuitive scrolling behavior across mouse, touch, and controller inputs.
+
+---
+
+### **Conclusion**
+The Scroll Area Widget provides a versatile and visually appealing solution for handling overflow content. With advanced features like infinite scrolling, custom scrollbar designs, and dynamic interactions, it adapts seamlessly to diverse application needs and enhances the user experience across all input types.
+
+---
+
 
 
 ## Summary
