@@ -3156,6 +3156,136 @@ The Drop Menu Widget offers a highly flexible and interactive solution for prese
 
 ---
 
+### **Item Grid Widget**
+
+The Item Grid Widget organizes items or elements into a grid layout, allowing users to interact with each cell. It is ideal for inventory systems, file management, or visual data organization and is designed to be intuitive across multiple input devices, including controllers.
+
+---
+
+### **Core Features**
+1. **Grid Layout**:
+   - Configurable rows and columns.
+   - Dynamically adjusts based on available space or item count.
+
+2. **Navigation**:
+   - Fully navigable with keyboard, touch, and controller inputs.
+   - Supports `on_focus`, `on_select`, and `on_hover` events for each grid cell.
+
+3. **Cell Customization**:
+   - Cells can contain images, icons, text, or interactive widgets (e.g., buttons or toggles).
+   - Background colors for each cell to indicate specific asset types.
+
+4. **Dynamic Updates**:
+   - Add, remove, or rearrange items dynamically.
+   - Option to load content from co-chains.
+   - Includes loading animations to indicate asset retrieval.
+
+5. **Grouping**:
+   - Support for grouping items within bordered sections (e.g., digital asset categories).
+   - Borders can be styled or colored for visual clarity.
+
+6. **Accessibility**:
+   - Provides labels or tooltips for each cell.
+   - Supports focus management for screen readers.
+
+7. **Animations**:
+   - Smooth animations for item addition, removal, rearrangement, and loading.
+   - Optional visual effects on selection or focus.
+
+---
+
+### **Proposed Fields**
+| **Field**        | **Description**                                                     | **Example**                              |
+|------------------|---------------------------------------------------------------------|------------------------------------------|
+| `grid_size`      | Defines the number of rows and columns.                             | `grid_size = { rows = 4, columns = 5 }`  |
+| `cell_size`      | Dimensions of each grid cell.                                       | `cell_size = "64px"`                   |
+| `items`          | Array of items to display in the grid.                              | `items = ["sword.png", "shield.png"]` |
+| `dynamic`        | Enables dynamic item management (e.g., add/remove items).           | `dynamic = true`                         |
+| `loading_animation` | Animation shown while assets are loading.                        | `loading_animation = "spin"`           |
+| `grouping`       | Defines groups of items with visual borders.                        | `grouping = true`                        |
+| `navigation`     | Configures navigation behavior for controllers and keyboards.       | `navigation = "controller"`            |
+| `animations`     | Animations for item interactions.                                   | `animations = { add = "fade-in", remove = "fade-out" }` |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**         | **Description**                                                | **Example**                              |
+|-----------------------|----------------------------------------------------------------|------------------------------------------|
+| `grid.gap`            | Spacing between grid cells.                                    | `grid.gap = "10px"`                    |
+| `grid.background`     | Background color of the grid.                                  | `grid.background = "#333"`             |
+| `cell.border`         | Border style for each cell.                                    | `cell.border = "1px solid #FFF"`       |
+| `cell.hover.effect`   | Visual effect on hover.                                        | `cell.hover.effect = "glow"`           |
+| `cell.selected.effect`| Effect for selected cells.                                     | `cell.selected.effect = "scale-up"`    |
+| `cell.loading.animation` | Animation for loading items into a cell.                   | `cell.loading.animation = "spin"`      |
+| `cell.background.color` | Background color for individual cells (e.g., asset type).    | `cell.background.color = "#FF5733"`    |
+| `group.border`        | Border style for item groups.                                  | `group.border = "2px solid #CCC"`      |
+| `group.background`    | Background color for grouped areas.                           | `group.background = "#F0F0F0"`         |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "item_grid"
+grid_size = { rows = 3, columns = 4 }
+cell_size = "64px"
+dynamic = true
+loading_animation = "spin"
+grouping = true
+items = [
+    { id = "1", image = "@assets/sword.png", tooltip = "Sword", background_color = "#FF5733" },
+    { id = "2", image = "@assets/shield.png", tooltip = "Shield", background_color = "#33FF57" },
+    { id = "3", image = "@assets/potion.png", tooltip = "Potion", background_color = "#3357FF" }
+]
+animations = { add = "fade-in", remove = "fade-out" }
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[item_grid]
+grid.gap = "10px"
+grid.background = "#333"
+
+[cell]
+border = "1px solid #FFF"
+hover.effect = "glow"
+selected.effect = "scale-up"
+loading.animation = "spin"
+background.color = "#FF5733"
+
+[group]
+border = "2px solid #CCC"
+background = "#F0F0F0"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Item Interaction**:
+   - Support drag-and-drop for rearranging items.
+   - Context menus for item-specific actions.
+
+2. **Pagination**:
+   - Include support for large grids that exceed the visible area.
+
+3. **Dynamic Co-Chain Integration**:
+   - Fetch item data dynamically, such as inventory updates from a co-chain.
+
+4. **Custom Animations**:
+   - Allow GSS designers to define unique animations for item interactions and loading effects.
+
+5. **Enhanced Grouping**:
+   - Provide detailed grouping with unique styles for each group (e.g., different borders, backgrounds).
+
+---
+
+### **Conclusion**
+The Item Grid Widget offers a robust and interactive way to organize and manage items visually. With features like grouping, dynamic updates, custom animations, and accessibility, it caters to diverse use cases and ensures a seamless experience across input devices.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
