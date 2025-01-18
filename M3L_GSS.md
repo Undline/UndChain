@@ -3540,6 +3540,122 @@ The Progress Bar Widget offers a customizable and dynamic way to visualize progr
 
 ---
 
+### **Tooltip Widget**
+
+The Tooltip Widget provides contextual information when a user hovers or focuses on an element. It enhances usability by displaying descriptions or additional details about a widget, offering guidance or feedback to users.
+
+---
+
+### **Core Features**
+1. **Default Tooltip Behavior**:
+   - Displays the description of each widget when no specific tooltip settings are provided.
+
+2. **Customizable Appearance**:
+   - Designers can define font, color, size, and other visual attributes of tooltips.
+
+3. **Fly-In Animations**:
+   - Includes animations for how the tooltip appears, such as fading, sliding, or scaling.
+
+4. **Trigger Options**:
+   - Tooltips can be triggered by hover, focus, touch, prolonged hover, or double-click input events.
+
+5. **Placement Options**:
+   - Configurable placement (top, bottom, left, right, or auto) relative to the widget.
+
+6. **Dynamic Content**:
+   - Can dynamically fetch and display content based on interactions or external data.
+
+7. **Feedback Integration**:
+   - Includes visual, audio, and haptic feedback when the tooltip is triggered.
+
+8. **Duration Control**:
+   - Configurable display duration for tooltips to remain visible.
+
+---
+
+### **Proposed Fields**
+| **Field**           | **Description**                                                       | **Example**                              |
+|---------------------|-----------------------------------------------------------------------|------------------------------------------|
+| `content`           | Text or content to display in the tooltip.                           | `content = "This is a tooltip."`        |
+| `trigger`           | Defines what triggers the tooltip (`hover`, `focus`, `touch`, `prolonged_hover`, `double_click`). | `trigger = "hover"`                     |
+| `placement`         | Position of the tooltip relative to the element.                    | `placement = "top"`                     |
+| `animation`         | Animation type for the tooltip's appearance.                        | `animation = "fade-in"`                 |
+| `feedback`          | Feedback options including audio and haptics.                       | `feedback = { audio = "tooltip.wav", haptic = "soft" }` |
+| `duration`          | Duration in seconds for how long the tooltip remains visible.        | `duration = 5`                           |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**             | **Description**                                                   | **Example**                              |
+|---------------------------|-------------------------------------------------------------------|------------------------------------------|
+| `tooltip.background`      | Background color of the tooltip.                                 | `tooltip.background = "#000"`          |
+| `tooltip.font.color`      | Font color of the tooltip.                                       | `tooltip.font.color = "#FFF"`          |
+| `tooltip.font.size`       | Font size of the tooltip text.                                   | `tooltip.font.size = "14px"`           |
+| `tooltip.border`          | Border style of the tooltip.                                     | `tooltip.border = "1px solid #FFF"`    |
+| `tooltip.padding`         | Padding inside the tooltip.                                      | `tooltip.padding = "8px"`              |
+| `tooltip.margin`          | Margin between the tooltip and the target element.              | `tooltip.margin = "5px"`               |
+| `tooltip.shadow`          | Shadow effect for the tooltip.                                  | `tooltip.shadow = "2px 2px 5px rgba(0,0,0,0.5)"` |
+| `tooltip.animation`       | Animation style for the tooltip's appearance.                   | `tooltip.animation = "fade-in"`        |
+| `tooltip.duration`        | Time the tooltip remains visible before disappearing.            | `tooltip.duration = "5s"`              |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "tooltip"
+content = "This is a helpful tooltip."
+trigger = "hover"
+placement = "top"
+animation = "fade-in"
+feedback = { audio = "tooltip.wav", haptic = "soft" }
+duration = 5
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[tooltip]
+background = "#000"
+font.color = "#FFF"
+font.size = "14px"
+border = "1px solid #FFF"
+padding = "8px"
+margin = "5px"
+shadow = "2px 2px 5px rgba(0,0,0,0.5)"
+animation = "fade-in"
+duration = "5s"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Dynamic Content**:
+   - Fetch tooltip content dynamically based on user interactions or external data sources.
+
+2. **Interactive Tooltips**:
+   - Allow interactive elements, such as buttons or links, within the tooltip.
+
+3. **Accessibility Enhancements**:
+   - Ensure tooltips are screen reader accessible and provide meaningful descriptions.
+
+4. **Device-Specific Triggers**:
+   - Adapt triggers based on the input type (e.g., touch vs. mouse).
+
+5. **Custom Animations**:
+   - Support for advanced animations, such as bounce or spin effects, for enhanced user engagement.
+
+6. **Duration Controls**:
+   - Define how long tooltips should stay visible and automatically disappear after the duration ends.
+
+---
+
+### **Conclusion**
+The Tooltip Widget is a powerful tool for providing contextual information and enhancing user understanding. With customizable triggers, placements, animations, feedback, and duration controls, it adapts seamlessly to diverse use cases while maintaining accessibility and interactivity.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
