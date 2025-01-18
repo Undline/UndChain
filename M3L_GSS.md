@@ -3789,6 +3789,144 @@ The Card Widget offers a robust and flexible solution for content presentation. 
 
 ---
 
+### **Poster Widget**
+
+The Poster Widget is an extension of the Card Widget, designed to present detailed content in a larger format. Posters are particularly effective for immersive displays, dominating the view for greater emphasis, especially on mobile devices. Posters can also shrink to morph back into cards when needed.
+
+---
+
+### **Core Features**
+1. **Expanded Content Presentation**:
+   - Posters provide more space for detailed information, images, or actions.
+   - Ideal for media-rich content or complex layouts.
+
+2. **Morphing Behavior**:
+   - Posters can morph into cards for compact presentation.
+   - Includes animations for smooth transitions between poster and card states.
+
+3. **Pre-Defined Poster Types**:
+   - **Informational Posters**: Display large blocks of text or images.
+   - **Interactive Posters**: Include interactive elements like forms, sliders, and buttons.
+   - **Data Posters**: Show detailed charts, graphs, and tables.
+   - **Media Posters**: Showcase videos, image galleries, or live streams.
+   - **Hybrid Posters**: Combine static and interactive elements, with expandable sections.
+   - **Hero Posters**: Highlight bold calls-to-action with layered text and visuals.
+   - **Tutorial Posters**: Provide step-by-step instructions or guides.
+   - **Split Posters**: Divide content into multiple sections for comparisons.
+   - **Scrollable Posters**: Allow vertical or horizontal scrolling within the poster itself.
+
+4. **Reusable Templates**:
+   - Developers can use predefined templates for common poster types, simplifying M3L creation.
+
+5. **Dynamic Layouts**:
+   - Layouts can adapt based on screen size or input device.
+
+6. **Interactive States**:
+   - Supports `on_expand`, `on_collapse`, `on_hover`, `on_scroll`, and other events.
+
+7. **Styling Options**:
+   - Fully customizable with borders, shadows, animations, and background styles.
+
+---
+
+### **Proposed Fields**
+| **Field**           | **Description**                                                       | **Example**                              |
+|---------------------|-----------------------------------------------------------------------|------------------------------------------|
+| `type`              | Defines the poster type (e.g., `informational`, `media`, `split`).    | `type = "media"`                      |
+| `layout`            | Layout for the poster (`grid`, `flex`, etc.).                        | `layout = "grid"`                      |
+| `content`           | Array of widgets (text, images, buttons) within the poster.          | `content = [ { type = "text", value = "Detailed Info" }, { type = "button", label = "Action" } ]` |
+| `border`            | Border styling for the poster.                                       | `border = "1px solid #CCC"`            |
+| `shadow`            | Shadow effect for the poster.                                        | `shadow = "5px 5px 10px rgba(0,0,0,0.3)"` |
+| `background`        | Background styling (color or gradient).                             | `background = "linear-gradient(to right, #FFF, #EEE)"` |
+| `animation`         | Animations for morphing and other interactions.                     | `animation = { expand = "scale-up", collapse = "scale-down" }` |
+| `card_morph`        | Enables morphing into a card.                                        | `card_morph = true`                      |
+| `interactive_button`| Adds a button for collapsing the poster back into a card.            | `interactive_button = { label = "Collapse", style = "secondary" }` |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**             | **Description**                                                   | **Example**                              |
+|---------------------------|-------------------------------------------------------------------|------------------------------------------|
+| `poster.border`           | Border style for posters.                                         | `poster.border = "1px solid #CCC"`    |
+| `poster.shadow`           | Shadow effect for posters.                                       | `poster.shadow = "5px 5px 10px rgba(0,0,0,0.3)"` |
+| `poster.background`       | Background styling for posters.                                  | `poster.background = "#FFF"`          |
+| `poster.layout`           | Layout direction (`grid`, `flex`, etc.).                         | `poster.layout = "grid"`              |
+| `poster.animation.expand` | Animation for expanding the poster.                             | `poster.animation.expand = "scale-up"` |
+| `poster.animation.collapse` | Animation for collapsing the poster into a card.               | `poster.animation.collapse = "scale-down"` |
+| `poster.button.style`     | Styling for the collapse button.                                 | `poster.button.style = "secondary"`   |
+| `poster.scrollbar.style`  | Styling for scrollable posters.                                  | `poster.scrollbar.style = "minimal"`  |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "poster"
+layout = "grid"
+type = "split"
+border = "1px solid #CCC"
+shadow = "5px 5px 10px rgba(0,0,0,0.3)"
+background = "linear-gradient(to right, #FFF, #EEE)"
+animation = { expand = "scale-up", collapse = "scale-down" }
+card_morph = true
+interactive_button = { label = "Collapse", style = "secondary" }
+content = [
+    { type = "image", src = "@assets/comparison_left.jpg" },
+    { type = "image", src = "@assets/comparison_right.jpg" }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[poster]
+border = "1px solid #CCC"
+shadow = "5px 5px 10px rgba(0,0,0,0.3)"
+background = "#FFF"
+layout = "grid"
+
+[poster.animation]
+expand = "scale-up"
+collapse = "scale-down"
+
+[poster.button]
+style = "secondary"
+
+[poster.scrollbar]
+style = "minimal"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Dynamic Adaptation**:
+   - Adjust layouts and interactions based on device type (e.g., mobile vs. desktop).
+
+2. **Custom Animations**:
+   - Allow GSS developers to define unique animations for expanding and collapsing posters.
+
+3. **Interactive Buttons**:
+   - Provide clear controls for transitioning between poster and card states.
+
+4. **Device-Specific Behavior**:
+   - Optimize poster usability for touch, mouse, and controller inputs.
+
+5. **Reusable Templates**:
+   - Offer predefined templates for common poster types to streamline development.
+
+6. **Scrollable Content**:
+   - Enable smooth scrolling within posters, with customizable scrollbar styles.
+
+---
+
+### **Conclusion**
+The Poster Widget builds on the flexibility of the Card Widget, offering a detailed and immersive way to present content. With support for morphing, dynamic layouts, reusable templates, and extensive styling, posters enhance user engagement and are ideal for media-rich or complex presentations.
+
+---
+
+
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
