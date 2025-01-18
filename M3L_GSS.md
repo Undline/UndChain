@@ -3421,6 +3421,125 @@ The Slider Widget is a highly customizable and interactive component for selecti
 
 ---
 
+### **Progress Bar Widget**
+
+The Progress Bar Widget visually represents progress toward a goal. It is customizable for various use cases, such as task completion, loading indicators, or milestone tracking, with support for animations, tooltips, and dynamic updates.
+
+---
+
+### **Core Features**
+1. **Single or Multi-Step Progress**:
+   - Supports continuous progress bars for single tasks.
+   - Multi-step progress bars with defined milestones or stages.
+
+2. **Customizable Range and Precision**:
+   - Define the minimum and maximum values for the progress.
+   - Supports precision for fractional progress updates.
+
+3. **Dynamic Updates**:
+   - Real-time updates to reflect progress changes.
+   - Can integrate with external sources for dynamic progress tracking.
+
+4. **Visual Indicators**:
+   - Color-coded segments to represent different stages or statuses.
+   - Optional gradient fills for smoother transitions.
+
+5. **Labels and Tooltips**:
+   - Display the current progress percentage or value directly on the bar.
+   - Tooltips to show additional context for progress.
+
+6. **Input-Specific Feedback**:
+   - Includes visual, audio, and haptic feedback for updates and completions.
+
+7. **Interactive Events**:
+   - Events like `on_start`, `on_progress`, and `on_complete`.
+
+8. **Accessibility**:
+   - Screen reader-friendly descriptions for progress updates.
+   - Fully navigable and understandable for users with disabilities.
+
+---
+
+### **Proposed Fields**
+| **Field**          | **Description**                                                       | **Example**                               |
+|--------------------|-----------------------------------------------------------------------|-------------------------------------------|
+| `min`              | Minimum value of the progress bar.                                   | `min = 0`                                 |
+| `max`              | Maximum value of the progress bar.                                   | `max = 100`                               |
+| `value`            | Current progress value.                                              | `value = 50`                              |
+| `segments`         | Defines segments for multi-step progress bars.                      | `segments = [25, 50, 75, 100]`            |
+| `tooltip`          | Enables tooltips to display progress details.                       | `tooltip = true`                          |
+| `gradient_fill`    | Defines a color gradient for the progress bar.                      | `gradient_fill = "linear-gradient(to right, #007BFF, #00FF00)"` |
+| `feedback`         | Feedback options including audio and haptics for updates.            | `feedback = { audio = { progress = "tick.wav" }, haptic = { intensity = "low" } }` |
+| `animations`       | Animations for progress updates and completion.                     | `animations = { update = "smooth", completion = "pulse" }` |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**            | **Description**                                                   | **Example**                              |
+|--------------------------|-------------------------------------------------------------------|------------------------------------------|
+| `progress.bar.height`    | Height of the progress bar.                                       | `progress.bar.height = "10px"`          |
+| `progress.bar.color`     | Default color of the progress bar.                               | `progress.bar.color = "#CCC"`          |
+| `progress.fill.color`    | Color of the filled portion of the progress bar.                 | `progress.fill.color = "#007BFF"`      |
+| `progress.segment.color` | Color for individual segments in a multi-step progress bar.      | `progress.segment.color = "#00FF00"`   |
+| `tooltip.background`     | Background color of the tooltip.                                | `tooltip.background = "#000"`          |
+| `tooltip.font.color`     | Font color of the tooltip.                                       | `tooltip.font.color = "#FFF"`          |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "progress_bar"
+min = 0
+max = 100
+value = 50
+tooltip = true
+gradient_fill = "linear-gradient(to right, #007BFF, #00FF00)"
+segments = [25, 50, 75, 100]
+feedback = { audio = { progress = "tick.wav" }, haptic = { intensity = "low" } }
+animations = { update = "smooth", completion = "pulse" }
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[progress.bar]
+height = "10px"
+color = "#CCC"
+fill.color = "#007BFF"
+
+[progress.segment]
+color = "#00FF00"
+
+[tooltip]
+background = "#000"
+font.color = "#FFF"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Real-Time Updates**:
+   - Fetch progress data dynamically from external sources or co-chains.
+
+2. **Custom Completion Effects**:
+   - Allow developers to customize animations and feedback for completed progress bars.
+
+3. **Multi-Device Feedback**:
+   - Provide consistent feedback across devices, including haptic responses on mobile and controller inputs.
+
+4. **Segmented Progress Bars**:
+   - Highlight milestones or stages within the progress bar.
+   - Allow unique styles and effects for each segment.
+
+---
+
+### **Conclusion**
+The Progress Bar Widget offers a customizable and dynamic way to visualize progress. With features like real-time updates, segmented progress, and feedback options (audio, visual, and haptics), it provides an engaging and accessible experience for diverse applications and devices.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
