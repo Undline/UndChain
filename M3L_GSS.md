@@ -3656,6 +3656,139 @@ The Tooltip Widget is a powerful tool for providing contextual information and e
 
 ---
 
+### **Card Widget**
+
+The Card Widget is a versatile component used for compact content presentation. It can display information, include interactive elements, and support advanced transitions such as flipping or morphing into a poster.
+
+---
+
+### **Core Features**
+1. **Card Types**:
+   - **Informational Cards**: Static, text/image-focused.
+   - **Interactive Cards**: Includes actionable elements like buttons or sliders.
+   - **Data Cards**: Displays structured data like graphs or metrics.
+   - **Hybrid Cards**: Combines informational and interactive elements, with support for flipping to reveal additional content.
+
+2. **Customizable Layout**:
+   - Supports layouts like `horizontal`, `vertical`, or `grid`.
+
+3. **Morphing to Poster**:
+   - Cards can transition into larger posters for detailed content presentation.
+   - A dedicated button appears when `poster` is enabled, which can be styled by GSS developers.
+
+4. **Dynamic Updates**:
+   - Can fetch and update content dynamically (e.g., via co-chains).
+
+5. **Interactive States**:
+   - Includes `on_hover`, `on_click`, `on_expand`, and more.
+
+6. **Styling Options**:
+   - Fully customizable with borders, shadows, animations, and background styles.
+
+---
+
+### **Proposed Fields**
+| **Field**           | **Description**                                                       | **Example**                              |
+|---------------------|-----------------------------------------------------------------------|------------------------------------------|
+| `type`              | Defines the type of card (`informational`, `interactive`, etc.).      | `type = "interactive"`                 |
+| `layout`            | Layout of the card (`horizontal`, `vertical`, `grid`).               | `layout = "vertical"`                  |
+| `content`           | Array of widgets (text, images, buttons) within the card.            | `content = [ { type = "text", value = "Product Name" }, { type = "button", label = "Buy" } ]` |
+| `border`            | Border styling for the card.                                         | `border = "1px solid #CCC"`            |
+| `shadow`            | Shadow effect for the card.                                          | `shadow = "2px 2px 5px rgba(0,0,0,0.5)"` |
+| `background`        | Background styling (color or gradient).                             | `background = "linear-gradient(to right, #FFF, #EEE)"` |
+| `animation`         | Animations for hover, click, or expand.                             | `animation = { hover = "scale-up", expand = "fade-in" }` |
+| `poster`            | Enables morphing the card into a larger poster.                     | `poster = true`                          |
+| `poster_button`     | Enables a dedicated button for transitioning into the poster view.   | `poster_button = { label = "Expand", style = "primary" }` |
+| `flip`              | Enables flipping the card to reveal additional content.             | `flip = { trigger = "on_click", animation = "rotate-y" }` |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**             | **Description**                                                   | **Example**                              |
+|---------------------------|-------------------------------------------------------------------|------------------------------------------|
+| `card.border`             | Border style for cards.                                           | `card.border = "1px solid #CCC"`      |
+| `card.shadow`             | Shadow effect for cards.                                          | `card.shadow = "2px 2px 5px rgba(0,0,0,0.5)"` |
+| `card.background`         | Background styling for cards.                                     | `card.background = "#FFF"`            |
+| `card.layout`             | Layout direction (`horizontal`, `vertical`, `grid`).             | `card.layout = "vertical"`            |
+| `card.animation.hover`    | Animation for hover interactions (e.g., raising the card).        | `card.animation.hover = "scale-up"`   |
+| `card.animation.expand`   | Animation for expanding cards or morphing into posters.          | `card.animation.expand = "fade-in"`   |
+| `poster.background`       | Background style for posters.                                    | `poster.background = "#FFF"`          |
+| `poster.shadow`           | Shadow effect for posters.                                       | `poster.shadow = "5px 5px 10px rgba(0,0,0,0.3)"` |
+| `poster.layout`           | Layout for the poster view.                                      | `poster.layout = "grid"`              |
+| `poster.animation`        | Animation style for morphing cards into posters.                | `poster.animation = "scale-up"`       |
+| `poster.button.style`     | Styling for the expand button in poster mode.                    | `poster.button.style = "primary"`     |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "card"
+layout = "vertical"
+type = "hybrid"
+poster = true
+poster_button = { label = "Expand", style = "primary" }
+flip = { trigger = "on_hover", animation = "rotate-y" }
+poster_animation = { morph = "scale-up", duration = "0.5s" }
+content = [
+    { type = "image", src = "@assets/product.jpg" },
+    { type = "text", value = "Product Name" },
+    { type = "button", label = "View Details" }
+]
+sides = [
+    { side = "front", content = [{ type = "text", value = "Brief Description" }] },
+    { side = "back", content = [{ type = "text", value = "Detailed Description" }] }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[card]
+layout = "vertical"
+background = "#FFF"
+shadow = "2px 2px 5px rgba(0,0,0,0.5)"
+
+[card.animation]
+hover = "scale-up"
+expand = "fade-in"
+
+[poster]
+background = "#FFF"
+shadow = "5px 5px 10px rgba(0,0,0,0.3)"
+layout = "grid"
+animation = "scale-up"
+
+[poster.button]
+style = "primary"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Custom Templates**:
+   - Allow developers to save card templates for reuse across applications.
+
+2. **Dynamic Content**:
+   - Fetch and update card content from co-chains or APIs.
+
+3. **Device-Specific Behavior**:
+   - Adjust layout and interaction style for different devices (e.g., mobile, controller).
+
+4. **Accessibility Enhancements**:
+   - Provide clear focus indicators and screen reader-friendly content.
+
+5. **Poster Transitions**:
+   - Enable smooth morphing between card and poster views for enhanced usability.
+
+---
+
+### **Conclusion**
+The Card Widget offers a robust and flexible solution for content presentation. With options for flipping, expanding, and morphing into posters, along with extensive styling and animation capabilities, it adapts seamlessly to diverse use cases while maintaining accessibility and interactivity.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
