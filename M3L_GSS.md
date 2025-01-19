@@ -142,7 +142,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Window**: Defines the background and foreground containers for widgets (like a frame).
 - **Screenshot**: A flexible draw area for custom shapes or graphics, which is useful when users need to share what they see on screen.
 - **Carousel**: Automatically cycles through various content, like images or promotions.
-**Break**: A simple widget used to visually divide sections of content. Supports horizontal and vertical orientations with customizable styles.
+- **Break**: A simple widget used to visually divide sections of content. Supports horizontal and vertical orientations with customizable styles.
 - **Toolbar**: Houses multiple buttons or tools for modifying a target section.
 - **Floating Menu**: Context-sensitive menu that activates on events (e.g., right-click, hover).
 - **Graph (Interactive)**: Generates visualizations based on input data; allows interactions if the data is editable.
@@ -152,6 +152,8 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Tab Widget**: Groups widgets by category, activated via tabs.
 - **Video**: Plays videos with predefined controls and settings.
 - **Popup**: Creates modals for warnings, errors, confirmations, or informational messages.
+- **Notification Menu**: This is a listing of notifications from the application being used.
+- **Toast**: Close to a popup but is designed to only show up for a limited amount of time then disappear (stays in the notifications menu)
 - **Date Picker**: Allows users to select dates.
 - **Tree View**: Represents hierarchical data (e.g., directories).
 - **Poll Widget**: Presents a multiple-choice question and shows aggregated results.
@@ -4491,6 +4493,344 @@ enter = "fade-in"
 
 ### **Conclusion**
 The Break Widget is a lightweight and flexible tool for visually organizing content. With customizable orientations, patterns, and animations, it enhances the clarity and visual appeal of user interfaces.
+
+---
+
+### **Toolbar Widget**
+
+The Toolbar Widget provides a collection of buttons, icons, and menus for interacting with and manipulating content within an application. It is ideal for applications requiring a robust toolset for user actions in the workspace. The Toolbar is designed to integrate with functions on UndChain and supports customization for specific applications.
+
+---
+
+### **Core Features**
+1. **Toolset Organization**:
+   - Houses multiple buttons or tools grouped logically.
+   - Supports separators and nested menus for better organization.
+
+2. **Standard Items**:
+   - Predefined actions for commonly used functionalities:
+     - **File Menu**: `New`, `Open`, `Save`, `Save As`, `Export`, `Close`
+     - **Edit Menu**: `Undo`, `Redo`, `Cut`, `Copy`, `Paste`, `Delete`
+     - **View Menu**: `Zoom In`, `Zoom Out`, `Fit to Screen`, `Full Screen`
+     - **Help Menu**: `About`, `Documentation`, `Report Issue`
+     - **Controls**: `Start`, `Stop`, `Add`, `Delete`
+   - Comes with default monochrome icons that can be styled by GSS designers.
+
+3. **Custom Actions**:
+   - Developers can define custom buttons and map them to specific application functions.
+
+4. **Interactive States**:
+   - Supports `on_click`, `on_hover`, and `on_press` events for each tool.
+
+5. **Dynamic Updates**:
+   - Tools and menus can dynamically update based on the state of the application.
+
+6. **Positioning**:
+   - Toolbars can be placed at the `top`, `left`, `right`, or `bottom` of the application.
+
+7. **Separator and Grouping**:
+   - Includes support for separators to visually divide tool groups.
+   - Groups are defined in M3L, each with a name, and styled in GSS.
+
+8. **Styling Options**:
+   - Fully customizable icons, button layouts, and interaction effects.
+
+---
+
+### **Proposed Fields**
+| **Field**           | **Description**                                                       | **Example**                              |
+|---------------------|-----------------------------------------------------------------------|------------------------------------------|
+| `tools`             | Array of tool groups in the toolbar. Each group includes tools and a name. | `tools = [ { group_name = "File", tools = [...] } ]` |
+| `orientation`       | Direction of the toolbar (`horizontal`, `vertical`).                | `orientation = "horizontal"`           |
+| `position`          | Placement of the toolbar within the application.                    | `position = "top"`                      |
+| `standard_icons`    | Enables predefined icons for standard actions.                      | `standard_icons = true`                  |
+| `custom_icons`      | Defines custom icons for application-specific tools.                | `custom_icons = [ { name = "Offset", icon = "@assets/offset.svg" } ]` |
+| `animation`         | Optional animations for tool appearance or interaction.             | `animation = { hover = "highlight", click = "bounce" }` |
+| `dynamic`           | Allows tools to update dynamically based on application state.      | `dynamic = true`                         |
+| `separator`         | Adds visual separators between groups of tools.                     | `separator = true`                       |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**             | **Description**                                                   | **Example**                              |
+|---------------------------|-------------------------------------------------------------------|------------------------------------------|
+| `toolbar.orientation`     | Orientation of the toolbar.                                      | `toolbar.orientation = "horizontal"`   |
+| `toolbar.position`        | Placement of the toolbar within the application.                | `toolbar.position = "top"`             |
+| `toolbar.background`      | Background styling for the toolbar.                             | `toolbar.background = "#FFF"`         |
+| `toolbar.border`          | Border style for the toolbar.                                    | `toolbar.border = "1px solid #CCC"`   |
+| `toolbar.icon.color`      | Default color for monochrome icons.                              | `toolbar.icon.color = "#000"`         |
+| `toolbar.icon.size`       | Size of the icons.                                               | `toolbar.icon.size = "24px"`          |
+| `toolbar.animation.hover` | Animation for tool hover effects.                                | `toolbar.animation.hover = "highlight"`|
+| `toolbar.animation.click` | Animation for tool click effects.                                | `toolbar.animation.click = "bounce"`  |
+| `toolbar.separator.style` | Styling for separators between tool groups.                     | `toolbar.separator.style = "solid"`   |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "toolbar"
+orientation = "horizontal"
+position = "top"
+standard_icons = true
+custom_icons = [ { name = "Offset", icon = "@assets/offset.svg" } ]
+dynamic = true
+separator = true
+tools = [
+    {
+        group_name = "File",
+        tools = [
+            { type = "button", label = "Open", intent = "@UndChain.SESSION_ID.file.open" },
+            { type = "button", label = "Save", intent = "@UndChain.SESSION_ID.file.save" }
+        ]
+    },
+    {
+        group_name = "Edit",
+        tools = [
+            { type = "button", label = "Undo", intent = "@UndChain.SESSION_ID.edit.undo" },
+            { type = "button", label = "Redo", intent = "@UndChain.SESSION_ID.edit.redo" }
+        ]
+    },
+    {
+        group_name = "Help",
+        tools = [
+            { type = "button", label = "About", intent = "@UndChain.SESSION_ID.help.about" }
+        ]
+    }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[toolbar]
+orientation = "horizontal"
+position = "top"
+background = "#FFF"
+border = "1px solid #CCC"
+
+[toolbar.icon]
+color = "#000"
+size = "24px"
+
+[toolbar.animation]
+hover = "highlight"
+click = "bounce"
+
+[toolbar.separator]
+style = "solid"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Dynamic Updates**:
+   - Allow tools to enable or disable based on application state (e.g., disabling `undo` if no actions can be undone).
+
+2. **Custom Tool Groups**:
+   - Enable developers to create logical groups of tools for specific workflows.
+
+3. **Device-Specific Behavior**:
+   - Adapt toolbar layout and interactions for touch, mouse, and controller inputs.
+
+4. **Accessibility Enhancements**:
+   - Ensure all tools are keyboard navigable and screen reader compatible.
+
+---
+
+### **Conclusion**
+The Toolbar Widget is a powerful interface element for applications requiring a rich toolset. With support for standard and custom tools, dynamic updates, separators, flexible positioning, and extensive styling options, it offers developers a versatile and user-friendly solution for creating complex applications.
+
+---
+
+### **Toolbar Widget**
+
+The Toolbar Widget provides a collection of buttons, icons, and menus for interacting with and manipulating content within an application. It is ideal for applications requiring a robust toolset for user actions in the workspace. The Toolbar is designed to integrate with functions on UndChain and supports customization for specific applications.
+
+---
+
+### **Core Features**
+
+1. **Toolset Organization**:
+
+   - Houses multiple buttons or tools grouped logically.
+   - Supports separators and nested menus for better organization.
+
+2. **Standard Items**:
+
+   - Predefined actions for commonly used functionalities:
+     - **File Menu**: `New`, `Open`, `Save`, `Save As`, `Export`, `Close`
+     - **Edit Menu**: `Undo`, `Redo`, `Cut`, `Copy`, `Paste`, `Delete`
+     - **View Menu**: `Zoom In`, `Zoom Out`, `Fit to Screen`, `Full Screen`
+     - **Help Menu**: `About`, `Documentation`, `Report Issue`
+     - **Controls**: `Start`, `Stop`, `Add`, `Delete`
+   - Comes with default monochrome icons that can be styled by GSS designers.
+
+3. **Custom Actions**:
+
+   - Developers can define custom buttons and map them to specific application functions.
+
+4. **Interactive States**:
+
+   - Supports `on_click`, `on_hover`, and `on_press` events for each tool.
+
+5. **Dynamic Updates**:
+
+   - Tools and menus can dynamically update based on the state of the application.
+
+6. **Positioning**:
+
+   - Toolbars can be placed at the `top`, `left`, `right`, or `bottom` of the application.
+
+7. **Separator and Grouping**:
+
+   - Separators are implicitly styled in GSS and applied when new groups are defined.
+   - Menus are defined in M3L with `menu_name`, and tool groups are nested within the menus.
+
+8. **Styling Options**:
+
+   - Fully customizable icons, button layouts, and interaction effects.
+   - GSS designers can define unique styles based on the toolbar's position.
+
+---
+
+### **M3L Fields**
+
+| **Field**        | **Description**                                                           | **Example**                                                           |
+| ---------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `tools`          | Array of menus in the toolbar. Each menu includes a name and tool groups. | `tools = [ { menu_name = "File", groups = [...] } ]`                  |
+| `orientation`    | Direction of the toolbar (`horizontal`, `vertical`).                      | `orientation = "horizontal"`                                          |
+| `position`       | Placement of the toolbar within the application.                          | `position = "top"`                                                    |
+| `animation`      | Optional animations for tool appearance or interaction.                   | `animation = { hover = "highlight", click = "bounce" }`               |
+| `dynamic`        | Allows tools to update dynamically based on application state.            | `dynamic = true`                                                      |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**             | **Description**                                      | **Example**                                   |
+| ------------------------- | ---------------------------------------------------- | --------------------------------------------- |
+| `toolbar.orientation`     | Orientation of the toolbar.                          | `toolbar.orientation = "horizontal"`          |
+| `toolbar.position`        | Placement of the toolbar within the application.     | `toolbar.position = "top"`                    |
+| `toolbar.background`      | Background styling for the toolbar.                  | `toolbar.background = "#FFF"`                 |
+| `toolbar.border`          | Border style for the toolbar.                        | `toolbar.border = "1px solid #CCC"`           |
+| `toolbar.icon.color`      | Default color for monochrome icons.                  | `toolbar.icon.color = "#000"`                 |
+| `toolbar.icon.size`       | Size of the icons.                                   | `toolbar.icon.size = "24px"`                  |
+| `toolbar.animation.hover` | Animation for tool hover effects.                    | `toolbar.animation.hover = "highlight"`       |
+| `toolbar.animation.click` | Animation for tool click effects.                    | `toolbar.animation.click = "bounce"`          |
+| `toolbar.position.top`    | Custom styles for toolbars positioned at the top.    | `toolbar.position.top.background = "#EEE"`    |
+| `toolbar.position.left`   | Custom styles for toolbars positioned on the left.   | `toolbar.position.left.background = "#DDD"`   |
+| `toolbar.position.right`  | Custom styles for toolbars positioned on the right.  | `toolbar.position.right.background = "#CCC"`  |
+| `toolbar.position.bottom` | Custom styles for toolbars positioned at the bottom. | `toolbar.position.bottom.background = "#BBB"` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "toolbar"
+orientation = "horizontal"
+position = "top"
+dynamic = true
+tools = [
+    {
+        menu_name = "File",
+        groups = [
+            {
+                group_name = "File Management",
+                tools = [
+                    { type = "button", label = "Open", intent = "@UndChain.SESSION_ID.file.open" },
+                    { type = "button", label = "Save", intent = "@UndChain.SESSION_ID.file.save" }
+                ]
+            }
+        ]
+    },
+    {
+        menu_name = "Edit",
+        groups = [
+            {
+                group_name = "Editing Tools",
+                tools = [
+                    { type = "button", label = "Undo", intent = "@UndChain.SESSION_ID.edit.undo" },
+                    { type = "button", label = "Redo", intent = "@UndChain.SESSION_ID.edit.redo" },
+                    { type = "button", label = "Offset", intent = "@UndChain.SESSION_ID.edit.offset" }
+                ]
+            }
+        ]
+    },
+    {
+        menu_name = "Help",
+        groups = [
+            {
+                group_name = "Assistance",
+                tools = [
+                    { type = "button", label = "About", intent = "@UndChain.SESSION_ID.help.about" }
+                ]
+            }
+        ]
+    }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[toolbar]
+orientation = "horizontal"
+position = "top"
+background = "#FFF"
+border = "1px solid #CCC"
+
+[toolbar.icon]
+color = "#000"
+size = "24px"
+
+[toolbar.animation]
+hover = "highlight"
+click = "bounce"
+
+[toolbar.position.top]
+background = "#EEE"
+
+[toolbar.position.left]
+background = "#DDD"
+
+[toolbar.position.right]
+background = "#CCC"
+
+[toolbar.position.bottom]
+background = "#BBB"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Dynamic Updates**:
+
+   - Allow tools to enable or disable based on application state (e.g., disabling `undo` if no actions can be undone).
+
+2. **Custom Tool Groups**:
+
+   - Enable developers to create logical groups of tools for specific workflows.
+
+3. **Device-Specific Behavior**:
+
+   - Adapt toolbar layout and interactions for touch, mouse, and controller inputs.
+
+4. **Accessibility Enhancements**:
+
+   - Ensure all tools are keyboard navigable and screen reader compatible.
+
+---
+
+### **Conclusion**
+
+The Toolbar Widget is a powerful interface element for applications requiring a rich toolset. With support for standard and custom tools, dynamic updates, separators, flexible positioning, and extensive styling options, it offers developers a versatile and user-friendly solution for creating complex applications.
 
 ---
 
