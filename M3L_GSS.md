@@ -4166,6 +4166,135 @@ The Screenshot Widget bridges functionality and usability by combining screen ca
 
 ---
 
+### **Carousel Widget**
+
+The Carousel Widget is designed to cycle through various types of content, such as images, cards, or other widgets. It supports automatic and manual navigation, with hybrid options available for enhanced interactivity.
+
+**Note**: In this context, "carousel" refers to a linear or looping content viewer, cycling through items horizontally or vertically. It does not represent a literal circular arrangement.
+
+---
+
+### **Core Features**
+1. **Content Cycling**:
+   - Automatically cycles through items on a timer.
+   - Supports manual navigation via controls (e.g., `on_click` or `on_swipe`).
+
+2. **Hybrid Mode**:
+   - Allows both automatic and manual navigation simultaneously.
+
+3. **Customizable Layout**:
+   - Configurable direction (`horizontal`, `vertical`) and alignment.
+
+4. **Interactive States**:
+   - Events like `on_hover`, `on_click`, `on_swipe`, and `on_end`.
+
+5. **Styling Options**:
+   - Fully customizable indicators, controls, and animations.
+
+6. **Dynamic Content Integration**:
+   - Fetch content dynamically from external sources or co-chains.
+
+7. **Pagination**:
+   - Numbered dots or indicators show available content and the current position.
+
+8. **Loading Animations**:
+   - Display a loading animation while waiting for content to load.
+
+---
+
+### **Proposed Fields**
+| **Field**           | **Description**                                                       | **Example**                              |
+|---------------------|-----------------------------------------------------------------------|------------------------------------------|
+| `content`           | Array of widgets to display in the carousel.                        | `content = [ { type = "image", src = "@assets/img1.jpg" }, { type = "card", content = [...] } ]` |
+| `direction`         | Direction of the carousel (`horizontal`, `vertical`).               | `direction = "horizontal"`             |
+| `autoplay`          | Enables automatic cycling of content.                               | `autoplay = true`                        |
+| `autoplay_interval` | Time in seconds between automatic transitions.                      | `autoplay_interval = 5`                  |
+| `controls`          | Enables manual navigation controls.                                 | `controls = { prev = true, next = true }`|
+| `indicators`        | Displays navigation indicators for content.                         | `indicators = true`                      |
+| `animation`         | Defines animation style for transitions.                           | `animation = "slide"`                   |
+| `loop`              | Enables looping through content.                                    | `loop = true`                            |
+| `intent`            | High-level intent for navigation (`cycle`, `pause`, `reset`).       | `intent = "cycle"`                      |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**             | **Description**                                                   | **Example**                              |
+|---------------------------|-------------------------------------------------------------------|------------------------------------------|
+| `carousel.direction`      | Direction of the carousel.                                       | `carousel.direction = "horizontal"`    |
+| `carousel.autoplay`       | Enables or disables autoplay.                                   | `carousel.autoplay = true`              |
+| `carousel.indicators.style` | Styling for navigation indicators.                            | `carousel.indicators.style = "dots"`   |
+| `carousel.controls.style` | Styling for navigation controls (e.g., arrows, buttons).        | `carousel.controls.style = "arrows"`   |
+| `carousel.animation.type` | Type of animation for transitions.                              | `carousel.animation.type = "fade"`     |
+| `carousel.animation.speed`| Speed of the animation.                                          | `carousel.animation.speed = "0.5s"`    |
+| `carousel.loading.type`   | Style of loading animation (e.g., spinner, shimmer).            | `carousel.loading.type = "spinner"`    |
+| `carousel.loading.color`  | Color of the loading animation.                                 | `carousel.loading.color = "#007BFF"`  |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "carousel"
+direction = "horizontal"
+autoplay = true
+autoplay_interval = 5
+intent = "cycle"
+loop = true
+content = [
+    { type = "image", src = "@assets/img1.jpg" },
+    { type = "image", src = "@assets/img2.jpg" },
+    { type = "card", content = [ { type = "text", value = "Product Name" }, { type = "button", label = "Buy Now" } ] }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[carousel]
+direction = "horizontal"
+autoplay = true
+
+[carousel.indicators]
+style = "dots"
+
+[carousel.controls]
+style = "arrows"
+
+[carousel.animation]
+type = "slide"
+speed = "0.5s"
+
+[carousel.loading]
+type = "spinner"
+color = "#007BFF"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Dynamic Content Loading**:
+   - Support for fetching content dynamically from co-chains or APIs.
+
+2. **Custom Transitions**:
+   - Allow developers to define custom animations for transitions.
+
+3. **Device-Specific Behavior**:
+   - Optimize interactions for touch, mouse, and controller inputs.
+
+4. **Accessibility Enhancements**:
+   - Ensure indicators and controls are keyboard navigable and screen reader compatible.
+
+5. **Loading States**:
+   - Display loading animations when fetching content dynamically.
+
+---
+
+### **Conclusion**
+The Carousel Widget is a powerful tool for cycling through diverse content, with support for automatic and manual navigation, advanced animations, and dynamic integrations. Its flexibility ensures seamless integration into various applications and use cases.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
