@@ -142,6 +142,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Window**: Defines the background and foreground containers for widgets (like a frame).
 - **Screenshot**: A flexible draw area for custom shapes or graphics, which is useful when users need to share what they see on screen.
 - **Carousel**: Automatically cycles through various content, like images or promotions.
+**Break**: A simple widget used to visually divide sections of content. Supports horizontal and vertical orientations with customizable styles.
 - **Toolbar**: Houses multiple buttons or tools for modifying a target section.
 - **Floating Menu**: Context-sensitive menu that activates on events (e.g., right-click, hover).
 - **Graph (Interactive)**: Generates visualizations based on input data; allows interactions if the data is editable.
@@ -4399,6 +4400,97 @@ color = "#007BFF"
 
 ### **Conclusion**
 The Carousel Widget is a powerful tool for cycling through diverse content, with support for automatic and manual navigation, advanced animations, and dynamic integrations. Its flexibility ensures seamless integration into various applications and use cases.
+
+---
+
+### **Break Widget**
+
+The Break Widget is a simple visual divider used to separate pieces of content on a screen. Breaks can be vertical or horizontal and styled in various ways to suit the design, including lines, background colors, or custom visual elements.
+
+---
+
+### **Core Features**
+1. **Orientation**:
+   - Supports both horizontal and vertical orientations.
+
+2. **Customizable Styling**:
+   - Fully customizable appearance, including colors, thickness, and patterns.
+
+3. **Dynamic Sizing**:
+   - Automatically adjusts to fit within its parent container or specified dimensions.
+
+4. **Interactive States**:
+   - Optional hover effects or animations for enhanced visual appeal.
+
+---
+
+### **Proposed Fields**
+| **Field**           | **Description**                                                       | **Example**                              |
+|---------------------|-----------------------------------------------------------------------|------------------------------------------|
+| `orientation`       | Specifies the direction of the break (`horizontal`, `vertical`).      | `orientation = "horizontal"`           |
+| `size`              | Defines the thickness or width of the break.                         | `size = "2px"`                          |
+| `color`             | Color of the break line or background.                               | `color = "#CCC"`                        |
+| `margin`            | Spacing around the break.                                            | `margin = "10px 0"`                     |
+| `pattern`           | Defines a pattern for the break line (e.g., solid, dashed, dotted).  | `pattern = "dashed"`                    |
+| `animation`         | Optional animations for appearance or hover effects.                | `animation = { enter = "fade-in" }`     |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**             | **Description**                                                   | **Example**                              |
+|---------------------------|-------------------------------------------------------------------|------------------------------------------|
+| `break.orientation`       | Orientation of the break.                                        | `break.orientation = "horizontal"`     |
+| `break.size`              | Thickness or width of the break.                                 | `break.size = "2px"`                   |
+| `break.color`             | Color of the break line or background.                           | `break.color = "#CCC"`                 |
+| `break.margin`            | Margin around the break.                                          | `break.margin = "10px 0"`              |
+| `break.pattern`           | Pattern of the break line.                                       | `break.pattern = "dashed"`             |
+| `break.animation.enter`   | Animation for the break's appearance.                            | `break.animation.enter = "fade-in"`    |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "break"
+orientation = "horizontal"
+size = "2px"
+color = "#CCC"
+margin = "10px 0"
+pattern = "dashed"
+animation = { enter = "fade-in" }
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[break]
+orientation = "horizontal"
+size = "2px"
+color = "#CCC"
+margin = "10px 0"
+pattern = "dashed"
+
+[break.animation]
+enter = "fade-in"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Dynamic Sizing**:
+   - Allow breaks to dynamically adjust their length or height based on the parent container.
+
+2. **Interactive States**:
+   - Optional hover effects or animations for breaks.
+
+3. **Device-Specific Styling**:
+   - Allow different styles or sizes based on device type.
+
+---
+
+### **Conclusion**
+The Break Widget is a lightweight and flexible tool for visually organizing content. With customizable orientations, patterns, and animations, it enhances the clarity and visual appeal of user interfaces.
 
 ---
 
