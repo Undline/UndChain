@@ -4834,6 +4834,133 @@ The Toolbar Widget is a powerful interface element for applications requiring a 
 
 ---
 
+### **Floating Menu Widget**
+
+The Floating Menu Widget provides a context-sensitive menu that activates based on user interactions, such as right-clicking or hovering over an element. This compact and focused menu is designed to offer quick access to the most relevant actions for the selected context.
+
+---
+
+### **Core Features**
+
+1. **Context-Sensitive Activation**:
+
+   - Activated by specific intents such as `add_context` (e.g., right-click, long press, hover).
+   - Automatically adjusts its options based on the context of the interaction.
+
+2. **Compact Design**:
+
+   - Focuses on the most commonly used actions for the context.
+   - Optimized for minimal screen real estate.
+
+3. **Dynamic Content**:
+
+   - Updates dynamically based on the state of the application or widget.
+   - Fetches relevant actions from co-chains or pre-defined menus.
+
+4. **Styling Options**:
+
+   - Fully customizable size, background, icons, and animations.
+   - Positioning is determined by the GSS file and can be relative to the event trigger or set as an absolute position.
+
+5. **Interactive States**:
+
+   - Supports `on_hover`, `on_click`, and `on_exit` events for each menu item.
+
+6. **Accessibility Enhancements**:
+
+   - Keyboard navigable and screen reader compatible.
+
+---
+
+### **M3L Fields**
+
+| **Field**        | **Description**                                                           | **Example**                                                           |
+| ---------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `menu_items`     | Array of items in the floating menu. Each item includes a label and intent. | `menu_items = [ { label = "Copy", intent = "@UndChain.SESSION_ID.edit.copy" }, { label = "Paste", intent = "@UndChain.SESSION_ID.edit.paste" } ]` |
+| `dynamic`        | Allows menu items to update dynamically based on the context.             | `dynamic = true`                                                      |
+| `animation`      | Optional animations for menu appearance or interaction.                   | `animation = { enter = "fade-in", exit = "fade-out" }`               |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**             | **Description**                                      | **Example**                                   |
+| ------------------------- | ---------------------------------------------------- | --------------------------------------------- |
+| `floating_menu.size`      | Dimensions of the floating menu.                     | `floating_menu.size = "150px x 200px"`        |
+| `floating_menu.background`| Background styling for the menu.                     | `floating_menu.background = "#FFF"`          |
+| `floating_menu.border`    | Border style for the menu.                           | `floating_menu.border = "1px solid #CCC"`    |
+| `floating_menu.icon.color`| Default color for menu icons.                        | `floating_menu.icon.color = "#000"`          |
+| `floating_menu.animation.enter` | Animation for menu appearance.                  | `floating_menu.animation.enter = "fade-in"`  |
+| `floating_menu.animation.exit`  | Animation for menu dismissal.                   | `floating_menu.animation.exit = "fade-out"` |
+| `floating_menu.position.relative_to_trigger` | Places the menu relative to the event trigger position. | `floating_menu.position.relative_to_trigger = true` |
+| `floating_menu.position.absolute` | Sets an absolute position for the menu.        | `floating_menu.position.absolute = "100px, 200px"` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "floating_menu"
+dynamic = true
+animation = { enter = "fade-in", exit = "fade-out" }
+menu_items = [
+    { label = "Copy", intent = "@UndChain.SESSION_ID.edit.copy" },
+    { label = "Paste", intent = "@UndChain.SESSION_ID.edit.paste" },
+    { label = "Delete", intent = "@UndChain.SESSION_ID.edit.delete" }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[floating_menu]
+size = "150px x 200px"
+background = "#FFF"
+border = "1px solid #CCC"
+
+[floating_menu.icon]
+color = "#000"
+
+[floating_menu.animation]
+enter = "fade-in"
+exit = "fade-out"
+
+[floating_menu.position]
+relative_to_trigger = true
+absolute = "100px, 200px"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Dynamic Updates**:
+
+   - Automatically adjust menu options based on user context and co-chain responses.
+
+2. **Custom Positioning**:
+
+   - Support for positioning relative to the triggering element or as an absolute value defined by the GSS designer.
+
+3. **Device-Specific Behavior**:
+
+   - Adapt menu interactions for touch, mouse, and controller inputs.
+
+4. **Accessibility Enhancements**:
+
+   - Ensure all menu items are keyboard navigable and screen reader compatible.
+
+---
+
+### **Conclusion**
+
+The Floating Menu Widget is a lightweight and flexible context-sensitive tool, offering quick access to relevant actions. Its compact design, dynamic content, and extensive customization options make it an essential feature for enhancing user interactions in applications.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
