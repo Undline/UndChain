@@ -3927,6 +3927,113 @@ The Poster Widget builds on the flexibility of the Card Widget, offering a detai
 
 ---
 
+### **Banner Widget**
+
+The Banner Widget is a horizontally oriented container, similar to a card but optimized for wide layouts. Banners are often used for showcasing promotions, alerts, or summary information. They can fill the entire parent widget's space or include customizable margins for precise placement.
+
+---
+
+### **Core Features**
+1. **Horizontal Layout**:
+   - Designed to span horizontally, making it ideal for headers, alerts, or promotional content.
+
+2. **Content Versatility**:
+   - Can include text, images, buttons, and other widgets.
+
+3. **Customizable Sizing**:
+   - Banners can either fill the parent container or include margins for spacing.
+
+4. **Interactive States**:
+   - Supports events like `on_click`, `on_hover`, and `on_dismiss`.
+
+5. **Styling Options**:
+   - Fully customizable with borders, shadows, animations, and background styles.
+
+6. **Dynamic Content Integration**:
+   - Fetch content dynamically from co-chains or APIs.
+
+7. **Dismissible Options**:
+   - Includes a close button for temporary banners.
+
+---
+
+### **Proposed Fields**
+| **Field**           | **Description**                                                       | **Example**                              |
+|---------------------|-----------------------------------------------------------------------|------------------------------------------|
+| `content`           | Array of widgets displayed inside the banner.                        | `content = [ { type = "text", value = "New Sale!" }, { type = "button", label = "Shop Now" } ]` |
+| `size`              | Defines the height of the banner.                                    | `size = "50px"`                        |
+| `fill`              | Determines if the banner fills the parent container.                 | `fill = true`                            |
+| `margin`            | Specifies margin around the banner if `fill` is false.               | `margin = "10px"`                      |
+| `dismissible`       | Enables a close button for dismissing the banner.                   | `dismissible = true`                     |
+| `animation`         | Animations for appearance or dismissal.                             | `animation = { enter = "slide-in", exit = "fade-out" }` |
+
+---
+
+### **GSS Styling Parameters**
+| **Parameter**             | **Description**                                                   | **Example**                              |
+|---------------------------|-------------------------------------------------------------------|------------------------------------------|
+| `banner.size`             | Height of the banner.                                             | `banner.size = "50px"`                 |
+| `banner.background`       | Background styling for the banner.                               | `banner.background = "linear-gradient(to right, #007BFF, #0056b3)"` |
+| `banner.margin`           | Margin around the banner.                                         | `banner.margin = "10px"`              |
+| `banner.border`           | Border style for the banner.                                      | `banner.border = "1px solid #CCC"`    |
+| `banner.shadow`           | Shadow effect for the banner.                                     | `banner.shadow = "2px 2px 5px rgba(0,0,0,0.5)"` |
+| `banner.animation.enter`  | Animation for the banner's appearance.                           | `banner.animation.enter = "slide-in"` |
+| `banner.animation.exit`   | Animation for dismissing the banner.                             | `banner.animation.exit = "fade-out"`  |
+
+---
+
+### **Example M3L Implementation**
+```toml
+[[layout.container.content]]
+type = "banner"
+size = "50px"
+fill = true
+dismissible = true
+animation = { enter = "slide-in", exit = "fade-out" }
+content = [
+    { type = "text", value = "Limited Time Offer!" },
+    { type = "button", label = "Shop Now" }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+```toml
+[banner]
+size = "50px"
+background = "linear-gradient(to right, #007BFF, #0056b3)"
+margin = "10px"
+border = "1px solid #CCC"
+shadow = "2px 2px 5px rgba(0,0,0,0.5)"
+
+[banner.animation]
+enter = "slide-in"
+exit = "fade-out"
+```
+
+---
+
+### **Advanced Considerations**
+1. **Dynamic Content Integration**:
+   - Fetch dynamic content for banners from co-chains or APIs.
+
+2. **Interactive States**:
+   - Include hover effects and interactive elements, like buttons.
+
+3. **Responsive Design**:
+   - Ensure banners adapt to different screen sizes and orientations.
+
+4. **Accessibility Enhancements**:
+   - Ensure close buttons and interactive elements are keyboard navigable and screen reader compatible.
+
+---
+
+### **Conclusion**
+The Banner Widget is a horizontally oriented container ideal for alerts, promotions, and headers. With support for dynamic content, interactive elements, and extensive styling options, it enhances user engagement while maintaining a clean, flexible design.
+
+---
+
 ### **Window Widget**
 
 The Window Widget simulates a window within the GSS environment. It is primarily used for development and design purposes but also serves as the foundational container for all M3L forms. Windows include interactive title bars, standard controls (close, minimize, maximize), and a defined area for embedding other widgets.
