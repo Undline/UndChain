@@ -5098,6 +5098,193 @@ The Context Menu Widget is a versatile tool for delivering traditional right-cli
 
 ---
 
+### **Graph Widget**
+
+The Graph Widget generates visual representations of data, offering a variety of chart types and interactive features. It supports dynamic data sources, customizable styling, and advanced interactions for developers and users alike.
+
+---
+
+### **Core Features**
+
+1. **Data Input**:
+   - Accepts multiple input formats, including static arrays, CSV files, or links to UndChain co-chains (e.g., SQeeL).
+   - Handles structured (e.g., time-series) and unstructured data (e.g., scatter plots).
+
+2. **Graph Types**:
+   - Bar charts (vertical and horizontal).
+   - Line graphs (smooth or stepped).
+   - Scatter plots.
+   - Pie charts.
+   - Area charts.
+
+3. **Interactive Features**:
+   - Zoom and pan for larger datasets.
+   - Highlight data points on hover.
+   - Clickable data points with intents (e.g., `on_click` to display more info).
+   - Editable data if connected to a writable source.
+
+4. **Styling**:
+   - Controlled through GSS for colors, line styles, marker shapes, animations, and legend customization.
+   - Supports frosted or transparent backgrounds.
+
+5. **Axes and Grid**:
+   - Customizable labels, ticks, units, and gridline styles.
+   - Adjustable granularity for X and Y axes, with dynamic options to automatically adjust based on data density.
+
+6. **Tooltips**:
+   - Provides contextual information for hovered data points.
+   - Fully customizable appearance.
+
+7. **Performance Optimization**:
+   - Includes a `sample_rate` parameter to manage large datasets by rendering every nth data point.
+
+8. **Advanced Interactions**:
+   - Export graphs as images or data files (e.g., CSV, JSON).
+   - Annotate specific points or ranges.
+   - Support for dual axes for datasets with different scales.
+
+9. **Accessibility**:
+   - Data summaries for screen readers.
+   - Keyboard navigation.
+
+---
+
+### **M3L Fields**
+
+| **Field**        | **Description**                                  | **Example**                                              |
+| ---------------- | ------------------------------------------------ | -------------------------------------------------------- |
+| `data_source`    | Defines the source of the data.                  | `data_source = "@SQeeL://path/to/data.csv"`             |
+| `graph_type`     | Type of graph to generate.                       | `graph_type = "line"`                                   |
+| `editable`       | Allows users to modify data points.              | `editable = true`                                        |
+| `intents`        | Array of interactions for data points.           | `intents = [ "on_click", "on_hover" ]`                 |
+| `animation`      | Animations for graph rendering or transitions.   | `animation = { enter = "fade-in", update = "bounce" }`  |
+| `axes`           | Axis customization options.                      | `axes = { x_label = "Time", y_label = "Value", x_granularity = 5, y_granularity = 10, dynamic_granularity = true }` |
+| `tooltip`        | Enables tooltips for data points.                | `tooltip = true`                                         |
+| `legend`         | Enables the graph legend.                        | `legend = true`                                          |
+| `sample_rate`    | Determines the rate at which data points are rendered. | `sample_rate = 10`                                 |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**           | **Description**                          | **Example**                              |
+| ----------------------- | ---------------------------------------- | ---------------------------------------- |
+| `graph.background`      | Background color for the graph area.     | `graph.background = "rgba(255, 255, 255, 0.7)"` |
+| `graph.legend`          | Customization for the legend.            | `graph.legend.position = "bottom-right"` |
+| `graph.line.color`      | Line color for line graphs.              | `graph.line.color = "#00F"`             |
+| `graph.marker.shape`    | Shape of data point markers.             | `graph.marker.shape = "circle"`         |
+| `graph.grid.style`      | Gridline style and visibility.           | `graph.grid.style = "dotted"`           |
+| `graph.grid.granularity`| Granularity of major and minor gridlines.| `graph.grid.granularity = { major = 5, minor = 1 }` |
+| `graph.tooltip`         | Tooltip styling for hovered data points. | `graph.tooltip.background = "#333"`    |
+| `graph.fill`            | Fill options for area and bar charts.    | `graph.fill.type = "gradient"`         |
+
+---
+
+### **Example M3L Implementation**
+
+#### Line Chart Example
+
+```toml
+[[layout.container.content]]
+type = "graph"
+data_source = "@SQeeL://Auction_House/sales_data.csv"
+graph_type = "line"
+editable = true
+animation = { enter = "fade-in", update = "bounce" }
+axes = { 
+    x_label = "Time", 
+    y_label = "Sales", 
+    x_granularity = 5, 
+    y_granularity = 10, 
+    dynamic_granularity = true 
+}
+tooltip = true
+legend = true
+sample_rate = 10
+```
+
+#### Pie Chart Example
+
+```toml
+[[layout.container.content]]
+type = "graph"
+data_source = "@SQeeL://Auction_House/category_sales.csv"
+graph_type = "pie"
+editable = false
+animation = { enter = "fade-in", update = "spin" }
+legend = true
+tooltip = true
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[graph]
+background = "rgba(255, 255, 255, 0.7)"
+effect = "frosted"
+
+[graph.legend]
+position = "bottom-right"
+icon = { shape = "custom", src = "@assets/icons/custom_icon.svg" }
+
+[graph.line]
+color = "#00F"
+width = "2px"
+
+[graph.marker]
+shape = "circle"
+size = "5px"
+
+[graph.grid]
+style = "dotted"
+major.color = "#AAA"
+minor.color = "#CCC"
+
+[graph.tooltip]
+background = "#333"
+color = "#FFF"
+font-size = "12px"
+border-radius = "4px"
+padding = "5px"
+
+[graph.fill]
+type = "gradient"
+gradient = { start = "#FF0000", end = "#0000FF", direction = "vertical" }
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Dynamic Updates**:
+   - Allow real-time updates from co-chains.
+   - Support partial updates for efficiency.
+
+2. **Data Validation**:
+   - Validate input data structure to prevent errors.
+
+3. **Annotations**:
+   - Allow users or developers to mark specific points or ranges on the graph.
+
+4. **Multiple Axes**:
+   - Support dual axes for datasets with different scales.
+
+5. **Performance Optimization**:
+   - Implement `sample_rate` to handle large datasets gracefully.
+
+6. **Dynamic Granularity**:
+   - Automatically adjust axis granularity based on the density of the data.
+
+---
+
+### **Conclusion**
+
+The Graph Widget combines rich customization, dynamic interactivity, and extensive styling options to deliver powerful data visualization. By incorporating features like tooltips, legends, grid granularity, and sample rate handling, it meets the needs of diverse applications while ensuring accessibility and performance.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
