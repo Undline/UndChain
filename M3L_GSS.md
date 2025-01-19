@@ -138,6 +138,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Progress Bar**: Visualizes progress toward a goal.
 - **Cards**: Compact content containers often used for showcasing assets or information.
 - **Posters**: Larger cards that dominate the view, particularly on mobile.
+- **Banner**: A banner acts much the same as a card widget, however its designed in a horizontal format whereas cards are more vertical. Banners can fill the space in parent widget or you can have margin.
 - **Window**: Defines the background and foreground containers for widgets (like a frame).
 - **Screenshot**: A flexible draw area for custom shapes or graphics, which is useful when users need to share what they see on screen.
 - **Carousel**: Automatically cycles through various content, like images or promotions.
