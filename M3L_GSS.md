@@ -4961,6 +4961,143 @@ The Floating Menu Widget is a lightweight and flexible context-sensitive tool, o
 
 ---
 
+### **Context Menu Widget**
+
+The Context Menu Widget provides a traditional right-click menu with options tailored to the selected element or context. Unlike the Floating Menu, which is designed for compact, dynamic menus, the Context Menu focuses on delivering a more extensive list of options typically used for file management, text editing, and similar actions. Notably, the Context Menu can only contain text elements—icons are not supported.
+
+Developers should note that the `---` label is reserved specifically for defining breaks within the `menu_items` array.
+
+---
+
+### **Core Features**
+
+1. **Standard Context Options**:
+
+   - Includes common options such as `Copy`, `Paste`, `Cut`, `Rename`, and `Delete`.
+
+2. **Contextual Actions**:
+
+   - Updates dynamically based on the selected element or context.
+
+3. **Expandable Sub-Menus**:
+
+   - Supports nested menus for additional actions.
+
+4. **Styling Options**:
+
+   - Fully customizable size, background, and animations.
+   - Positioning is determined by the GSS file and can be relative to the event trigger or set as an absolute position.
+
+5. **Breaks**:
+
+   - Developers can define logical breaks directly within the `menu_items` array in the M3L file for better organization.
+   - GSS defines how these breaks are styled.
+
+6. **Interactive States**:
+
+   - Supports `on_hover`, `on_click`, and `on_exit` events for each menu item.
+
+7. **Accessibility Enhancements**:
+
+   - Keyboard navigable and screen reader compatible.
+
+---
+
+### **M3L Fields**
+
+| **Field**    | **Description**                                                                    | **Example**                                                                                                                                                          |
+| ------------ | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `menu_items` | Array of items in the context menu. Items can include labels, intents, and breaks. | `menu_items = [ { label = "Copy", intent = "@UndChain.SESSION_ID.edit.copy" }, { label = "---" }, { label = "Paste", intent = "@UndChain.SESSION_ID.edit.paste" } ]` |
+| `animation`  | Optional animations for menu appearance or interaction.                            | `animation = { enter = "fade-in", exit = "fade-out" }`                                                                                                               |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**                               | **Description**                                         | **Example**                                        |
+| ------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------- |
+| `context_menu.size`                         | Dimensions of the context menu.                         | `context_menu.size = "200px x 300px"`              |
+| `context_menu.background`                   | Background styling for the menu.                        | `context_menu.background = "#FFF"`                 |
+| `context_menu.border`                       | Border style for the menu.                              | `context_menu.border = "1px solid #CCC"`           |
+| `context_menu.animation.enter`              | Animation for menu appearance.                          | `context_menu.animation.enter = "fade-in"`         |
+| `context_menu.animation.exit`               | Animation for menu dismissal.                           | `context_menu.animation.exit = "fade-out"`         |
+| `context_menu.position.relative_to_trigger` | Places the menu relative to the event trigger position. | `context_menu.position.relative_to_trigger = true` |
+| `context_menu.position.absolute`            | Sets an absolute position for the menu.                 | `context_menu.position.absolute = "100px, 200px"`  |
+| `context_menu.break.style`                  | Styling for breaks between menu items.                  | `context_menu.break.style = "dashed"`              |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "context_menu"
+animation = { enter = "fade-in", exit = "fade-out" }
+menu_items = [
+    { label = "Copy", intent = "@UndChain.SESSION_ID.edit.copy" },
+    { label = "---" },
+    { label = "Paste", intent = "@UndChain.SESSION_ID.edit.paste" },
+    { label = "Rename", intent = "@UndChain.SESSION_ID.file.rename" },
+    { label = "Delete", intent = "@UndChain.SESSION_ID.file.delete" }
+]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[context_menu]
+size = "200px x 300px"
+background = "#FFF"
+border = "1px solid #CCC"
+
+[context_menu.animation]
+enter = "fade-in"
+exit = "fade-out"
+
+[context_menu.position]
+relative_to_trigger = true
+position = "100px, 200px"
+
+[context_menu.break]
+style = "dashed"
+color = "#CCC"
+margin = "5px"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Dynamic Updates**:
+
+   - Automatically adjust menu options based on user context and co-chain responses.
+
+2. **Expandable Sub-Menus**:
+
+   - Include support for nested sub-menus for advanced actions.
+
+3. **Breaks for Organization**:
+
+   - Developers can define logical breaks in the menu directly within the `menu_items` array for better grouping of options.
+
+4. **Device-Specific Behavior**:
+
+   - Adapt menu interactions for touch, mouse, and controller inputs.
+
+5. **Accessibility Enhancements**:
+
+   - Ensure all menu items are keyboard navigable and screen reader compatible.
+
+---
+
+### **Conclusion**
+
+The Context Menu Widget is a versatile tool for delivering traditional right-click menu functionality. Its support for nested menus, dynamic updates, logical breaks, and extensive customization options ensures it meets the needs of a wide range of applications.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
