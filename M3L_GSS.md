@@ -5285,6 +5285,168 @@ The Graph Widget combines rich customization, dynamic interactivity, and extensi
 
 ---
 
+### **Candle Chart Widget**
+
+The Candle Chart Widget is a specialized visualization tool designed for financial and trading applications. It provides candlestick representations of market data along with support for additional technical indicators like MACD, RSI, stochastic RSI, SMA, and volume overlays, including VRVP (Visible Range Volume Profile). The widget also supports various candlestick types, such as Heikin-Ashi.
+
+---
+
+### **Core Features**
+
+1. **Candlestick Representation**:
+   - Visualizes open, high, low, and close (OHLC) values for each time period.
+   - Supports multiple candlestick types (e.g., traditional, Heikin-Ashi).
+   - Color-coding for bullish and bearish candles (e.g., green for up, red for down).
+
+2. **Technical Indicators**:
+   - Built-in support for:
+     - **MACD**: Moving Average Convergence Divergence.
+     - **RSI**: Relative Strength Index.
+     - **Stochastic RSI**: Combines RSI and stochastic oscillators.
+     - **SMA**: Smooth Moving Average.
+     - **Volume**: Overlay or separate chart.
+     - **VRVP**: Displays volume profile as horizontal bars for specific ranges, distinguishing buy and sell volumes with different colors.
+   - Developers can define custom indicators as additional chart elements.
+
+3. **Drawing Tools**:
+   - Add trend lines, support/resistance levels, labels, dots, or area bars.
+   - Fully interactive, allowing users to adjust or remove elements dynamically.
+
+4. **Zoom and Pan**:
+   - Enables detailed examination of specific periods.
+   - Smooth transitions for zoom and pan actions.
+
+5. **Data Input**:
+   - Accepts data from CSV files, JSON, or links to UndChain co-chains.
+
+6. **Interactivity**:
+   - Hover over candlesticks or indicators to show detailed tooltips.
+   - Click events for additional actions (e.g., marking trades).
+
+7. **Custom Overlays**:
+   - Add trend lines, support/resistance levels, or annotations.
+
+8. **Accessibility**:
+   - Data summaries for screen readers.
+   - Keyboard navigation for scrolling through time periods.
+
+---
+
+### **Custom Charting with the Graph Widget**
+
+Developers can create their own charting tools using the Graph Widget as a foundation. By defining custom visualizations and linking data sources, they can build highly specialized charts for unique applications.
+
+#### Key Features:
+- Use `graph_type = "custom"` for bespoke visualizations.
+- Accept any data input format (e.g., CSV, JSON, co-chains).
+- Define unique formulas and visualizations.
+- Reuse Graph Widget styling and interactions for consistency.
+
+#### Example M3L Implementation for a Custom Chart:
+
+```toml
+[[layout.container.content]]
+type = "graph"
+data_source = "@SQeeL://CustomApp/data_stream.json"
+graph_type = "custom"
+custom_definitions = [
+    { name = "Custom Line", formula = "data.y * 2", color = "#FF5733" },
+    { name = "Custom Area", formula = "data.y / 2", color = "#33FF57", fill = true }
+]
+x_axis = { label = "Time", dynamic_granularity = true }
+y_axis = { label = "Custom Metric", min = 0, max = 100 }
+tooltip = true
+legend = true
+animation = { enter = "fade-in", update = "grow" }
+```
+
+#### Example GSS for Custom Charts:
+
+```toml
+[graph]
+background = "#FFF"
+
+[graph.line]
+color = "#FF5733"
+width = "2px"
+
+[graph.area]
+color = "#33FF57"
+fill = "rgba(51, 255, 87, 0.5)"
+
+[graph.tooltip]
+background = "#000"
+color = "#FFF"
+font-size = "12px"
+border-radius = "4px"
+padding = "5px"
+
+[graph.legend]
+position = "bottom-right"
+```
+
+---
+
+### **M3L Fields**
+
+| **Field**        | **Description**                                  | **Example**                                              |
+| ---------------- | ------------------------------------------------ | -------------------------------------------------------- |
+| `data_source`    | Defines the source of the data.                  | `data_source = "@SQeeL://path/to/ohlc_data.csv"`        |
+| `indicators`     | Array of indicators to display with the chart.   | `indicators = [ "MACD", "RSI", "Stochastic RSI", "SMA", "VRVP", "Volume" ]` |
+| `overlay_lines`  | Defines custom overlays like trend lines.        | `overlay_lines = [ { name = "Support", points = [...] } ]` |
+| `drawing_tools`  | Enables user-defined drawings like lines or labels. | `drawing_tools = true`                                  |
+| `candlestick_type` | Specifies the type of candlestick to display.   | `candlestick_type = "Heikin-Ashi"`                      |
+| `intents`        | Array of interactions for candles or indicators. | `intents = [ "on_click", "on_hover" ]`                 |
+| `animation`      | Animations for rendering or updates.             | `animation = { enter = "fade-in", update = "grow" }`   |
+| `tooltip`        | Enables tooltips for candles and indicators.     | `tooltip = true`                                         |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**           | **Description**                          | **Example**                              |
+| ----------------------- | ---------------------------------------- | ---------------------------------------- |
+| `candle_chart.background` | Background color for the chart area.     | `candle_chart.background = "#000"`       |
+| `candle_chart.candle.up_color` | Color for bullish candles.          | `candle_chart.candle.up_color = "#0F0"`  |
+| `candle_chart.candle.down_color` | Color for bearish candles.        | `candle_chart.candle.down_color = "#F00"` |
+| `candle_chart.grid.style` | Gridline style and visibility.           | `candle_chart.grid.style = "dotted"`     |
+| `candle_chart.legend`   | Customization for the legend.            | `candle_chart.legend.position = "top-left"` |
+| `candle_chart.indicator.line.color` | Line color for indicators.     | `candle_chart.indicator.line.color = "#00F"` |
+| `candle_chart.tooltip`  | Tooltip styling for hovered data.        | `candle_chart.tooltip.background = "#333"` |
+| `candle_chart.vrvp`     | Styling for VRVP bars, with buy/sell differentiation. | `candle_chart.vrvp.buy_color = "#0A0", vrvp.sell_color = "#A00"` |
+
+---
+
+### **Advanced Considerations**
+
+1. **Dynamic Updates**:
+   - Support real-time updates from co-chains.
+   - Allow partial updates to avoid re-rendering the entire chart.
+
+2. **Custom Indicators**:
+   - Enable developers to define and add their own indicators beyond MACD, RSI, Stochastic RSI, SMA, VRVP, and Volume.
+
+3. **Drawing Tools**:
+   - Allow users to draw custom annotations like lines, dots, labels, or area bars.
+
+4. **Export Options**:
+   - Provide options to export the chart as an image or JSON file.
+
+5. **Performance Optimization**:
+   - Implement `sample_rate` for large datasets.
+   - Use adaptive rendering for zoomed-in views.
+
+6. **Accessibility**:
+   - Ensure keyboard navigation and data summaries are optimized for screen readers.
+
+---
+
+### **Conclusion**
+
+The Candle Chart Widget and Graph Widget together empower developers to create robust, customized visualizations. With support for multiple indicators, candlestick types, real-time updates, and dynamic graphing capabilities, these tools provide the flexibility needed to build powerful, interactive, and extensible interfaces for a wide range of applications.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
