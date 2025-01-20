@@ -147,6 +147,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Floating Menu**: Context-sensitive menu that activates on events (e.g., right-click, hover).
 - **Graph (Interactive)**: Generates visualizations based on input data; allows interactions if the data is editable.
 - **Timeline**: A graph-like structure for events over time, expanding only horizontally.
+- **Roadmap** - Widget that depicts a roadmap for a project. Contains markers that are designed for additional information.
 - **Spellcheck**: Highlights misspelled words with corrections shown in a tooltip.
 - **Item Grid**: Displays items in a controller-friendly layout.
 - **Tab Widget**: Groups widgets by category, activated via tabs.
