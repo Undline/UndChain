@@ -5448,6 +5448,159 @@ The Candle Chart Widget and Graph Widget together empower developers to create r
 
 ---
 
+### **Timeline Widget**
+
+The Timeline Widget is a specialized graph-like structure focusing on the chronological arrangement of events. It expands only horizontally and offers advanced features for representing, interacting with, and managing time-based data. Additionally, tracks can be used to organize and manipulate content such as video, audio, or animations over time.
+
+---
+
+### **Core Features**
+
+1. **Horizontal Layout**:
+   - The timeline expands only along the horizontal axis, ideal for representing events over time.
+   - Supports scrolling and zooming for exploring longer timelines.
+
+2. **Event Markers**:
+   - Markers represent key events on the timeline.
+   - Customizable shapes, colors, and icons for markers.
+   - Markers can include tooltips or labels for detailed event information.
+
+3. **Tracks**:
+   - Supports tracks for managing time-based content like video, audio, or animations.
+   - Tracks allow users to drag, drop, and adjust content segments over time.
+   - Tracks can have unique styling, labels, and categories.
+
+4. **Event Categories**:
+   - Events can be grouped into categories, distinguished by color or marker style.
+   - Categories can be toggled on/off to filter the timeline view.
+
+5. **Dynamic Updates**:
+   - Events and tracks can be dynamically added, updated, or removed based on data changes from co-chains or other sources.
+
+6. **Interactivity**:
+   - Clickable markers to trigger intents (e.g., open detailed views, start animations).
+   - Hover effects for displaying tooltips or additional data.
+   - Tracks support dragging, resizing, and linking of content segments.
+
+7. **Styling and Customization**:
+   - GSS designers can style the timeline background, marker appearance, grid lines, labels, and tracks.
+   - Support for animations on marker entrance, updates, or transitions.
+
+8. **Data Sources**:
+   - Events and tracks can be sourced from static arrays, co-chains, or APIs.
+   - Accepts time-series data formats for seamless integration.
+
+9. **Accessibility**:
+   - Screen-reader-friendly descriptions for events and tracks.
+   - Keyboard navigation for browsing through the timeline.
+
+---
+
+### **M3L Fields**
+
+| **Field**          | **Description**                                    | **Example**                                              |
+| ------------------- | -------------------------------------------------- | -------------------------------------------------------- |
+| `data_source`      | Defines the source of the timeline data.           | `data_source = "@SQeeL://events.db"`                    |
+| `categories`       | Groups events into categories with unique styles.  | `categories = [ "work", "personal" ]`               |
+| `tracks`           | Defines tracks for time-based content.             | `tracks = [ { name = "Audio", type = "audio", items = [...] } ]` |
+| `intents`          | Defines interactions for markers or tracks.        | `intents = [ "on_click", "on_hover", "on_drag" ]`   |
+| `animation`        | Animations for marker and track transitions.       | `animation = { enter = "fade-in", update = "bounce" }` |
+| `tooltip`          | Enables tooltips for events and tracks.            | `tooltip = true`                                        |
+| `grid_lines`       | Configures grid lines for the timeline.            | `grid_lines = true`                                     |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**             | **Description**                          | **Example**                              |
+| ------------------------- | ---------------------------------------- | ---------------------------------------- |
+| `timeline.background`     | Background color for the timeline.       | `timeline.background = "#FFF"`         |
+| `timeline.marker.shape`   | Shape of event markers.                  | `timeline.marker.shape = "circle"`     |
+| `timeline.marker.color`   | Color of event markers.                  | `timeline.marker.color = "#00F"`       |
+| `timeline.marker.size`    | Size of event markers.                   | `timeline.marker.size = "10px"`        |
+| `timeline.track.style`    | Styling for tracks (e.g., color, height). | `timeline.track.style = { color = "#CCC", height = "20px" }` |
+| `timeline.grid.style`     | Gridline style for the timeline.         | `timeline.grid.style = "dashed"`       |
+| `timeline.label.font`     | Font settings for labels.                | `timeline.label.font = "Arial, sans-serif"` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "timeline"
+data_source = "@SQeeL://events.db"
+categories = [ "work", "personal" ]
+tracks = [
+    { name = "Audio", type = "audio", items = [ { start = 0, end = 10, label = "Intro" } ] },
+    { name = "Video", type = "video", items = [ { start = 5, end = 15, label = "Main Clip" } ] },
+    { name = "Animation", type = "animation", items = [ { start = 7, end = 12, label = "Fade Transition" } ] }
+]
+intents = [ "on_click", "on_hover", "on_drag" ]
+animation = { enter = "fade-in", update = "slide" }
+tooltip = true
+grid_lines = true
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[timeline]
+background = "#FFF"
+
+[timeline.marker]
+shape = "circle"
+color = "#00F"
+size = "10px"
+
+[timeline.track]
+style = { color = "#CCC", height = "20px" }
+
+[timeline.grid]
+style = "dashed"
+major.color = "#AAA"
+minor.color = "#CCC"
+
+[timeline.label]
+font = "Arial, sans-serif"
+color = "#333"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Dynamic Event and Track Management**:
+   - Events and tracks can be added or removed in real time, with smooth animations.
+
+2. **Granularity Options**:
+   - Zoom levels to view daily, monthly, or yearly events.
+
+3. **Custom Interactions**:
+   - Developers can define actions triggered by specific markers or tracks (e.g., link to a detailed page or trigger co-chain actions).
+
+4. **Performance Optimization**:
+   - Lazy loading for events and tracks in extensive timelines.
+   - Clustering for densely packed events to reduce visual clutter.
+
+---
+
+### **Use Cases**
+- **Project Timelines**: Visualize deadlines, milestones, and task progress.
+- **Media Editing**: Manage video, audio, and animation tracks with adjustable durations.
+- **Historical Data**: Explore events over months, years, or centuries.
+- **Personal Logs**: Track daily activities, workouts, or journaling.
+
+---
+
+### **Conclusion**
+
+The Timeline Widget combines flexibility and interactivity to visualize time-based data effectively. With support for event markers, tracks, animations, dynamic updates, and extensive styling options, it is a powerful tool for a wide range of applications, from media editing to project management.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
