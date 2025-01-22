@@ -5602,6 +5602,158 @@ The Timeline Widget combines flexibility and interactivity to visualize time-bas
 
 ---
 
+### **Gantt Chart Widget**
+
+The Gantt Chart Widget is a logical extension of the Timeline Widget, designed specifically for project management and task tracking. It inherits the core functionality of the Timeline Widget, adding task dependencies, progress indicators, and enhanced interaction capabilities.
+
+---
+
+### **Core Features**
+
+1. **Task Representation**:
+   - Displays tasks as horizontal bars spanning their start and end times.
+   - Supports grouping tasks into parent-child hierarchies.
+
+2. **Dependencies**:
+   - Visualizes task dependencies using arrows or lines connecting tasks.
+   - Supports lag/lead time between dependent tasks.
+
+3. **Progress Indicators**:
+   - Displays the progress of each task as a percentage within the task bar.
+   - Progress can be updated dynamically from data sources.
+
+4. **Dynamic Updates**:
+   - Tasks and dependencies can be dynamically added, updated, or removed based on real-time data.
+
+5. **Tracks and Layers**:
+   - Tasks are organized into tracks, similar to the Timeline Widget.
+   - Layers can represent different teams, phases, or milestones.
+
+6. **Interactivity**:
+   - Clickable tasks to trigger intents (e.g., open task details, mark as complete).
+   - Drag-and-drop functionality for adjusting task durations or dependencies.
+
+7. **Styling and Customization**:
+   - GSS designers can define task colors, dependency line styles, progress indicators, and gridlines.
+   - Gridlines can be fully customized for style, color, and granularity.
+   - Default color schemes can be overridden or customized per project.
+
+8. **Data Sources**:
+   - Tasks and dependencies can be sourced from static arrays, co-chains, or APIs.
+   - Accepts project management data formats for seamless integration.
+
+9. **Accessibility**:
+   - Screen-reader-friendly descriptions for tasks and dependencies.
+   - Keyboard navigation for moving between tasks and layers.
+
+---
+
+### **M3L Fields**
+
+| **Field**         | **Description**                                   | **Example**                                              |
+| ------------------ | ------------------------------------------------- | -------------------------------------------------------- |
+| `data_source`     | Defines the source of the Gantt chart data.        | `data_source = "@SQeeL://project_tasks.db"`             |
+| `tasks`           | Defines tasks, including start, end, and progress.| `tasks = [ { id = "1", name = "Task A", start = 0, end = 10, progress = 50 } ]` |
+| `dependencies`    | Links tasks with dependencies.                    | `dependencies = [ { from = "1", to = "2", type = "FS" } ]` |
+| `intents`         | Defines interactions for tasks or dependencies.   | `intents = [ "on_click", "on_drag" ]`               |
+| `animation`       | Animations for transitions or updates.            | `animation = { enter = "fade-in", update = "grow" }`|
+| `tooltip`         | Enables tooltips for tasks and dependencies.      | `tooltip = true`                                        |
+| `grid_lines`      | Configures grid lines for the Gantt chart.         | `grid_lines = true`                                     |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**             | **Description**                          | **Example**                              |
+| ------------------------- | ---------------------------------------- | ---------------------------------------- |
+| `gantt.background`        | Background color for the Gantt chart.    | `gantt.background = "#FFF"`           |
+| `gantt.task.color`        | Default color for task bars.             | `gantt.task.color = "#00F"`           |
+| `gantt.task.progress.color`| Color for task progress indicators.     | `gantt.task.progress.color = "#0A0"`  |
+| `gantt.dependency.line`   | Style for dependency lines.              | `gantt.dependency.line = "dashed"`    |
+| `gantt.grid.style`        | Gridline style for the Gantt chart.      | `gantt.grid.style = { major = "solid", color = "#CCC" }`         |
+| `gantt.label.font`        | Font settings for task labels.           | `gantt.label.font = "Arial, sans-serif"`|
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "gantt_chart"
+data_source = "@SQeeL://project_tasks.db"
+tasks = [
+    { id = "1", name = "Task A", start = 0, end = 10, progress = 50 },
+    { id = "2", name = "Task B", start = 5, end = 15, progress = 25 }
+]
+dependencies = [
+    { from = "1", to = "2", type = "FS" }
+]
+intents = [ "on_click", "on_drag" ]
+animation = { enter = "fade-in", update = "grow" }
+tooltip = true
+grid_lines = true
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[gantt]
+background = "#FFF"
+
+[gantt.task]
+color = "#00F"
+progress.color = "#0A0"
+
+[gantt.dependency.line]
+style = "dashed"
+color = "#333"
+
+[gantt.grid]
+style = { major = "solid", color = "#CCC" }
+
+[gantt.label]
+font = "Arial, sans-serif"
+color = "#333"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Dynamic Task and Dependency Management**:
+   - Tasks and dependencies can be added or removed in real time.
+
+2. **Custom Interactions**:
+   - Developers can define actions triggered by specific tasks or dependencies.
+
+3. **Performance Optimization**:
+   - Lazy loading for large projects.
+   - Efficient rendering for densely populated charts.
+
+4. **Color Schemes**:
+   - Default multicolored schemes can be overridden or made user-selectable.
+
+5. **Grid Styling**:
+   - Fully customizable gridlines, allowing designers to define major and minor styles separately.
+
+---
+
+### **Use Cases**
+- **Project Management**: Track tasks, deadlines, and dependencies.
+- **Resource Allocation**: Visualize resource usage across time.
+- **Milestone Tracking**: Highlight key milestones and their dependencies.
+- **Organizational Collaboration**: Display project progress and task ownership within an UndChain-based organization.
+
+---
+
+### **Conclusion**
+
+The Gantt Chart Widget is an essential tool for project management and task tracking. With features like task dependencies, progress indicators, and real-time updates, combined with extensive GSS styling options, it provides a powerful and customizable solution for organizations and developers alike.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
