@@ -151,11 +151,12 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Roadmap**: Widget that depicts a roadmap for a project. Contains markers that are designed for additional information.
 - **Skill Tree**: this widget creates a skill tree like widget that allows nodes (cards) to be activated when the parent of that node is 'activated'
 - **Spellcheck**: Highlights misspelled words with corrections shown in a tooltip.
+- **Autocomplete**: Assists in writing by providing options to autocomplete words allowing for faster input. 
 - **Item Grid**: Displays items in a controller-friendly layout.
 - **Tab Widget**: Groups widgets by category, activated via tabs.
 - **Video**: Plays videos with predefined controls and settings.
 - **Popup**: Creates modals for warnings, errors, confirmations, or informational messages.
-- **Notification Menu**: This is a listing of notifications from the application being used.
+- **Notification Panel**: This is a listing of notifications from the application being used.
 - **Toast**: Close to a popup but is designed to only show up for a limited amount of time then disappear (stays in the notifications menu)
 - **Date Picker**: Allows users to select dates.
 - **Tree View**: Represents hierarchical data (e.g., directories).
