@@ -5754,6 +5754,175 @@ The Gantt Chart Widget is an essential tool for project management and task trac
 
 ---
 
+### **Roadmap Widget**
+
+**Roadmap** - Widget that depicts a roadmap for a project. Contains markers that are designed for additional information.
+
+The Roadmap Widget is a dynamic visualization tool for tracking and communicating project progress. It allows flexible pathway designs, milestone markers, and integration with card widgets for detailed information. The widget supports advanced customization for diverse use cases, including organizational and personal planning. Additionally, it introduces the ability for GSS designers to create custom paths using SVG files, offering unparalleled flexibility.
+
+---
+
+### **Core Features**
+
+1. **Pathway Representation**:
+   - Display the roadmap as a line, curve, or custom path defined by the GSS designer.
+   - Options for linear, circular, or branching pathways.
+   - Custom paths can be created using SVG files, with markers positioned dynamically based on available space and proximity rules.
+
+2. **Markers**:
+   - Represents milestones along the pathway using cards as the base framework.
+   - Each marker can use any card type, with images replaced by customizable icons (SVG).
+   - Differentiates between completed and pending markers with distinct styles.
+
+3. **Dynamic Updates**:
+   - Allows for real-time addition, removal, or updates to markers based on data changes.
+   - Supports dynamic marker visibility based on zoom level, priority, or space constraints on custom paths.
+
+4. **Styling and Customization**:
+   - GSS designers can style the pathway, markers, tooltips, animations, and icons.
+   - Media queries can adjust roadmap layout and styling for different screen sizes, ensuring responsiveness.
+   - Provides default and custom themes for pathways and markers.
+
+5. **Interactivity**:
+   - Markers are clickable, triggering intents such as opening details or navigating to related content.
+   - Hover effects for displaying additional information (e.g., descriptions, percentages).
+
+6. **Progress Indicators**:
+   - Option to visualize progress as a percentage, dynamically moving along the pathway.
+   - Support for gradients or animations to show progression visually.
+
+7. **Animations and Drawing Effects**:
+   - Introduces a "draw" animation for SVG-defined paths, creating a smooth visual effect where the path is drawn onscreen.
+   - The drawing speed can dynamically adjust based on the sharpness of angles in the SVG path, slowing down for tighter turns and accelerating on straight segments.
+
+8. **Data Sources**:
+   - Can fetch roadmap data from co-chains, APIs, or static arrays.
+   - Links each marker to relevant data points for detailed interaction.
+
+9. **Accessibility**:
+   - Screen-reader support for roadmap descriptions and marker details.
+   - Keyboard navigation for traversing the pathway and markers.
+
+---
+
+### **M3L Fields**
+
+| **Field**         | **Description**                                   | **Example**                                              |
+| ------------------ | ------------------------------------------------- | -------------------------------------------------------- |
+| `data_source`     | Defines the source of the roadmap data.            | `data_source = "@SQeeL://project_roadmap.db"`            |
+| `path_type`       | Specifies the style of the pathway.                | `path_type = "custom"`                                   |
+| `markers`         | Defines roadmap markers with details.              | `markers = [ { name = "Start", position = 0, status = "completed", card_type = "info" } ]` |
+| `intents`         | Defines interactions for markers or the pathway.   | `intents = [ "on_click", "on_hover" ]`               |
+| `animation`       | Animations for transitions or updates.             | `animation = { enter = "fade-in", update = "draw" }`|
+| `tooltip`         | Enables tooltips for markers.                      | `tooltip = true`                                        |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**             | **Description**                          | **Example**                              |
+| ------------------------- | ---------------------------------------- | ---------------------------------------- |
+| `roadmap.background`      | Background color for the roadmap.         | `roadmap.background = "#FFF"`         |
+| `roadmap.path.style`      | Style for the roadmap pathway.            | `roadmap.path.style = "custom"`       |
+| `roadmap.path.svg`        | Path definition using an SVG file.        | `roadmap.path.svg = "@assets/roadmap_path.svg"` |
+| `roadmap.path.draw_speed` | Adjusts the speed of the "draw" animation.| `roadmap.path.draw_speed = "dynamic"` |
+| `roadmap.marker.completed`| Styling for completed markers.            | `roadmap.marker.completed = { color = "#0A0", icon = "checkmark" }` |
+| `roadmap.marker.pending`  | Styling for pending markers.              | `roadmap.marker.pending = { color = "#AAA", icon = "circle" }` |
+| `roadmap.tooltip`         | Styling for marker tooltips.              | `roadmap.tooltip = { background = "#000", color = "#FFF" }` |
+| `roadmap.progress`        | Customization for progress indicators.    | `roadmap.progress = { gradient = "true", color = "#0F0" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "roadmap"
+data_source = "@SQeeL://project_roadmap.db"
+path_type = "custom"
+markers = [
+    { name = "Start", position = 0, status = "completed", tooltip = "Project Initiation", card_type = "info" },
+    { name = "Midway", position = 50, status = "pending", tooltip = "Halfway Mark", card_type = "highlight" },
+    { name = "Finish", position = 100, status = "pending", tooltip = "Completion", card_type = "action" }
+]
+intents = [ "on_click", "on_hover" ]
+animation = { enter = "fade-in", update = "draw" }
+tooltip = true
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[roadmap]
+background = "#FFF"
+
+[roadmap.path]
+style = "custom"
+svg = "@assets/roadmap_path.svg"
+width = "5px"
+color = "#333"
+draw_speed = "dynamic"
+
+[roadmap.marker.completed]
+color = "#0A0"
+icon = "checkmark"
+
+[roadmap.marker.pending]
+color = "#AAA"
+icon = "circle"
+
+[roadmap.tooltip]
+background = "#000"
+color = "#FFF"
+font-size = "12px"
+
+[roadmap.progress]
+gradient = true
+color = "#0F0"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Custom Marker Shapes and Cards**:
+   - Allow developers to define custom SVG shapes or use card widgets for detailed marker content.
+
+2. **Animations**:
+   - Entrance, progress, and exit animations for markers and pathways.
+   - The "draw" animation dynamically adjusts speed based on the path's sharpness, creating a natural flow.
+
+3. **Media Queries**:
+   - Use media queries to adjust roadmap layout and styling for different screen sizes.
+
+4. **Dynamic Progress**:
+   - Real-time updates reflecting progress as tasks are completed.
+
+5. **Custom Paths with SVG**:
+   - GSS designers can define completely custom pathways using SVG files, ensuring flexibility and visual creativity.
+   - Rules ensure markers dynamically position themselves without overlapping existing content or markers.
+
+6. **Integration with Other Widgets**:
+   - Link markers to Gantt charts, timelines, or detailed task views.
+
+---
+
+### **Use Cases**
+- **Project Tracking**: Visualize progress across milestones and goals.
+- **Product Roadmaps**: Show upcoming features, releases, and updates.
+- **Organizational Planning**: Communicate long-term strategies to stakeholders.
+- **Personal Goals**: Track personal achievements and future objectives.
+
+---
+
+### **Conclusion**
+
+The Roadmap Widget is a versatile tool for visualizing progress and milestones in a project. With its integration of card widgets, customizable pathways, SVG-defined paths, and dynamic updates, it provides an engaging and adaptable way to communicate plans and progress effectively.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
