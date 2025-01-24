@@ -5926,6 +5926,198 @@ The Roadmap Widget is a versatile tool for visualizing progress and milestones i
 
 ---
 
+### **Skill Tree Widget**
+
+**Skill Tree**: This widget creates a skill tree-like structure where nodes (badges) can be activated only when their parent nodes are also activated. Nodes represent milestones, skills, or objectives, and the tree visually showcases progression paths.
+
+---
+
+### **Core Features**
+
+1. **Node Representation**:
+
+   - Nodes are based on a custom `badge` design, featuring a description, an image, and optional status icons.
+   - Each node includes a label, status (locked/unlocked), and optional tooltip or description.
+
+2. **Parent-Child Relationships**:
+
+   - Nodes are locked until their parent nodes are activated.
+   - Support for multiple parents (e.g., AND/OR relationships).
+
+3. **Progress Tracking**:
+
+   - Dynamic updates show which nodes are completed, available, or locked.
+   - Real-time updates if connected to a co-chain like Mimic or SQeeL.
+
+4. **Path Styling**:
+
+   - GSS designers can style the connections between nodes (e.g., lines, arrows, curves).
+   - Customizable animations for unlocking nodes and connecting paths.
+
+5. **Skill Points or Unlock Criteria**:
+
+   - Nodes can be unlocked using skill points, defined in the M3L file.
+   - Other criteria (e.g., completing a task or reaching a milestone) can be specified.
+
+6. **Dynamic Layout**:
+
+   - Automatic layout adjustment for varying screen sizes using media queries.
+   - Horizontal, vertical, and radial layout options.
+
+7. **Interactive Features**:
+
+   - Clickable or hoverable nodes to display details or trigger intents.
+   - Tooltips or detailed views can display extended descriptions or unlock requirements when a node is highlighted or clicked.
+   - Toast notifications can provide feedback when a node is unlocked, enhancing user engagement.
+
+8. **Pan and Zoom**:
+
+   - Users can pan and zoom around the skill tree, with panning behavior defined by GSS (e.g., right analog stick for controllers or `Ctrl + drag` for mouse).
+   - Smooth zoom transitions ensure a seamless experience.
+
+9. **Custom Animations and Multi-Layered Trees**:
+
+   - GSS designers can create custom node unlock animations.
+   - Multi-layered trees allow users to dive into specific subjects or explore diverse branches.
+   - Root nodes can expand into new trees, with clustering to reduce clutter.
+
+10. **Background Customization**:
+
+    - GSS designers can use colors, gradients, or images as backgrounds for the tree.
+
+---
+
+### **M3L Fields**
+
+| **Field**     | **Description**                                    | **Example**                                                                                                      |
+| ------------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `data_source` | Defines the source of the skill tree data.         | `data_source = "@SQeeL://skill_tree.db"`                                                                         |
+| `layout`      | Specifies the layout style (horizontal, vertical). | `layout = "radial"`                                                                                              |
+| `tree`        | Defines the nodes and their relationships.         | `tree = [ { id = "1", label = "Skill A", status = "locked", points_required = 3, connections = [ "2", "3" ] } ]` |
+| `intents`     | Specifies interactions for nodes.                  | `intents = [ "on_click", "on_hover" ]`                                                                           |
+| `background`  | Specifies a background image or color.             | `background = "@UndChain/skill_background.jpg"`                                                                  |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**             | **Description**                      | **Example**                                                        |
+| ------------------------- | ------------------------------------ | ------------------------------------------------------------------ |
+| `skilltree.background`    | Background color for the skill tree. | `skilltree.background = "#FFF"`                                    |
+| `skilltree.node.locked`   | Styling for locked nodes.            | `skilltree.node.locked = { color = "#AAA", icon = "lock" }`        |
+| `skilltree.node.unlocked` | Styling for unlocked nodes.          | `skilltree.node.unlocked = { color = "#0A0", icon = "checkmark" }` |
+| `skilltree.path.style`    | Path styling between nodes.          | `skilltree.path.style = { type = "curve", color = "#333" }`        |
+| `skilltree.tooltip`       | Styling for tooltips.                | `skilltree.tooltip = { background = "#000", color = "#FFF" }`      |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "skill_tree"
+data_source = "@SQeeL://skill_tree.db"
+layout = "radial"
+background = "@assets/background.jpg"
+tree = [
+    {
+        id = "1",
+        label = "Skill A",
+        status = "completed",
+        points_required = 0,
+        tooltip = "Learned basic skill A",
+        connections = [ "2", "3" ]
+    },
+    {
+        id = "2",
+        label = "Skill B",
+        status = "locked",
+        points_required = 3,
+        tooltip = "Unlock after earning 3 skill points",
+        connections = []
+    },
+    {
+        id = "3",
+        label = "Skill C",
+        status = "locked",
+        points_required = 5,
+        tooltip = "Unlock after earning 5 skill points",
+        connections = []
+    }
+]
+intents = [ "on_click", "on_hover" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[skilltree]
+background = "#FFF"
+
+[skilltree.node.locked]
+color = "#AAA"
+icon = "lock"
+
+[skilltree.node.unlocked]
+color = "#0A0"
+icon = "checkmark"
+
+[skilltree.path]
+style = { type = "curve", color = "#333" }
+
+[skilltree.tooltip]
+background = "#000"
+color = "#FFF"
+font-size = "12px"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Dynamic Node Unlocking**:
+
+   - Nodes can unlock dynamically based on user actions, skill points, or data changes.
+   - Real-time updates from co-chains enable interactive experiences.
+
+2. **Custom Animations**:
+
+   - GSS designers can create animations for node unlocking and path transitions.
+
+3. **Multi-Layer Trees and Clustering**:
+
+   - Support for hierarchical layers or sub-trees to organize large skill trees.
+   - Clustering reduces clutter and allows root nodes to expand into new trees.
+
+4. **Pan and Zoom**:
+
+   - Allow users to navigate large trees with smooth panning and zooming.
+   - Define panning behavior per input type in GSS.
+
+5. **Toast Notifications**:
+
+   - Notify users of node unlocks or achievements with engaging feedback.
+
+---
+
+### **Use Cases**
+
+- **E-learning Platforms**: Represent course progress and prerequisites visually.
+- **Gamification**: Track achievements and progress in productivity or learning apps.
+- **Feature Roadmaps**: Display unlocked and upcoming features for user engagement.
+- **Decision Making**: Represent branching decisions or workflows in a structured, visual format.
+- **Application Settings**: Highlight features and configurations available within the app.
+
+---
+
+### **Conclusion**
+
+The Skill Tree Widget introduces a highly interactive and visually engaging way to represent progress, dependencies, and unlockable content. With its support for dynamic updates, skill point integration, customizable paths, panning and zooming, and toast notifications, it is a versatile tool for applications ranging from e-learning to gamified productivity systems.
+
+---
+
 ### **Spellcheck Widget**
 
 **Spellcheck**: Highlights misspelled words with corrections shown in a tooltip.
