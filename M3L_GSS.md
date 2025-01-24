@@ -150,6 +150,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Gantt Charts**: This widget allows the use of Gantt charts which inherits timeline widget.
 - **Roadmap**: Widget that depicts a roadmap for a project. Contains markers that are designed for additional information.
 - **Skill Tree**: this widget creates a skill tree like widget that allows nodes (cards) to be activated when the parent of that node is 'activated'
+- **Badge**: This widget is meant to act between the an icon and a card. It allows more area that shows an icon and a name, but when 'viewed' can expand into a full description. It can also be 'unlocked'.
 - **Spellcheck**: Highlights misspelled words with corrections shown in a tooltip.
 - **Autocomplete**: Assists in writing by providing options to autocomplete words allowing for faster input. 
 - **Item Grid**: Displays items in a controller-friendly layout.
@@ -5922,6 +5923,153 @@ color = "#0F0"
 ### **Conclusion**
 
 The Roadmap Widget is a versatile tool for visualizing progress and milestones in a project. With its integration of card widgets, customizable pathways, SVG-defined paths, and dynamic updates, it provides an engaging and adaptable way to communicate plans and progress effectively.
+
+---
+
+### **Spellcheck Widget**
+
+**Spellcheck**: Highlights misspelled words with corrections shown in a tooltip.
+
+The Spellcheck Widget works by integrating a dictionary or grammar rule system into editable text-based widgets (like `text_area` or `text_box`). It provides a visual layer for identifying errors and offering suggestions while allowing GSS designers to customize how these elements are displayed and interacted with.
+
+---
+
+### **Core Features**
+
+1. **Error Highlighting**:
+   - Highlights misspelled words with customizable visual styles (e.g., red squiggly underline, background color).
+   - Distinguishes between spelling and grammar errors using separate styles.
+
+2. **Tooltip for Corrections**:
+   - Displays correction suggestions in a tooltip when activated (e.g., via right-click, hover, or keyboard shortcut).
+   - Supports multiple correction options with the ability to select and replace the word.
+
+3. **Interactive Menu**:
+   - Allows contextual actions like “Add to Dictionary,” “Ignore,” or “Replace.”
+   - Supports integration with the `context_menu` widget for an extended set of actions.
+
+4. **Customization Options**:
+   - GSS designers can define how errors are displayed, tooltips are styled, and interactions are handled.
+   - Allows for audio or haptic feedback when users interact with errors (optional).
+
+5. **Dynamic Updates**:
+   - Checks for errors dynamically as the user types or when triggered by a specific event.
+   - Integrates with co-chains for advanced grammar and language processing (e.g., Mimic).
+
+6. **Keyboard Shortcuts**:
+   - Allows GSS designers to define shortcuts for enabling/disabling spellcheck or cycling through errors (e.g., pressing `Ctrl + ;` to activate spellcheck).
+
+7. **Multi-Language Support**:
+   - Supports multiple dictionaries and language rules, selectable by the user or developer.
+   - Automatically switches based on content language (if defined in metadata).
+
+8. **Standard and User-Defined Word Lists**:
+   - Includes a standard word list for basic spellchecking.
+   - Allows users to define custom word lists to accommodate specific terminologies or preferences.
+   - User-defined words can be managed through the context menu with options to add or remove entries.
+
+9. **Accessibility**:
+   - Screen-reader support for reading out detected errors and correction suggestions.
+   - Keyboard navigation for cycling through errors and interacting with tooltips.
+
+---
+
+### **M3L Fields**
+
+| **Field**            | **Description**                                    | **Example**                                              |
+| --------------------- | -------------------------------------------------- | -------------------------------------------------------- |
+| `enabled`            | Toggles spellcheck for the associated text widget.  | `enabled = true`                                         |
+| `dictionary_source`  | Specifies the source of the dictionary.             | `dictionary_source = "@SQeeL://language/dictionary.db"`  |
+| `user_word_list`     | Specifies the location of the user-defined word list.| `user_word_list = "@UserStorage://custom_words.db"`     |
+| `language`           | Defines the language for spellcheck.                | `language = "en-US"`                                     |
+| `highlight_style`    | Defines the visual style for error highlighting.    | `highlight_style = "underline"`                         |
+| `intents`            | Specifies interactions (e.g., tooltip activation).  | `intents = [ "on_hover", "on_right_click" ]`           |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**                | **Description**                              | **Example**                              |
+| ---------------------------- | -------------------------------------------- | ---------------------------------------- |
+| `spellcheck.error.spelling`  | Styling for spelling errors.                 | `spellcheck.error.spelling = { underline = "red squiggly", tooltip = "true" }` |
+| `spellcheck.error.grammar`   | Styling for grammar errors.                  | `spellcheck.error.grammar = { color = "orange", tooltip = "true" }` |
+| `spellcheck.tooltip`         | Styling for tooltips displaying suggestions. | `spellcheck.tooltip = { background = "#FFF", color = "#000" }` |
+| `spellcheck.shortcut`        | Keyboard shortcut for toggling spellcheck.   | `spellcheck.shortcut = "Ctrl + ;"`      |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "text_area"
+spellcheck = {
+    enabled = true,
+    dictionary_source = "@SQeeL://language/dictionary.db",
+    user_word_list = "@UserStorage://custom_words.db",
+    language = "en-US",
+    highlight_style = "underline",
+    intents = [ "on_hover", "on_right_click" ]
+}
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[spellcheck.error.spelling]
+underline = "red squiggly"
+tooltip = true
+
+[spellcheck.error.grammar]
+color = "orange"
+tooltip = true
+
+[spellcheck.tooltip]
+background = "#FFF"
+color = "#000"
+font-size = "12px"
+
+[spellcheck.shortcut]
+keyboard = "Ctrl + ;"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Custom Error Handling**:
+   - Allow developers to define custom rules for error detection (e.g., specific jargon or domain-specific terms).
+
+2. **Co-Chain Integration**:
+   - Use Mimic or similar co-chains for advanced grammar suggestions and contextual recommendations.
+
+3. **Event Triggers**:
+   - Define when spellcheck runs (e.g., on typing, on submit, or when explicitly triggered).
+
+4. **Language Switching**:
+   - Automatically detect language based on text input or metadata and switch dictionaries dynamically.
+
+5. **Error Reporting and Analytics**:
+   - Optionally log error types and frequencies for analytics or AI training.
+
+6. **User-Defined Word Management**:
+   - Provide an interface for users to manage their custom word lists, enabling easy additions or removals directly within the application.
+
+---
+
+### **Use Cases**
+- **Text Editors**: Provide real-time spellcheck and grammar corrections for writers.
+- **Form Validation**: Ensure accurate input in forms and text fields.
+- **Language Learning Tools**: Highlight errors and provide explanations for educational purposes.
+- **Content Creation**: Improve quality and readability in blog posts, articles, or emails.
+
+---
+
+### **Conclusion**
+
+The Spellcheck Widget adds a powerful layer of functionality to text-based widgets, allowing users to easily identify and correct errors in real time. Its integration with GSS ensures that designers can create a seamless and intuitive experience while maintaining visual consistency across applications. By supporting dynamic updates, keyboard shortcuts, user-defined word lists, and co-chain integration, the Spellcheck Widget is a versatile tool for a wide range of use cases.
 
 ---
 
