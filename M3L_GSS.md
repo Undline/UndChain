@@ -154,7 +154,6 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Spellcheck**: Highlights misspelled words with corrections shown in a tooltip.
 - **Autocomplete**: Assists in writing by providing options to autocomplete words allowing for faster input. 
 - **Item Grid**: Displays items in a controller-friendly layout.
-- **Tab Widget**: Groups widgets by category, activated via tabs.
 - **Video**: Plays videos with predefined controls and settings.
 - **Popup**: Creates modals for warnings, errors, confirmations, or informational messages.
 - **Notification Panel**: This is a listing of notifications from the application being used.
