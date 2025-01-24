@@ -6118,6 +6118,142 @@ The Skill Tree Widget introduces a highly interactive and visually engaging way 
 
 ---
 
+### **Badge Widget**
+
+**Badge**: This widget acts as a hybrid between an icon and a card. It provides more space to display an icon and a name, while also allowing for expanded functionality such as viewing detailed descriptions or unlocking new features.
+
+---
+
+### **Core Features**
+
+1. **Compact Design with Expandable Details**:
+   - Displays an icon and a name in its default state.
+   - Expands to show a full description or additional details when triggered by specific intents.
+
+2. **Unlockable Functionality**:
+   - Can transition from a "locked" to "unlocked" state, with animations and styling defined in the GSS file.
+   - Useful for gamification, skill trees, or feature progression.
+
+3. **Interactive Features**:
+   - Supports intents such as `descriptor`, `unlock`, and `highlight` to provide a highly interactive experience.
+   - Examples of interactions:
+     - **Descriptor**: Displays a popup or page with detailed information about the badge.
+     - **Unlock**: Changes the badge’s state to "unlocked," triggering animations and updates.
+     - **Highlight**: Temporarily emphasizes the badge with animations or effects.
+
+4. **Dynamic Updates**:
+   - Real-time updates to badge status, description, or associated data via co-chains (e.g., Mimic or SQeeL).
+
+5. **Styling and Customization**:
+   - GSS designers can define the appearance, hover effects, unlock animations, and how expanded descriptions are displayed.
+   - Supports dynamic styling based on state (e.g., locked, unlocked, highlighted).
+
+6. **Accessibility**:
+   - Includes screen-reader support for badge names and descriptions.
+   - Keyboard navigation for interacting with badges and triggering intents.
+
+---
+
+### **M3L Fields**
+
+| **Field**       | **Description**                                  | **Example**                                              |
+| --------------- | ------------------------------------------------ | -------------------------------------------------------- |
+| `icon`          | Specifies the icon displayed on the badge.        | `icon = "@assets/icons/skill_icon.svg"`                |
+| `name`          | The name of the badge.                           | `name = "Skill Mastery"`                                |
+| `description`   | Full description displayed when expanded.         | `description = "Achieved mastery in advanced skills."` |
+| `status`        | Indicates if the badge is locked or unlocked.     | `status = "locked"`                                     |
+| `intents`       | Specifies the interactions supported by the badge.| `intents = [ "descriptor", "unlock", "highlight" ]`    |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**           | **Description**                          | **Example**                              |
+| ----------------------- | ---------------------------------------- | ---------------------------------------- |
+| `badge.background`      | Background color for the badge.           | `badge.background = "#FFF"`            |
+| `badge.icon`            | Styling for the badge icon.               | `badge.icon = { size = "40px", color = "#333" }` |
+| `badge.locked`          | Styling for locked badges.                | `badge.locked = { color = "#AAA", icon = "lock" }` |
+| `badge.unlocked`        | Styling for unlocked badges.              | `badge.unlocked = { color = "#0A0", icon = "checkmark" }` |
+| `badge.highlight`       | Highlight effect styling.                 | `badge.highlight = { animation = "pulse", duration = "2s" }` |
+| `badge.tooltip`         | Styling for tooltips displayed on hover.  | `badge.tooltip = { background = "#000", color = "#FFF" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "badge"
+icon = "@assets/icons/skill_icon.svg"
+name = "Skill Mastery"
+description = "Achieved mastery in advanced skills."
+status = "locked"
+intents = [ "descriptor", "unlock", "highlight" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[badge]
+background = "#FFF"
+
+[badge.icon]
+size = "40px"
+color = "#333"
+
+[badge.locked]
+color = "#AAA"
+icon = "lock"
+
+[badge.unlocked]
+color = "#0A0"
+icon = "checkmark"
+
+[badge.highlight]
+animation = "pulse"
+duration = "2s"
+
+[badge.tooltip]
+background = "#000"
+color = "#FFF"
+font-size = "12px"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Dynamic Badge Updates**:
+   - Real-time updates to badge status and description based on user progress or external triggers.
+   - Integration with co-chains like Mimic or SQeeL for advanced functionality.
+
+2. **Custom Unlock Animations**:
+   - GSS designers can define unique animations for transitioning badges from locked to unlocked states.
+
+3. **Batch Operations**:
+   - Support for batch unlocking or highlighting of multiple badges simultaneously.
+
+4. **Integration with Other Widgets**:
+   - Use badges within skill trees, leaderboards, or gamified progress tracking systems.
+
+---
+
+### **Use Cases**
+- **Skill Trees**: Serve as individual nodes within a skill tree, providing detailed descriptions and unlockable functionality.
+- **Achievement Systems**: Represent user achievements or milestones in applications.
+- **Gamified Interfaces**: Enhance user engagement by visually representing progress or rewards.
+- **Onboarding Processes**: Highlight key steps or features during user onboarding.
+
+---
+
+### **Conclusion**
+
+The Badge Widget is a versatile addition to M3L and GSS, bridging the gap between icons and cards. Its compact design, interactivity, and unlockable functionality make it ideal for skill trees, achievement systems, and gamified interfaces. By supporting dynamic updates, customizable animations, and flexible intents, the Badge Widget enhances user engagement and visual communication across applications.
+
+---
+
 ### **Spellcheck Widget**
 
 **Spellcheck**: Highlights misspelled words with corrections shown in a tooltip.
