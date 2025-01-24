@@ -6550,6 +6550,147 @@ The Autocomplete Widget enhances input efficiency and accuracy by providing dyna
 
 ---
 
+### **Text Prediction Widget**
+
+**Text Prediction**: This widget extends the functionality of autocomplete by leveraging AI models via the Mimic co-chain to predict entire strings or phrases based on the context of the user’s input. It provides powerful, context-aware text generation capabilities for productivity and creative applications.
+
+---
+
+### **Core Features**
+
+1. **AI-Powered Predictions**:
+   - Dynamically predicts complete strings, sentences, or paragraphs.
+   - Uses the Mimic co-chain for advanced context processing and language modeling.
+
+2. **Context Awareness**:
+   - Maintains context to generate relevant and cohesive predictions.
+   - Adapts to the tone, structure, and intent of the user’s writing.
+
+3. **Dynamic Interaction**:
+   - Predictions can be displayed inline in faint text or externally adjacent to the text area.
+   - Users can accept, reject, or edit predictions seamlessly with shortcuts (e.g., `Ctrl + Plus`).
+
+4. **Customization and Adaptability**:
+   - GSS designers can define how predictions are presented and interacted with.
+   - Developers can customize prompts sent to the Mimic co-chain for domain-specific predictions.
+
+5. **Multi-Language Support**:
+   - Supports multiple languages and dynamically adjusts based on input.
+
+6. **Local Caching for Performance**:
+   - Caches recent predictions locally to improve responsiveness and reduce repeated requests.
+
+7. **Accessibility**:
+   - Fully navigable via keyboard and screen-readers.
+   - Offers voice prompts for visually impaired users (optional).
+
+---
+
+### **M3L Fields**
+
+| **Field**           | **Description**                                        | **Example**                                              |
+| -------------------- | ------------------------------------------------------ | -------------------------------------------------------- |
+| `ai_source`         | Specifies the source of the AI model.                   | `ai_source = "@Mimic://text_prediction"`               |
+| `context`           | Provides context for the predictions (e.g., "email").  | `context = "business email"`                            |
+| `language`          | Defines the language used for predictions.             | `language = "en-US"`                                     |
+| `max_predictions`   | Maximum number of predictions to display.               | `max_predictions = 3`                                    |
+| `intents`           | Specifies interactions (e.g., `on_predict`).            | `intents = [ "on_type", "on_hover", "on_predict" ]`   |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**             | **Description**                                  | **Example**                                |
+| ------------------------- | ------------------------------------------------ | ------------------------------------------ |
+| `textprediction.inline`   | Styling for inline predictions.                   | `textprediction.inline = { color = "#CCC" }` |
+| `textprediction.external` | Styling for external predictions outside the text field. | `textprediction.external = { color = "#AAA", font-style = "italic" }` |
+| `textprediction.selected` | Styling for the currently highlighted prediction. | `textprediction.selected = { background = "#EEE" }` |
+| `textprediction.tooltip`  | Styling for tooltips displaying extra context.    | `textprediction.tooltip = { background = "#000", color = "#FFF" }` |
+| `textprediction.audio`    | Audio cues for prediction updates or selection.   | `textprediction.audio = { select = "confirm.mp3", update = "notify.mp3" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "text_area"
+text_prediction = {
+    ai_source = "@Mimic://text_prediction",
+    context = "business email",
+    language = "en-US",
+    intents = [ "on_type", "on_hover", "on_predict" ],
+    max_predictions = 3
+}
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[textprediction.inline]
+color = "#CCC"
+
+[textprediction.external]
+color = "#AAA"
+font-style = "italic"
+
+[textprediction.selected]
+background = "#EEE"
+
+[textprediction.tooltip]
+background = "#000"
+color = "#FFF"
+font-size = "12px"
+
+[textprediction.audio]
+select = "confirm.mp3"
+update = "notify.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Domain-Specific Predictions**:
+   - Use custom prompts for Mimic to generate domain-relevant text (e.g., medical documentation, legal contracts).
+   - Incorporate predefined templates to speed up repetitive tasks.
+
+2. **Real-Time Updates**:
+   - Dynamically update predictions based on the user’s evolving input.
+   - Leverage context to refine predictions for accuracy and tone.
+
+3. **Feedback and Learning**:
+   - Capture user feedback to improve the AI model’s predictions over time.
+   - Optionally log user-approved predictions for analysis and refinement.
+
+4. **Co-Chain Dependency**:
+   - Requires Mimic for text prediction, but can fallback to a limited local model for basic functionality.
+
+5. **Multi-Sentence Predictions**:
+   - Optionally extend predictions to include multi-sentence or paragraph-level outputs.
+
+6. **Shortcut Customization**:
+   - GSS designers can define shortcuts for accepting predictions (e.g., `Ctrl + Plus`).
+
+---
+
+### **Use Cases**
+- **Email Drafting**: Generate professional email responses with appropriate tone and context.
+- **Content Creation**: Assist writers with completing sentences, paragraphs, or entire sections.
+- **Code Assistance**: Provide boilerplate code snippets or function templates in IDEs.
+- **Chatbots and Messaging**: Enable smart, context-aware replies in communication platforms.
+- **Educational Tools**: Offer writing assistance and suggestions tailored to learning objectives.
+
+---
+
+### **Conclusion**
+
+The Text Prediction Widget empowers users with AI-driven text generation capabilities, bridging the gap between manual input and fully automated content creation. With its integration into M3L and GSS, it offers flexibility and adaptability across diverse applications, enhancing productivity and user experience.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
