@@ -6401,6 +6401,155 @@ The Spellcheck Widget adds a powerful layer of functionality to text-based widge
 
 ---
 
+### **Autocomplete Widget**
+
+**Autocomplete**: Assists in writing by providing options to autocomplete words, allowing for faster input and improved accuracy. Suggestions are made in real-time based on the user's context and behavior.
+
+---
+
+### **Core Features**
+
+1. **Dynamic Suggestions**:
+   - Provides real-time suggestions based on user input.
+   - Leverages language models, co-chains (e.g., SQeeL), or predefined dictionaries for generating predictions.
+   - Maintains context to refine suggestions for higher accuracy.
+   - Highlights the top suggestion by confidence, with the ability for users to select alternative suggestions.
+
+2. **Interactive Suggestion Menu**:
+   - Displays a dropdown of suggestions dynamically filtered as the user types.
+   - Supports interaction methods like `Ctrl + Space` after highlighting a word.
+   - The most confident suggestion is pre-highlighted by default.
+
+3. **Integration with Spellcheck**:
+   - Complements the Spellcheck Widget by suggesting corrections or completing words based on user input.
+   - Replaces misspelled words seamlessly with the user’s consent.
+
+4. **Customization and Contextual Adaptation**:
+   - GSS designers can customize dropdown styling and interaction behavior.
+   - Context-aware suggestions (e.g., technical terms in IDEs or domain-specific language in professional settings).
+
+5. **Multi-Language and Domain-Specific Support**:
+   - Supports multiple languages and can switch dynamically based on input or metadata.
+   - Domain-specific dictionaries (e.g., medical terms, programming languages) can be dynamically loaded via UndChain.
+   - Custom user dictionaries can be stored locally or on UndChain (e.g., `@UserStorage/suggestions.db`).
+
+6. **Local Execution for Performance**:
+   - Runs locally for minimal lag and responsive performance.
+   - Downloads custom dictionaries or context profiles from UndChain for offline use.
+
+7. **Audio and Visual Feedback**:
+   - GSS designers can define visual animations or audio cues for suggestion updates and selections.
+
+---
+
+### **M3L Fields**
+
+| **Field**           | **Description**                                        | **Example**                                              |
+| -------------------- | ------------------------------------------------------ | -------------------------------------------------------- |
+| `dictionary_source` | Defines the source of the autocomplete dictionary.      | `dictionary_source = "@SQeeL://language/autocomplete.db"` |
+| `user_dictionary`   | Custom user dictionary for personalized suggestions.    | `user_dictionary = "@UserStorage/suggestions.db"`       |
+| `context`           | Provides context for the suggestions (e.g., "coding"). | `context = "IDE"`                                        |
+| `language`          | Defines the language used for suggestions.             | `language = "en-US"`                                     |
+| `intents`           | Specifies interactions (e.g., `on_select`).             | `intents = [ "on_type", "on_select", "on_hover" ]`     |
+| `max_suggestions`   | Maximum number of suggestions to display.               | `max_suggestions = 5`                                    |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**             | **Description**                                  | **Example**                                |
+| ------------------------- | ------------------------------------------------ | ------------------------------------------ |
+| `autocomplete.dropdown`   | Styling for the suggestion dropdown menu.         | `autocomplete.dropdown = { background = "#FFF", border = "1px solid #CCC" }` |
+| `autocomplete.suggestion` | Styling for individual suggestions.               | `autocomplete.suggestion = { font-size = "14px", color = "#000" }` |
+| `autocomplete.selected`   | Styling for the currently highlighted suggestion. | `autocomplete.selected = { background = "#EEE" }` |
+| `autocomplete.tooltip`    | Styling for tooltips displaying extra context.    | `autocomplete.tooltip = { background = "#000", color = "#FFF" }` |
+| `autocomplete.audio`      | Audio cues for suggestion updates or selection.   | `autocomplete.audio = { select = "click.mp3", update = "ding.mp3" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "text_area"
+autocomplete = {
+    dictionary_source = "@SQeeL://language/autocomplete.db",
+    user_dictionary = "@UserStorage/suggestions.db",
+    context = "IDE",
+    language = "en-US",
+    intents = [ "on_type", "on_select", "on_hover" ],
+    max_suggestions = 5
+}
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[autocomplete.dropdown]
+background = "#FFF"
+border = "1px solid #CCC"
+
+[autocomplete.suggestion]
+font-size = "14px"
+color = "#000"
+
+[autocomplete.selected]
+background = "#EEE"
+
+[autocomplete.tooltip]
+background = "#000"
+color = "#FFF"
+font-size = "12px"
+
+[autocomplete.audio]
+select = "click.mp3"
+update = "ding.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Domain-Specific Suggestions**:
+   - Integrate specialized dictionaries for technical domains (e.g., medical terms, legal phrases, programming languages).
+   - Allow developers to define context-specific autocomplete behavior.
+
+2. **Co-Chain Integration**:
+   - Use UndChain for downloading domain-specific dictionaries or user profiles.
+   - Incorporate real-time updates based on evolving user context or preferences.
+
+3. **User Customization**:
+   - Enable users to add their own frequently used words or phrases to the autocomplete dictionary.
+
+4. **Local Execution**:
+   - Ensure fast, responsive performance by running locally while syncing with cloud-based profiles.
+
+5. **Predictive Phrasing**:
+   - Suggest one word at a time while maintaining context.
+   - Allow user selection of highlighted words with pre-defined keybindings (e.g., `Ctrl + Space`).
+
+6. **Feedback Mechanisms**:
+   - Allow GSS designers to implement both visual animations and audio cues for feedback.
+
+---
+
+### **Use Cases**
+- **IDEs and Code Editors**: Suggest code snippets, function signatures, or parameters.
+- **Search Engines**: Predict user queries dynamically as they type.
+- **Email Clients**: Provide phrase suggestions for faster email composition.
+- **Chat Applications**: Speed up messaging with contextual word or emoji suggestions.
+- **Forms and Surveys**: Guide users through input fields with predictive suggestions.
+
+---
+
+### **Conclusion**
+
+The Autocomplete Widget enhances input efficiency and accuracy by providing dynamic, context-aware suggestions. Its integration with M3L and GSS ensures flexibility, allowing developers to tailor its functionality and design to meet diverse application needs. Whether used in productivity tools, coding environments, or communication platforms, the Autocomplete Widget is a powerful addition to the M3L framework.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
