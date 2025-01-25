@@ -165,7 +165,6 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Poll Widget**: Presents a multiple-choice question and shows aggregated results.
 - **Status Bar**: Displays relevant statistics or information at the bottom of the screen.
 - **Split View**: Divides the screen into two or more resizable panels.
-- **Breadcrumbs**: Shows the user’s current location in a hierarchy, improving navigation and enhancing both SEO and accessibility by providing semantic structure and clear navigational aids.
 
 #### **High-Level Widgets**
 
@@ -7614,6 +7613,130 @@ clear = "clear.mp3"
 ### **Conclusion**
 
 The Color Picker Widget offers a versatile and visually customizable way to handle color selection. Its flexible modes and robust features ensure it meets the needs of diverse applications while maintaining ease of use and accessibility.
+
+---
+
+### **Tree View Widget**
+
+**Tree View**: A widget designed to represent hierarchical data such as directories, categories, or nested structures. This widget allows users to navigate, expand, collapse, and interact with nodes in a clear and organized manner.
+
+---
+
+### **Core Features**
+
+1. **Node Management**:
+   - **Expandable and Collapsible Nodes**: Users can expand or collapse nodes to navigate the hierarchy.
+   - **Dynamic Loading**: Nodes can fetch child elements dynamically from co-chains (e.g., loading directories or subcategories).
+
+2. **Customizable Design**:
+   - GSS allows customization of icons, colors, fonts, and animations for nodes.
+   - Supports node-specific styling (e.g., highlight active nodes).
+
+3. **Interaction Options**:
+   - **Single-Select or Multi-Select**: Users can interact with one or multiple nodes.
+   - **Drag-and-Drop**: Nodes can be reordered or moved within the tree structure.
+   - **Context Menu Integration**: Supports floating menus for node-specific actions (e.g., rename, delete).
+
+4. **Search and Filtering**:
+   - Integrate a search bar for filtering visible nodes based on user input.
+   - Highlight matching nodes during searches.
+
+5. **Accessibility Features**:
+   - Fully navigable via keyboard or screen readers.
+   - Support for high contrast modes and visual indicators.
+
+6. **Animation and Sounds**:
+   - Entrance and exit animations for nodes (e.g., fade-in, slide-down).
+   - Optional sounds for expanding or collapsing nodes.
+
+---
+
+### **M3L Fields**
+
+| **Field**        | **Description**                                   | **Example**                                               |
+| ---------------- | ------------------------------------------------- | --------------------------------------------------------- |
+| `type`           | Specifies the widget type.                        | `type = "tree_view"`                                     |
+| `dynamic_source` | Fetches hierarchical data dynamically.            | `dynamic_source = "@SQeeL://directory_structure.db"`     |
+| `intents`        | Specifies actions for widget events.              | `intents = [ "on_select", "on_expand", "on_collapse" ]` |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**              | **Description**                                    | **Example**                                 |
+| -------------------------- | -------------------------------------------------- | ------------------------------------------- |
+| `tree_view.background`     | Background color of the tree view widget.          | `tree_view.background = "#FFF"`          |
+| `tree_view.border`         | Border styling for the widget.                     | `tree_view.border = "1px solid #CCC"`    |
+| `tree_view.font`           | Font styling for node labels.                      | `tree_view.font = { size = "14px", color = "#000" }` |
+| `tree_view.node`           | Styling for individual nodes.                      | `tree_view.node = { padding = "5px" }`   |
+| `tree_view.node.hover`     | Styling when a node is hovered.                    | `tree_view.node.hover = { background = "#EEE" }` |
+| `tree_view.animations`     | Animations for expanding and collapsing nodes.     | `tree_view.animations = { expand = "slide-down", collapse = "slide-up" }` |
+| `tree_view.sounds`         | Sounds for specific interactions (optional).       | `tree_view.sounds = { expand = "expand.mp3", collapse = "collapse.mp3" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "tree_view"
+dynamic_source = "@SQeeL://directory_structure.db"
+intents = [ "on_select", "on_expand", "on_collapse" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[tree_view]
+background = "#FFF"
+border = "1px solid #CCC"
+
+[tree_view.font]
+size = "14px"
+color = "#000"
+
+[tree_view.node]
+padding = "5px"
+
+[tree_view.node.hover]
+background = "#EEE"
+
+[tree_view.animations]
+expand = "slide-down"
+collapse = "slide-up"
+
+[tree_view.sounds]
+expand = "expand.mp3"
+collapse = "collapse.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+#### **Dynamic Data Loading**
+   - Use co-chains like SQeeL to dynamically fetch child nodes, enabling efficient navigation of large hierarchies.
+
+#### **Responsive Design**
+   - Ensure the widget adapts to various screen sizes and orientations.
+
+#### **Localization Support**
+   - Support for localized node labels and tooltips.
+
+---
+
+### **Use Cases**
+- **File Browsers**: Navigate through directories and subdirectories.
+- **Category Navigation**: Represent nested product categories in e-commerce.
+- **Organizational Charts**: Visualize hierarchical relationships in teams or projects.
+
+---
+
+### **Conclusion**
+
+The Tree View Widget is a versatile tool for navigating hierarchical data structures. Its customizable design, dynamic data loading, and robust interaction options make it suitable for a wide range of applications, from file browsers to organizational charts.
 
 ---
 
