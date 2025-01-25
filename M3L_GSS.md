@@ -8566,6 +8566,131 @@ The Status Bar Widget is a vital tool for providing users with real-time feedbac
 
 ---
 
+### **Split View Widget**
+
+**Split View**: A widget designed to divide the screen into two or more resizable panels, enabling flexible layouts and adjustable content areas. While initially intended for M3L and GSS editor applications, this widget has broad use cases for applications requiring multiple adjustable sections.
+
+---
+
+### **Core Features**
+
+1. **Adjustable Panels**:
+   - Allows users to resize panels dynamically.
+   - GSS designers can define the minimum and maximum size for each panel.
+
+2. **Dynamic Splits**:
+   - Supports up to 2 splits on mobile devices and up to 4 splits on desktop.
+   - Automatically adapts to screen size and orientation.
+
+3. **Customizable Splitters**:
+   - GSS designers can style the splitters, adding colors, gradients, or even images.
+   - Splitter interaction (dragging) can trigger animations or sounds.
+
+4. **Interaction Options**:
+   - Intents such as `on_resize`, `on_drag_start`, and `on_drag_end` enable integration with application logic.
+   - Supports snapping to predefined positions.
+
+5. **Accessibility Features**:
+   - Fully navigable via keyboard and screen readers.
+   - High contrast mode for better visibility.
+
+6. **Animation and Sounds**:
+   - Animations for splitter resizing or snapping.
+   - Optional sounds for drag interactions.
+
+---
+
+### **M3L Fields**
+
+| **Field**         | **Description**                                   | **Example**                                                |
+| ----------------- | ------------------------------------------------- | ---------------------------------------------------------- |
+| `type`            | Specifies the widget type.                        | `type = "split_view"`                                     |
+| `panels`          | Defines the number of panels.                     | `panels = 2`                                              |
+| `min_panel_size`  | Sets the minimum size for each panel.             | `min_panel_size = "100px"`                                |
+| `max_panel_size`  | Sets the maximum size for each panel.             | `max_panel_size = "auto"`                                 |
+| `default_sizes`   | Specifies the initial sizes of the panels.         | `default_sizes = [ "50%", "50%" ]`                       |
+| `intents`         | Specifies actions for widget events.              | `intents = [ "on_resize", "on_drag_start", "on_drag_end" ]` |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**               | **Description**                                    | **Example**                                   |
+| --------------------------- | -------------------------------------------------- | --------------------------------------------- |
+| `split_view.background`     | Background color for the entire widget.            | `split_view.background = "#F0F0F0"`         |
+| `split_view.border`         | Border styling for the widget.                     | `split_view.border = "1px solid #CCC"`      |
+| `split_view.splitter`       | Styling for the splitters (e.g., color, width).    | `split_view.splitter = { color = "#666", width = "5px" }` |
+| `split_view.splitter.hover` | Styling for the splitter when hovered.             | `split_view.splitter.hover = { color = "#999" }` |
+| `split_view.animations`     | Animations for resizing or snapping interactions.  | `split_view.animations = { resize = "ease-in-out", snap = "bounce" }` |
+| `split_view.sounds`         | Sounds for dragging or snapping splitters.         | `split_view.sounds = { drag = "drag.mp3", snap = "snap.mp3" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "split_view"
+panels = 2
+min_panel_size = "100px"
+max_panel_size = "auto"
+default_sizes = [ "50%", "50%" ]
+intents = [ "on_resize", "on_drag_start", "on_drag_end" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[split_view]
+background = "#F0F0F0"
+border = "1px solid #CCC"
+
+[split_view.splitter]
+color = "#666"
+width = "5px"
+
+[split_view.splitter.hover]
+color = "#999"
+
+[split_view.animations]
+resize = "ease-in-out"
+snap = "bounce"
+
+[split_view.sounds]
+drag = "drag.mp3"
+snap = "snap.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+#### **Dynamic Panel Adaptation**
+   - Ensure panels resize dynamically when the screen size changes.
+
+#### **Responsive Design**
+   - Enforce screen size-based limits for splits (e.g., 2 for mobile, 4 for desktop).
+
+#### **Customization and Theming**
+   - GSS designers can create unique splitter styles and animations to match the application theme.
+
+---
+
+### **Use Cases**
+- **M3L/GSS Editors**: Enable designers to preview how UIs respond to different layouts.
+- **Development Tools**: Provide adjustable work areas for code, preview, and debugging.
+- **Creative Applications**: Allow users to customize their workspace with adjustable panels.
+
+---
+
+### **Conclusion**
+
+The Split View Widget is a versatile tool for creating resizable, multi-panel layouts. Its adaptability and customization options make it ideal for applications requiring dynamic and responsive designs, from creative tools to advanced editors.
+
+---
+
 ## High-Level Widgets
 
 High level widgets are meant to really be single page widgets and are what gives M3L it's power as it showcases how common design schemens can have a very set look and feel which allows users the ability to know how to use your application before they even try it for the first time. As teh M3L standard grows there will be more standard high level widgets so GSS designers will have to check in and update GSS files periodicaly. If they are not updated there is a standard markup for how the high level widget is made and the system will follwo that formula using the low level widget definintions.
