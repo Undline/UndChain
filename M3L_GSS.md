@@ -7041,6 +7041,182 @@ The Popup Widget provides a flexible and visually customizable method for engagi
 
 ---
 
+### **Notification Panel Widget**
+
+**Notification Panel**: This widget provides a comprehensive listing of notifications specific to the application being used. Notifications may include system messages, updates, errors, warnings, or other user-relevant information. It works as part of a two-part system in conjunction with transient widgets like the Toast widget. Users can revisit dismissed or timed-out messages and interact with the Notification Panel through shortcuts, settings menus, or dedicated notification buttons.
+
+> **Note**: The Notification Panel is distinct from the UndChain primary notification system. Applications wishing to post in the master notification system must explicitly request user permission. This distinction ensures application-specific notifications remain separate from the user's primary notifications.
+
+---
+
+### **Core Features**
+
+1. **Structured Layout**:
+
+   - Displays notifications in a list format, with the newest notifications appearing at the top (or as defined by the GSS designer).
+   - Each notification can include:
+     - **Type**: Warning, Error, Information, Confirmation, etc.
+     - **Timestamp**: When the notification was generated.
+     - **Message**: A brief description or title.
+     - **Details**: Optional additional information.
+     - **Persistence**: Identifies whether a notification persists across sessions (default is temporary).
+
+2. **Interaction Options**:
+
+   - Users can dismiss individual notifications via a dedicated button or clear all notifications at once.
+   - Expandable notifications for detailed views.
+   - Users can open the Notification Panel via a button, shortcut, or settings menu.
+
+3. **Customizable Design**:
+
+   - GSS defines the layout, color schemes, and animations.
+   - Supports icons for notification types (e.g., warning icon, confirmation checkmark).
+   - Includes two icons for the notification button: one for standard use and another to indicate unread notifications.
+
+4. **Event Integration**:
+
+   - Notifications can be dynamically added via intents triggered by application events.
+   - Persistent storage for notifications fetched from co-chains like Mimic or SQeeL can be used.
+
+5. **Accessibility Features**:
+
+   - Fully navigable via keyboard or screen readers.
+   - Support for high contrast modes.
+
+6. **Animation and Sounds**:
+
+   - Entrance and exit animations for notifications (e.g., slide-in, fade-out).
+   - Sounds are primarily used for dismiss actions, with other notification sounds handled before being added to the panel.
+
+7. **Categories and Filtering**:
+
+   - Group notifications by type or priority.
+   - Search and filter options for large lists.
+
+---
+
+### **M3L Fields**
+
+| **Field**           | **Description**                                | **Example**                                               |
+| ------------------- | ---------------------------------------------- | --------------------------------------------------------- |
+| `type`              | Specifies the type of notification panel.      | `type = "notification_panel"`                            |
+| `intents`           | Specifies actions for notification management. | `intents = [ "on_dismiss", "on_expand", "on_clear_all" ]` |
+| `dynamic_source`    | Fetches notifications from a co-chain.         | `dynamic_source = "@SQeeL://notifications.db"`           |
+| `max_notifications` | Limits the number of visible notifications.    | Defined in the GSS file.                                  |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**                   | **Description**                                 | **Example**                                                                               |
+| ------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `notification_panel.background` | Background color of the notification panel.     | `notification_panel.background = "#FFF"`                                                  |
+| `notification_panel.border`     | Border styling for the panel.                   | `notification_panel.border = "1px solid #CCC"`                                            |
+| `notification_panel.title`      | Styling for the title text of the panel.        | `notification_panel.title = { font-size = "18px", color = "#000" }`                       |
+| `notification_item`             | Styling for individual notification entries.    | `notification_item = { background = "#F9F9F9", border = "1px solid #EEE" }`               |
+| `notification_item.warning`     | Custom styling for warning notifications.       | `notification_item.warning = { color = "#856404", background = "#FFF3CD" }`               |
+| `notification_item.error`       | Custom styling for error notifications.         | `notification_item.error = { color = "#721C24", background = "#F8D7DA" }`                 |
+| `notification_item.success`     | Custom styling for success notifications.       | `notification_item.success = { color = "#155724", background = "#D4EDDA" }`               |
+| `notification_item.info`        | Custom styling for informational notifications. | `notification_item.info = { color = "#0C5460", background = "#D1ECF1" }`                  |
+| `notification_item.animations`  | Entrance and exit animations for notifications. | `notification_item.animations = { entrance = "slide-in", exit = "fade-out" }`             |
+| `notification_item.sounds`      | Custom sounds for specific notification types.  | `notification_item.sounds = { warning = "warning_sound.mp3", error = "error_sound.mp3" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "notification_panel"
+dynamic_source = "@SQeeL://notifications.db"
+intents = [ "on_dismiss", "on_expand", "on_clear_all" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[notification_panel]
+background = "#FFF"
+border = "1px solid #CCC"
+
+[notification_panel.title]
+font-size = "18px"
+color = "#000"
+
+[notification_item]
+background = "#F9F9F9"
+border = "1px solid #EEE"
+
+[notification_item.warning]
+color = "#856404"
+background = "#FFF3CD"
+
+[notification_item.error]
+color = "#721C24"
+background = "#F8D7DA"
+
+[notification_item.success]
+color = "#155724"
+background = "#D4EDDA"
+
+[notification_item.info]
+color = "#0C5460"
+background = "#D1ECF1"
+
+[notification_item.animations]
+entrance = "slide-in"
+exit = "fade-out"
+
+[notification_item.sounds]
+warning = "warning_sound.mp3"
+error = "error_sound.mp3"
+success = "success_sound.mp3"
+info = "info_sound.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Toast Integration**:
+
+   - Notifications generated by the Toast widget can persist in the Notification Panel.
+
+2. **Custom Filtering**:
+
+   - Allow users to filter notifications by type, priority, or time range.
+
+3. **Mobile-Friendly Design**:
+
+   - Ensure responsiveness for smaller screens, with collapsible or scrollable layouts.
+
+4. **Search Functionality**:
+
+   - Enable users to search for specific notifications.
+
+5. **Dynamic Updates**:
+
+   - Synchronize with co-chains like Mimic or SQeeL for real-time notification updates.
+
+---
+
+### **Use Cases**
+
+- **Error Logs**: Track system errors and issues in one location.
+- **User Activity**: Notify users about completed tasks, updates, or changes.
+- **System Updates**: Inform users of critical application or system events.
+- **Persistent Notifications**: Provide a history of important notifications for reference.
+
+---
+
+### **Conclusion**
+
+The Notification Panel Widget serves as a centralized hub for managing and viewing application notifications. Its seamless integration with other widgets like Toast ensures users remain informed while maintaining flexibility and customization for developers.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
