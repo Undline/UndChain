@@ -6865,6 +6865,182 @@ The Video Widget is a robust and adaptable component for video playback. With su
 
 ---
 
+### **Popup Widget**
+
+**Popup**: Creates modals for warnings, errors, confirmations, or informational messages. These popups provide a flexible and customizable way to communicate with users through a focused interface.
+
+---
+
+### **Core Features**
+
+1. **Structured Layout**:
+   - **Header/Title**: A concise title summarizing the purpose of the popup.
+   - **Description**: A detailed message or explanation.
+   - **Buttons**: Actionable buttons such as "OK," "Cancel," or "Report."
+
+2. **Customizable Design**:
+   - GSS designers can define the size, position, and styling of the popup.
+   - Includes options for fixed, draggable, or resizable popups.
+   - Supports customization based on popup types (e.g., warning, error, confirmation, informational).
+
+3. **Event Triggers**:
+   - Supports events such as `on_open`, `on_close`, and `on_action`.
+   - Popups can be triggered by user actions, co-chain events, or system events.
+
+4. **Types of Popups**:
+   - **Warning**: Alerts the user to a potential issue or risk.
+   - **Error**: Notifies the user of a failure or problem.
+   - **Confirmation**: Requests user approval for an action.
+   - **Informational**: Provides additional details or guidance.
+
+5. **Dynamic Content**:
+   - Content can be dynamically updated via co-chains like Mimic or SQeeL.
+   - Can display data fetched in real time (e.g., error logs, form validation feedback).
+
+6. **Accessibility Features**:
+   - Fully navigable via keyboard and screen readers.
+   - Support for high contrast modes.
+
+7. **Animations and Sounds**:
+   - Entrance and exit animations (e.g., fade, slide, zoom).
+   - Custom sound effects specific to each popup type can be defined in GSS.
+
+---
+
+### **M3L Fields**
+
+| **Field**        | **Description**                                    | **Example**                                              |
+| ---------------- | -------------------------------------------------- | -------------------------------------------------------- |
+| `type`           | Specifies the type of popup.                       | `type = "warning"`                                      |
+| `header`         | Title text for the popup.                          | `header = "System Warning"`                             |
+| `description`    | Main content of the popup.                         | `description = "Your session is about to expire."`      |
+| `buttons`        | Array of button definitions.                       | `buttons = [ { label = "OK", intent = "on_close" }, { label = "Report", intent = "on_report" } ]` |
+| `intents`        | Specifies popup-level interactions.                | `intents = [ "on_open", "on_close", "on_action" ]`      |
+| `dynamic_source` | Dynamically fetches content for the popup.          | `dynamic_source = "@SQeeL://popup_content.db"`          |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**              | **Description**                                      | **Example**                                |
+| -------------------------- | ---------------------------------------------------- | ------------------------------------------ |
+| `popup.background`         | Background color of the popup.                       | `popup.background = "#FFF"`              |
+| `popup.border`             | Border styling for the popup.                        | `popup.border = "1px solid #CCC"`        |
+| `popup.header`             | Styling for the popup header.                        | `popup.header = { font-size = "18px", color = "#000" }` |
+| `popup.description`        | Styling for the description text.                    | `popup.description = { font-size = "14px", color = "#333" }` |
+| `popup.buttons`            | Styling for buttons within the popup.                | `popup.buttons = { button.color = "#FFF", button.background = "#007BFF" }` |
+| `popup.warning`            | Custom styling for warning popups.                   | `popup.warning = { background = "#FFF3CD", border = "1px solid #FFEEBA" }` |
+| `popup.error`              | Custom styling for error popups.                     | `popup.error = { background = "#F8D7DA", border = "1px solid #F5C6CB" }` |
+| `popup.confirmation`       | Custom styling for confirmation popups.              | `popup.confirmation = { background = "#D4EDDA", border = "1px solid #C3E6CB" }` |
+| `popup.informational`      | Custom styling for informational popups.             | `popup.informational = { background = "#D1ECF1", border = "1px solid #BEE5EB" }` |
+| `popup.animations`         | Entrance and exit animations for the popup.          | `popup.animations = { entrance = "fade-in", exit = "slide-out" }` |
+| `popup.sounds.warning`     | Custom sound for warning popups.                     | `popup.sounds.warning = "warning_sound.mp3"`            |
+| `popup.sounds.error`       | Custom sound for error popups.                       | `popup.sounds.error = "error_sound.mp3"`                |
+| `popup.sounds.confirmation`| Custom sound for confirmation popups.                | `popup.sounds.confirmation = "confirmation_sound.mp3"`  |
+| `popup.sounds.informational`| Custom sound for informational popups.              | `popup.sounds.informational = "info_sound.mp3"`         |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "popup"
+header = "Session Timeout"
+description = "Your session is about to expire. Please save your work or extend your session."
+buttons = [
+    { label = "OK", intent = "on_close" },
+    { label = "Extend Session", intent = "on_extend" },
+    { label = "Report", intent = "on_report" }
+]
+intents = [ "on_open", "on_close", "on_action" ]
+dynamic_source = "@SQeeL://popup_content.db"
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[popup]
+background = "#FFF"
+border = "1px solid #CCC"
+
+[popup.header]
+font-size = "18px"
+color = "#000"
+
+[popup.description]
+font-size = "14px"
+color = "#333"
+
+[popup.buttons]
+button.color = "#FFF"
+button.background = "#007BFF"
+button.hover.color = "#0056B3"
+
+[popup.warning]
+background = "#FFF3CD"
+border = "1px solid #FFEEBA"
+
+[popup.error]
+background = "#F8D7DA"
+border = "1px solid #F5C6CB"
+
+[popup.confirmation]
+background = "#D4EDDA"
+border = "1px solid #C3E6CB"
+
+[popup.informational]
+background = "#D1ECF1"
+border = "1px solid #BEE5EB"
+
+[popup.animations]
+entrance = "fade-in"
+exit = "slide-out"
+
+[popup.sounds]
+warning = "warning_sound.mp3"
+error = "error_sound.mp3"
+confirmation = "confirmation_sound.mp3"
+informational = "info_sound.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Dynamic Content Integration**:
+   - Leverage co-chains like SQeeL to fetch real-time content or suggestions.
+
+2. **Multi-Step Popups**:
+   - Support for wizard-style or sequential popups to guide users through complex workflows.
+
+3. **Error Handling**:
+   - Automatically trigger popups in response to system errors or validation failures.
+
+4. **Custom Interaction Logic**:
+   - Allow developers to bind popups to specific intents (e.g., closing other widgets upon confirmation).
+
+5. **GSS Flexibility**:
+   - Define popups for various screen sizes and input methods, ensuring responsiveness and usability.
+
+---
+
+### **Use Cases**
+- **Warnings**: Alert users about critical actions or system states.
+- **Errors**: Provide detailed error messages with actionable buttons.
+- **Confirmations**: Obtain user consent before performing an irreversible action.
+- **Information**: Share updates or contextual guidance.
+
+---
+
+### **Conclusion**
+
+The Popup Widget provides a flexible and visually customizable method for engaging users with critical information or interactions. With GSS and co-chain integration, it adapts seamlessly to a variety of use cases and device types.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
