@@ -7218,6 +7218,150 @@ The Notification Panel Widget serves as a centralized hub for managing and viewi
 
 ---
 
+### **Toast Widget**
+
+**Toast**: A temporary, transient notification that briefly appears on the screen and automatically disappears after a set amount of time. Toast messages are typically used to convey short-term, non-critical information to users and are archived in the Notification Panel for later reference.
+
+---
+
+### **Core Features**
+
+1. **Predefined Types**:
+   - **Warning**: Alerts the user to a potential issue.
+   - **Error**: Notifies the user of a failure or problem.
+   - **Confirmation**: Confirms the successful completion of an action.
+   - **Informational**: Provides additional details or updates.
+
+2. **Customizable Design**:
+   - GSS defines the placement, appearance, and animations of toast messages.
+   - Supports icons and styling specific to each type.
+   - Allows designers to define screen positions (e.g., top-right, bottom-center).
+
+3. **Timing Options**:
+   - Default duration for each toast type (e.g., 5 seconds).
+   - Customizable duration via M3L field or GSS.
+   - Option to make toast persistent until dismissed by the user.
+
+4. **Event Integration**:
+   - Supports intents such as `on_show` and `on_dismiss`.
+   - Automatically logs to the Notification Panel after dismissal or expiration.
+
+5. **Accessibility Features**:
+   - Fully navigable via keyboard and screen readers.
+   - Support for high contrast modes and assistive technologies.
+
+6. **Animation and Sounds**:
+   - Unified animation and sound control, allowing synchronized feedback.
+   - Designers can define delays, offsets, and interaction-specific sound effects.
+
+---
+
+### **M3L Fields**
+
+| **Field**          | **Description**                                   | **Example**                                               |
+| ------------------ | ------------------------------------------------- | --------------------------------------------------------- |
+| `type`             | Specifies the type of toast.                      | `type = "confirmation"`                                 |
+| `message`          | Main content of the toast.                        | `message = "Your settings have been saved successfully."`|
+| `duration`         | Duration before the toast disappears (in seconds).| `duration = 5`                                           |
+| `intents`          | Specifies actions for toast events.               | `intents = [ "on_show", "on_dismiss" ]`                 |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**           | **Description**                                      | **Example**                                |
+| ----------------------- | ---------------------------------------------------- | ------------------------------------------ |
+| `toast.background`      | Background color for all toast messages.             | `toast.background = "#FFF"`              |
+| `toast.border`          | Border styling for the toast.                        | `toast.border = "1px solid #CCC"`        |
+| `toast.position`        | Placement on the screen (e.g., top-right).           | `toast.position = "bottom-right"`         |
+| `toast.animations`      | Unified entrance and exit animations with sounds.    | `toast.animations = { entrance = { type = "fade-in", duration = "0.5s", sound = { file = "confirmation_sound.mp3", delay = "0.1s" } }, exit = { type = "slide-up", duration = "0.5s" } }` |
+| `toast.warning`         | Custom styling for warning toasts.                   | `toast.warning = { background = "#FFF3CD", border = "1px solid #FFEEBA", sound = { file = "warning_sound.mp3", delay = "0s" } }` |
+| `toast.error`           | Custom styling for error toasts.                     | `toast.error = { background = "#F8D7DA", border = "1px solid #F5C6CB", sound = { file = "error_sound.mp3", delay = "0s" } }` |
+| `toast.confirmation`    | Custom styling for confirmation toasts.              | `toast.confirmation = { background = "#D4EDDA", border = "1px solid #C3E6CB", sound = { file = "confirmation_sound.mp3", delay = "0.1s" } }` |
+| `toast.info`            | Custom styling for informational toasts.             | `toast.info = { background = "#D1ECF1", border = "1px solid #BEE5EB", sound = { file = "info_sound.mp3", delay = "0.2s" } }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "toast"
+message = "Your settings have been saved successfully."
+duration = 5
+intents = [ "on_show", "on_dismiss" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[toast]
+background = "#FFF"
+border = "1px solid #CCC"
+position = "bottom-right"
+
+[toast.animations]
+entrance = { type = "fade-in", duration = "0.5s", sound = { file = "confirmation_sound.mp3", delay = "0.1s" } }
+exit = { type = "slide-up", duration = "0.5s" }
+
+[toast.warning]
+background = "#FFF3CD"
+border = "1px solid #FFEEBA"
+sound = { file = "warning_sound.mp3", delay = "0s" }
+
+[toast.error]
+background = "#F8D7DA"
+border = "1px solid #F5C6CB"
+sound = { file = "error_sound.mp3", delay = "0s" }
+
+[toast.confirmation]
+background = "#D4EDDA"
+border = "1px solid #C3E6CB"
+sound = { file = "confirmation_sound.mp3", delay = "0.1s" }
+
+[toast.info]
+background = "#D1ECF1"
+border = "1px solid #BEE5EB"
+sound = { file = "info_sound.mp3", delay = "0.2s" }
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Notification Panel Integration**:
+   - Toast messages are automatically logged into the Notification Panel after expiration or dismissal.
+
+2. **Custom Timing**:
+   - Allow users to override the default duration for specific toast types (e.g., error messages last longer).
+
+3. **Dynamic Positioning**:
+   - GSS can define responsive positions for toasts based on screen size or orientation.
+
+4. **Sound and Animation Coordination**:
+   - Synchronize sound effects with entrance animations to improve user feedback.
+
+5. **Mobile Optimization**:
+   - Ensure proper scaling and placement for smaller devices.
+
+---
+
+### **Use Cases**
+- **Action Confirmation**: Display confirmation messages after user actions (e.g., saving settings).
+- **Temporary Alerts**: Inform users of short-term updates (e.g., "Server will restart in 5 minutes").
+- **Error Notifications**: Provide quick feedback on failures, like form validation errors.
+- **Informational Messages**: Show helpful tips or non-urgent updates.
+
+---
+
+### **Conclusion**
+
+The Toast Widget is a lightweight and visually engaging way to deliver temporary notifications. With robust GSS customization and seamless integration into the Notification Panel, it provides a user-friendly mechanism for transient messaging while ensuring users can review past messages if needed.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
