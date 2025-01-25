@@ -164,6 +164,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Object Tree**: This works like a tree view with the exception that is meant for object. Useful in systems that need to maintain objects on screen.
 - **Poll Widget**: Presents a multiple-choice question and shows aggregated results.
 - **Rating Widget**: This widget type is meant to define a rating system. It must at least have two rating types but can be as much as defined in the M3L file. Most common is a 5 star system.
+- **Classification Widget**: This widget is responsible to classifying content which is crucial on social system where user interaction suggests content. This is designed to show who is the intended audience. It also has a field allowing users to describe why they choose this classification.
 - **Reaction Widget**: This widget provides a system that allows users to react to another widget. This can consist of emoji or GIFs.
 - **Status Bar**: Displays relevant statistics or information at the bottom of the screen.
 - **Split View**: Divides the screen into two or more resizable panels.
