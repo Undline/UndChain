@@ -7740,6 +7740,138 @@ The Tree View Widget is a versatile tool for navigating hierarchical data struct
 
 ---
 
+### **Object Tree Widget**
+
+**Object Tree**: A widget designed for managing hierarchical objects with advanced interaction options. Unlike the Tree View Widget, the Object Tree supports property editing, visual connections, and customizable behaviors for each object in the hierarchy.
+
+---
+
+### **Core Features**
+
+1. **Advanced Node Management**:
+   - **Property Editing**: Inline editing for attributes and properties of objects.
+   - **Expandable and Collapsible Nodes**: Users can expand or collapse nodes to navigate complex hierarchies.
+   - **Multi-Select and Group Operations**: Enable bulk operations on selected objects.
+
+2. **Visual Connections**:
+   - **Node Relationships**: Show relationships between nodes using visual connectors (e.g., lines or arrows).
+   - **Drag-and-Drop Connections**: Allow users to establish relationships between nodes dynamically.
+
+3. **Customizable Node Behavior**:
+   - GSS defines unique behaviors and styles for different object types.
+   - Enable context-sensitive actions such as linking, duplicating, or deleting nodes.
+
+4. **Dynamic Data Loading**:
+   - Fetch object data dynamically from co-chains like SQeeL or Code Ledger.
+   - Supports large datasets by loading child nodes on demand.
+
+5. **Accessibility Features**:
+   - Fully navigable via keyboard or screen readers.
+   - High contrast mode for better visibility.
+
+6. **Animation and Sounds**:
+   - Entrance and exit animations for nodes and relationships.
+   - Optional sounds for interactions such as linking or editing objects.
+
+---
+
+### **M3L Fields**
+
+| **Field**        | **Description**                                   | **Example**                                               |
+| ---------------- | ------------------------------------------------- | --------------------------------------------------------- |
+| `type`           | Specifies the widget type.                        | `type = "object_tree"`                                   |
+| `dynamic_source` | Fetches hierarchical object data dynamically.     | `dynamic_source = "@SQeeL://object_hierarchy.db"`       |
+| `intents`        | Specifies actions for widget events.              | `intents = [ "on_select", "on_expand", "on_edit", "on_link" ]` |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**              | **Description**                                    | **Example**                                 |
+| -------------------------- | -------------------------------------------------- | ------------------------------------------- |
+| `object_tree.background`   | Background color of the object tree widget.        | `object_tree.background = "#FFF"`        |
+| `object_tree.border`       | Border styling for the widget.                     | `object_tree.border = "1px solid #CCC"`   |
+| `object_tree.font`         | Font styling for object labels.                    | `object_tree.font = { size = "14px", color = "#000" }` |
+| `object_tree.node`         | Styling for individual nodes.                      | `object_tree.node = { padding = "5px" }`  |
+| `object_tree.node.hover`   | Styling when a node is hovered.                    | `object_tree.node.hover = { background = "#EEE" }` |
+| `object_tree.connection`   | Visual styling for node connectors.                | `object_tree.connection = { color = "#888", width = "2px" }` |
+| `object_tree.animations`   | Animations for node interactions.                  | `object_tree.animations = { link = "fade-in", unlink = "fade-out" }` |
+| `object_tree.sounds`       | Sounds for specific interactions (optional).       | `object_tree.sounds = { edit = "edit.mp3", link = "link.mp3" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "object_tree"
+dynamic_source = "@SQeeL://object_hierarchy.db"
+intents = [ "on_select", "on_expand", "on_edit", "on_link" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[object_tree]
+background = "#FFF"
+border = "1px solid #CCC"
+
+[object_tree.font]
+size = "14px"
+color = "#000"
+
+[object_tree.node]
+padding = "5px"
+
+[object_tree.node.hover]
+background = "#EEE"
+
+[object_tree.connection]
+color = "#888"
+width = "2px"
+
+[object_tree.animations]
+link = "fade-in"
+unlink = "fade-out"
+
+[object_tree.sounds]
+edit = "edit.mp3"
+link = "link.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+#### **Custom Node Types**
+   - Allow developers to define custom node types with unique properties and interactions.
+
+#### **Integration with Co-Chains**
+   - Use co-chains like SQeeL or Code Ledger to fetch and update object data dynamically.
+
+#### **Responsive Design**
+   - Adapt node layouts and connectors for different screen sizes and orientations.
+
+#### **Localization Support**
+   - Support for localized object names and tooltips.
+
+---
+
+### **Use Cases**
+- **3D Object Management**: Manage 3D assets in a game or simulation.
+- **Application State Trees**: Visualize and manipulate the state hierarchy of an application.
+- **Organizational Charts**: Represent complex team structures with properties for each team member.
+
+---
+
+### **Conclusion**
+
+The Object Tree Widget is a powerful tool for managing hierarchical data with advanced interactions. Its property editing, visual connections, and dynamic loading capabilities make it ideal for use cases requiring detailed control over object relationships and attributes.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
