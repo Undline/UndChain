@@ -8310,6 +8310,134 @@ The Classification Widget is an essential tool for ensuring content is appropria
 
 ---
 
+### **Reaction Widget**
+
+**Reaction Widget**: A widget that enables users to react to another widget using emojis, GIFs, or other visual elements. This widget is ideal for fostering engagement and interaction, commonly used in chats, videos, or content feeds.
+
+---
+
+### **Core Features**
+
+1. **Reaction Options**:
+   - Supports emojis, GIFs, or custom reaction icons.
+   - Developers can define a set of pre-approved reactions.
+
+2. **Dynamic Reaction Tracking**:
+   - Tracks reaction counts in real-time when connected to co-chains like Pages.
+   - Displays aggregated results (e.g., number of likes, favorite reactions).
+
+3. **Customizable Design**:
+   - GSS designers can style reaction icons, animations, and placement.
+   - Allows for unique reaction designs per application or widget.
+
+4. **Interaction Options**:
+   - Intents such as `on_react`, `on_remove_reaction`, and `on_view_reactions` enable advanced interactions.
+   - Multi-select support to allow users to choose multiple reactions, if enabled.
+
+5. **Accessibility Features**:
+   - Fully navigable via keyboard or screen readers.
+   - High contrast mode for better visibility.
+
+6. **Animation and Sounds**:
+   - Entrance and exit animations for reaction icons.
+   - Optional sounds for adding or removing reactions.
+
+---
+
+### **M3L Fields**
+
+| **Field**          | **Description**                                   | **Example**                                                |
+| ------------------ | ------------------------------------------------- | ---------------------------------------------------------- |
+| `type`             | Specifies the widget type.                        | `type = "reaction_widget"`                                |
+| `reaction_set`     | Defines the available reactions.                  | `reaction_set = [ "👍", "❤️", "😂", "😮", "😢", "👏" ]`    |
+| `allow_gifs`       | Enables GIF reactions.                            | `allow_gifs = true`                                       |
+| `dynamic_source`   | Fetches reaction data dynamically.                | `dynamic_source = "@SQeeL://reaction_data.db"`           |
+| `intents`          | Specifies actions for widget events.              | `intents = [ "on_react", "on_remove_reaction" ]`         |
+| `target_widget`    | Specifies the widget being reacted to.            | `target_widget = "chat_message_1"`                       |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**                | **Description**                                    | **Example**                                   |
+| ---------------------------- | -------------------------------------------------- | --------------------------------------------- |
+| `reaction_widget.background` | Background color of the reaction widget.           | `reaction_widget.background = "#FFF"`       |
+| `reaction_widget.border`     | Border styling for the widget.                     | `reaction_widget.border = "none"`           |
+| `reaction_widget.icon`       | Styling for reaction icons.                        | `reaction_widget.icon = { size = "24px" }` |
+| `reaction_widget.icon.hover` | Styling when a reaction icon is hovered.           | `reaction_widget.icon.hover = { scale = "1.2" }` |
+| `reaction_widget.results`    | Styling for aggregated reaction results.           | `reaction_widget.results = { color = "#FF00FF" }` |
+| `reaction_widget.animations` | Animations for reactions (e.g., adding/removing).  | `reaction_widget.animations = { add = "bounce", remove = "fade-out" }` |
+| `reaction_widget.sounds`     | Sounds for reaction interactions (optional).       | `reaction_widget.sounds = { add = "pop.mp3", remove = "delete.mp3" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "reaction_widget"
+reaction_set = [ "👍", "❤️", "😂", "😮", "😢", "👏" ]
+allow_gifs = true
+dynamic_source = "@SQeeL://reaction_data.db"
+target_widget = "chat_message_1"
+intents = [ "on_react", "on_remove_reaction" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[reaction_widget]
+background = "#FFF"
+border = "none"
+
+[reaction_widget.icon]
+size = "24px"
+
+[reaction_widget.icon.hover]
+scale = "1.2"
+
+[reaction_widget.results]
+color = "#FF00FF"
+
+[reaction_widget.animations]
+add = "bounce"
+remove = "fade-out"
+
+[reaction_widget.sounds]
+add = "pop.mp3"
+remove = "delete.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+#### **Dynamic Data Loading**
+   - Use co-chains like SQeeL to dynamically fetch and update reaction data.
+
+#### **Responsive Design**
+   - Ensure the widget adapts to various screen sizes and orientations.
+
+#### **Localization Support**
+   - Support for localized reaction sets (e.g., regional emoji preferences).
+
+---
+
+### **Use Cases**
+- **Chats**: Allow users to react to individual messages with emojis or GIFs.
+- **Videos**: Provide reaction tools for users to express sentiment during playback.
+- **Content Feeds**: Enable reactions for posts, articles, or comments.
+
+---
+
+### **Conclusion**
+
+The Reaction Widget fosters engagement and interactivity, providing users with an intuitive way to express sentiment. With dynamic customization options and seamless integration with other widgets, it’s a versatile tool for modern applications.
+
+---
+
 ## High-Level Widgets
 
 High level widgets are meant to really be single page widgets and are what gives M3L it's power as it showcases how common design schemens can have a very set look and feel which allows users the ability to know how to use your application before they even try it for the first time. As teh M3L standard grows there will be more standard high level widgets so GSS designers will have to check in and update GSS files periodicaly. If they are not updated there is a standard markup for how the high level widget is made and the system will follwo that formula using the low level widget definintions.
