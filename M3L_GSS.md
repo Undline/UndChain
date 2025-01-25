@@ -163,6 +163,8 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Tree View**: Represents hierarchical data (e.g., directories).
 - **Object Tree**: This works like a tree view with the exception that is meant for object. Useful in systems that need to maintain objects on screen.
 - **Poll Widget**: Presents a multiple-choice question and shows aggregated results.
+- **Rating Widget**: This widget type is meant to define a rating system. It must at least have two rating types but can be as much as defined in the M3L file. Most common is a 5 star system.
+- **Reaction Widget**: This widget provides a system that allows users to react to another widget. This can consist of emoji or GIFs.
 - **Status Bar**: Displays relevant statistics or information at the bottom of the screen.
 - **Split View**: Divides the screen into two or more resizable panels.
 
@@ -7871,6 +7873,8 @@ link = "link.mp3"
 The Object Tree Widget is a powerful tool for managing hierarchical data with advanced interactions. Its property editing, visual connections, and dynamic loading capabilities make it ideal for use cases requiring detailed control over object relationships and attributes.
 
 ---
+
+
 
 ## Summary
 
