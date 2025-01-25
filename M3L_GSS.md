@@ -6690,6 +6690,181 @@ The Text Prediction Widget empowers users with AI-driven text generation capabil
 
 ---
 
+### **Video Widget**
+
+**Video**: Plays videos with predefined controls and settings, serving as a foundational component for larger media workflows. The control UI is fully customizable through GSS, allowing advanced layouts such as overlays, separate control windows, or embedded controls. This widget also supports video streaming via the Live co-chain, enabling seamless content delivery within UndChain.
+
+---
+
+### **Core Features**
+
+1. **Basic Playback Controls**:
+   - **Play/Pause**: Toggle between playing and pausing the video.
+   - **Fast Forward (FF)** and **Rewind (RR)**: Skip forward or backward by predefined intervals.
+   - **Replay**: Restart the video from the beginning.
+
+2. **Volume Control**:
+   - GSS defines how volume is adjusted (e.g., slider, buttons, or dials).
+   - Includes Mute/Unmute functionality.
+
+3. **Progress Bar**:
+   - Editable size, allowing developers to tailor its appearance.
+   - Can display **highlights** based on popular playback sections.
+   - Chapter markers for navigation.
+
+4. **Chapters and Bookmarks**:
+   - Allow users to jump to specific sections of interest.
+   - Chapters can include titles and timestamps.
+   - Mimic integration in the Media Player Widget can auto-define chapters/bookmarks based on content analysis.
+
+5. **Subtitles and Closed Captions (CC)**:
+   - Load subtitle files (e.g., SRT, VTT).
+   - GSS designers can style fonts, colors, positioning, and background for subtitles and captions.
+
+6. **Playback Speed Control**:
+   - Adjustable playback speeds (e.g., 0.5x, 1x, 1.5x, 2x).
+
+7. **Full-Screen, Fill-Screen, and Pop-Out Modes**:
+   - **Full-Screen**: Seamless transition between windowed and full-screen modes.
+   - **Fill-Screen**: Expands the video horizontally while maintaining aspect ratio, leaving unused areas available for other widgets.
+   - **Pop-Out Mode**: Allows users to drag the video into a separate, floating window.
+
+8. **Mini Mode**:
+   - Activates when the user scrolls past the video content.
+   - Displays a small floating player with basic controls (e.g., Play/Pause and Expand).
+
+9. **Source Flexibility**:
+   - Supports AVX encoding for efficient and royalty-free video playback.
+   - Videos can be local (`@Undline/videos/video.mp4`), streamed via co-chains like SQeeL, or hosted on the Live co-chain for seamless streaming.
+
+10. **Accessibility Features**:
+   - Keyboard shortcuts for all controls (e.g., Space for play/pause, Arrow keys for seeking).
+   - Screen-reader support for buttons and labels.
+
+11. **Buffering Indicator**:
+    - Loading animations for videos being streamed or buffered.
+
+12. **Dynamic Updates**:
+    - Dynamic content switching without reloading the widget (e.g., switching sources).
+
+---
+
+### **M3L Fields**
+
+| **Field**           | **Description**                                  | **Example**                                              |
+| -------------------- | ------------------------------------------------ | -------------------------------------------------------- |
+| `source`            | Defines the video source.                        | `source = "@Live://channel/stream_id"`                  |
+| `subtitles`         | Provides a subtitle file for the video.          | `subtitles = "@SQeeL://videos/subtitles.srt"`           |
+| `autoplay`          | Automatically starts playback when loaded.       | `autoplay = true`                                        |
+| `loop`              | Enables continuous playback.                     | `loop = false`                                           |
+| `playback_speeds`   | Defines supported playback speeds.               | `playback_speeds = [ 0.5, 1.0, 1.5, 2.0 ]`              |
+| `default_speed`     | Sets the default playback speed.                 | `default_speed = 1.0`                                    |
+| `chapters`          | Defines video chapters with titles and timestamps.| `chapters = [ { title = "Introduction", time = "00:00:00" }, { title = "Conclusion", time = "00:10:00" } ]` |
+| `intents`           | Specifies interactions for controls.             | `intents = [ "on_play", "on_pause", "on_seek" ]`       |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**             | **Description**                                  | **Example**                                |
+| ------------------------- | ------------------------------------------------ | ------------------------------------------ |
+| `video.background`        | Background color for the video widget.            | `video.background = "#000"`              |
+| `video.controls`          | Styling for the playback controls.                | `video.controls = { button.color = "#FFF", progress_bar.color = "#007BFF" }` |
+| `video.progress_bar`      | Styling for the progress bar.                     | `video.progress_bar = { height = "8px", background = "#333" }` |
+| `video.volume_slider`     | Styling for the volume slider.                    | `video.volume_slider = { color = "#007BFF" }` |
+| `video.subtitles`         | Styling for subtitles.                           | `video.subtitles = { font-size = "16px", color = "#FFF", background = "rgba(0, 0, 0, 0.5)" }` |
+| `video.mini_mode`         | Styling for the mini mode player.                | `video.mini_mode = { size = "200px", position = "bottom-right" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "video"
+source = "@Live://channel/tutorial_stream"
+subtitles = "@SQeeL://videos/tutorial_subs.srt"
+autoplay = true
+loop = true
+playback_speeds = [ 0.5, 1.0, 1.5, 2.0 ]
+default_speed = 1.0
+chapters = [
+    { title = "Introduction", time = "00:00:00" },
+    { title = "Main Content", time = "00:05:00" },
+    { title = "Conclusion", time = "00:10:00" }
+]
+intents = [ "on_play", "on_pause", "on_seek", "on_volume_change" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[video]
+background = "#000"
+
+[video.controls]
+button.color = "#FFF"
+button.hover.color = "#CCC"
+progress_bar.color = "#007BFF"
+progress_bar.background = "#333"
+progress_bar.height = "8px"
+volume_slider.color = "#007BFF"
+volume_slider.background = "#333"
+
+[video.subtitles]
+font-size = "16px"
+color = "#FFF"
+background = "rgba(0, 0, 0, 0.5)"
+position = "bottom"
+
+[video.mini_mode]
+size = "200px"
+position = "bottom-right"
+background = "#111"
+controls = { button.color = "#FFF", button.hover.color = "#CCC" }
+```
+
+---
+
+### **Advanced Considerations**
+
+1. **Highlighting Sections**:
+   - Progress bars can include highlights based on user interaction data.
+
+2. **Chapter Navigation**:
+   - Users can navigate to specific sections using chapter markers.
+
+3. **Closed Captions (CC)**:
+   - Support for multiple subtitle tracks and on-the-fly switching.
+
+4. **Accessibility and Customization**:
+   - Keyboard shortcuts and screen-reader support ensure inclusivity.
+   - GSS customization for every control element allows tailored user experiences.
+
+5. **Custom UI Layouts**:
+   - GSS allows advanced control layouts, such as overlays on the video, separate control windows, or mobile-friendly media controls.
+
+6. **Fill-Screen and Mini Mode Enhancements**:
+   - Enable seamless transitions between different viewing modes.
+
+---
+
+### **Use Cases**
+- **Tutorial Applications**: Embedding videos with chapters and progress tracking.
+- **Learning Platforms**: Supporting subtitles, playback speed adjustments, and chapter navigation.
+- **Media Applications**: Building foundational video players for larger media workflows.
+- **Live Streaming**: Seamless integration with the Live co-chain for broadcasting and consuming streamed content.
+
+---
+
+### **Conclusion**
+
+The Video Widget is a robust and adaptable component for video playback. With support for AVX encoding, subtitle styling, dynamic content updates, and Live co-chain integration, it sets the stage for a seamless user experience while maintaining flexibility for diverse applications.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
