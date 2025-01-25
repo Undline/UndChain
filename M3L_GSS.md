@@ -8164,6 +8164,152 @@ The Rating Widget is a flexible and visually engaging tool for collecting user s
 
 ---
 
+### **Classification Widget**
+
+**Classification Widget**: A widget responsible for classifying content and recommending suitable audiences. This widget is crucial in social systems where user interactions influence content suggestions. It allows developers to indicate the intended audience and provides a field for users to describe why a specific classification was chosen. If a content widget does not have a classification, it will default to "Adult Only" as a security measure.
+
+---
+
+### **Core Features**
+
+1. **Audience Classification**:
+
+   - Developers can specify the intended audience (e.g., "Everyone", "Teen", "Mature").
+   - Categories can follow predefined standards such as ESRB or custom classifications.
+   - Default classification for untagged content widgets is "Adult Only".
+
+2. **User Feedback**:
+
+   - Users can add a description explaining their classification choice.
+   - Provides transparency and accountability for content labeling.
+
+3. **Dynamic Updates**:
+
+   - Integrates with co-chains like Pages to dynamically adjust recommendations based on audience interactions and classifications.
+
+4. **Customizable Design**:
+
+   - GSS designers can define the appearance of classification categories, icons, and descriptions.
+
+5. **Interaction Options**:
+
+   - Intents such as `on_select` and `on_submit` allow seamless integration into applications.
+
+6. **Accessibility Features**:
+
+   - Fully navigable via keyboard or screen readers.
+   - High contrast mode for better visibility.
+
+7. **Animation and Sounds**:
+
+   - Entrance and exit animations for the widget.
+   - Optional sounds for selection and submission events.
+
+---
+
+### **M3L Fields**
+
+| **Field**           | **Description**                                 | **Example**                                           |
+| ------------------- | ----------------------------------------------- | ----------------------------------------------------- |
+| `type`              | Specifies the widget type.                      | `type = "classification_widget"`                      |
+| `categories`        | Defines available classification categories.    | `categories = [ "Everyone", "Teen", "Mature" ]`       |
+| `default`           | Sets the default classification category.       | `default = "Everyone"`                                |
+| `description_field` | Enables users to add a reason for their choice. | `description_field = true`                            |
+| `dynamic_source`    | Fetches classification data dynamically.        | `dynamic_source = "@SQeeL://classification_rules.db"` |
+| `intents`           | Specifies actions for widget events.            | `intents = [ "on_select", "on_submit" ]`              |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**                          | **Description**                                  | **Example**                                                                       |
+| -------------------------------------- | ------------------------------------------------ | --------------------------------------------------------------------------------- |
+| `classification_widget.background`     | Background color of the widget.                  | `classification_widget.background = "#FFF"`                                       |
+| `classification_widget.border`         | Border styling for the widget.                   | `classification_widget.border = "1px solid #CCC"`                                 |
+| `classification_widget.font`           | Font styling for categories and descriptions.    | `classification_widget.font = { size = "14px", color = "#000" }`                  |
+| `classification_widget.category`       | Styling for individual categories.               | `classification_widget.category = { padding = "10px" }`                           |
+| `classification_widget.category.hover` | Styling when a category is hovered.              | `classification_widget.category.hover = { background = "#EEE" }`                  |
+| `classification_widget.description`    | Styling for the user feedback description field. | `classification_widget.description = { color = "#444" }`                          |
+| `classification_widget.animations`     | Animations for widget interactions.              | `classification_widget.animations = { select = "fade-in", submit = "slide-out" }` |
+| `classification_widget.sounds`         | Sounds for specific interactions (optional).     | `classification_widget.sounds = { select = "click.mp3", submit = "success.mp3" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "classification_widget"
+categories = [ "Everyone", "Teen", "Mature" ]
+default = "Everyone"
+description_field = true
+dynamic_source = "@SQeeL://classification_rules.db"
+intents = [ "on_select", "on_submit" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[classification_widget]
+background = "#FFF"
+border = "1px solid #CCC"
+
+[classification_widget.font]
+size = "14px"
+color = "#000"
+
+[classification_widget.category]
+padding = "10px"
+
+[classification_widget.category.hover]
+background = "#EEE"
+
+[classification_widget.description]
+color = "#444"
+
+[classification_widget.animations]
+select = "fade-in"
+submit = "slide-out"
+
+[classification_widget.sounds]
+select = "click.mp3"
+submit = "success.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+#### **Dynamic Data Loading**
+
+- Use co-chains like SQeeL to dynamically fetch classification categories or adjust recommendations based on user interactions.
+
+#### **Responsive Design**
+
+- Ensure the widget adapts to various screen sizes and orientations.
+
+#### **Localization Support**
+
+- Support for localized category names and descriptions.
+
+---
+
+### **Use Cases**
+
+- **Content Platforms**: Classify videos, articles, or posts to recommend appropriate audiences.
+- **Social Applications**: Allow users to tag content with appropriate classifications for better visibility.
+- **E-Learning**: Classify lessons or quizzes based on difficulty or age appropriateness.
+
+---
+
+### **Conclusion**
+
+The Classification Widget is an essential tool for ensuring content is appropriately labeled and targeted to the right audience. With robust customization options and integration into social and content-driven systems, it promotes transparency and enhances the user experience.
+
+---
+
 ## High-Level Widgets
 
 High level widgets are meant to really be single page widgets and are what gives M3L it's power as it showcases how common design schemens can have a very set look and feel which allows users the ability to know how to use your application before they even try it for the first time. As teh M3L standard grows there will be more standard high level widgets so GSS designers will have to check in and update GSS files periodicaly. If they are not updated there is a standard markup for how the high level widget is made and the system will follwo that formula using the low level widget definintions.
