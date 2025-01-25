@@ -7490,6 +7490,132 @@ The Date Picker Widget provides a streamlined and visually customizable way to h
 
 ---
 
+### **Color Picker Widget**
+
+**Color Picker**: A widget that allows users to select a color, typically from a palette. The widget supports customizable palettes and multiple modes for varying levels of detail and interaction.
+
+---
+
+### **Core Features**
+
+1. **Modes**:
+   - **Macro**: A larger interface providing a full-spectrum color palette, with options to adjust hue, saturation, and brightness.
+   - **Mini**: A compact interface offering a simplified palette or a predefined set of colors.
+
+2. **Customizable Palettes**:
+   - GSS designers can define custom color palettes to match application themes or user requirements.
+   - Default palette includes a full rainbow spectrum.
+
+3. **Dynamic Color Ranges**:
+   - Enables users to select colors within defined ranges (e.g., brand-specific colors).
+   - Supports co-chain integration for dynamically updating palettes (e.g., pulling theme colors from a design system).
+
+4. **Event Integration**:
+   - Intents such as `on_color_select`, `on_clear`, and `on_error` allow seamless integration with application workflows.
+   - Triggers for hover, click, or drag interactions.
+
+5. **Accessibility Features**:
+   - Keyboard navigation and screen reader support for color descriptions.
+   - High contrast mode and visual indicators for selected colors.
+
+6. **Animation and Sounds**:
+   - Entrance and exit animations to make the picker feel engaging.
+   - Optional sounds for selecting or clearing colors.
+
+---
+
+### **M3L Fields**
+
+| **Field**        | **Description**                                   | **Example**                                              |
+| ---------------- | ------------------------------------------------- | -------------------------------------------------------- |
+| `type`           | Specifies the widget type.                        | `type = "color_picker"`                                 |
+| `mode`           | Determines the mode of the color picker.          | `mode = "macro"` or `mode = "mini"`                   |
+| `palette`        | Defines a custom palette of colors.               | `palette = [ "#FF0000", "#00FF00", "#0000FF" ]`       |
+| `intents`        | Specifies actions for widget events.              | `intents = [ "on_color_select", "on_clear", "on_error" ]` |
+| `dynamic_source` | Fetches palette data dynamically.                 | `dynamic_source = "@SQeeL://palette.db"`               |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**           | **Description**                                    | **Example**                                |
+| ----------------------- | -------------------------------------------------- | ------------------------------------------ |
+| `color_picker.background` | Background color of the color picker widget.       | `color_picker.background = "#FFF"`       |
+| `color_picker.border`    | Border styling for the widget.                     | `color_picker.border = "1px solid #CCC"` |
+| `color_picker.font`      | Font styling for labels or color descriptions.      | `color_picker.font = { size = "14px", color = "#000" }` |
+| `color_picker.mode`      | Custom styling for macro or mini modes.             | `color_picker.mode.macro = { spacing = "10px" }` |
+| `color_picker.animations`| Entrance and exit animations for the widget.        | `color_picker.animations = { entrance = "fade-in", exit = "slide-out" }` |
+| `color_picker.sounds`    | Sounds for specific interactions (optional).        | `color_picker.sounds = { select = "click.mp3", clear = "clear.mp3" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "color_picker"
+mode = "macro"
+palette = [ "#FF0000", "#00FF00", "#0000FF" ]
+dynamic_source = "@SQeeL://palette.db"
+intents = [ "on_color_select", "on_clear", "on_error" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[color_picker]
+background = "#FFF"
+border = "1px solid #CCC"
+
+[color_picker.font]
+size = "14px"
+color = "#000"
+
+[color_picker.mode.macro]
+spacing = "10px"
+
+[color_picker.mode.mini]
+spacing = "5px"
+
+[color_picker.animations]
+entrance = "fade-in"
+exit = "slide-out"
+
+[color_picker.sounds]
+select = "click.mp3"
+clear = "clear.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+#### **Dynamic Palettes**
+   - Use co-chains like SQeeL to fetch and update palettes dynamically based on user or application needs.
+
+#### **Responsive Design**
+   - GSS enables switching between macro and mini modes for mobile-friendly design.
+
+#### **Localization Support**
+   - Support for localized color names or descriptions (e.g., "Scarlet Red" instead of "#FF0000").
+
+---
+
+### **Use Cases**
+- **Brand Design**: Allow users to select brand-approved colors.
+- **Theming**: Enable customization of UI themes or assets.
+- **Art Tools**: Provide precise color selection for creative applications.
+
+---
+
+### **Conclusion**
+
+The Color Picker Widget offers a versatile and visually customizable way to handle color selection. Its flexible modes and robust features ensure it meets the needs of diverse applications while maintaining ease of use and accessibility.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
