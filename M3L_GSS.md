@@ -8022,6 +8022,152 @@ The Poll Widget is a versatile and engaging tool for gathering user input and di
 
 ---
 
+### **Rating Widget**
+
+**Rating Widget**: A widget designed to collect user ratings for content or experiences. This widget supports various rating types and scales, with a minimum of two rating levels and a customizable upper limit of 100, as defined in the M3L file. The most common implementation is a five-star system, but developers can configure other formats (e.g., numerical scales or emojis). Ratings must be tied to a specific widget, ensuring context and relevance for each use case.
+
+---
+
+### **Core Features**
+
+1. **Customizable Rating Scales**:
+   - Supports 2 to 100 rating levels.
+   - Options include stars, numerical values, emojis, or custom icons.
+   - GSS designers can implement control systems to adjust designs based on the number of rating levels (e.g., a slider for more than 10 levels).
+
+2. **Dynamic Feedback**:
+   - Shows real-time feedback as users hover or select ratings.
+   - Supports optional text labels for each rating level (e.g., "Poor", "Excellent").
+
+3. **Aggregated Results**:
+   - Displays average ratings dynamically when connected to co-chains like Pages.
+   - Allows GSS designers to define result display types (e.g., graphical bars, percentages).
+
+4. **Interaction Options**:
+   - Intents such as `on_rate` and `on_clear` allow seamless integration into applications.
+   - Ratings are tied to a specific widget, ensuring clear context for feedback.
+   - Supports resetting ratings if enabled by the developer.
+
+5. **Accessibility Features**:
+   - Fully navigable via keyboard or screen readers.
+   - High contrast mode for better visibility.
+
+6. **Animation and Sounds**:
+   - Entrance and exit animations for the widget.
+   - Optional sounds for hovering, selecting, or clearing ratings.
+
+---
+
+### **M3L Fields**
+
+| **Field**        | **Description**                                   | **Example**                                                |
+| ---------------- | ------------------------------------------------- | ---------------------------------------------------------- |
+| `type`           | Specifies the widget type.                        | `type = "rating_widget"`                                  |
+| `scale`          | Defines the number of rating levels (max 100).    | `scale = 5`                                               |
+| `labels`         | Optional text labels for each level.              | `labels = [ "Poor", "Fair", "Good", "Very Good", "Excellent" ]` |
+| `icons`          | Custom icons for each rating level.               | `icons = [ "star", "star", "star", "star", "star" ]`       |
+| `dynamic_source` | Fetches aggregated ratings dynamically.           | `dynamic_source = "@SQeeL://content_ratings.db"`         |
+| `target_widget`  | Specifies the widget being rated.                 | `target_widget = "asset_card_1"`                         |
+| `intents`        | Specifies actions for widget events.              | `intents = [ "on_rate", "on_clear" ]`                     |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**              | **Description**                                    | **Example**                                 |
+| -------------------------- | -------------------------------------------------- | ------------------------------------------- |
+| `rating_widget.background` | Background color of the rating widget.             | `rating_widget.background = "#FFF"`      |
+| `rating_widget.border`     | Border styling for the widget.                     | `rating_widget.border = "1px solid #CCC"` |
+| `rating_widget.font`       | Font styling for labels (if applicable).           | `rating_widget.font = { size = "14px", color = "#000" }` |
+| `rating_widget.icon`       | Styling for rating icons (e.g., color, size).       | `rating_widget.icon = { color = "#FFD700", size = "20px" }` |
+| `rating_widget.icon.hover` | Styling when a rating icon is hovered.             | `rating_widget.icon.hover = { color = "#FFA500" }` |
+| `rating_widget.results`    | Styling for displaying aggregated results.          | `rating_widget.results = { type = "bar", color = "#00FF00" }` |
+| `rating_widget.animations` | Animations for rating interactions.                | `rating_widget.animations = { hover = "scale-up", select = "pulse" }` |
+| `rating_widget.sounds`     | Sounds for specific interactions (optional).       | `rating_widget.sounds = { hover = "hover.mp3", select = "select.mp3" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "rating_widget"
+scale = 5
+labels = [ "Poor", "Fair", "Good", "Very Good", "Excellent" ]
+icons = [ "star", "star", "star", "star", "star" ]
+dynamic_source = "@SQeeL://content_ratings.db"
+target_widget = "asset_card_1"
+intents = [ "on_rate", "on_clear" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[rating_widget]
+background = "#FFF"
+border = "1px solid #CCC"
+
+[rating_widget.font]
+size = "14px"
+color = "#000"
+
+[rating_widget.icon]
+color = "#FFD700"
+size = "20px"
+
+[rating_widget.icon.hover]
+color = "#FFA500"
+
+[rating_widget.results]
+type = "bar"
+color = "#00FF00"
+
+[rating_widget.animations]
+hover = "scale-up"
+select = "pulse"
+
+[rating_widget.sounds]
+hover = "hover.mp3"
+select = "select.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+#### **Dynamic Data Loading**
+   - Use co-chains like SQeeL to fetch and update aggregated ratings in real-time.
+
+#### **Responsive Design**
+   - Ensure the widget adapts to various screen sizes and orientations.
+
+#### **Localization Support**
+   - Support for localized labels and tooltips.
+
+#### **Custom Control Systems**
+   - Enable GSS designers to create unique rating designs based on the scale (e.g., sliders for high scales, icons for low scales).
+
+---
+
+### **Use Cases**
+- **Content Feedback**: Collect user ratings for videos, articles, or assets.
+- **Product Reviews**: Enable customers to rate products in e-commerce platforms.
+- **Service Quality**: Gather feedback on user experiences or customer support interactions.
+
+---
+
+### **Conclusion**
+
+The Rating Widget is a flexible and visually engaging tool for collecting user sentiment. With robust customization options and seamless integration into co-chains like Pages, it provides valuable insights for content optimization and user engagement.
+
+---
+
+## High-Level Widgets
+
+High level widgets are meant to really be single page widgets and are what gives M3L it's power as it showcases how common design schemens can have a very set look and feel which allows users the ability to know how to use your application before they even try it for the first time. As teh M3L standard grows there will be more standard high level widgets so GSS designers will have to check in and update GSS files periodicaly. If they are not updated there is a standard markup for how the high level widget is made and the system will follwo that formula using the low level widget definintions.
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
