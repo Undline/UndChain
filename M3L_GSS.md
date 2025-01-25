@@ -161,6 +161,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Date Picker**: Allows users to select dates.
 - **Color Picker**: Allows users to select a color (normally vis a pallet)
 - **Tree View**: Represents hierarchical data (e.g., directories).
+- **Object Tree**: This works like a tree view with the exception that is meant for object. Useful in systems that need to maintain objects on screen.
 - **Poll Widget**: Presents a multiple-choice question and shows aggregated results.
 - **Status Bar**: Displays relevant statistics or information at the bottom of the screen.
 - **Split View**: Divides the screen into two or more resizable panels.
