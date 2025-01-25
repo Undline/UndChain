@@ -8438,6 +8438,134 @@ The Reaction Widget fosters engagement and interactivity, providing users with a
 
 ---
 
+### **Status Bar Widget**
+
+**Status Bar**: A widget designed to display relevant statistics or information at the bottom of the screen. This widget is ideal for creative or complex applications, providing feedback on processing times, system status, or the current mode within an application.
+
+---
+
+### **Core Features**
+
+1. **Dynamic Status Updates**:
+   - Displays real-time feedback for long-running processes (e.g., "Rendering: 75% complete").
+   - Updates dynamically based on application state.
+
+2. **Mode Display**:
+   - Indicates the current mode of the application (e.g., "Edit Mode", "Preview Mode").
+   - Allows seamless mode transitions with clear feedback to the user.
+
+3. **Customizable Content**:
+   - Supports text, icons, and progress bars for enhanced communication.
+   - GSS designers can style the status bar to match the application’s theme.
+
+4. **Interaction Options**:
+   - Intents such as `on_click` or `on_hover` can trigger additional actions or tooltips.
+   - Supports expandable sections for more detailed information.
+
+5. **Accessibility Features**:
+   - Fully navigable via keyboard or screen readers.
+   - High contrast mode for better visibility.
+
+6. **Animation and Sounds**:
+   - Entrance and exit animations for smooth appearance or dismissal.
+   - Optional sounds for status updates or warnings.
+
+---
+
+### **M3L Fields**
+
+| **Field**        | **Description**                                   | **Example**                                                |
+| ---------------- | ------------------------------------------------- | ---------------------------------------------------------- |
+| `type`           | Specifies the widget type.                        | `type = "status_bar"`                                     |
+| `default_mode`   | Sets the initial mode displayed.                  | `default_mode = "Edit Mode"`                              |
+| `dynamic_source` | Fetches status updates dynamically.               | `dynamic_source = "@SQeeL://status_data.db"`             |
+| `progress_bar`   | Enables or disables a progress bar.               | `progress_bar = true`                                     |
+| `intents`        | Specifies actions for widget events.              | `intents = [ "on_click", "on_hover" ]`                   |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**                  | **Description**                                    | **Example**                                  |
+| ------------------------------ | -------------------------------------------------- | -------------------------------------------- |
+| `status_bar.background`        | Background color of the status bar.                | `status_bar.background = "#333"`           |
+| `status_bar.border`            | Border styling for the widget.                     | `status_bar.border = "1px solid #FFF"`     |
+| `status_bar.font`              | Font styling for status text.                      | `status_bar.font = { size = "12px", color = "#FFF" }` |
+| `status_bar.progress`          | Styling for the progress bar (if enabled).         | `status_bar.progress = { color = "#0F0", height = "5px" }` |
+| `status_bar.icon`              | Styling for icons displayed in the status bar.     | `status_bar.icon = { size = "16px", color = "#FFF" }` |
+| `status_bar.animations`        | Animations for status updates or transitions.      | `status_bar.animations = { update = "fade-in", exit = "slide-out" }` |
+| `status_bar.sounds`            | Sounds for status changes or updates.              | `status_bar.sounds = { update = "ping.mp3" }`          |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "status_bar"
+default_mode = "Edit Mode"
+dynamic_source = "@SQeeL://status_data.db"
+progress_bar = true
+intents = [ "on_click", "on_hover" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[status_bar]
+background = "#333"
+border = "1px solid #FFF"
+
+[status_bar.font]
+size = "12px"
+color = "#FFF"
+
+[status_bar.progress]
+color = "#0F0"
+height = "5px"
+
+[status_bar.icon]
+size = "16px"
+color = "#FFF"
+
+[status_bar.animations]
+update = "fade-in"
+exit = "slide-out"
+
+[status_bar.sounds]
+update = "ping.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+#### **Dynamic Data Loading**
+   - Use co-chains like SQeeL to dynamically fetch and update status information in real-time.
+
+#### **Responsive Design**
+   - Ensure the widget adapts to various screen sizes and orientations.
+
+#### **Localization Support**
+   - Support for localized mode names and status descriptions.
+
+---
+
+### **Use Cases**
+- **Creative Applications**: Display rendering progress or current tool mode.
+- **System Monitoring**: Provide real-time system feedback, such as resource usage or network status.
+- **Game Development**: Show game states or debug information during development.
+
+---
+
+### **Conclusion**
+
+The Status Bar Widget is a vital tool for providing users with real-time feedback and context. Its flexible design and dynamic capabilities make it suitable for a wide range of applications, from creative tools to system monitoring.
+
+---
+
 ## High-Level Widgets
 
 High level widgets are meant to really be single page widgets and are what gives M3L it's power as it showcases how common design schemens can have a very set look and feel which allows users the ability to know how to use your application before they even try it for the first time. As teh M3L standard grows there will be more standard high level widgets so GSS designers will have to check in and update GSS files periodicaly. If they are not updated there is a standard markup for how the high level widget is made and the system will follwo that formula using the low level widget definintions.
