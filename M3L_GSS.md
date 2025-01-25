@@ -7874,7 +7874,152 @@ The Object Tree Widget is a powerful tool for managing hierarchical data with ad
 
 ---
 
+### **Poll Widget**
 
+**Poll Widget**: A widget designed to present multiple-choice questions and display aggregated results. This widget is ideal for collecting user feedback, conducting surveys, or facilitating quick audience polls. The system defaults to two options, with the ability to scale to multiple options. Additionally, users can write in their own answers if this feature is enabled. All polls must have at least two options; otherwise, you are polling for engagement, which is a different widget type.
+
+---
+
+### **Core Features**
+
+1. **Multiple Choice Options**:
+
+   - Supports two or multiple-selection polls.
+   - Customizable number of options.
+   - Optional user-submitted answers, enabling greater flexibility and engagement.
+
+2. **Aggregated Results**:
+
+   - Displays results dynamically as users vote.
+   - GSS designers can define result display types (e.g., percentages, absolute counts, or graphical bars).
+
+3. **Dynamic Updates**:
+
+   - Results update in real-time when connected to a co-chain like SQeeL.
+   - Supports anonymous and authenticated voting.
+
+4. **Customizable Design**:
+
+   - GSS allows full control over the appearance of the poll, including option styling, fonts, and colors.
+   - Supports progress animations for results.
+
+5. **Accessibility Features**:
+
+   - Fully navigable via keyboard or screen readers.
+   - High contrast mode for better visibility.
+
+6. **Animation and Sounds**:
+
+   - Entrance and exit animations for poll options and results.
+   - Optional sounds for voting and result updates.
+
+---
+
+### **M3L Fields**
+
+| **Field**          | **Description**                            | **Example**                                      |
+| ------------------ | ------------------------------------------ | ------------------------------------------------ |
+| `type`             | Specifies the widget type.                 | `type = "poll_widget"`                           |
+| `question`         | The poll question.                         | `question = "What is your favorite color?"`      |
+| `options`          | List of available answers.                 | `options = [ "Red", "Blue", "Green", "Yellow" ]` |
+| `allow_multiple`   | Specifies if multiple answers are allowed. | `allow_multiple = false`                         |
+| `allow_user_input` | Enables users to submit their own answers. | `allow_user_input = true`                        |
+| `dynamic_source`   | Fetches poll results dynamically.          | `dynamic_source = "@SQeeL://poll_results.db"`    |
+| `intents`          | Specifies actions for widget events.       | `intents = [ "on_vote", "on_result_update" ]`    |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**              | **Description**                            | **Example**                                                          |
+| -------------------------- | ------------------------------------------ | -------------------------------------------------------------------- |
+| `poll_widget.background`   | Background color of the poll widget.       | `poll_widget.background = "#FFF"`                                    |
+| `poll_widget.border`       | Border styling for the widget.             | `poll_widget.border = "1px solid #CCC"`                              |
+| `poll_widget.font`         | Font styling for the question and options. | `poll_widget.font = { size = "16px", color = "#000" }`               |
+| `poll_widget.option`       | Styling for individual poll options.       | `poll_widget.option = { padding = "10px" }`                          |
+| `poll_widget.option.hover` | Styling when an option is hovered.         | `poll_widget.option.hover = { background = "#EEE" }`                 |
+| `poll_widget.results`      | Styling for the results display.           | `poll_widget.results = { type = "bar", color = "#00FF00" }`          |
+| `poll_widget.animations`   | Animations for voting and result updates.  | `poll_widget.animations = { vote = "fade-in", results = "expand" }`  |
+| `poll_widget.sounds`       | Sounds for interactions (optional).        | `poll_widget.sounds = { vote = "click.mp3", update = "update.mp3" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "poll_widget"
+question = "What is your favorite color?"
+options = [ "Red", "Blue", "Green", "Yellow" ]
+allow_multiple = false
+allow_user_input = true
+dynamic_source = "@SQeeL://poll_results.db"
+intents = [ "on_vote", "on_result_update" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[poll_widget]
+background = "#FFF"
+border = "1px solid #CCC"
+
+[poll_widget.font]
+size = "16px"
+color = "#000"
+
+[poll_widget.option]
+padding = "10px"
+
+[poll_widget.option.hover]
+background = "#EEE"
+
+[poll_widget.results]
+type = "bar"
+color = "#00FF00"
+
+[poll_widget.animations]
+vote = "fade-in"
+results = "expand"
+
+[poll_widget.sounds]
+vote = "click.mp3"
+update = "update.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+#### **Dynamic Data Loading**
+
+- Use co-chains like SQeeL to fetch and update poll results in real-time.
+
+#### **Responsive Design**
+
+- Ensure the widget adapts to various screen sizes and orientations.
+
+#### **Localization Support**
+
+- Support for localized questions and options.
+
+---
+
+### **Use Cases**
+
+- **Audience Engagement**: Conduct live polls during presentations or streams.
+- **Feedback Collection**: Gather opinions on features or services.
+- **Education**: Use for quizzes or quick knowledge checks.
+
+---
+
+### **Conclusion**
+
+The Poll Widget is a versatile and engaging tool for gathering user input and displaying results. Its dynamic design and robust customization options make it suitable for a variety of applications, from audience engagement to data collection.
+
+---
 
 ## Summary
 
