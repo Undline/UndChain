@@ -159,6 +159,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Notification Panel**: This is a listing of notifications from the application being used.
 - **Toast**: Close to a popup but is designed to only show up for a limited amount of time then disappear (stays in the notifications menu)
 - **Date Picker**: Allows users to select dates.
+- **Color Picker**: Allows users to select a color (normally vis a pallet)
 - **Tree View**: Represents hierarchical data (e.g., directories).
 - **Poll Widget**: Presents a multiple-choice question and shows aggregated results.
 - **Status Bar**: Displays relevant statistics or information at the bottom of the screen.
