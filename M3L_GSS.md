@@ -7362,6 +7362,134 @@ The Toast Widget is a lightweight and visually engaging way to deliver temporary
 
 ---
 
+### **Date Picker Widget**
+
+**Date Picker**: A widget designed to allow users to easily select and sanitize dates. It provides an intuitive interface for date selection and ensures consistent formatting and validation. Two modes, **macro** and **mini**, offer GSS designers flexibility in integrating the widget into various layouts.
+
+---
+
+### **Core Features**
+
+1. **Modes**:
+   - **Macro**: A larger, calendar-style interface for comprehensive date browsing and selection.
+   - **Mini**: A compact, dropdown-style interface for quick date selection, ideal for limited screen space.
+
+2. **Customizable Design**:
+   - GSS defines the layout, colors, fonts, and animations for the widget.
+   - Designers can toggle between macro and mini modes based on user input or screen size.
+
+3. **Date Validation**:
+   - Ensures selected dates fall within a specified range.
+   - Prevents invalid dates (e.g., February 30).
+   - Supports dynamic date constraints (e.g., disallow past dates).
+
+4. **Event Integration**:
+   - Intents such as `on_date_select`, `on_clear`, and `on_error` enable seamless integration with application workflows.
+   - Supports interactions like hovering, clicking, or tapping.
+
+5. **Accessibility Features**:
+   - Fully navigable via keyboard or screen readers.
+   - Support for high contrast modes and assistive technologies.
+
+6. **Animation and Sounds**:
+   - Entrance and exit animations for the date picker.
+   - Optional sounds for date selection, validation errors, and clearing selections.
+
+---
+
+### **M3L Fields**
+
+| **Field**        | **Description**                                   | **Example**                                              |
+| ---------------- | ------------------------------------------------- | -------------------------------------------------------- |
+| `type`           | Specifies the widget type.                        | `type = "date_picker"`                                  |
+| `mode`           | Determines the mode of the date picker.           | `mode = "macro"` or `mode = "mini"`                   |
+| `range`          | Defines the valid date range.                     | `range = { start = "2024-01-01", end = "2024-12-31" }`|
+| `intents`        | Specifies actions for widget events.              | `intents = [ "on_date_select", "on_clear", "on_error" ]` |
+| `dynamic_source` | Fetches date-related constraints dynamically.     | `dynamic_source = "@SQeeL://date_constraints.db"`      |
+
+---
+
+### **GSS Styling Parameters**
+
+| **Parameter**           | **Description**                                    | **Example**                                 |
+| ----------------------- | -------------------------------------------------- | ------------------------------------------- |
+| `date_picker.background`| Background color of the date picker widget.         | `date_picker.background = "#FFF"`         |
+| `date_picker.border`    | Border styling for the date picker.                 | `date_picker.border = "1px solid #CCC"`   |
+| `date_picker.font`      | Font styling for dates in the widget.               | `date_picker.font = { size = "14px", color = "#000" }` |
+| `date_picker.mode`      | Custom styling for macro or mini modes.             | `date_picker.mode.macro = { spacing = "10px" }` |
+| `date_picker.animations`| Entrance and exit animations for the widget.        | `date_picker.animations = { entrance = "fade-in", exit = "slide-out" }` |
+| `date_picker.sounds`    | Sounds for specific interactions (optional).        | `date_picker.sounds = { select = "click.mp3", error = "error.mp3" }` |
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "date_picker"
+mode = "macro"
+range = { start = "2024-01-01", end = "2024-12-31" }
+dynamic_source = "@SQeeL://date_constraints.db"
+intents = [ "on_date_select", "on_clear", "on_error" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[date_picker]
+background = "#FFF"
+border = "1px solid #CCC"
+
+[date_picker.font]
+size = "14px"
+color = "#000"
+
+[date_picker.mode.macro]
+spacing = "10px"
+
+[date_picker.mode.mini]
+spacing = "5px"
+
+[date_picker.animations]
+entrance = "fade-in"
+exit = "slide-out"
+
+[date_picker.sounds]
+select = "click.mp3"
+error = "error.mp3"
+clear = "clear.mp3"
+```
+
+---
+
+### **Advanced Considerations**
+
+#### **Dynamic Constraints**
+   - Use co-chains like SQeeL to fetch dynamic date constraints (e.g., blackout dates).
+
+#### **Responsive Design**
+   - GSS enables switching between macro and mini modes for mobile-friendly design.
+
+#### **Localization Support**
+   - Enable different date formats (e.g., MM/DD/YYYY, DD/MM/YYYY) based on locale settings.
+
+---
+
+### **Use Cases**
+- **Event Scheduling**: Allow users to select dates for events, bookings, or deadlines.
+- **Range Selection**: Let users choose start and end dates for reports or timelines.
+- **Dynamic Calendars**: Integrate with co-chains for live updates, such as holidays or blackout dates.
+
+---
+
+### **Conclusion**
+
+The Date Picker Widget provides a streamlined and visually customizable way to handle date selection in applications. Its flexible modes and robust features ensure it meets the needs of diverse applications while maintaining ease of use and accessibility.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
