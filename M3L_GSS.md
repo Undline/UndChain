@@ -8747,6 +8747,169 @@ High-level widgets showcase the power and versatility of M3L, making it easier t
 
 ---
 
+### **Asset View Widget**
+
+**Asset View**: Provides a comprehensive shopping experience with product grids, sorting tools, a shopping cart, detailed asset sections, and return management systems. This widget is designed for both digital and physical marketplaces, offering flexibility and customization to meet diverse needs.
+
+---
+
+### **Core Features**
+
+1. **Dynamic Data Sources**:
+
+   - Pull asset data dynamically from:
+     - **UndChain Database**: Ensures secure, decentralized transactions using co-chains such as SQeeL.
+     - **Static Datasets**: Useful for testing, debugging, or fixed inventories.
+
+2. **Featured Items**:
+
+   - A carousel highlights up to 10 featured items, cycling dynamically based on user behavior or developer-defined priorities.
+
+3. **Shopping Cart Integration**:
+
+   - Allows users to add items to a cart, with real-time updates and subtotal calculations.
+   - Supports item holds for limited-stock assets and restrictions for high-demand items.
+   - Includes the ability to add multiples of the same item, unless restricted by stock levels.
+
+4. **Sorting and Filtering**:
+
+   - Built-in sorting tools for price, popularity, and ratings.
+   - Advanced filters for categories, contract types, availability, and user-defined preferences.
+
+5. **Subscription Support**:
+
+   - Users can opt for recurring subscriptions or one-time purchases for applicable assets.
+
+6. **Dynamic Comparison**:
+
+   - Compare similar items side-by-side, dynamically updating if stock levels or details change.
+
+7. **Return Management System**:
+
+   - Supports an integrated RMA (Return Merchandise Authorization) system.
+   - Allows customers to initiate return requests and receive return shipping labels.
+   - Tracks return data for analytics and customer service improvement.
+
+8. **User Roles**:
+
+   - Includes role-based access controls to limit analytics, sales data, or return visibility to appropriate users.
+
+9. **Analytics Integration**:
+
+   - Tracks user interactions like clicks, favorites, time spent on items, and return rates.
+   - Generates data for marketing insights, inventory management, and user engagement analysis.
+
+10. **Settings and Personalization**:
+
+   - Captures browse history, purchase history, and user preferences for better personalization.
+   - Supports favorites and wishlists for easy access to frequently viewed or desired items.
+
+11. **Customizability**:
+
+    - Developers can override details pages, checkout processes, or return systems as needed.
+    - Sections can be overloaded by M3L designers to include additional text or functions.
+
+12. **Accessibility**:
+
+    - Fully navigable via keyboard and screen readers.
+    - High-contrast modes and dynamic layout adjustments for touch and controller inputs.
+
+13. **Animations**:
+
+    - GSS designers can define animations for every widget within the asset view, allowing custom transitions, hover effects, and interaction feedback.
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "asset_view"
+data_source = "SQeeL://marketplace/assets.db"
+featured_items = [ "item1", "item2", "item3" ]
+sorting_options = [ "price", "popularity", "ratings" ]
+filters = [ "category", "contract_type", "availability" ]
+cart_enabled = true
+subscriptions = true
+comparison_enabled = true
+returns_enabled = true
+user_roles = [ "admin", "manager", "viewer" ]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[asset_view]
+background = "#FFF"
+
+[asset_grid.item]
+padding = "10px"
+background = "#F9F9F9"
+hover.background = "#EEE"
+
+[asset_grid.item.contract]
+color = "#00FF00"
+
+[featured_items.carousel]
+duration = "5s"
+transition = "ease-in-out"
+
+[cart.icon]
+size = "24px"
+color = "#007BFF"
+
+[filters.dropdown]
+background = "#EEE"
+border = "1px solid #CCC"
+
+[animations.add_to_cart]
+type = "bounce"
+duration = "0.3s"
+
+[animations.featured_cycle]
+type = "slide-in"
+duration = "0.5s"
+```
+
+---
+
+### **Advanced Considerations**
+
+#### **Dynamic Comparison**
+   - Items in the comparison list dynamically update if stock levels or details change.
+
+#### **Promotions and Campaigns**
+   - Developers can integrate banners or dedicated widgets to highlight promotions.
+
+#### **Return Management System**
+   - Users can request returns directly from the asset view.
+   - RMA tracking for store owners to process return requests.
+   - Notifications for users on return status updates.
+
+#### **User Roles and Permissions**
+   - Analytics, sales data, and return data can be restricted to specific roles.
+
+#### **Localization**
+   - Support localized currencies and languages for a global audience.
+
+---
+
+### **Use Cases**
+
+- **E-Commerce**: Digital marketplaces for assets like NFTs or physical goods.
+- **Subscription Services**: Platforms offering monthly or yearly subscriptions.
+- **Specialized Applications**: Niche tools like component selection systems for engineering or manufacturing.
+
+---
+
+### **Conclusion**
+
+The Asset View Widget is a powerful, versatile tool for creating robust shopping and browsing experiences. With its rich feature set and dynamic customization options, it empowers developers to build applications that cater to diverse audiences and business needs.
+
+---
+
 ## Summary
 
 This appendix showcases the flexibility and modularity of M3L and GSS through a comprehensive widget catalog. Developers can use these examples to create visually consistent and functional applications while ensuring compatibility with future enhancements.
