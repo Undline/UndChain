@@ -147,6 +147,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Floating Menu**: Context-sensitive menu that activates on events (e.g., right-click, hover).
 - **Graph (Interactive)**: Generates visualizations based on input data; allows interactions if the data is editable.
 - **Timeline**: A graph-like structure for events over time, expanding only horizontally.
+- **Waterfall Charts**: Displays a continuous stream of data over time, often used for visualizing RF signals, sensor data, or other time-based intensity variations.
 - **Gantt Charts**: This widget allows the use of Gantt charts which inherits timeline widget.
 - **Roadmap**: Widget that depicts a roadmap for a project. Contains markers that are designed for additional information.
 - **Skill Tree**: this widget creates a skill tree like widget that allows nodes (cards) to be activated when the parent of that node is 'activated'
