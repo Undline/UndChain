@@ -5609,6 +5609,121 @@ The Timeline Widget combines flexibility and interactivity to visualize time-bas
 
 ---
 
+### **Waterfall Widget**
+
+**Waterfall Widget**: Displays a continuous stream of data over time, often used for visualizing RF signals, sensor data, or other time-based intensity variations. Supports vertical and horizontal orientations with customizable color gradients to emphasize stronger signals. Additionally, icons and shapes can be dynamically overlaid to mark major events or pattern matches, enhancing data visualization.
+
+---
+
+### **Core Features**
+
+1. **Data Visualization**:
+   - Displays intensity over time, commonly used for radio signals, seismic activity, or financial trends.
+   - Supports both real-time and historical data streaming.
+
+2. **Orientation and Layout**:
+   - Can be rendered in **vertical** or **horizontal** orientation.
+   - Adaptable to screen size with dynamic resizing based on user preference.
+
+3. **Customizable Color Gradients**:
+   - Allows defining color schemes to represent different intensity levels.
+   - Supports heatmap-like visualization for improved clarity.
+
+4. **Data Sources**:
+   - Can pull data dynamically from:
+     - **UndChain Database**: Fetches time-series data securely.
+     - **Live Data Streams**: Connects to real-time sources like RF scanners or network traffic monitors.
+     - **Static Datasets**: Used for testing and pre-recorded analysis.
+
+5. **Interactivity**:
+   - Supports zooming and panning for closer inspection of data.
+   - Users can hover over data points to display tooltip information.
+
+6. **Threshold Alerts**:
+   - Can define intensity thresholds that trigger visual or audio alerts.
+   - Useful for monitoring critical signals like system failures or emergency alerts.
+
+7. **Event Markers & Pattern Recognition**:
+   - Allows icons or shapes to be drawn at specific points to highlight key events.
+   - Enables pattern recognition to overlay alerts or contextual annotations.
+   - Ideal for marking interference in RF analysis, seismic anomalies, or trend spikes.
+
+8. **GSS Styling and Animations**:
+   - Customizable animations for data flow (e.g., smooth scrolling or fading transitions).
+   - Allows GSS designers to implement custom effects based on intensity shifts.
+   - Icons and markers can have animations tied to their appearance.
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "waterfall"
+data_source = "SQeeL://sensor_data/realtime"
+orientation = "horizontal"
+color_gradient = { low = "#0000FF", mid = "#00FF00", high = "#FF0000" }
+threshholds = { warning = 70, critical = 90 }
+zoom_enabled = true
+pan_enabled = true
+
+[[layout.container.content.markers]]
+position = 1245
+icon = "@UndChain/icons/signal_warning.svg"
+label = "Signal Interference Detected"
+
+[[layout.container.content.markers]]
+position = 2670
+shape = "circle"
+color = "#FFA500"
+label = "Detected Anomaly"
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[waterfall]
+background = "#000"
+border = "1px solid #444"
+
+[waterfall.data_intensity]
+low = "#0000FF"
+mid = "#00FF00"
+high = "#FF0000"
+
+[waterfall.animation]
+scroll_speed = "2s"
+transition_effect = "fade-in"
+
+[waterfall.tooltip]
+font-size = "14px"
+color = "#FFF"
+background = "rgba(0,0,0,0.7)"
+
+[waterfall.markers]
+icon_size = "20px"
+marker_animation = "pulse"
+```
+
+---
+
+### **Use Cases**
+
+- **Radio Frequency Monitoring**: Visualizes RF noise levels and spectrum analysis, marking interference sources.
+- **Seismic Activity Tracking**: Displays earthquake wave propagation with annotations for key events.
+- **Stock Market Trends**: Shows financial movement over time, overlaying major buy/sell indicators.
+- **Network Traffic Analysis**: Monitors bandwidth usage and anomalies, highlighting unusual spikes.
+
+---
+
+### **Conclusion**
+
+The Waterfall Widget provides a powerful means of displaying time-based data with customizable visualizations. With real-time data streaming, custom gradients, event markers, and interactivity, it is a valuable tool for applications requiring continuous signal monitoring, anomaly detection, or advanced trend analysis.
+
+---
+
 ### **Gantt Chart Widget**
 
 The Gantt Chart Widget is a logical extension of the Timeline Widget, designed specifically for project management and task tracking. It inherits the core functionality of the Timeline Widget, adding task dependencies, progress indicators, and enhanced interaction capabilities.
