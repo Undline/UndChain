@@ -9030,6 +9030,123 @@ The **Context Menu Widget** transforms traditional menus into an **adaptive, ful
 
 ---
 
+### **Form Builder Widget**
+
+**Form Builder**: A structured data entry system that supports dynamic validation, multi-step forms, and pre-filled inputs. This widget enables **structured data collection** while providing full flexibility for both M3L and GSS developers.
+
+---
+
+### **Core Features**
+
+- **Dynamic Field Creation** – M3L developers define **text fields, checkboxes, dropdowns, radio buttons, and file uploads**.
+- **Validation System** – Allows **real-time input validation** (e.g., required fields, regex validation, format checks).
+- **Multi-Step Forms** – Supports **step-based navigation** for complex data entry.
+- **Pre-Fill Support** – Users can opt-in to **auto-fill common fields** (e.g., name, email, phone) from their UndChain profile.
+- **Custom Error Handling** – Errors are styled and handled by **GSS** (e.g., tooltips, popups, field highlights).
+- **Auto-Saving & Drafts** – **Partially completed forms are saved on UndChain** but remain under the control of the **form writer**.
+- **Submit Action** – Every form **must** have a submit button, which **triggers an intent for processing the data**.
+- **Conditional Logic** – Fields can **show/hide based on previous answers** (e.g., If "Other" is selected, a new text field appears).
+- **Controller & Keyboard Navigation** – Supports **tabbing between fields and controller-based inputs**.
+- **Alternative Input Support** – Users can enter data **via voice input, handwriting, or standard text entry**, depending on GSS implementation.
+
+---
+
+### **File Submission Rules**
+
+- **Files are uploaded to UndChain** and **linked in the form submission** (not physically attached).
+- **File Size & Type Rules** – M3L developers can set acceptable file types and size limits.
+- **Limits Per Form** – Form creators can set a **maximum number of attachments** per submission.
+- **Off-Chain Attachments** – If a file is stored off-chain, the **user must explicitly approve the link before submission**.
+
+---
+
+### **CAPTCHA Alternative for Free Submissions**
+
+- A **built-in challenge system** for spam prevention.
+- **Only required when the user isn't paying for form submission.**
+- Uses **UndChain perception scores and account activity** to determine if the user is a real person.
+- Can be **enabled per form** by M3L developers.
+
+---
+
+### **Example Form Builder in M3L**
+
+```toml
+[[layout.container.content]]
+type = "form_builder"
+steps = 3  # Defines multi-step navigation
+
+[[layout.container.content.fields]]
+id = "full_name"
+type = "text"
+label = "Full Name"
+required = true
+pre_fill = true  # Pulls from user profile if permitted
+
+[[layout.container.content.fields]]
+id = "email"
+type = "email"
+label = "Email Address"
+required = true
+pre_fill = true
+
+[[layout.container.content.fields]]
+id = "file_upload"
+type = "file"
+label = "Upload Documents"
+max_files = 3
+file_types = ["pdf", "jpg", "png"]
+max_size = "10MB"
+
+[[layout.container.content.fields]]
+id = "captcha"
+type = "captcha"
+label = "Verification"
+required = true
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[form_builder]
+background = "#FFF"
+border = "1px solid #CCC"
+padding = "15px"
+
+[form_builder.field]
+label_font_size = "14px"
+error_color = "#FF0000"
+
+[form_builder.button.submit]
+background = "#007BFF"
+color = "#FFF"
+padding = "10px"
+border-radius = "5px"
+hover.background = "#0056b3"
+
+[form_builder.captcha]
+challenge_type = "image_recognition"
+```
+
+---
+
+### **Use Cases**
+
+- **E-commerce Checkout Forms** – Users can pre-fill shipping details for faster checkout.
+- **Job Applications** – Supports multi-step entry and file uploads.
+- **Event Registration** – Allows conditional fields based on user input.
+- **On-Chain ID Verification** – Uses file upload validation for identity checks.
+
+---
+
+### **Conclusion**
+
+The **Form Builder Widget** enables developers to **build complex, interactive forms** with full **validation, multi-step workflows, and adaptive pre-filling.** By integrating **alternative inputs, UndChain storage, and CAPTCHA-like security based on perception scores and activity tracking**, this widget **ensures smooth user experiences while preventing spam and abuse.**
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
