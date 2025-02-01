@@ -8926,6 +8926,110 @@ The Docking Widget redefines **UI flexibility**, allowing **dynamic, multi-devic
 
 ---
 
+### **Context Menu Widget**
+
+**Context Menu**: A flexible menu system that appears upon interaction (right-click, long press, etc.) and offers quick access to relevant actions. Unlike static dropdowns, context menus in M3L can be **fully customized**, styled, and dynamically adapted based on user input and device type.
+
+---
+
+### **Core Features**
+
+- **Dynamic Layout** – GSS designers can style it as a **dropdown, radial, cascading list, or linear menu**.  
+- **Adaptive Visibility** – **GSS controls whether the menu disappears when the cursor moves away**.  
+- **Base Functions** – Standard **UI functions** (e.g., **Cut, Copy, Paste, Pin to Desktop**) are always available.  
+- **Custom Actions** – **M3L devs** can **inject their own custom functions** into the menu dynamically.  
+- **Priority Items** – GSS **can set which items always appear first**, keeping layouts **clean and predictable**.  
+- **Nested Menus** – Allows for **multi-tiered context menus** when needed.  
+- **Positioning and Styling** – GSS **determines how and where the menu appears**.  
+- **Item Limit** – Capped at **12 items per menu** to prevent UI overload.  
+- **Shape Morphing** – GSS **can dynamically change the shape and structure of the menu**.  
+- **SVG Icons Support** – Icons can replace text for **visual representation**, particularly useful for radial menus.  
+
+---
+
+### **Context Menu Behavior**
+
+**How Do Default Items Work?**  
+- **Each widget type has pre-defined default context options** (e.g., **Text Widgets** have Cut/Copy/Paste, **Asset View** has “Add to Cart” or “Compare”).  
+- **M3L devs can override or extend this list**, but they cannot remove default OS-like functions.  
+
+**Should Context Menus Persist?**  
+- **Yes, if the GSS designer allows it.**  
+- Some context menus may disappear on **mouse exit**, while others may remain until dismissed.  
+
+**Can Menus Change Shape?**  
+- **Yes.** The menu **can animate from a small dot into a full list, curve around an element, or dynamically reflow based on available space.**  
+
+---
+
+### **Example Context Menu in M3L**
+
+```toml
+[[layout.container.content]]
+type = "context_menu"
+allowed_layouts = ["dropdown", "radial", "list"]
+auto_hide = false
+
+[[layout.container.content.default_options]]
+id = "copy"
+label = "Copy"
+intent = "copy"
+icon = "@assets/icons/copy.svg"
+
+[[layout.container.content.default_options]]
+id = "paste"
+label = "Paste"
+intent = "paste"
+icon = "@assets/icons/paste.svg"
+
+[[layout.container.content.custom_options]]
+id = "custom_action"
+label = "Mark as Important"
+intent = "custom"
+icon = "@assets/icons/important.svg"
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[context_menu]
+background = "#222"
+border = "1px solid #555"
+animation = "fade-in"
+
+[context_menu.item]
+hover_effect = "glow"
+active_border_color = "#00FFAA"
+icon_size = "20px"
+
+[context_menu.layout.radial]
+radius = "120px"
+spread_angle = "180deg"
+
+[context_menu.auto_hide]
+enabled = true
+timeout = "2s"
+```
+
+---
+
+### **Use Cases**
+
+- **Advanced UI Interactions**: Replace static menus with dynamic, interactive popups.  
+- **Controller-Friendly UIs**: Perfect for **analog stick radial selections**.  
+- **Fast Navigation in Productivity Apps**: Right-click or hold-press to quickly access relevant actions.  
+- **Immersive Web3 Environments**: Context menus for **managing digital assets, interacting with on-chain tools, and performing quick operations**.  
+
+---
+
+### **Conclusion**
+
+The **Context Menu Widget** transforms traditional menus into an **adaptive, fully customizable system**. Whether it's a **radial menu for controllers**, a **cascading list for file management**, or a **dynamic popup with AI-driven suggestions**, this widget brings **next-generation UI interactions** to UndChain.
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
