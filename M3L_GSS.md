@@ -170,7 +170,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Status Bar**: Displays relevant statistics or information at the bottom of the screen.
 - **Split View**: Divides the screen into two or more resizable panels.
 - **Docking Widget**: Allows UI elements to be draggable and dockable to predefined locations (top, left, right, bottom, or floating).
-- **Circular Menu**: A radial-style menu that appears around a focal point, providing quick access to tools and actions.
+- **Context Menu**: A styled menu that appears around a focal point, providing quick access to tools and actions.
 - **Kanban Board**: A drag-and-drop task management board that organizes items into columns representing different workflow states.
 - **Form Builder**: Enables structured data entry with dynamic validation and multi-step capabilities.
 - **AI-Assisted UI Adaptation**: Uses AI to analyze user behavior and dynamically adjust UI elements for better usability.
