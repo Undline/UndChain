@@ -175,6 +175,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Form Builder**: Enables structured data entry with dynamic validation and multi-step capabilities.
 - **AI-Assisted UI Adaptation**: Uses AI to analyze user behavior and dynamically adjust UI elements for better usability.
 - **Node Grid**: A grid-based system where users can place and connect nodes for flowcharting, visual programming, or logic structuring.
+- **Shapes**: Allows users to draw and scale shapes on screen along with adding additional text to those widgets.
 - **Chat Widget**: Supports real-time messaging, reactions, and user status indicators.
 - **Hero Section**: Captures user attention with headers, sub-headers, and call-to-action buttons.
 
