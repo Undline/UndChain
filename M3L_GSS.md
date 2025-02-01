@@ -8813,6 +8813,119 @@ The Split View Widget is a versatile tool for creating resizable, multi-panel la
 
 ---
 
+### **Docking Widget**
+
+**Docking Widget**: Allows UI elements to be draggable and dockable to predefined locations, spanning multiple screens, devices, and output types. This widget creates a **modular UI experience**, allowing users to customize their layout dynamically. With multi-output support, widgets can dock not only on screens but also on **haptic devices, audio systems, and smart environmental outputs**.
+
+---
+
+### **Core Features**
+
+1. **Multi-Device Support**:
+   - Dock widgets across **multiple displays**, including desktops, tablets, and mobile.
+   - Allows seamless **cross-device** transitions (e.g., dock a chat window to a phone while keeping a dashboard on a monitor).
+
+2. **Output-Responsive UI**:
+   - Supports **audio-based docking** (e.g., notifications play through smart speakers or bone-conduction headsets).
+   - Enables **haptic-based docking** (e.g., vibrations for alerts, controller trigger resistance for certain interactions).
+   - Can link to **environmental devices** (e.g., smart lighting changes color based on notifications).
+
+3. **Customizable Docking Zones**:
+   - UI elements can be docked to **predefined areas** (top, left, right, bottom, floating, or user-defined positions).
+   - Supports **auto-snap docking** for structured layouts or **freeform placement** for full user customization.
+
+4. **GSS Styling and Behavior Customization**:
+   - Define docking rules per **device type** and **screen resolution**.
+   - Style docked UI elements with **border highlights, animations, and transparency effects**.
+
+5. **Adaptive UI for Multiple Input Types**:
+   - Seamless switching between **keyboard/mouse, controller, and touch**.
+   - Allows GSS designers to **prioritize UI placement based on user preference and device interactions**.
+
+6. **Drag-and-Drop Interaction**:
+   - Widgets can be **freely moved, locked, or resized**, but only certain widget types support docking. For example, windows, toolbars, and media players can be docked, while elements like dropdown menus or context menus remain static.
+   - Supports **gesture-based docking** for touch devices.
+
+7. **AI-Assisted UI Adaptation (Optional Future Feature)**:
+   - The system **learns user behavior** and suggests optimal widget docking positions.
+   - Adaptive UI reorganization based on **frequent interactions**.
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "docking"
+allowed_positions = ["top", "bottom", "left", "right", "floating"]
+output_support = ["screen", "haptic", "audio", "environment"]
+
+[[layout.container.content.default_widgets]]
+id = "notifications"
+dock_position = "top-right"
+output_device = "screen"
+
+[[layout.container.content.default_widgets]]
+id = "alerts"
+dock_position = "haptic"
+output_device = "controller_trigger"
+intensity = "medium"
+
+[[layout.container.content.default_widgets]]
+id = "music_player"
+dock_position = "audio"
+output_device = "bone_conduction"
+
+[[layout.container.content.default_widgets]]
+id = "workspace_lighting"
+dock_position = "environment"
+output_device = "smart_lighting"
+color_theme = "cool blue"
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[docking]
+background = "#1A1A1A"
+border = "2px solid #444"
+
+[docking.widget]
+hover_effect = "glow"
+active_border_color = "#00FFAA"
+animation = "fade-in"
+
+[docking.haptic_feedback]
+trigger_resistance = "high"
+intensity = "medium"
+
+[docking.audio_feedback]
+type = "subtle"
+output = "3D_spatial_sound"
+
+[docking.environmental_effects]
+smart_lighting = "color_sync"
+```
+
+---
+
+### **Use Cases**
+
+- **Multi-Screen Workspaces**: Dock widgets between desktop monitors, tablets, and mobile for seamless productivity.
+- **Immersive Gaming & Haptics**: Assign UI interactions to **controller vibrations or adaptive triggers**.
+- **Audio & Sound Design**: Redirect notifications and alerts to **bone-conduction headsets or smart speakers**.
+- **Smart Home Integration**: Sync notifications to **ambient lighting for passive alerts**.
+
+---
+
+### **Conclusion**
+
+The Docking Widget redefines **UI flexibility**, allowing **dynamic, multi-device experiences**. Whether users **dock widgets across displays, haptic devices, or smart environments**, this widget provides a **seamless adaptive UI framework**. **With AI-assisted adaptation, future UI layouts will adjust to users' habits—automatically.**
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
