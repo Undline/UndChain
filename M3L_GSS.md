@@ -169,22 +169,27 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Reaction Widget**: This widget provides a system that allows users to react to another widget. This can consist of emoji or GIFs.
 - **Status Bar**: Displays relevant statistics or information at the bottom of the screen.
 - **Split View**: Divides the screen into two or more resizable panels.
+- **Docking Widget**: Allows UI elements to be draggable and dockable to predefined locations (top, left, right, bottom, or floating).
+- **Circular Menu**: A radial-style menu that appears around a focal point, providing quick access to tools and actions.
+- **Kanban Board**: A drag-and-drop task management board that organizes items into columns representing different workflow states.
+- **Form Builder**: Enables structured data entry with dynamic validation and multi-step capabilities.
+- **AI-Assisted UI Adaptation**: Uses AI to analyze user behavior and dynamically adjust UI elements for better usability.
+- **Node Grid**: A grid-based system where users can place and connect nodes for flowcharting, visual programming, or logic structuring.
+- **Chat Widget**: Supports real-time messaging, reactions, and user status indicators.
+- **Hero Section**: Captures user attention with headers, sub-headers, and call-to-action buttons.
 
 #### **High-Level Widgets**
 
 - **Asset View**: Provides a comprehensive shopping experience with product grids, sorting tools, a shopping cart, and detailed asset sections.
-- **Node View**: Enables flowcharting, visual programming, or editing workflows.
+- **Website**: Sets up a general website that can contain pre-defined sections. Allows for blank widgets so devs can make custom sections.
 - **Spreadsheet**: A grid-like table supporting formulas, edits, and data visualization.
 - **Text Editor**: Rich text editing with formatting tools, suggestions, and AI-powered generation.
 - **IDE**: A code editor with syntax highlighting, debugging tools, and project navigation.
 - **Content Area**: Combines a canvas, sidebars, and list views for CAD or visual editing tasks.
 - **Map**: Displays geographic or abstract data with layers, POIs, and animations.
-- **Toast**: Temporary notifications with a history button and silencer mode.
-- **Chat Widget**: Supports real-time messaging, reactions, and user status indicators.
 - **Forum Widget**: Enables threaded discussions for asynchronous communication.
 - **Video Player**: Advanced media playback with interactivity, previews, and OSTR (On-Screen Text Reader).
 - **Live View**: Allows interactive presentations or remote tutorials.
-- **Hero Section**: Captures user attention with headers, subheaders, and call-to-action buttons.
 - **Wiki View**: Editable content area with permissions and collaboration tools.
 - **News Feed**: Displays content in a scrollable feed with filters.
 - **Wizard Widget**: Guides users through multi-step processes or settings.
