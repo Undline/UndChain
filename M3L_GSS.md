@@ -9147,6 +9147,100 @@ The **Form Builder Widget** enables developers to **build complex, interactive f
 
 ---
 
+### **Node Grid Widget**
+
+**Node Grid**: A foundational widget for **flowcharts, visual scripting, neural network mapping, automation tools, and creative workflows**. This system allows **interactive, structured relationships** between various elements, creating a **flexible and powerful visualization environment**.
+
+---
+
+### **Core Features**
+
+- **Grid-Based Layout** – Nodes snap to a defined grid system for cleaner layouts.
+- **Widget-Agnostic Snapping** – Any widget can be snapped inside a node grid (e.g., shapes, text, images).
+- **Connection System** – Nodes can be **linked via directional or bi-directional arrows** for structured relationships.
+- **Multi-Input & Output Support** – A single node can have **multiple connection points** for complex structures.
+- **Shape Integration** – Nodes can take the form of **rectangles, circles, diamonds**, or custom-defined SVG shapes.
+- **Layering Support** – Supports **z-order management** so some nodes **can be layered on top of others**.
+- **Dynamic Rearrangement** – Auto-layout options can **reposition nodes dynamically** based on relationships.
+- **Dragging & Panning** – Users can freely **drag nodes** and **pan across the workspace**.
+- **Custom Labels & Metadata** – Each node **can contain descriptions, icons, tags, and metadata**.
+- **Animated Flow** – **Optional animations** when nodes **connect or disconnect** to improve visualization.
+- **Group Nodes & Nesting** – Allows **collapsible groups** of nodes for **sub-flowcharting**.
+- **Configurable Snapping** – The snapping grid is **controlled by the GSS designer** and adapts to **screen size and zoom level**.
+- **Curved & Straight Connections** – **GSS designers** can configure connections to be **rigid or curved**.
+- **Expandable Nodes** – **Nodes that contain additional data can expand/collapse**, with visual indicators for expansion.
+- **Default Logic Nodes** – Includes **AND, OR, NOT** logic nodes for **decision trees and automation workflows**.
+- **Configurable Arrows** – Connections can be **directional or bi-directional**, set by the M3L developer.
+
+---
+
+### **Example Node Grid in M3L**
+
+```toml
+[[layout.container.content]]
+type = "node_grid"
+snap_enabled = true
+
+[[layout.container.content.nodes]]
+id = "start_node"
+type = "shape"
+label = "Start"
+shape = "circle"
+color = "#007BFF"
+
+[[layout.container.content.nodes]]
+id = "decision_node"
+type = "logic"
+label = "Decision"
+shape = "diamond"
+logic_type = "AND"
+expandable = true
+
+[[layout.container.content.connections]]
+from = "start_node"
+to = "decision_node"
+connection_style = "curved"
+direction = "bi-directional"
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[node_grid]
+grid_color = "#CCC"
+snap_to_grid = true
+zoom_enabled = true
+
+[node_grid.node]
+default_background = "#222"
+default_border = "1px solid #555"
+animation_on_connect = "fade-in"
+
+[node_grid.connection]
+default_style = "curved"
+default_color = "#00FFAA"
+arrow_type = "bi-directional"
+```
+
+---
+
+### **Use Cases**
+
+- **Flowchart Systems** – For business logic, automation workflows, and procedural mapping.
+- **Visual Programming** – Enables block-based programming similar to Unreal Engine’s Blueprint system.
+- **Neural Networks & AI Mapping** – Helps visualize decision trees and data flow models.
+- **CAD-like Design Tools** – Can be expanded for **schematic representation and diagramming**.
+
+---
+
+### **Conclusion**
+
+The **Node Grid Widget** enables **interactive, structured relationships** between various elements, providing a **powerful visualization framework** for automation, logic mapping, and interactive flowcharts. **By integrating SVG-based shapes, animated transitions, and customizable snapping, this widget offers a highly adaptable and dynamic experience.**
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
