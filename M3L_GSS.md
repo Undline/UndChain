@@ -9242,6 +9242,99 @@ The **Node Grid Widget** enables **interactive, structured relationships** betwe
 
 ---
 
+### **Shapes Widget**
+
+**Shapes**: A versatile widget for **drawing, scaling, and manipulating geometric forms**. This system is designed for use in **flowcharts, CAD-like applications, whiteboards, and node-based interfaces.**
+
+---
+
+### **Core Features**
+
+- **Predefined Shape Types** – Supports **rectangles, circles, triangles, diamonds, stars, hexagons**, and **custom SVG imports**.
+- **Scalability** – Shapes can be **resized dynamically**, maintaining aspect ratios where needed.
+- **Rotational Support** – Users can **rotate shapes** freely or snap to defined angles.
+- **Text Annotations** – Shapes can contain **embedded text** with customizable font, size, and color.
+- **Layering & Ordering** – Supports **z-order management** to control depth positioning.
+- **Snap-to-Grid & Freeform Placement** – Shapes can be **manually placed** or **snapped to an alignment grid**.
+- **Fill & Stroke Options** – Supports **solid, gradient, pattern fills, and custom stroke styles** (dashed, dotted, etc.).
+- **Grouping & Ungrouping** – Multiple shapes **can be grouped together for batch manipulation**.
+- **Opacity & Transparency Controls** – Allows **semi-transparent overlays** for layering effects.
+- **Shape Animations** – Shapes can have **entrance, exit, and interaction animations** defined in GSS.
+- **Dynamic Reshaping** – Some shapes (e.g., polygons) can **have adjustable points** to modify their structure.
+- **Multi-Selection Support** – Users can select multiple shapes via **drag-select or object panel selection**.
+- **Image Fill Support** – Shapes can contain **images as a fill**, with resolution options controlled by **M3L/GSS developers**.
+- **Shape Merging & Boolean Operations** – Supports **union, subtraction, combination, and fragmentation** for complex shape manipulation.
+- **Shape Sticking (Grouping)** – Users can **stick shapes together**, allowing movement as a single unit while maintaining separate shape definitions.
+
+---
+
+### **Example Shapes in M3L**
+
+```toml
+[[layout.container.content]]
+type = "shape"
+id = "custom_shape"
+shape = "circle"
+color = "#FF0000"
+stroke = "2px solid #000"
+rotation = 45
+group = "main_group"
+
+[[layout.container.content]]
+type = "shape"
+id = "image_shape"
+shape = "rectangle"
+fill_type = "image"
+image_src = "@Undline/assets/texture.jpg"
+max_resolution = "1080p"
+
+[[layout.container.content]]
+type = "shape"
+id = "merged_shape"
+merge_operation = "union"
+merge_targets = ["custom_shape", "image_shape"]
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[shape]
+default_background = "#EEE"
+default_border = "1px solid #444"
+animation_on_hover = "pulse"
+
+[shape.fill]
+default_style = "gradient"
+default_gradient = ["#FF0000", "#FFA500"]
+
+[shape.image]
+max_resolution = "4K"
+auto_disable = true
+
+[shape.merge]
+default_operation = "combine"
+allow_fragmentation = true
+```
+
+---
+
+### **Use Cases**
+
+- **Flowchart Systems** – Creating structured diagrams with labeled nodes.
+- **Whiteboard Applications** – Enabling freehand design with reusable elements.
+- **CAD-Like Tools** – Allowing precise geometric shape manipulation.
+- **UI Design & Prototyping** – Assisting in interface layout planning.
+
+---
+
+### **Conclusion**
+
+The **Shapes Widget** enables **rich geometric manipulation** with **snapping, scaling, merging, and animation support**. By integrating **image fills, multi-selection, and custom Boolean operations**, this widget provides **a highly dynamic and versatile drawing experience.**
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
