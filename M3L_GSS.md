@@ -9335,6 +9335,99 @@ The **Shapes Widget** enables **rich geometric manipulation** with **snapping, s
 
 ---
 
+### **Chat Widget**
+
+**Chat Widget**: A versatile messaging system supporting **real-time messaging, reactions, user status indicators, advanced moderation tools, and configurable file-sharing and link permissions**.
+
+---
+
+### **Core Features**
+
+- **Live & Historical Messages** – Supports both **real-time chats and replayable past conversations** (e.g., VOD replays).
+- **Message Formatting** – Allows for **bold, italics, underlines, links, emojis, and markdown support**.
+- **Reactions & Reply System** – Users can react to messages (e.g., 👍, ❤️) and **reply in threads**.
+- **User Status Indicators** – Shows **active, idle, offline, or custom status** (e.g., ‘Typing...’).
+- **Typing Indicator Management** – **Typing indicators are automatically disabled when more than three users are actively chatting** to prevent overload.
+- **Private & Group Chats** – Supports **one-on-one messaging and multi-user group chats**.
+- **Message Pinning & Saving** – Allows users to **pin important messages** or **save them for later**.
+- **Read Receipts & Delivery Status** – Displays **sent, delivered, and seen indicators**.
+- **File Attachments** – Supports **sending images, videos, documents, and voice messages**, with host-configurable file-sharing permissions.
+- **Moderation Controls** – Allows **admins/moderators to mute, ban, delete messages, and enforce chat modes**.
+- **Chat Modes** – Hosts can **restrict chats to emoji-only, GIF-only, or slow mode** to manage high-volume conversations.
+- **Link Sharing Permissions** – Hosts can **allow or block links** based on **user roles** (e.g., only moderators or VIP users can post links).
+- **Theme & Layout Customization** – GSS can control **bubble shape, color schemes, and chat position**.
+- **Timestamps & Message Ordering** – Messages are **timestamped** and sorted chronologically to **support VOD replays**.
+- **AI-Powered Auto-Replies & Moderation** – Optionally integrates with **Mimic AI** to provide **suggested responses and automated moderation tools**.
+- **Voice & Video Call Integration** – Supports linking to **external VoIP/video conferencing systems**.
+- **Search & Filtering** – Users can **search for messages, filter by sender, or highlight keywords**.
+- **Custom Emoji & Sticker Support** – Hosts can upload **custom emoji packs & stickers** (with optional subscription gating).
+- **Self-Destructing Messages** – Users can opt to send **temporary messages** that disappear after a set duration.
+- **Live Mode & Chat Replay** – **Live chat can be replayed** when watching recorded content (e.g., VOD playback).
+- **Notification & Mute Settings** – Users can **mute chats, filter notifications, or adjust alert frequency** based on volume.
+- **Bandwidth Optimization for Custom Emojis** – Limits emoji size & caching to prevent excessive data usage.
+
+---
+
+### **Example Chat Widget in M3L**
+
+```toml
+[[layout.container.content]]
+type = "chat_widget"
+mode = "live"
+moderation_enabled = true
+chat_mode = "emoji_only"
+custom_emojis = true
+allow_file_sharing = false
+allow_link_sharing = "moderators_only"
+typing_indicator_management = "auto_disable_on_high_volume"
+
+[[layout.container.content.moderation]]
+mimic_ai_assist = true
+max_message_length = 500
+allow_temp_messages = true
+```
+
+---
+
+### **Example GSS Implementation**
+
+```toml
+[chat_widget]
+bubble_background = "#222"
+text_color = "#FFF"
+typing_indicator = "pulse"
+typing_indicator_auto_disable = 3
+
+[chat_widget.emoji]
+custom_emoji_support = true
+emoji_cache_limit = "50MB"
+
+[chat_widget.moderation]
+default_mode = "slow"
+mute_sound_on_high_volume = true
+
+[chat_widget.permissions]
+allow_file_sharing = false
+allow_link_sharing = "moderators_only"
+```
+
+---
+
+### **Use Cases**
+
+- **Gaming & Live Streaming** – Supports real-time chat with **VOD replay functionality**.
+- **Collaborative Workspaces** – Enables **private and group chats** for teams and communities.
+- **Decentralized Social Platforms** – Offers a robust **messaging framework** for social engagement.
+- **Educational Platforms** – Allows structured discussions with **emoji-based engagement and moderation tools**.
+
+---
+
+### **Conclusion**
+
+The **Chat Widget** is a fully customizable, **real-time and replayable** chat system designed for **flexible integration in applications**. With support for **moderation tools, AI-assisted filtering, configurable file-sharing and link permissions, and multi-format messaging**, this widget enables both **casual and professional communication** while ensuring **efficient resource management and smooth user experience.**
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
