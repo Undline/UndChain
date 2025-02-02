@@ -9651,6 +9651,108 @@ The **Settings Widget** provides users with control over privacy, security, anim
 
 ---
 
+### **Pause Menu Widget**
+
+**Pause Menu**: Opens a pause menu widget that allows users to select from multiple options. Primarily designed for controller-based navigation but also accessible via keyboard (`Pause/Break` key) or touchscreen.
+
+---
+
+### **Core Features**
+
+- **Resume Functionality** – Users can resume the session by pressing the `Pause` key again, selecting `Resume` from the menu, or pressing the designated controller button (e.g., `Start`).
+- **Settings Menu** – Direct access to the **Settings Widget** for adjusting preferences mid-session.
+- **Exit/Quit Option** – Allows the user to **exit the current app/session** (to desktop, main menu, or entirely out of the application). For controllers, this can be mapped to the `Exit` button, while the `Home` button returns users to the home screen, placing the application in a suspended state.
+- **Save & Load (If Applicable)** – Provides options to **save progress and reload previous sessions** (useful for gaming or workflow-oriented applications).
+- **Quick Select (Optional)** – A section where users can jump between **frequently accessed sections** (e.g., inventory, chat, user profiles).
+- **Network Status Indicator** – Displays **connection status, ping, or blockchain sync state** for networked applications.
+- **Controller Input Mapping** – Displays a **quick reference for control schemes**, especially useful when switching between different controllers.
+- **Help & Support** – Access documentation, FAQs, or AI-powered assistance.
+- **Return to Home Screen** – Option to suspend the current application and return to the UndChain desktop or main application hub.
+
+---
+
+### **Customization & Configuration**
+
+- **Maximum of 8 Menu Items** – To prevent overwhelming users, the pause menu is limited to 8 selectable options.
+- **Visual Transitions & Background Customization** –
+  - Designers can **customize how the pause menu enters/exits** (e.g., fade-in, zoom, slide-in).
+  - Instead of just blurring the background, designers can **swap in a completely different background** for more immersive effects.
+  - The background can **change dynamically based on the currently selected option** (e.g., an animated guide highlighting different sections).
+- **Live Pause vs. Freeze Mode** –
+  - Applications can use **full freeze mode** (pauses updates, animations, and inputs) or **live pause mode** (keeps background data streams running).
+  - Users can configure this in the **Settings Menu** based on their performance preferences.
+- **Recent Messages Overlay** –
+  - Users can view the last few messages received before pausing.
+  - Useful in multiplayer applications or when using AI-assisted interactions.
+- **Button Behavior Control** –
+  - GSS designers can define how buttons behave (e.g., click-to-activate vs. hold-to-activate).
+  - Users can also remap pause menu controls for their input device.
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "pause_menu"
+pause_mode = "live"  # Options: "freeze", "live"
+background = "custom_image"
+options = [
+    { label = "Settings", action = "open_settings" },
+    { label = "Exit to Home", action = "return_home" },
+    { label = "Exit Application", action = "exit_application" },
+    { label = "Save Progress", action = "save_session" },
+    { label = "Help", action = "open_help" }
+]
+
+[[layout.container.content.status]]
+network_status = "show"
+input_mapping = "show"
+notifications = "hide"
+```
+
+---
+
+### **Example GSS Styling**
+
+```toml
+[pause_menu]
+background = "dark_overlay"
+menu_style = "vertical_list"
+animation_entry = "fade_in"
+animation_exit = "fade_out"
+
+[pause_menu.buttons]
+hover_effect = "glow"
+active_effect = "press_down"
+
+[pause_menu.status]
+network_display = "corner_top"
+```
+
+---
+
+### **Use Cases**
+
+- **Gaming & Streaming** – Allows users to manage sessions, settings, and network states while pausing.
+- **Workflows & Productivity** – Enables quick saves, workflow switches, and connectivity checks in dApps.
+- **Decentralized Applications** – Syncs across connected devices, providing multi-device pause handling.
+
+---
+
+### **Conclusion**
+
+The **Pause Menu Widget** provides users with **seamless access to application settings, session management, and network details** without disrupting the experience. Its **customizable visual elements and flexible configurations** make it an essential tool for a wide variety of applications.
+
+This includes:
+- **Configurable freeze vs. live pause mode** (set by users in settings).
+- **Dynamic UI customizations based on current selection.**
+- **Customizable button behaviors, animations, and background swaps.**
+- **Streamlined default menu with intuitive button mapping.**
+- **Dedicated Exit and Home buttons for clear navigation.**
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
