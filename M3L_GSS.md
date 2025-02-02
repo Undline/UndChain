@@ -194,7 +194,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Hero Section**: Captures user attention with headers, sub-headers, and call-to-action buttons.
 - **Settings**: This widget contains settings for the current application that a user can control per the M3L developer and GSS designer. 
 - **Pause menu**: Opens a pause menu widget that allows users to select from multiple options. meant for controllers but could be used by K&M by pressing pause break.
-- **AI-Assisted UI Adaptation**: Uses AI to analyze user behavior and dynamically adjust UI elements for better usability.
+- **TOS Widget**: The terms of service widget is a standardized widget specifically for TOS regarding agreements made (such as using a co-chain). Has a accept and reject button and a scroll requirement.
 
 #### **High-Level Widgets**
 
