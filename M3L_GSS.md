@@ -9528,6 +9528,129 @@ The **Hero Section Widget** provides **multiple configurations for eye-catching 
 
 ---
 
+### **Settings Widget**
+
+**Settings**: This widget contains settings for the current application that a user can control per the M3L developer and GSS designer. The settings menu includes default items but can also be expanded by both the M3L developer of the app where the settings widget is launched and the GSS designer currently in use.
+
+---
+
+### **Core Features**
+
+- **Theme Customization** – Allows users to toggle dark/light mode, adjust color schemes, or switch between multiple UI themes if the GSS designer has provided them.
+- **Text Scaling & Accessibility** – Adjusts default text size, font choices, contrast settings, and UI scaling for accessibility.
+- **Device Management** – Enables users to add, remove, and assign content to connected devices in the multi-device ecosystem.
+- **Notification & Sound Settings** – Allows users to mute specific notifications, enable sounds, or customize alert types (e.g., popups, toast messages, banners).
+- **Permission Controls** – Grants users control over device access, storage permissions, media playback, and interaction preferences for individual applications.
+- **Auto-Fill & Auto-Pay** – Supports custom rules for automatic form-filling and limits for auto-spending AdCoin or other digital assets on paywalled content.
+- **Energy-Saving & Performance Modes** – Allows users to limit animations, reduce computational load, or optimize performance based on device capabilities.
+- **Regional Settings** – Controls default language, currency, and time zone settings.
+- **Security & Privacy Settings** – Includes options for biometric authentication, encryption settings, and data retention preferences.
+- **Application-Specific Settings** – Developers can expose custom configuration options, like gameplay settings, workflow preferences, or toggling experimental features.
+
+---
+
+### **Advanced Features**
+
+- **Animations Toggle** – Allows users to enable/disable animations entirely (useful for performance tuning or accessibility).
+- **Per-Widget Animation Settings** – Users can choose which animations to disable or reduce intensity (e.g., subtle transitions vs. full animations).
+- **Sound-Linked Animations** – Since sounds are triggered with animations, the animation toggle should also disable associated sounds unless the user specifies otherwise.
+- **Intent Type for Accessing Settings** – Different devices may require different access methods:
+  - Mouse & Keyboard → Click settings icon or press a shortcut (e.g., `Ctrl + ,`).
+  - Controller → Press Pause/Menu Button or enter a Pause Menu.
+  - Touchscreen → Tap a hamburger menu or swipe from the edge.
+- **User Profile Management** –
+  - View & manage public profile info.
+  - Set custom avatars (stored in UndChain).
+  - Switch between multiple user profiles.
+  - View public key & account details.
+- **Privacy & Visibility Controls** –
+  - Toggle “Online” status visibility.
+  - Decide whether read receipts are shared in chats.
+  - Choose whether to display typing indicators.
+  - Enable/disable activity tracking & logs (e.g., time online, spending behavior).
+- **Connected Devices Panel** –
+  - Lists all connected devices (PC, phone, controller, haptics, VR headset, etc.).
+  - Displays device image, function, and current status (active, idle, disconnected).
+  - Allows renaming devices for better management.
+  - Configure input mappings (e.g., remap buttons for controllers).
+  - Enable/disable specific device interactions (e.g., “disable motion controls”).
+  - Allow/deny specific apps access to devices.
+- **Security & Encryption Preferences** –
+  - Encryption Type Display – Users can see what encryption method is currently in use.
+  - Key Management – Shows the public key and allows users to generate a new key pair if needed.
+  - Session Logs & Activity Tracking – Provides users visibility into login sessions & device access history.
+
+---
+
+### **Example M3L Implementation**
+
+```toml
+[[layout.container.content]]
+type = "settings"
+theme_toggle = true
+animation_toggle = true
+font_scaling = true
+device_management = true
+auto_pay = { enabled = true, max_limit = 50 }
+privacy_controls = { online_status = false, read_receipts = false, typing_indicator = true }
+
+[[layout.container.content.profile]]
+username = "@Undline"
+avatar = "@Undline/avatar.png"
+public_key = "0x123456789"
+profile_switching = true
+
+[[layout.container.content.devices]]
+allow_remap = true
+show_connected = true
+device_list = [
+    { name = "PS5 Controller", type = "gamepad", active = true },
+    { name = "Meta VR Headset", type = "VR", active = false }
+]
+
+[[layout.container.content.security]]
+encryption_type = "AES-256"
+show_public_key = true
+log_sessions = true
+```
+
+---
+
+### **Example GSS Styling**
+
+```toml
+[settings]
+background_color = "#222"
+text_color = "#FFF"
+toggle_style = "slider"
+animation_entry = "fade_in"
+
+[settings.privacy]
+online_status_toggle = true
+read_receipts_toggle = true
+typing_indicator_toggle = true
+
+[settings.devices]
+list_display = "grid"
+highlight_active = true
+```
+
+---
+
+### **Use Cases**
+
+- **Gaming & Streaming** – Users can fine-tune their experience based on performance and input preferences.
+- **E-Commerce & Subscriptions** – Provides users control over automatic payments and purchase history.
+- **Decentralized Workflows** – Manages connected devices, security, and custom workflows for dApps.
+
+---
+
+### **Conclusion**
+
+The **Settings Widget** provides users with control over privacy, security, animations, input devices, notifications, and application preferences. Its extensive features make it a core part of any M3L-powered application, ensuring flexibility, security, and accessibility for all users.
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
