@@ -9428,6 +9428,104 @@ The **Chat Widget** is a fully customizable, **real-time and replayable** chat s
 
 ---
 
+### **Hero Section Widget**
+
+**Hero Section**: Captures user attention with headers, sub-headers, and call-to-action buttons. Different types of hero sections allow for **dynamic content presentation, immersive storytelling, and action-driven user engagement**.
+
+---
+
+### **Hero Section Types**
+
+- **Standard Hero** – The classic hero section with a **headline, subtext, and CTA button**.
+- **Scrolling Banner Hero** – Functions as a **carousel or auto-scrolling banner**, featuring **multiple offers, images, or messages**.
+- **Product Showcase Hero** – A **large display hero** featuring a **product or service**, possibly with **ratings, price, and add-to-cart functionality**.
+- **CTA Hero** – Designed for **strong action-taking**, like signing up for a newsletter, **registering for an event**, or making a **purchase immediately**.
+- **Interactive Hero** – Embeds **user input fields, search bars, countdown timers, or live updates** for a more dynamic experience.
+- **Full-Screen Takeover Hero** – Expands the **entire viewport**, ideal for **immersive storytelling, launch pages, or cinematic experiences**.
+
+---
+
+### **Core Features**
+
+- **Headline & Sub-Header** – The primary and supporting **text for user engagement**.
+- **Call-to-Action (CTA) Buttons** – Supports **multiple action buttons** to guide users toward a goal.
+- **Background Media** – Can use **static images, gradients, patterns, video, or animations** as a backdrop.
+- **Overlay & Text Contrast Options** – Ensures readability with **darkened overlays or text shadowing**.
+- **Alignment & Layout Control** – Supports **centered, left-aligned, or right-aligned text and buttons**.
+- **Responsive Scaling** – Adapts to **mobile, tablet, and desktop layouts dynamically**.
+- **Interactive Elements** – Allows **hover effects, animations, and scroll-triggered transformations**.
+- **Customization for CTA Buttons** – Can be **rectangular, rounded, or floating** per GSS styling.
+- **Auto-Scroll Prompts** – Can integrate **downward scroll indicators** to guide users further down the page.
+- **Customizable Animations** – Can **fade in, slide in, zoom, or pulse upon page load**.
+- **Parallax Support** – Background image/video can **scroll slower than foreground text for depth effects**.
+- **Live Updates** – Can dynamically **update content without reloading the page**, useful for promotions or announcements.
+
+---
+
+### **Example: Full-Screen Hero for Product Launch**
+
+```toml
+[[layout.container.content]]
+type = "hero_section"
+hero_type = "full_screen"
+background_type = "video"
+background_src = "@UndChain/assets/console_promo.mp4"
+animation_entry = "fade_in"
+animation_exit = "fade_out"
+dismiss_mode = "scroll, timer"
+timer_duration = 5  # Auto-dismiss after 5 seconds
+
+[[layout.container.content.text]]
+type = "headline"
+text = "The Future of Gaming is Here."
+font_size = "4rem"
+color = "#FFF"
+
+[[layout.container.content.text]]
+type = "subheader"
+text = "Introducing the UndChain Console – Power. Speed. Innovation."
+font_size = "2rem"
+color = "#CCC"
+
+[[layout.container.content.button]]
+label = "Pre-Order Now"
+action = "@UndChain.Store/preorder"
+button_style = "primary"
+```
+
+---
+
+### **Example GSS Styling**
+
+```toml
+[hero_section.full_screen]
+background_color = "#000"
+text_alignment = "center"
+padding = "40px"
+transition_speed = "1s"
+
+[hero_section.full_screen.animation]
+entry = "zoom_in"
+exit = "fade_out"
+```
+
+---
+
+### **Use Cases**
+
+- **Gaming & Live Streaming** – Supports dramatic product launches with full-screen takeovers.
+- **E-Commerce & Promotions** – Highlights key promotions with scrolling banner heroes.
+- **Decentralized Social Platforms** – Creates engaging community entry points.
+- **Educational Platforms** – Introduces new courses dynamically with interactive heroes.
+
+---
+
+### **Conclusion**
+
+The **Hero Section Widget** provides **multiple configurations for eye-catching designs, engagement-driven CTAs, and immersive user experiences**. Its **versatile structure allows for seamless integration into any webpage**, whether for **advertising, content delivery, or user engagement.**
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
