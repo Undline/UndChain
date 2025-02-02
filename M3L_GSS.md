@@ -173,11 +173,13 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Context Menu**: A styled menu that appears around a focal point, providing quick access to tools and actions.
 - **Kanban Board**: A drag-and-drop task management board that organizes items into columns representing different workflow states.
 - **Form Builder**: Enables structured data entry with dynamic validation and multi-step capabilities.
-- **AI-Assisted UI Adaptation**: Uses AI to analyze user behavior and dynamically adjust UI elements for better usability.
 - **Node Grid**: A grid-based system where users can place and connect nodes for flowcharting, visual programming, or logic structuring.
 - **Shapes**: Allows users to draw and scale shapes on screen along with adding additional text to those widgets.
 - **Chat Widget**: Supports real-time messaging, reactions, and user status indicators.
 - **Hero Section**: Captures user attention with headers, sub-headers, and call-to-action buttons.
+- **Settings**: This widget contains settings for the current application that a user can control per the M3L developer and GSS designer. 
+- **Pause menu**: Opens a pause menu widget that allows users to select from multiple options. meant for controllers but could be used by K&M by pressing pause break.
+- **AI-Assisted UI Adaptation**: Uses AI to analyze user behavior and dynamically adjust UI elements for better usability.
 
 #### **High-Level Widgets**
 
