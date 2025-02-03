@@ -9919,6 +9919,102 @@ This includes:
 
 ---
 
+### **TOS Widget: Ensuring Clear and Transparent Agreements**
+
+The **TOS Widget** is a standardized component designed for handling terms of service agreements, contracts, and user acknowledgments. It ensures users actively review agreements before proceeding with actions like using a co-chain, purchasing assets, or signing legally binding documents.
+
+---
+
+## **Core Features**
+
+### **1. Structured Display**
+- Presents **terms of service, contracts, or agreements** in an organized format.
+- Supports **Markdown formatting** for the content sections, while section titles remain static.
+- Displays structured sections with clear **titles** and **content blocks**.
+- Can include **embedded media** (e.g., images, videos) for additional clarification.
+
+### **2. Acceptance & Interaction**
+- **Accept and Reject Buttons**: Users must actively confirm their decision.
+- **Scroll Requirement**: Users must scroll through the entire document before acceptance.
+- **Timer Enforcement**: Developers can set a mandatory review time before enabling the accept button.
+- **Smart Scroll Detection**: Prevents rapid scrolling by limiting speed to ensure users read key sections.
+
+### **3. Change Tracking & Summaries**
+- **Version Control**: Users are notified when the TOS has been updated.
+- **Change Highlights**: Marks and summarizes differences between the previous and current version.
+- **Mandatory Re-Acceptance**: Users must accept the updated version before continuing (if required).
+
+### **4. Customization & User Experience**
+- **Multi-Language Support**: Users can switch to translated versions if available.
+- **Theming**: Custom fonts, colors, and layouts defined by the GSS file.
+- **Overlay or Fullscreen Mode**: Can be presented as a modal or full-page agreement.
+- **Progress Indicator (GSS Implementation)**: Optional visual bar to track reading progress.
+- **Dark Mode Compatibility**: Ensured via GSS customization.
+
+### **5. Data Logging & Retrieval**
+- **Timestamping**: Logs the time and date of acceptance.
+- **Previous Agreements Access**: Users can review past accepted agreements.
+- **Blockchain Validation (Optional)**: Co-chain validation records acceptance for transparency and non-repudiation.
+
+---
+
+## **M3L Implementation Example**
+```toml
+[[layout.container.content]]
+type = "tos_widget"
+id = "terms_of_service"
+sections = [
+    { title = "Introduction", content = "Welcome to our platform. By using our services, you agree to the following terms..." },
+    { title = "Data Usage", content = "We collect minimal data necessary for platform functionality. See our privacy policy..." },
+    { title = "User Responsibilities", content = "You are responsible for keeping your account secure and following the guidelines set forth..." }
+]
+accept_button = "I Agree"
+reject_button = "Decline"
+scroll_required = true
+time_limit = 30  # Minimum 30 seconds before acceptance is enabled
+```
+
+---
+
+## **GSS Implementation Example**
+```toml
+[tos_widget]
+font-family = "Arial, sans-serif"
+background-color = "#ffffff"
+text-color = "#333333"
+border-radius = "8px"
+
+[tos_widget.buttons]
+accept.background-color = "#007BFF"
+accept.text-color = "#ffffff"
+reject.background-color = "#FF3B30"
+reject.text-color = "#ffffff"
+
+[tos_widget.scroll_behavior]
+disable_accept_until_read = true
+scroll-speed-limit = "moderate"
+progress-indicator = true
+
+[tos_widget.animations]
+on_open = "fade-in"
+on_close = "fade-out"
+```
+
+---
+
+## **Optional Enhancements**
+- **AI Summary Assistance**: If enabled, AI (e.g., Mimic) generates a summarized version of the agreement.
+- **Alternative Accept Methods**: Voice confirmation or biometric approval (if supported by the device).
+- **Opt-In Features**: Users can check optional clauses within the same widget.
+- **User-Specific Terms**: Custom agreements based on the user’s role or prior selections.
+
+---
+
+### **Final Thoughts**
+The **TOS Widget** provides a standardized, transparent way to handle agreements, ensuring compliance while offering customization for developers and designers. With features like **change tracking, smart scrolling, markdown content support, and sectioned organization**, it balances legal clarity with user-friendly interactions.
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
