@@ -9921,7 +9921,7 @@ This includes:
 
 ---
 
-### **TOS Widget: Ensuring Clear and Transparent Agreements**
+### **TOS Widget**
 
 The **TOS Widget** is a standardized component designed for handling terms of service agreements, contracts, and user acknowledgments. It ensures users actively review agreements before proceeding with actions like using a co-chain, purchasing assets, or signing legally binding documents.
 
