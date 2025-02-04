@@ -195,6 +195,8 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Settings**: This widget contains settings for the current application that a user can control per the M3L developer and GSS designer. 
 - **Pause menu**: Opens a pause menu widget that allows users to select from multiple options. meant for controllers but could be used by K&M by pressing pause break.
 - **TOS Widget**: The terms of service widget is a standardized widget specifically for TOS regarding agreements made (such as using a co-chain). Has a accept and reject button and a scroll requirement.
+- **Find/Replace Widget**: This is meant to find text within a specified context. 
+- **Clock/Schedular**: This is meant as a design system for a clock also serves as a scheduling agent.
 
 #### **High-Level Widgets**
 
@@ -10012,6 +10014,115 @@ on_close = "fade-out"
 
 ### **Final Thoughts**
 The **TOS Widget** provides a standardized, transparent way to handle agreements, ensuring compliance while offering customization for developers and designers. With features like **change tracking, smart scrolling, markdown content support, and sectioned organization**, it balances legal clarity with user-friendly interactions.
+
+---
+
+### **Find/Replace Widget**
+
+The **Find/Replace Widget** is an in-app **text search and replacement** system designed for applications that require **efficient, scoped, and interactive text navigation**. Unlike a full **application-wide search**, this widget operates within a defined **scope**, ensuring a streamlined and **context-aware** search experience.
+
+---
+
+## **Core Features**
+
+### **1. Scoped Search & Matching (M3L)**
+
+- **Scope Definition**:
+  - **Widget-Specific**: Limited to selected widgets (`text_area`, `spreadsheet`, etc.).
+  - **Document-Wide**: Searches across all text-based content within a specific M3L file.
+- **Search Matching Options**:
+  - **Case Sensitivity**: Optional (`true/false`).
+  - **Whole Word Matching**: Ensures only full-word matches appear.
+  - **Wildcard Support**:
+    - `*` matches multiple characters (`doc*` → `document`, `docs`).
+    - `?` matches a single character (`col?r` → `color`, `colour`).
+  - **Fuzzy Search (Optional)**: AI-driven correction for misspelled search queries.
+
+### **2. Replace Functionality**
+
+- **Replace One**: Modifies only the currently selected match.
+- **Replace All**: Applies replacements across all matched occurrences.
+- **Undo & Redo Support**: Reverts or reapplies replacements.
+
+### **3. Intuitive UI & Interaction (GSS Controlled)**
+
+- **Search Panel**:
+  - **Compact Mode**: Simple **search bar** with **hit count** and **navigation arrows**.
+  - **Expanded Mode**: Includes **replace field**, **filters**, and **advanced options**.
+- **Find Animation** (Contextual Highlighting):
+  - **Scroll Views**: **Pans and highlights** found text using an **easing curve**.
+  - **Multi-Page Documents**: **Slides to the correct page**, then highlights the match.
+- **Voice Search Support**:
+  - AI-assisted speech-to-text conversion.
+  - **Optional microphone input trigger**.
+
+---
+
+## **M3L Implementation Example**
+
+```toml
+[[layout.container.content]]
+type = "find_replace_widget"
+id = "search_in_notes"
+search_scope = ["text_area_1", "text_area_2"]
+case_sensitive = false
+whole_word = true
+wildcard_enabled = true
+ai_suggestions = true  # Users can disable this in settings
+```
+
+---
+
+## **GSS Implementation Example**
+
+```toml
+[find_replace_widget]
+font-family = "Arial, sans-serif"
+background-color = "#f8f8f8"
+text-color = "#333"
+border-radius = "5px"
+popup_position = "top"
+
+[find_replace_widget.highlight]
+background-color = "#ffeb3b"
+border = "1px solid #ffcc00"
+
+[find_replace_widget.buttons]
+replace.background-color = "#007BFF"
+replace.text-color = "#ffffff"
+undo.background-color = "#FF3B30"
+undo.text-color = "#ffffff"
+
+[find_replace_widget.animations]
+on_open = "slide-down"
+on_close = "fade-out"
+find_animation.scroll_view = "pan-and-highlight"
+find_animation.multi_page = "slide-to-page-then-pan"
+
+[find_replace_widget.voice_search]
+enabled = true
+trigger_button = "mic_icon"
+
+[find_replace_widget.ai_suggestions]
+enabled = true
+highlight_suggestions = true
+correction_prompt = "Did you mean: "
+```
+
+---
+
+## **Advanced Features & Enhancements**
+
+- **Multi-Device Search Panel**: Results can be displayed on **external screens or devices**.
+- **Search Query History (Optional)**: Saves **recent search terms** for faster recall.
+- **AI-Powered Corrections**: AI suggests **typo corrections** based on common patterns.
+- **Find & Replace Logging**: Logs **past search-replace actions** for user reference.
+
+---
+
+### **Final Thoughts**
+
+The **Find/Replace Widget** brings **precision, efficiency, and adaptability** to in-app search systems. With **AI-enhanced correction, dynamic navigation, and customizable animations**, it **simplifies** text searching while ensuring **developer flexibility**.
 
 ---
 
