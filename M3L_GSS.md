@@ -10132,6 +10132,103 @@ High-level widgets are the cornerstone of M3L's simplicity and power. By combini
 
 ---
 
+### **Clock Widget Documentation**
+
+The **Clock Widget** provides real-time timekeeping functionality and serves as a versatile tool for users. It supports multiple display modes, world clock features, and additional time-based utilities like a stopwatch and countdown timer. The Clock Widget is standalone but can integrate with the **Scheduler inside the Calendar Widget** if enabled.
+
+---
+
+## **Core Features**
+
+### **1. Time Display Modes**
+- **Digital Mode**: Displays time in a numerical format (12-hour or 24-hour toggleable).
+- **Analog Mode**: A graphical clock face with moving hands.
+- **World Clock**: Displays multiple time zones at once (if enabled by the user).
+- **Custom Time Zones**: Users can manually select and pin different time zones.
+
+### **2. Additional Timekeeping Tools**
+- **Stopwatch**: Tracks elapsed time with start, stop, and reset buttons.
+- **Countdown Timer**: Allows users to set a time duration that counts down to zero.
+- **Multi-Timer Support**: Users can set multiple countdowns at once for different tasks.
+
+### **3. Task & Event Integration (Optional)**
+- If **Scheduler is enabled in the Calendar Widget**, the **Clock Widget can pull the next three scheduled events**.
+- If **Scheduler is disabled**, the Clock remains a standalone time display.
+- Users can enable/disable this functionality in the **Settings Menu**.
+
+### **4. Display & Customization**
+- **Full-Screen Mode**: Expands the clock to take up an entire display.
+- **Mini Mode**: A compact, always-visible clock (can be docked or floating).
+- **Custom Skins & Styles**: GSS designers can create different clock themes (e.g., futuristic, retro, minimalist).
+- **Multi-Device Support**: The clock can sync across multiple screens if allowed in settings.
+
+### **5. Animation & Interaction Options**
+- **Smooth Animations**: Clock hands move fluidly in **analog mode**.
+- **On-Hover Effects**: GSS designers can add hover effects to change the appearance of the clock.
+- **User Input Triggers**:
+    - **Double-click** toggles between digital and analog.
+    - **Right-click** (or equivalent) opens quick settings.
+    - **Middle-click** resets the stopwatch (if active).
+
+### **6. Time Syncing & Precision**
+- **Network Time Sync**: Option to pull accurate time from a global time server.
+- **Offline Mode**: Uses the system clock when no network is available.
+- **Time Drift Correction**: Adjusts automatically if network sync detects drift.
+
+### **7. Notifications & Alerts**
+- Users can **set alarms within the Scheduler** (if enabled).
+- Optional **reminders for upcoming tasks** (pulled from the Calendar Widget).
+- **Chimes & Sounds**: Custom sound profiles for different alerts (configurable in settings).
+
+---
+
+## **M3L Implementation Example**
+```toml
+[[layout.container.content]]
+type = "clock_widget"
+id = "desktop_clock"
+mode = "digital"  # Options: "digital", "analog", "world_clock"
+time_zone = "UTC-5"
+display_mode = "mini"  # Options: "full", "mini", "docked"
+
+# Optional: Enable Scheduler Integration
+show_scheduled_tasks = true
+calendar_sync = true  # Allows event previews
+```
+
+---
+
+## **GSS Styling Example**
+```toml
+[clock_widget]
+font = "Orbitron, sans-serif"
+background_color = "#000000"
+text_color = "#ffffff"
+border_radius = "10px"
+hover_effect = "glow"
+animation.on_hover = "pulse"
+
+# Analog Mode Styling
+[clock_widget.analog]
+clock_face = "modern"
+hand_color = "#ffffff"
+second_hand_color = "#ff0000"
+
+# World Clock Styling
+[clock_widget.world_clock]
+background_color = "#222222"
+text_color = "#00ffcc"
+```
+
+---
+
+## **Final Thoughts**
+The **Clock Widget** provides a **fully customizable, multi-functional timekeeping system** that fits into **any user interface**. With support for **multiple display modes, synchronization options, and extended scheduling integration**, it’s a **powerful yet lightweight** addition to any M3L-designed application.
+
+Would you like to proceed to the **Calendar & Scheduler Widget next**, or refine anything here first?
+
+---
+
 ### Key Advantages
 
 1. **Ease of Use**:
