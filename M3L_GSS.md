@@ -10126,6 +10126,127 @@ The **Find/Replace Widget** brings **precision, efficiency, and adaptability** t
 
 ---
 
+### **Calendar Widget Documentation**
+
+The **Calendar Widget** provides a structured view of dates, events, and schedules, integrating seamlessly with **task management, scheduling, and event tracking**. It supports multiple display formats, customization options, and multi-device synchronization using UndChain.
+
+---
+
+## **Core Features**
+
+### **1. Calendar Display Modes**
+
+- **Yearly View**: Displays the entire year, highlighting important dates.
+- **Monthly View**: Standard **grid-based** view with event markers.
+- **Weekly View**: Shows a week’s schedule with hour-based breakdowns.
+- **Daily View**: Provides a **detailed agenda** for the selected day.
+- **Mini Mode**: A compact, **quick-glance version** of the calendar.
+- **Macro Mode**: Full-screen, interactive calendar with deep scheduling features.
+
+### **2. Scheduling & Event Management**
+
+- **Event Creation**: Users can click on any date to **quick-add an event**.
+- **Repeating Events**: Set weekly, monthly, or custom recurrence patterns.
+- **Event Notifications**: Alerts for upcoming events, meetings, or deadlines.
+- **Categories**: Work, Personal, Public, or Custom categories.
+- **Privacy Settings**:
+  - **Public** (viewable by anyone).
+  - **Restricted** (shared with selected users).
+  - **Private** (only the owner can view).
+- **RSVP Integration**: Users can accept/decline invitations.
+
+### **3. Time-Tracking & Digital Punch Cards**
+
+- **Shift Logging**: Employees can clock in/out via a **punch card interface**.
+- **Billable Hours Tracking**: Logs working hours for freelancers & consultants.
+- **Work Session Tracking**: Measures time spent on specific tasks/projects.
+
+### **4. Multi-Calendar Support**
+
+- Users can **create multiple calendars** for different projects or teams.
+- **Group Calendars**: Share and coordinate schedules with a team.
+- **Cross-Application Syncing**:
+  - Syncs with **Clock Widget** for task reminders.
+  - Compatible with **Scheduler Widget** for integrated event tracking.
+
+### **5. Multi-Device & Display Adaptation**
+
+- **Seamless Syncing Across Devices** (if enabled by user).
+- **Custom Themes & Views**:
+  - Light & Dark mode support.
+  - Adjust font sizes, background colors, and calendar markers.
+- **Adaptive Layouts**: Different styling for **desktop, mobile, and multi-screen setups**.
+
+### **6. Custom Event Metadata**
+
+- **Event Type Icons** (meetings, deadlines, reminders, holidays, etc.).
+- **Tags for Quick Filtering** (e.g., #work, #travel, #birthday).
+- **Attachments**: Users can **attach files, notes, or links** to events.
+- **Smart Suggestions**: Auto-suggests locations, invitees, and event names based on past usage.
+
+---
+
+## **M3L Implementation Example**
+
+```toml
+[[layout.container.content]]
+type = "calendar_widget"
+id = "primary_calendar"
+title = "Work Calendar"  # Displayed title
+data_source = "@Undline/calendar_data.db"  # Storage reference
+calendar_type = "Work"  # Options: "Personal", "Work", "Shared", "Public"
+display_mode = "macro"  # Options: "mini", "macro"
+scheduler_enabled = true  # Enables scheduling features
+privacy = "restricted"  # Options: "public", "restricted", "private"
+```
+
+---
+
+## **GSS Styling Example**
+
+```toml
+[calendar_widget]
+font = "Arial, sans-serif"
+background_color = "#ffffff"
+highlight_today = true
+event_border_color = "#007BFF"
+animation.on_hover = "scale"
+
+[calendar_widget.mini_mode]
+background_color = "#f0f0f0"
+font_size = "12px"
+padding = "5px"
+
+[calendar_widget.macro_mode]
+background_color = "#000000"
+font_size = "16px"
+padding = "15px"
+
+[calendar_widget.yearly]
+grid_line_color = "#dddddd"
+marker_color = "#ff4500"
+
+[calendar_widget.monthly]
+background_color = "#e0e0e0"
+marker_style = "circle"
+
+[calendar_widget.weekly]
+time_block_color = "#ffa500"
+marker_style = "square"
+
+[calendar_widget.daily]
+highlight_appointments = true
+event_background_color = "#00ff00"
+```
+
+---
+
+## **Final Thoughts**
+
+The **Calendar Widget** is a **powerful and adaptable scheduling tool** that integrates with **various time-tracking, planning, and event-based applications**. With **multi-calendar support, interactive scheduling, and multi-device syncing**, it serves as a **centralized hub** for all time-sensitive tasks and events.
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
