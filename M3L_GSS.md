@@ -10247,6 +10247,89 @@ The **Calendar Widget** is a **powerful and adaptable scheduling tool** that int
 
 ---
 
+### **Scheduler Widget Documentation**
+
+The **Scheduler Widget** allows users to add events to their calendar seamlessly. It provides multiple UI display modes, supports **event linking** to the user's calendar, and offers **RSVP functionality** for shared events.
+
+---
+
+## **Core Features**
+
+### **1. Event Creation & Linking**
+- Directly links to a **user’s selected calendar**.
+- Can be used standalone or embedded into other widgets (e.g., dMail, notifications, etc.).
+- Supports **public, private, and group calendar events**.
+
+### **2. Display Modes**
+- **Button Mode**: Minimalist UI that adds an event on click.
+- **Inline Mode**: Embedded text prompt allowing direct scheduling.
+- **Popup Mode**: Expanded UI for selecting details before saving.
+- **Compact Mode**: Small UI element that fits inside a larger widget.
+
+### **3. Customizable Event Details**
+- `title`: Name of the event.
+- `description`: Short summary.
+- `start_time`: Start date/time.
+- `end_time`: End date/time.
+- `location`: Physical or virtual.
+- `reminders`: Notification settings.
+- `event_type`: Meeting, Deadline, RSVP, etc.
+
+### **4. RSVP & Public Events**
+- Users can **RSVP** to an event when invited.
+- Events can be marked **private, shared with specific users, or public**.
+- **User roles** can be assigned (e.g., host, speaker, attendee).
+
+### **5. Smart Scheduling & AI Assistance**
+- Suggests best available time slots based on past scheduling patterns.
+- Detects **conflicting events** and provides alternative slots.
+- AI can **auto-generate event summaries** based on context.
+- Offers an **estimated meeting cost** (if used with dMail for business meetings).
+
+### **6. Time Zone Awareness**
+- Detects and syncs with the user’s **time zone** automatically.
+- Allows manual **time zone selection** for global scheduling.
+- Adjusts for **daylight savings changes** dynamically.
+
+### **7. Privacy & Security Controls**
+- Users can **restrict event visibility** (public, friends, private).
+- End-to-end encryption for **confidential meeting details**.
+- Option to **disable automatic syncing** with other devices.
+
+---
+
+## **M3L Implementation Example**
+```toml
+[[layout.container.content]]
+type = "scheduler_widget"
+id = "meeting_scheduler"
+display_mode = "popup"  # Options: "button", "inline", "popup", "compact"
+calendar_link = "@Undline/work_calendar.m3l"
+allow_rsvp = true
+require_confirmation = false
+reminder_time = "30min"
+```
+
+---
+
+## **GSS Styling Example**
+```toml
+[scheduler_widget]
+background_color = "#1E1E1E"
+text_color = "#FFFFFF"
+border_radius = "8px"
+popup_style = "slide_in"
+button_style = "rounded"
+hover_effect = "pulse"
+```
+
+---
+
+## **Final Thoughts**
+The **Scheduler Widget** makes event planning seamless across M3L applications. With **event linking, RSVP support, and AI-powered scheduling**, it ensures that users never miss an important meeting or reminder.
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
