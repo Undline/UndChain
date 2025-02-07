@@ -10416,6 +10416,98 @@ The **Affiliate Widget** provides a **secure, transparent, and automated way** f
 
 ---
 
+### **Ad Widget Documentation**
+
+#### **1. Overview**
+The **Ad Widget** enables applications and services to integrate advertisements as part of the **Reward Task System (RTS)**. This system ensures that **users are compensated fairly** for their engagement with ads while maintaining **strict user controls** and **preventing exploitative ad practices**.
+
+⚠️ **Important:** If a user **pays AdCoin** to access content, **ads cannot be displayed**. This protects user experience and prevents double monetization.
+
+---
+
+#### **2. The Reward Task System (RTS) & Ads**
+The **Reward Task System (RTS)** is a decentralized framework that allows different co-chains to reward users for engagement-based tasks, including ad interaction, content classification, and AI training verification.
+
+🔹 **How Ads Fit Into RTS:**
+- Businesses register **ad tasks** within **RTS-compatible co-chains**.
+- Users **engage with ads** (e.g., watching a video, answering interactive questions).
+- The **system verifies genuine engagement** before triggering an **AdCoin payout**.
+- Ads **cannot interfere with content paid for via AdCoin**.
+
+🔹 **Other Use Cases for RTS (Beyond Ads):**
+- **Content Classification** (Mimic / Pages Co-Chain).
+- **Crowdsourced AI Training** (Mimic Co-Chain).
+- **Bug Bounties & Security Reports** (Security Co-Chain).
+- **Fitness & Activity Challenges** (Health / Fitness Co-Chains).
+
+---
+
+#### **3. Ad Widget Types**
+The **Ad Widget** supports three core ad types:
+
+1. **Banner Ads** – Small, non-intrusive ads displayed within UI components.
+2. **Video Ads** – Short video advertisements (skippable or non-skippable based on RTS rules).
+3. **Interactive Ads** – Users must complete an interaction (e.g., answering a question) to receive rewards.
+
+💡 **Note:** M3L developers can select **which ad types** they wish to use, but they cannot override **global AdCoin rules**.
+
+---
+
+#### **4. User Control & Ad Restrictions**
+To **ensure a positive user experience**, the **Ad Widget follows strict rules**:
+
+- **No Ads on Paid Content:** If a user has spent AdCoin to access content, **ads are disabled automatically**.
+- **User Controls:** Users can set ad **preferences** in **Settings**.
+- **Cooldown Periods:** Prevents users from **farming AdCoin** by watching ads repeatedly.
+- **Verified Engagement:** AI detects **fraudulent interactions** (e.g., muting ads, switching tabs).
+- **Transparency:** Users **always know how much AdCoin they earn** before engaging.
+
+---
+
+#### **5. Verification & Anti-Exploit Measures**
+To **prevent abuse**, the RTS and Ad Widget use the following protections:
+
+- **Ad Engagement Tracking:** AI detects **genuine engagement** (e.g., no auto-skipping, no muting, active tab focus).
+- **Rate Limits & Cooldowns:** Users **can’t farm ads** for infinite AdCoin.
+- **Fraud Detection:** Detects **spam behaviors** and bans **exploitive activity**.
+- **Penalty System:** Users caught **cheating the system** will lose rewards and perception score.
+
+---
+
+#### **6. M3L Implementation Example**
+```toml
+[[layout.container.content]]
+type = "ad_widget"
+id = "homepage_banner_ad"
+ad_type = "banner"  # Options: "banner", "video", "interactive"
+reward_payout = 10  # AdCoin reward amount (subject to RTS rules)
+cooldown = 1800  # Time (in seconds) before another ad task is available
+```
+
+---
+
+#### **7. GSS Styling Example**
+```toml
+[ad_widget]
+background_color = "#222222"
+border_radius = "10px"
+animation.on_hover = "glow"
+audio.on_start = "chime.wav"
+size = "responsive"  # Auto-adjusts based on screen size
+```
+
+---
+
+#### **8. Final Considerations**
+- **The Ad Widget must comply with RTS rules.**
+- **Users are always informed** about the reward amount before engaging.
+- **Ads cannot be displayed** where AdCoin has been used for access.
+- **Businesses and developers must register their ad tasks** with an RTS-compatible co-chain.
+
+**The Ad Widget, combined with the Reward Task System, allows UndChain to create the first decentralized, fair, and user-controlled ad economy.**
+
+---
+
 ## High-Level Widgets
 
 High-level widgets are the cornerstone of M3L's simplicity and power. By combining multiple low-level widgets into cohesive, reusable components, they allow developers to implement complex functionality with minimal effort. These widgets encapsulate common design patterns, enabling a consistent look and feel across applications while simplifying development workflows.
