@@ -197,6 +197,10 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **TOS Widget**: The terms of service widget is a standardized widget specifically for TOS regarding agreements made (such as using a co-chain). Has a accept and reject button and a scroll requirement.
 - **Find/Replace Widget**: This is meant to find text within a specified context. 
 - **Clock/Schedular**: This is meant as a design system for a clock also serves as a scheduling agent.
+- **Calendar Widget**: This is meant to draw a calendar on screen, meant for scheduling events. Users can have multiple calendars but all users have a personal calendar.
+- **Scheduler Widget**: The scheduler widget complements the calendar widget so that users can scheduler events on a calendar. 
+- **Affiliate Widget**: This is meant for referring other users to products or services. 
+- **Ad Widget**: This is meant to be a quick easy way to create Ads for the Ad hub (a Ad hub is where users can generate AdCoin so they have an Ad free experience)
 
 #### **High-Level Widgets**
 
