@@ -10247,7 +10247,7 @@ The **Calendar Widget** is a **powerful and adaptable scheduling tool** that int
 
 ---
 
-### **Scheduler Widget Documentation**
+### **Scheduler Widget**
 
 The **Scheduler Widget** allows users to add events to their calendar seamlessly. It provides multiple UI display modes, supports **event linking** to the user's calendar, and offers **RSVP functionality** for shared events.
 
@@ -10330,7 +10330,7 @@ The **Scheduler Widget** makes event planning seamless across M3L applications. 
 
 ---
 
-### **Affiliate Widget Documentation**
+### **Affiliate Widget**
 
 #### **Overview**
 
