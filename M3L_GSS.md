@@ -139,6 +139,8 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 
 #### **Low-Level Widgets**
 
+- **Window**: Creates a new widowed object within the virtual desktop so that users can contain a application.
+- **Frame**: A Frame widget is one that is meant to contain multiple widgets (including other frames). Types: Grid, Relative, Absolute and Flex.
 - **Button**: Clickable widget that has various forms: Image buttons, confirmation buttons, call-to-action buttons, and muted buttons.
 - **Text**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
 - **Text Box**: Allows for single-line user input.
@@ -154,7 +156,6 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Cards**: Compact content containers often used for showcasing assets or information.
 - **Posters**: Larger cards that dominate the view, particularly on mobile.
 - **Banner**: A banner acts much the same as a card widget, however its designed in a horizontal format whereas cards are more vertical. Banners can fill the space in parent widget or you can have margin.
-- **Window**: Defines the background and foreground containers for widgets (like a frame).
 - **Screenshot**: A flexible draw area for custom shapes or graphics, which is useful when users need to share what they see on screen.
 - **Carousel**: Automatically cycles through various content, like images or promotions.
 - **Break**: A simple widget used to visually divide sections of content. Supports horizontal and vertical orientations with customizable styles.
