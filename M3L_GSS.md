@@ -139,7 +139,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 
 #### **Low-Level Widgets**
 
-- **Button**: Image buttons, confirmation buttons, call-to-action buttons, and muted buttons.
+- **Button**: Clickable widget that has various forms: Image buttons, confirmation buttons, call-to-action buttons, and muted buttons.
 - **Text**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
 - **Text Box**: Allows for single-line user input.
 - **Text Area**: Multi-line input for larger text blocks.
