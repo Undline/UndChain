@@ -141,6 +141,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 
 - **Window**: Creates a new widowed object within the virtual desktop so that users can contain a application.
 - **Frame**: A Frame widget is one that is meant to contain multiple widgets (including other frames). Types: Grid, Relative, Absolute and Flex.
+- **Side Bar**: This is a special type of frame widget that is designed to only take the area of a side of the screen: top, bottom, left or right.
 - **Button**: Clickable widget that has various forms: Image buttons, confirmation buttons, call-to-action buttons, and muted buttons.
 - **Text**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
 - **Text Box**: Allows for single-line user input.
