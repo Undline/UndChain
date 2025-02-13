@@ -140,7 +140,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 #### **Low-Level Widgets**
 
 - **Window**: Creates a new widowed object within the virtual desktop so that users can contain a application.
-- **Frame**: A Frame widget is one that is meant to contain multiple widgets (including other frames). Types: Grid, Relative, Absolute and Flex.
+- **[Frame]**(#frame-widget): A Frame widget is one that is meant to contain multiple widgets (including other frames). Types: Grid, Relative, Absolute and Flex.
 - **Side Bar**: This is a special type of frame widget that is designed to only take the area of a side of the screen: top, bottom, left or right.
 - **Button**: Clickable widget that has various forms: Image buttons, confirmation buttons, call-to-action buttons, and muted buttons.
 - **Text**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
@@ -1837,21 +1837,35 @@ This appendix provides a comprehensive listing of all widgets supported by M3L a
 
 ## Low-Level Widgets
 
-### **Frame Widgets**
-Frames are essential for structuring layouts in M3L. They act as containers that define how child widgets are positioned and aligned. Frames come in various types, allowing developers to create responsive, flexible, and complex UIs.
+### **Frame Widget**
 
-#### **Frame vs. Window**
-- **Frame**: Manages the layout of widgets within an application.
-- **Window**: Simulates an application environment, allowing developers to preview new GSS styles or UI designs. It provides an isolated space for testing and experimentation.
+The **Frame Widget** serves as the foundation for organizing and structuring widgets within an M3L interface. Frames define how child widgets are positioned, aligned, and displayed within an application. **Frames can be nested within other frames**, enabling complex layouts while maintaining a clear and logical structure.
 
 ---
 
-### **Frame Types**
+## **Core Concepts**
 
-#### **1. Grid Frame**
-- Organizes widgets into rows and columns, providing structured layouts for dashboards, forms, or content grids.
+### **1. Frames vs. Windows**
+- **Frame**: A structural container used to organize widgets within an application.
+- **Window**: A simulated application environment that allows UI/UX testing and custom styling within a contained workspace.
 
-**Fields**:
+**Frames do not manage application states (e.g., minimizing or closing) like Windows do; they focus purely on layout and positioning.**
+
+### **2. Default Frame Behavior**
+If an M3L developer does not specify a frame type, the system defaults to:
+- **Frame Type**: `flex`
+- **Alignment**: `center`
+- **Padding**: `0`
+- **Margin**: `0`
+
+---
+
+## **Frame Types & Properties**
+
+### **1. Grid Frame**
+Organizes widgets into a structured row/column layout.
+
+#### **Fields**:
 | **Field**    | **Description**                                               | **Example**           |
 |--------------|---------------------------------------------------------------|-----------------------|
 | `rows`       | Number of rows in the grid.                                   | `rows = 3`            |
@@ -1861,172 +1875,123 @@ Frames are essential for structuring layouts in M3L. They act as containers that
 | `margin`     | Spacing around the grid.                                      | `margin = "10px"`     |
 | `padding`    | Spacing inside the grid container.                            | `padding = "5px"`     |
 | `z_order`    | Stacking order of widgets within the grid (2D layering).      | `z_order = 1`         |
-| `x`, `y`, `z`| Position offsets for the grid relative to its container. **Note**: `z` is reserved for future use and currently ignored. | `x = "20px", y = "10px", z = "0"` |
+| `background_color` | Defines a background for the grid container.             | `background_color = "#eee"` |
 
-**Example**:
+#### **Example M3L Implementation**:
 ```toml
-[[layout.container.content]]
-type = "frame"
-frame_type = "grid"
+[frame]
+type = "grid"
 rows = 2
 columns = 3
 gap = "10px"
 alignment = "center"
 margin = "15px"
 padding = "10px"
-x = "0"
-y = "0"
-z = "0"
+z_order = 0
 
-children = [
-    {
-        type = "button",
-        label = "Submit"
-    }
-]
+[frame.button]
+row = 2
+col = 3
+text = "Submit"
+```
+
+#### **GSS Styling Example**:
+```toml
+[frame.grid]
+background_color = "#f5f5f5"
+margin = "10px"
+padding = "5px"
+box_shadow = "0px 2px 5px rgba(0,0,0,0.1)"
 ```
 
 ---
 
-#### **2. Relative Frame**
-- Positions widgets based on an anchor point, making it useful for placing elements near each other or aligning them dynamically.
+### **2. Relative Frame**
+Positions widgets dynamically based on an anchor point.
 
-**Fields**:
-| **Field**      | **Description**                                            | **Example**            |
+#### **Fields**:
+| **Field**      | **Description**                                             | **Example**            |
 |----------------|------------------------------------------------------------|------------------------|
-| `anchor`       | Specifies the reference point for positioning (top-left, center). | `anchor = "top-left"`  |
-| `offset_x`     | Horizontal offset from the anchor point.                   | `offset_x = "20px"`    |
-| `offset_y`     | Vertical offset from the anchor point.                     | `offset_y = "10px"`    |
-| `z_order`      | Stacking order for widgets in the frame.                   | `z_order = 2`          |
-| `x`, `y`, `z`  | Position offsets for the entire frame. **Note**: `z` is reserved for future use and currently ignored. | `x = "0", y = "0", z = "0"` |
-| `margin`       | Spacing around the relative frame.                         | `margin = "10px"`      |
-| `padding`      | Spacing inside the relative frame container.               | `padding = "5px"`      |
+| `anchor`       | Sets reference point (top-left, center, bottom-right).      | `anchor = "top-left"`  |
+| `offset_x`     | Horizontal offset from the anchor.                         | `offset_x = "20px"`    |
+| `offset_y`     | Vertical offset from the anchor.                           | `offset_y = "10px"`    |
+| `background_image` | Optional background image for styling.                   | `background_image = "@Undline/assets/bg.png"` |
 
-**Example**:
+#### **Example M3L Implementation**:
 ```toml
-[[layout.container.content]]
-type = "frame"
-frame_type = "relative"
+[frame]
+type = "relative"
 anchor = "top-left"
 offset_x = "20px"
 offset_y = "10px"
-x = "0"
-y = "0"
-z = "0"
-margin = "10px"
-padding = "5px"
 
-children = [
-    {
-        type = "image",
-        src = "@Undline/assets/logo.png"
-    }
-]
+[frame.image]
+src = "@Undline/assets/logo.png"
 ```
 
 ---
 
-#### **3. Absolute Frame**
-- Allows precise placement of widgets using x, y, and z coordinates, ideal for pixel-perfect designs.
+### **3. Absolute Frame**
+Allows precise positioning of widgets using x, y, and z coordinates.
 
-**Fields**:
-| **Field**      | **Description**                                                | **Example**          |
-|----------------|----------------------------------------------------------------|----------------------|
-| `x`, `y`, `z`  | Exact coordinates for placing widgets within the frame. **Note**: `z` is reserved for future use and currently ignored. | `x = "50px", y = "100px", z = "1"` |
-| `z_order`      | Stacking order for overlapping widgets.                        | `z_order = 1`        |
-| `margin`       | Spacing around the frame.                                      | `margin = "10px"`    |
-| `padding`      | Spacing inside the frame container.                            | `padding = "5px"`    |
+#### **Fields**:
+| **Field**      | **Description**                                             | **Example**          |
+|----------------|------------------------------------------------------------|----------------------|
+| `x`, `y`, `z`  | Exact placement within the parent container.               | `x = "50px", y = "100px", z = "1"` |
 
-**Example**:
+#### **Example M3L Implementation**:
 ```toml
-[[layout.container.content]]
-type = "frame"
-frame_type = "absolute"
-x = "0"
-y = "0"
-z = "0"
-margin = "10px"
-padding = "5px"
+[frame]
+type = "absolute"
+x = "50px"
+y = "100px"
+z = "1"
 
-children = [
-    {
-        type = "text",
-        content = "Welcome to M3L!",
-        x = "50px",
-        y = "100px",
-        z = "1"
-    }
-]
+[frame.text]
+content = "Welcome to M3L!"
 ```
 
 ---
 
-#### **4. Flex Frame**
-- Aligns widgets along a single axis (row or column) with options for wrapping, spacing, and alignment.
+### **4. Flex Frame**
+Aligns widgets dynamically along an axis.
 
-**Fields**:
+#### **Fields**:
 | **Field**          | **Description**                                            | **Example**                |
 |--------------------|------------------------------------------------------------|----------------------------|
 | `direction`        | Specifies the axis for alignment (row or column).          | `direction = "row"`        |
 | `wrap`             | Enables wrapping of widgets if space is insufficient.      | `wrap = true`              |
 | `justify_content`  | Distributes space between widgets (start, center, end).    | `justify_content = "space-around"` |
 | `align_items`      | Aligns widgets along the perpendicular axis.               | `align_items = "center"`   |
-| `margin`           | Spacing around the frame.                                  | `margin = "10px"`          |
-| `padding`          | Spacing inside the frame container.                        | `padding = "5px"`          |
 
-**Example**:
+#### **Example M3L Implementation**:
 ```toml
-[[layout.container.content]]
-type = "frame"
-frame_type = "flex"
+[frame]
+type = "flex"
 direction = "row"
 wrap = true
 justify_content = "space-around"
 align_items = "center"
-margin = "15px"
-padding = "10px"
 
-children = [
-    {
-        type = "button",
-        label = "Buy Now"
-    }
-]
+[frame.button]
+text = "Buy Now"
 ```
 
 ---
 
-### **Nesting Frames**
-Frames can be nested to create advanced layouts. For example, a Flex Frame might contain a Grid Frame, which itself contains Relative Frames for individual widget placement. For deeply nested layouts, it is recommended to use external files for `children` after three levels of nesting.
-
-**Example Hybrid**:
-```toml
-[[layout.container.content]]
-type = "frame"
-frame_type = "flex"
-direction = "row"
-wrap = true
-justify_content = "space-around"
-
-children = [
-    {
-        type = "frame",
-        frame_type = "grid",
-        rows = 2,
-        columns = 3,
-        gap = "5px",
-        children = "@path/to/nested_children.gss"
-    }
-]
-```
+## **Key Features**
+- **Nested Frames**: Frames can be nested within other frames for complex layouts.
+- **Background Support**: Frames can have colors or images as backgrounds.
+- **Padding & Margins**: Define spacing within and around frames.
+- **Multiple Layouts**: Grid, Relative, Absolute, and Flex provide unique ways to structure widgets.
+- **ID-Based Targeting**: Every frame (even when unnamed) has an implicit ID for easy reference.
 
 ---
 
-### **Key Recommendations**
-- Use `z` for future 3D implementation. It is ignored for now but ensures compatibility with future features.
-- Leverage nested frames for complex layouts and modular designs.
-- Combine frame types (e.g., Grid within Flex) for maximum flexibility and responsiveness.
-- For deeply nested layouts, use external files for `children` to enhance readability and maintainability.
+## **Final Notes**
+- Use `z_order` for future 3D layering support.
+- Avoid deeply nested layouts beyond **three levels** for readability; external files are recommended after this point.
+- Frames are fundamental in M3L UI design, and **choosing the right frame type ensures optimal user experience.**
 
 ---
 
