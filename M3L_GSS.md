@@ -1837,6 +1837,247 @@ This appendix provides a comprehensive listing of all widgets supported by M3L a
 
 ## Low-Level Widgets
 
+### Window Widget
+
+The **Window Widget** is a top-level UI container that provides a **draggable, resizable, and interactive** space for your M3L application. Each **window** can house child widgets (such as text, buttons, grids, etc.) while enabling advanced features like title bars, modal interactions, docking, and custom animations.
+
+---
+
+#### Core Features
+
+1. **Title Bar and Controls**  
+   - Displays a **title** and standard window controls (**close**, **minimize**, **maximize**, **pin**).  
+   - **Optional**: You can hide or customize the title bar (`title_bar = false`).  
+   - **Minimize** is **implicit** if the developer sets `minimize = true` under `controls`; the system automatically places the window into the **virtual desktop tray** when minimized.
+
+2. **Layouts and Child Widgets**  
+   - Embeds **child widgets** inside the window using any frame type (flex, grid, relative, absolute) if explicitly declared.  
+   - Defaults to a **flex-based** layout if no explicit `layout` is specified.
+
+3. **Draggability & Resizability**  
+   - `draggable`: Lets users move the window by dragging the title bar.  
+   - `resizable`: Lets users resize by dragging edges.  
+   - `dockable`: Snaps the window to screen edges or other windows (the **docker** widget handles more advanced snapping).
+
+4. **Modal Mode**  
+   - `modal = true` blocks interaction outside this window until it’s closed, typically used for prompts or wizards.  
+   - You can optionally define a rule like `modal_dismiss_on_outside_click = true` for automatically closing the modal if the user clicks outside.
+
+5. **Animations & Transitions**  
+   - **open**, **close**, and **resize** animations can be declared in GSS.  
+   - Also supports advanced **keyframe** or **custom** animation files.  
+   - Example: fade-in on open, custom `.ani` file on close, or keyframed shadow pulsation.
+
+6. **Controls**  
+   - A single property `controls = { ... }` toggles standard window buttons: `close`, `minimize`, `maximize`, `pin`.  
+   - Style or replace them with custom designs in GSS.
+
+7. **Multi-Device & Accessibility**  
+   - **Keyboard navigation** (tab-focusing, arrow-key resizing), **touch** gestures, or **voice** commands via co-chains (like Mimic).  
+   - Intelligent scaling for watch/mobile/console.  
+   - Windows adapt to user preferences or device context in line with the **Omni-Interface System**.
+
+8. **Nested Windows**  
+   - Windows can be placed **inside other windows** for advanced layouts or subpanels.
+
+9. **Window Dimensions**  
+   - By default, a **Window** has a **default size** determined by the system (e.g., 60% of the parent’s width, 50% of its height).  
+   - Override with `min_width`, `min_height`, `max_width`, `max_height`, `width`, `height`.  
+   - These constraints can be manipulated by Pseudo or an AI system for dynamic layouts.
+
+---
+
+#### M3L Example
+
+```toml
+# -----------------------------------------------
+#   M3L Snippet for Window Widget
+# -----------------------------------------------
+
+[window]
+id = "settings_window"
+title = "Application Settings"
+title_bar = true
+draggable = true
+resizable = true
+dockable = true
+modal = false
+
+# Window controls
+controls = { close = true, minimize = true, maximize = true, pin = true }
+
+[window.text]
+id = "settings_text"
+value = "Adjust your settings below..."
+
+[window.button]
+id = "save_button"
+type = "CTA"
+label = "Save Changes"
+on_click = "UndChain/SettingsSave.psu"
+```
+
+**Notes on the M3L Section**:
+
+- **Window ID**: `id = "settings_window"` is used for referencing or theming in GSS.  
+- **Title**: “Application Settings” will appear in the title bar.  
+- **draggable/resizable**: By default, both are `false`; we enable them here.  
+- **Child Widgets**: We see a text widget (`settings_text`) and a button (`save_button`), each with an **id** for easy reference.  
+- **Layout**: No explicit layout means the **Window** defaults to a **flex** frame internally.  
+- **Minimize**: Because `controls.minimize = true`, the user can minimize to the tray at any time.
+
+---
+
+#### GSS Example
+
+```toml
+# ------------------------------------------------
+#   GSS Snippet for Window Widget
+# ------------------------------------------------
+
+[window]
+# If not defined, the default background color is #CCC
+background = "/assets/window_bg.png"
+border_radius = "8px"
+
+# Demonstration of multiple shadows:
+# We'll use an array of strings. Each string is one shadow definition.
+# Negative blur => interpret as 'inset' or 'internal' shadow
+shadow = [
+  "5px 7px 15px rgba(0, 0, 0, 128)",
+  "0px -5px -10px rgba(255, 0, 0, 96)"
+]
+
+[window.animation.shadow_pulse]
+type = "keyframes"
+steps = [
+  {
+    shadow = [
+      "5px 7px 15px rgba(0, 0, 0, 64)",
+      "0px -5px -10px rgba(255, 0, 0, 32)"
+    ]
+  },
+  {
+    shadow = [
+      "5px 7px 15px rgba(0, 0, 0, 192)",
+      "0px -5px -10px rgba(255, 0, 0, 128)"
+    ]
+  }
+]
+duration = "2s"
+timing_function = "ease-in-out"
+iteration_count = "infinite"
+
+[window.titlebar]
+height = "35px"
+color = "#007BFF"
+font = "bold 16px Arial"
+
+[window.controls]
+style = "flat"
+icon_size = "14px"
+
+[window.button]
+font = "Poppins"
+size = "1em"
+bold = true
+
+# Show a combined visual+audio open animation
+[window.animation]
+open = { 
+  type = "fade-in", 
+  audio = { 
+    file = "pop_sound.wav", 
+    delay = "0.2s" 
+  }
+}
+close = "/custom_animations/window_rollup.ani"
+resize = "smooth"
+```
+
+**Notes on the GSS Section**:
+
+1. **Background**  
+   - Demonstrates using a **local file** (`/assets/window_bg.png`). If not set, defaults to **#CCC**.
+
+2. **Multiple Shadows via Array**  
+   - `shadow` is defined as an **array** of strings; each string is one shadow.  
+   - `5px 7px 15px rgba(0, 0, 0, 128)` means offsetX=5px, offsetY=7px, blur=15px, color=semi-black.  
+   - `0px -5px -10px rgba(255, 0, 0, 96)` uses a **negative** blur (`-10px`) as a custom GSS rule to interpret it as an **internal/inset** shadow.  
+   - This approach avoids multi-line strings and keeps everything cleaner in TOML.
+
+3. **Shadow Animation**  
+   - `shadow_pulse` keyframes: each step sets the entire array of shadow definitions.  
+   - This can produce a pulsing effect, changing color or blur over time.  
+   - Negative blur is an **inset** if that’s how your GSS engine interprets it.
+
+4. **Open/Close Animations**  
+   - **open**: fade-in plus an **audio** pop effect.  
+   - **close**: points to a custom `.ani` file (`"window_rollup.ani"`).  
+   - **resize**: the built-in `"smooth"` transition.
+
+5. **Titlebar, Controls, Button**  
+   - Basic styling for each region.  
+   - `icon_size = "14px"` affects built-in close/minimize icons.
+
+---
+
+#### Advanced Considerations
+
+1. **Docking Behavior**  
+   - `dockable = true` integrates with a **docker** widget that auto-snaps windows to edges.  
+   - Potential expansions: custom `snap_zones`, corner tiling, or multi-screen logic.
+
+2. **Implicit Minimize**  
+   - If `controls.minimize = true`, system automatically supports a tray minimize.  
+   - Minimizing “pauses” the window except for priority tasks/alerts.
+
+3. **Modal**  
+   - `modal = true` ensures the window blocks background interactions.  
+   - `modal_dismiss_on_outside_click = [true|false]` can allow auto-close if user clicks outside the window.
+
+4. **Close vs. Hide**  
+   - Close “destroys” the window and unsaved data.  
+   - Minimizing or “hiding” keeps the UI state suspended.  
+   - Future expansions might define `close_behavior = "destroy" | "hide"`.
+
+5. **Omni-Interface Tie-In**  
+   - Windows adapt across device types or input methods.  
+   - Minimizing or resizing might behave differently on smaller or watch-like displays.
+
+6. **Performance**  
+   - Large multi-window setups can be memory-heavy—encourage devs to close or minimize windows not in active use.  
+   - The system can auto-suspend windows after inactivity if desired.
+
+---
+
+#### Event Reference
+
+| **Event**     | **Description**                                        |
+|---------------|--------------------------------------------------------|
+| `on_open`     | Fires once the window is displayed.                    |
+| `on_close`    | Fires before the window is removed from display.       |
+| `on_minimize` | Fires when minimized (if `controls.minimize = true`).  |
+| `on_maximize` | Fires when maximized (if `controls.maximize = true`).  |
+| `on_drag`     | Fires when the window is moved by the user.            |
+| `on_resize`   | Fires each time the window’s edges are resized.        |
+| `on_focus`    | Fires when the user’s focus returns to the window.     |
+| `on_blur`     | (Optional) triggers when window loses focus.           |
+
+**Tip**: You can define these events in your M3L or reference them from GSS (e.g., `[window.events.on_resize]`) for custom logic. If a future AI or Pseudo code needs to programmatically close/minimize a window, these parameters and events can be triggered or listened to.
+
+---
+
+#### Final Suggestions
+
+- **Keep M3L Minimal**: Define structure & logic in M3L; push **visual** or **audio** definitions to GSS.  
+- **Use Keyframes**: Animate **any** GSS property (shadows, backgrounds, transforms) for fluid UI transitions.  
+- **Optimize for Accessibility**: Provide clear title bars, tab ordering, focus states.  
+- **Test on Multiple Devices**: Confirm draggability/resizing works across desktop, mobile, watch contexts.  
+- **Consider a Window Manager**: For advanced multi-window ecosystems (tray, layering, grouping, etc.).  
+
+---
+
 ### **Frame Widget**
 
 The **Frame Widget** serves as the foundation for organizing and structuring widgets within an M3L interface. Frames define how child widgets are positioned, aligned, and displayed within an application. **Frames can be nested within other frames**, enabling complex layouts while maintaining a clear and logical structure.
