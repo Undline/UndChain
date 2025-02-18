@@ -203,6 +203,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Scheduler Widget**: The scheduler widget complements the calendar widget so that users can scheduler events on a calendar. 
 - **Affiliate Widget**: This is meant for referring other users to products or services. 
 - **Ad Widget**: This is meant to be a quick easy way to create Ads for the Ad hub (a Ad hub is where users can generate AdCoin so they have an Ad free experience)
+- **Onboarding Widget**: This widget type assists with onboarding new users to an application or interface. This is done by directing users attention to various widgets with pop-ups that explain what each element does.
 
 #### **High-Level Widgets**
 
