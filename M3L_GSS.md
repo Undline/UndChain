@@ -2239,6 +2239,124 @@ text = "Buy Now"
 
 ---
 
+### Primary Button Widget
+
+A **Primary Button** serves as a **prominent call-to-action** in an M3L interface. It is typically styled to stand out, indicating the most important or recommended action on a given screen—e.g., **“Submit,” “Proceed,”** or **“Buy Now.”**
+
+#### Core Fields
+
+|Field|Description|Example|
+|---|---|---|
+|`id`|Unique identifier for referencing the button in GSS or code.|`id = "submit_btn"`|
+|`label`|Text displayed on the button face.|`label = "Submit"`|
+|`icon`|Optional. Path to an icon or image if the button uses an icon.|`icon = "@Undline/assets/check.svg"`|
+|`action`|A short string describing the button’s role or action.|`action = "submit_form"`|
+|`target`|Resource, Pseudo script, or API call location.|`target = "@Undline/api/submit"`|
+|`tooltip`|Text shown on hover/focus (if supported).|`tooltip = "Finalize submission"`|
+|`disabled`|Disables interaction if `true`.|`disabled = false`|
+|`loading`|Shows a loading state if `true`.|`loading = false`|
+|`keyboard_shortcut`|Optional. Defines a key combo to trigger the button (if supported).|`keyboard_shortcut = "ctrl+s"`|
+|`order`|Numeric ordering for keyboard or controller tab navigation. If none is provided, it’s auto-assigned (top-left to bottom-right).|`order = 1`|
+|`on_click`|Specifies an array of event actions (intent, etc.).|`on_click = [{ intent = "submit_form" }]`|
+
+> **Note**: We exclude styles (e.g., border, radius) from M3L to keep the markup minimal and push design to GSS.
+
+---
+
+#### Example M3L Snippet
+
+```toml
+# A minimal M3L snippet for the primary button widget
+
+[primary_button]
+id = "submit_btn"
+label = "Submit"
+action = "submit_form"
+target = "@Undline/api/submit"
+tooltip = "Click to finalize"
+keyboard_shortcut = "ctrl+s"
+order = 1
+
+on_click = [
+  { intent = "submit_form", target = "@Undline/api/submit" }
+]
+```
+
+**Explanation**:
+
+- **id**: "submit_btn" -> GSS or Pseudo references.
+- **label**: "Submit" -> The textual face of the button.
+- **action**: "submit_form" -> A short descriptor or link to internal logic.
+- **target**: Could be a co-chain or local function.
+- **tooltip**: Helps with a quick hint if your environment supports hover/focus tooltips.
+- **keyboard_shortcut**: If the environment supports it, pressing "Ctrl+S" might trigger the button.
+- **order**: Numeric priority used for tab or arrow navigation. Lower numbers get focus first.
+- **on_click**: Ties into M3L event logic, calling "submit_form" on press.
+
+---
+
+#### GSS Example
+
+```toml
+[primary_button]
+background-color = "#007BFF"
+color = "#FFFFFF"
+border-radius = "5px"
+border = "1px solid #0056b3"
+padding = "10px 20px"
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+
+[primary_button.hover]
+background-color = "#0056b3"
+
+[primary_button.disabled]
+background-color = "#cccccc"
+color = "#666666"
+cursor = "not-allowed"
+
+[primary_button.loading]
+# Could show a spinner or change label
+content = "Loading..."
+cursor = "wait"
+
+[primary_button.shadow]
+# Note: You can define multiple shadow strings in this array if you want multiple shadows!
+value = [ "2px 2px 4px rgba(0,0,0,128)" ]
+
+[primary_button.animation.hover]
+type = "scale-up"
+duration = "0.3s"
+timing_function = "ease-in-out"
+
+[primary_button.animation.click]
+type = "progress-fill"
+duration = "0.5s"
+timing_function = "ease-in"
+```
+
+**Explanation**:
+
+1. `[primary_button]`: Declares style for this widget’s default state.
+2. `[primary_button.hover]`, `[primary_button.disabled]`, `[primary_button.loading]`: Distinct states.
+3. **Shadows**: Using an array-of-strings approach, if your GSS engine interprets each string as one shadow.
+    - _You can list multiple strings to layer multiple shadows._
+4. **Animations**: You can define separate animations ("hover", "click", etc.) referencing keyframes or built-in transitions.
+
+---
+
+#### Advanced Considerations
+
+1. **Confirmation or Secondary Buttons**: For destructive or more cautious actions, consider a separate "confirmation" or secondary button widget.
+2. **Disabled & Loading**: When `disabled = true`, all interactions are blocked. If `loading = true`, GSS can display a spinner or text override.
+3. **Accessibility**: Provide `tooltip` or embed helper text for screen readers. Check keyboard focus states.
+4. **Events**: `on_click` is the main event; you can add `on_focus`, `on_blur` in M3L or GSS if needed.
+5. **Integration**: This widget can be embedded inside a window or frame, e.g. `[window.primary_button]`.
+6. **Keyboard Shortcuts**: Not all environments may support `keyboard_shortcut`, but if they do, it’s a convenient way to speed up repeated actions.
+7. **Tab Navigation**: The `order` field helps define which widget gets focus first when a user presses Tab or navigates via controller. If no order is specified, the system auto-assigns based on top-left to bottom-right scanning.
+
+---
+
 ### **Button Widget**
 
 Buttons are versatile widgets that trigger actions or navigate users through the interface. They support multiple predefined types and rich customization options, including animations and interactive effects.
