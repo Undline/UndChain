@@ -143,6 +143,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Fullscreen**: Not sure if this should be a widget type, but could describe a system where we want to take a full screen to show widgets. Common use would be console, mobile and desktop environments.
 - **[Frame](#frame-widget)**: A Frame widget is one that is meant to contain multiple widgets (including other frames). Types: Grid, Relative, Absolute and Flex.
 - **Side Bar**: This is a special type of frame widget that is designed to only take the area of a side of the screen: top, bottom, left or right.
+- **[Primary Button](#primary-button-widget)**: This button is specifically designed as a call to action button, meaning you want the user to click this button over any other.
 - **Button**: Clickable widget that has various forms: Image buttons, confirmation buttons, call-to-action buttons, and muted buttons.
 - **Text**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
 - **Text Box**: Allows for single-line user input.
