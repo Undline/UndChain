@@ -146,6 +146,8 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **[Primary Button](#primary-button-widget)**: This button is specifically designed as a call to action button, meaning you want the user to click this button over any other.
 - **[Secondary Button](#secondary-button-widget)**: This is designed to complement the primary button for things like cancel, back or skip.
 - **[Image Button](#image-button-widget)**: This button is designed for specific applications where the M3L developers wish to have a custom button that is not an icon.
+- **[Confirmation Button](#confirmation-button-widget)**: This button is designed to confirm a major action or event by the user. Think purchasing an item or signing a contract. This could be a click and hold or a slide confirmation, depending on the GSS designer.
+- **[Toggle Button](#toggle-button-widget)**: 
 - **Button**: Clickable widget that has various forms: Image buttons, confirmation buttons, call-to-action buttons, and muted buttons.
 - **Text**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
 - **Text Box**: Allows for single-line user input.
@@ -2477,6 +2479,122 @@ timing_function = "ease-in"
 #### Final Thoughts
 
 A **Secondary Button** is a complementary control that provides a subdued but fully functional alternative to **Primary** or other call-to-action buttons. By storing styling in GSS while M3L focuses on logic fields, you maintain a clean architecture and consistent user experience.
+
+---
+
+### Image Button Widget
+
+An **Image Button** primarily uses an image or icon as its face, but can also display **text** if desired (e.g., under or beside the icon). This makes it ideal for icon-based toolbars, but still flexible enough to include descriptive text where needed.
+
+#### Core Fields
+
+| Field              | Description                                                                                                      | Example                                    |
+|--------------------|------------------------------------------------------------------------------------------------------------------|--------------------------------------------|
+| `id`               | Unique identifier for referencing in **Pseudo** or your own logic (not used by GSS).                            | `id = "music_icon_btn"`                  |
+| `image`            | Path to an image or icon that forms the button face.                                                             | `image = "@Undline/assets/play_icon.svg"`|
+| `label`            | (Optional) Text displayed alongside/under the image, depending on GSS.                                           | `label = "Play"`                          |
+| `action`           | A short descriptor for the button’s role or action.                                                              | `action = "play_music"`                  |
+| `target`           | Resource, Pseudo script, or API call location.                                                                   | `target = "@Undline/api/play"`           |
+| `tooltip`          | Text shown on hover/focus (if supported).                                                                        | `tooltip = "Play Music"`                 |
+| `disabled`         | Disables interaction if `true`.                                                                                  | `disabled = false`                         |
+| `loading`          | Shows a loading state if `true`.                                                                                 | `loading = false`                          |
+| `keyboard_shortcut`| (Optional) Defines a key combo to trigger the button (if supported).                                             | `keyboard_shortcut = "space"`            |
+| `order`            | Numeric ordering for keyboard/controller tab navigation. Defaults to auto if none given.                         | `order = 3`                                |
+| `on_click`         | Specifies an array of event actions (intent, etc.).                                                              | `on_click = [{ intent = "play_song" }]`  |
+
+> **Note**: If you want purely an icon, omit `label`. If you want text as well, supply `label`. GSS determines how (or if) text is rendered.
+
+---
+
+#### Example M3L Snippet
+
+```toml
+# Minimal M3L snippet for the Image Button widget
+
+[image_button]
+id = "music_icon_btn"
+image = "@Undline/assets/play_icon.svg"
+label = "Play"   # Optional text
+action = "play_music"
+target = "@Undline/api/play"
+tooltip = "Play Music"
+keyboard_shortcut = "space"
+order = 3
+
+on_click = [
+  { intent = "play_song", target = "@Undline/api/play" }
+]
+```
+
+**Explanation**:
+- **id**: Used for referencing in logic or Pseudo, not for GSS.
+- **image**: The graphical face for the button.
+- **label**: (Optional) If you want text near/under the icon.
+- **action** / **target**: A short descriptor plus resource pointer.
+- **tooltip**: Helpful for accessibility or clarifying icon meaning.
+- **keyboard_shortcut**: Possibly triggers the button on a key press.
+- **order**: Determines focus order for keyboard/controller.
+- **on_click**: Ties into M3L event logic.
+
+---
+
+#### GSS Example
+
+```toml
+[image_button]
+# Typically an icon or image, but you can arrange label if present.
+background = "transparent"
+border = "none"
+cursor = "pointer"
+
+[image_button.hover]
+background = "rgba(255, 255, 255, 0.1)"
+
+[image_button.disabled]
+opacity = "0.5"
+cursor = "not-allowed"
+
+[image_button.loading]
+opacity = "0.7"
+cursor = "wait"
+
+[image_button.shadow]
+value = [ "2px 2px 4px rgba(0,0,0,64)" ]
+
+[image_button.animation.hover]
+type = "pulse"
+duration = "0.3s"
+timing_function = "ease-in-out"
+
+[image_button.animation.click]
+type = "zoom-in"
+duration = "0.2s"
+timing_function = "ease-in"
+```
+
+**Explanation**:
+1. `[image_button]`: Minimal styling for a purely icon-based button.
+2. If `label` is present, GSS designers might display it below or next to the image.
+3. States like `[image_button.hover]`, `[image_button.disabled]`, `[image_button.loading]` match other button conventions.
+4. **Animations**: Example includes `pulse` on hover, `zoom-in` on click.
+
+---
+
+#### Advanced Considerations
+
+1. **Text + Icon Layout**: GSS can define how/where the `label` appears relative to the image. For instance, you can place the text below or to the right.
+2. **Tooltips for Accessibility**: If no `label` is shown, tooltips or ARIA labels are crucial for screen readers.
+3. **Shadows & Borders**: Optional, but can help the icon stand out. For custom shapes, you can ignore certain fields like `border-radius`.
+4. **Disabled & Loading**: If `disabled = true` or `loading = true`, GSS can overlay spinners or reduce opacity.
+5. **Keyboard Navigation**: `order` ensures the image button is in a logical place in the tab sequence.
+6. **Parent Scoping**: If you embed in `[card]`, GSS can define `[card.image_button]` to override global `[image_button]` styles.
+7. **Keyboard Shortcuts**: Not always supported, but if it is, pressing a specific key can replicate a click.
+
+---
+
+#### Final Thoughts
+
+An **Image Button** offers a primarily graphical method of user interaction, with an optional label if you want partial text. By preserving separation of logic (M3L) and styling (GSS), you maintain flexibility, consistency, and accessibility—especially for purely icon-based UIs.
 
 ---
 
