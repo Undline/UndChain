@@ -144,6 +144,8 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **[Frame](#frame-widget)**: A Frame widget is one that is meant to contain multiple widgets (including other frames). Types: Grid, Relative, Absolute and Flex.
 - **Side Bar**: This is a special type of frame widget that is designed to only take the area of a side of the screen: top, bottom, left or right.
 - **[Primary Button](#primary-button-widget)**: This button is specifically designed as a call to action button, meaning you want the user to click this button over any other.
+- **[Secondary Button](#secondary-button-widget)**: This is designed to complement the primary button for things like cancel, back or skip.
+- **[Image Button](#image-button-widget)**: This button is designed for specific applications where the M3L developers wish to have a custom button that is not an icon.
 - **Button**: Clickable widget that has various forms: Image buttons, confirmation buttons, call-to-action buttons, and muted buttons.
 - **Text**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
 - **Text Box**: Allows for single-line user input.
@@ -2354,6 +2356,127 @@ timing_function = "ease-in"
 5. **Integration**: This widget can be embedded inside a window or frame, e.g. `[window.primary_button]`.
 6. **Keyboard Shortcuts**: Not all environments may support `keyboard_shortcut`, but if they do, it’s a convenient way to speed up repeated actions.
 7. **Tab Navigation**: The `order` field helps define which widget gets focus first when a user presses Tab or navigates via controller. If no order is specified, the system auto-assigns based on top-left to bottom-right scanning.
+
+---
+
+### Secondary Button Widget
+
+A **Secondary Button** is used for supporting or less critical actions (e.g., "Cancel," "Back," or "Skip"). It typically blends into the interface more subtly than a primary button, but remains sufficiently noticeable for user interaction.
+
+#### Core Fields
+
+| Field             | Description                                                                                                    | Example                                     |
+|-------------------|----------------------------------------------------------------------------------------------------------------|---------------------------------------------|
+| `id`              | Unique identifier for referencing in **Pseudo** or your own logic (not used by GSS).                          | `id = "cancel_btn"`                       |
+| `label`           | Text displayed on the button face.                                                                             | `label = "Cancel"`                        |
+| `icon`            | (Optional) Path to an icon or image if the button uses an icon.                                                | `icon = "@Undline/assets/close.svg"`      |
+| `action`          | A short string describing the button’s role or action.                                                         | `action = "cancel_form"`                  |
+| `target`          | Resource, Pseudo script, or API call location.                                                                 | `target = "@Undline/api/cancel"`         |
+| `tooltip`         | Text shown on hover/focus (if supported).                                                                      | `tooltip = "Cancel and go back"`          |
+| `disabled`        | Disables interaction if `true`.                                                                                | `disabled = false`                         |
+| `loading`         | Shows a loading state if `true`.                                                                               | `loading = false`                          |
+| `keyboard_shortcut` | (Optional) Defines a key combo to trigger the button (if supported).                                         | `keyboard_shortcut = "esc"`              |
+| `order`           | Numeric ordering for keyboard/controller tab navigation. Defaults to auto if none given.                       | `order = 2`                                |
+| `on_click`        | Specifies an array of event actions (intent, etc.).                                                            | `on_click = [{ intent = "cancel_form" }]`|
+
+> **Note**: In M3L, we keep styling minimal. GSS is responsible for the visual aspects.
+
+---
+
+#### Example M3L Snippet
+
+```toml
+# A minimal M3L snippet for the secondary button widget
+
+[secondary_button]
+id = "cancel_btn"
+label = "Cancel"
+action = "cancel_form"
+target = "@Undline/api/cancel"
+tooltip = "Cancel and go back"
+keyboard_shortcut = "esc"
+order = 2
+
+on_click = [
+  { intent = "cancel_form", target = "@Undline/api/cancel" }
+]
+```
+
+**Explanation**:
+- **id**: "cancel_btn" is used for referencing in logic or Pseudo, not by GSS.
+- **label**: "Cancel" is displayed on the button.
+- **action**, **target**: Short descriptor plus resource pointer.
+- **tooltip**: Quick user hint if environment supports hover/focus.
+- **keyboard_shortcut**: Possibly triggers the same effect when pressing `esc`.
+- **order**: The second button to focus during tab/arrow navigation.
+- **on_click**: Ties into M3L event logic, e.g., "cancel_form".
+
+---
+
+#### GSS Example
+
+```toml
+[secondary_button]
+background-color = "#CCCCCC"
+color = "#333333"
+border-radius = "4px"
+border = "1px solid #999999"
+padding = "8px 16px"
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+
+[secondary_button.hover]
+background-color = "#BBBBBB"
+
+[secondary_button.disabled]
+background-color = "#eeeeee"
+color = "#999999"
+cursor = "not-allowed"
+
+[secondary_button.loading]
+# Could show a spinner or change the label
+content = "Loading..."
+cursor = "wait"
+
+[secondary_button.shadow]
+# Use an array-of-strings if you want multiple shadows.
+value = [ "1px 1px 3px rgba(0,0,0,64)" ]
+
+[secondary_button.animation.hover]
+type = "scale-up"
+duration = "0.3s"
+timing_function = "ease-in-out"
+
+[secondary_button.animation.click]
+type = "pulse"
+duration = "0.5s"
+timing_function = "ease-in"
+```
+
+**Explanation**:
+1. `[secondary_button]`: Declares styles for the default state (less vibrant than a primary button).
+2. `[secondary_button.hover]`, `[secondary_button.disabled]`, `[secondary_button.loading]`: Specialized states.
+3. **Shadows**: Insert multiple strings in the `value` array to layer multiple shadows.
+4. **Animations**: Example includes a slight `scale-up` on hover and a `pulse` on click.
+
+---
+
+#### Advanced Considerations
+
+1. **Custom Shapes**: If defining a custom polygon or 3D shape, some standard fields (e.g., `border-radius`) may not apply.
+2. **Destructive vs. Non-Destructive**: If the action is destructive (e.g., "Delete"), a separate `destructive_button` might be warranted.
+3. **Disabled & Loading**: Setting `disabled = true` or `loading = true` updates states in GSS accordingly.
+4. **Keyboard Navigation**: The `order` field dictates tab or arrow focus. If omitted, the engine auto-assigns an order.
+5. **Accessibility**: Provide `tooltip` or screenreader text. Confirm focus behavior if using unusual shapes.
+6. **Integration**: This widget can appear inside `[window]`, `[frame]`, or other parent scopes.
+   - **Parent Scoping**: GSS can apply different styles if you embed this inside `[card]`, e.g. `[card.secondary_button]`, which overrides or adds to the global `[secondary_button]` styling. This enables unique looks in different parent contexts without duplicating widgets.
+7. **Keyboard Shortcuts**: Not all environments may honor `keyboard_shortcut`, but if they do, it’s a user-friendly timesaver.
+
+---
+
+#### Final Thoughts
+
+A **Secondary Button** is a complementary control that provides a subdued but fully functional alternative to **Primary** or other call-to-action buttons. By storing styling in GSS while M3L focuses on logic fields, you maintain a clean architecture and consistent user experience.
 
 ---
 
