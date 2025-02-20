@@ -147,7 +147,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **[Secondary Button](#secondary-button-widget)**: This is designed to complement the primary button for things like cancel, back or skip.
 - **[Image Button](#image-button-widget)**: This button is designed for specific applications where the M3L developers wish to have a custom button that is not an icon.
 - **[Confirmation Button](#confirmation-button-widget)**: This button is designed to confirm a major action or event by the user. Think purchasing an item or signing a contract. This could be a click and hold or a slide confirmation, depending on the GSS designer.
-- **[Toggle Button](#toggle-button-widget)**: 
+- **[Toggle Button](#toggle-button-widget)**: This button is designed as a true / false action type to indicate when a event is triggered or not. Think a light switch or a setting option that is either yes or no.
 - **Button**: Clickable widget that has various forms: Image buttons, confirmation buttons, call-to-action buttons, and muted buttons.
 - **Text**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
 - **Text Box**: Allows for single-line user input.
@@ -2595,6 +2595,134 @@ timing_function = "ease-in"
 #### Final Thoughts
 
 An **Image Button** offers a primarily graphical method of user interaction, with an optional label if you want partial text. By preserving separation of logic (M3L) and styling (GSS), you maintain flexibility, consistency, and accessibility—especially for purely icon-based UIs.
+
+---
+
+### Confirmation Button Widget
+
+A **Confirmation Button** is used for **major or irreversible actions**, such as making a purchase or signing a contract. Unlike a standard button, it typically requires an **extra step** (like click-and-hold or swipe-to-confirm) so the user explicitly acknowledges the action.
+
+#### Core Fields
+
+| Field               | Description                                                                                                  | Example                                     |
+|---------------------|--------------------------------------------------------------------------------------------------------------|---------------------------------------------|
+| `id`                | Unique identifier for referencing in **Pseudo** or logic (not used by GSS).                                 | `id = "purchase_btn"`                     |
+| `label`             | Text displayed on the button face (e.g., "Confirm").                                                       | `label = "Confirm"`                       |
+| `icon`              | (Optional) Path to an icon or image if the button uses an icon.                                             | `icon = "@Undline/assets/check.svg"`      |
+| `action`            | A short descriptor for the button’s role or action.                                                         | `action = "confirm_purchase"`             |
+| `target`            | Resource, Pseudo script, or API call location.                                                              | `target = "@Undline/api/checkout"`        |
+| `tooltip`           | Text shown on hover/focus (if supported).                                                                   | `tooltip = "Click and Hold to Confirm"`   |
+| `confirmation_mode` | Defines how the user must confirm (e.g. `click_and_hold`, `slide`, or other).                               | `confirmation_mode = "click_and_hold"`    |
+| `hold_duration`     | If `confirmation_mode` = `click_and_hold`, the time in ms the user must hold before firing the event.       | `hold_duration = 2000`                      |
+| `disabled`          | Disables interaction if `true`.                                                                             | `disabled = false`                         |
+| `loading`           | Shows a loading state if `true`.                                                                            | `loading = false`                          |
+| `keyboard_shortcut` | (Optional) Key combo to trigger the button (if supported).                                                  | `keyboard_shortcut = "ctrl+enter"`        |
+| `order`             | Numeric ordering for keyboard/controller tab navigation. Defaults to auto if none given.                    | `order = 4`                                |
+| `on_click`          | Specifies an array of event actions (intent, etc.).                                                         | `on_click = [{ intent = "finalize_deal" }]`|
+
+> **Note**: If you want a simpler approach, consider a primary or secondary button. Confirmation Button is for big actions.
+
+---
+
+#### Example M3L Snippet
+
+```toml
+# Minimal M3L snippet for a Confirmation Button
+
+[confirmation_button]
+id = "purchase_btn"
+label = "Buy Now"
+action = "confirm_purchase"
+target = "@Undline/api/checkout"
+tooltip = "Click and hold 2s to confirm"
+confirmation_mode = "click_and_hold"
+hold_duration = 2000
+order = 4
+
+on_click = [
+  { intent = "finalize_deal", target = "@Undline/api/checkout" }
+]
+```
+
+**Explanation**:
+- **id**: "purchase_btn" is for referencing in logic.
+- **label**: "Buy Now" or "Confirm" is displayed.
+- **confirmation_mode**: e.g. "click_and_hold" or "slide".
+- **hold_duration**: If `confirmation_mode`= `click_and_hold`, the user must hold for 2s.
+- **tooltip**: Nudges the user about the hold requirement.
+- **on_click**: Ties into M3L event logic after confirmation.
+
+---
+
+#### GSS Example
+
+```toml
+[confirmation_button]
+background-color = "#FFAA00"
+color = "#000000"
+border-radius = "6px"
+border = "1px solid #FFA500"
+padding = "12px 24px"
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+font-weight = "bold"
+
+[confirmation_button.hover]
+background-color = "#FF9900"
+
+[confirmation_button.disabled]
+background-color = "#dddddd"
+color = "#999999"
+cursor = "not-allowed"
+
+[confirmation_button.loading]
+content = "Processing..."
+cursor = "wait"
+
+[confirmation_button.shadow]
+# Add a slightly stronger shadow for emphasis
+value = [ "3px 3px 6px rgba(0,0,0,128)" ]
+
+[confirmation_button.animation.hover]
+type = "scale-up"
+duration = "0.3s"
+timing_function = "ease-in-out"
+
+[confirmation_button.animation.click]
+type = "slide-confirm"  # For a 'slide to confirm' effect.
+duration = "1s"
+timing_function = "ease-in"
+
+[confirmation_button.animation.hold]
+# Could define a radial fill or progress ring that completes in hold_duration ms
+# This is up to the GSS engine's capabilities.
+```
+
+**Explanation**:
+1. `[confirmation_button]`: A bright color (e.g. gold/orange) conveys importance.
+2. `[confirmation_button.hover]`, `[confirmation_button.disabled]`, `[confirmation_button.loading]`: Each modifies visuals.
+3. **Shadows**: Emphasize the significance of the action.
+4. **Animations**:
+   - `slide-confirm` is a hypothetical effect for swiping confirmation.
+   - `hold` might visually show a timed progress if the user holds the button.
+
+---
+
+#### Advanced Considerations
+
+1. **Confirmation Modes**: If `confirmation_mode = "slide"`, GSS can animate a slider the user drags. If `click_and_hold`, you might define a progress ring animation. Implementation details vary.
+2. **Time & Safety**: Longer `hold_duration` (like 3000–5000 ms) if the action is extremely irreversible.
+3. **Disabled & Loading**: If `disabled = true` or `loading = true`, interactions are limited or visually indicated.
+4. **Keyboard Navigation**: `order` ensures your confirmation button has a consistent place in tabbing.
+5. **Accessibility**: Provide `tooltip` or screenreader text. Confirm voice or keyboard input can also trigger the hold/slide logic.
+6. **Integration**: `[confirmation_button]` can embed inside `[window]`, `[frame]`, `[card]`, etc.
+7. **Parent Scoping**: If placed in a `card`, GSS can define `[card.confirmation_button]` for specialized looks.
+
+---
+
+#### Final Thoughts
+
+A **Confirmation Button** enforces an *explicit* user action—such as a hold or slide—to prevent accidental clicks on critical steps. The M3L snippet sets up logic fields (`confirmation_mode`, `hold_duration`), while GSS handles the visual nuance (e.g., a progress ring or sliding track), ensuring a robust and user-friendly confirmation flow.
 
 ---
 
