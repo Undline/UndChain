@@ -149,7 +149,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **[Confirmation Button](#confirmation-button-widget)**: This button is designed to confirm a major action or event by the user. Think purchasing an item or signing a contract. This could be a click and hold or a slide confirmation, depending on the GSS designer.
 - **[Toggle Button](#toggle-button-widget)**: This button is designed as a true / false action type to indicate when a event is triggered or not. Think a light switch or a setting option that is either yes or no.
 - **[FAB Button](#floating-action-button-widget)**: A Floating Action Button (FAB) is a prominent, circular button designed for a key action (e.g., “New Post,” “Compose,” or “Start Chat”). It often floats above other UI elements and can be draggable if desired.
-- **Text**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
+- **[Text](text-widget)**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
 - **Text Box**: Allows for single-line user input.
 - **Text Area**: Multi-line input for larger text blocks.
 - **Checkbox**: For binary selections, users can check one or more items.
