@@ -142,13 +142,13 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **[Window](#window-widget)**: Creates a new widowed object within the virtual desktop so that users can contain a application.
 - **Fullscreen**: Not sure if this should be a widget type, but could describe a system where we want to take a full screen to show widgets. Common use would be console, mobile and desktop environments.
 - **[Frame](#frame-widget)**: A Frame widget is one that is meant to contain multiple widgets (including other frames). Types: Grid, Relative, Absolute and Flex.
-- **Side Bar**: This is a special type of frame widget that is designed to only take the area of a side of the screen: top, bottom, left or right.
+- **Side Bar**: This is a special type of frame widget that is designed to only take the area of a side of the screen: left or right.
 - **[Primary Button](#primary-button-widget)**: This button is specifically designed as a call to action button, meaning you want the user to click this button over any other.
 - **[Secondary Button](#secondary-button-widget)**: This is designed to complement the primary button for things like cancel, back or skip.
 - **[Image Button](#image-button-widget)**: This button is designed for specific applications where the M3L developers wish to have a custom button that is not an icon.
 - **[Confirmation Button](#confirmation-button-widget)**: This button is designed to confirm a major action or event by the user. Think purchasing an item or signing a contract. This could be a click and hold or a slide confirmation, depending on the GSS designer.
 - **[Toggle Button](#toggle-button-widget)**: This button is designed as a true / false action type to indicate when a event is triggered or not. Think a light switch or a setting option that is either yes or no.
-- **Button**: Clickable widget that has various forms: Image buttons, confirmation buttons, call-to-action buttons, and muted buttons.
+- **[FAB Button](#floating-action-button-widget)**: A Floating Action Button (FAB) is a prominent, circular button designed for a key action (e.g., “New Post,” “Compose,” or “Start Chat”). It often floats above other UI elements and can be draggable if desired.
 - **Text**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
 - **Text Box**: Allows for single-line user input.
 - **Text Area**: Multi-line input for larger text blocks.
@@ -2726,133 +2726,260 @@ A **Confirmation Button** enforces an *explicit* user action—such as a hold or
 
 ---
 
-### **Button Widget**
+### Toggle Button Widget
 
-Buttons are versatile widgets that trigger actions or navigate users through the interface. They support multiple predefined types and rich customization options, including animations and interactive effects.
+A **Toggle Button** lets users switch between two states, such as **ON/OFF**, **Mute/Unmute**, or **Enable/Disable**. Rather than submitting an action once, the button retains and visually displays its current state.
 
----
+#### Core Fields
 
-### **Button Types**
-1. **Primary Button (CTA)**:
-   - Highlights the main action for users (e.g., "Submit" or "Proceed").
-2. **Secondary Button (Muted)**:
-   - Used for supporting or less critical actions (e.g., "Cancel" or "Go Back").
-3. **Image Button**:
-   - Uses an image as the button surface while retaining full button functionality.
-4. **Confirmation Button**:
-   - Requires an additional step to confirm the action (e.g., click-and-hold).
-5. **Toggle Button**:
-   - Allows switching between two states, such as ON/OFF.
-6. **Floating Action Button**:
-   - A circular button designed for key actions with optional drag functionality.
+| Field               | Description                                                                                                  | Example                                   |
+|---------------------|--------------------------------------------------------------------------------------------------------------|-------------------------------------------|
+| `id`                | Unique identifier for referencing in **Pseudo** or logic (not used by GSS).                                 | `id = "mute_toggle"`                    |
+| `label_on`          | Text displayed when the toggle is in the "on" or "active" state.                                          | `label_on = "Unmuted"`                  |
+| `label_off`         | Text displayed when the toggle is in the "off" or "inactive" state.                                       | `label_off = "Muted"`                   |
+| `initial_state`     | The default state (`on` or `off`) if not otherwise set by logic.                                             | `initial_state = "off"`                 |
+| `action_on`         | A short descriptor for the "on" action (e.g., unmute, enable).                                              | `action_on = "unmute_sound"`            |
+| `action_off`        | A short descriptor for the "off" action (e.g., mute, disable).                                             | `action_off = "mute_sound"`             |
+| `target`            | Resource, Pseudo script, or API call location for toggling on/off states.                                    | `target = "@Undline/api/sound_toggle"`  |
+| `tooltip_on`        | (Optional) Hover/focus text when the toggle is `on`.                                                         | `tooltip_on = "Currently Unmuted"`       |
+| `tooltip_off`       | (Optional) Hover/focus text when the toggle is `off`.                                                        | `tooltip_off = "Currently Muted"`        |
+| `disabled`          | Disables interaction if `true`.                                                                              | `disabled = false`                        |
+| `loading`           | Shows a loading state if toggling is in progress.                                                            | `loading = false`                         |
+| `keyboard_shortcut` | (Optional) Key combo to toggle (if supported).                                                               | `keyboard_shortcut = "m"`               |
+| `order`             | Numeric ordering for keyboard/controller tab navigation. Defaults to auto if none given.                     | `order = 5`                               |
+| `on_toggle`         | Specifies an array of event actions for toggling. May pass a param indicating on/off.                        | `on_toggle = [{ intent = "toggle_sound" }]` |
 
----
-
-### **Core Fields**
-| **Field**       | **Description**                                                                 | **Example**                            |
-|-----------------|---------------------------------------------------------------------------------|----------------------------------------|
-| `label`         | Text displayed on the button (if applicable).                                   | `label = "Submit"`                     |
-| `icon`          | Path to the icon or image for the button surface.                               | `icon = "@Undline/assets/icon.svg"`    |
-| `type`          | Specifies the button type (`primary`, `secondary`, `icon`, `confirmation`, `toggle`, `floating`). | `type = "confirmation"`                |
-| `action`        | Action triggered when the button is clicked.                                    | `action = "purchase"`                  |
-| `target`        | Target resource or page for the action (if applicable).                         | `target = "@Undline/api/buy"`          |
-| `tooltip`       | Text displayed when hovering over the button.                                   | `tooltip = "Click to Purchase"`        |
-| `confirmation`  | Enables a two-step confirmation process.                                        | `confirmation = true`                  |
-| `click_and_hold`| Triggers an action after holding the button for a set duration (in ms).          | `click_and_hold = 2000`                |
-| `disabled`      | Disables the button, preventing interaction.                                    | `disabled = true`                      |
-| `loading`       | Shows a loading animation when the button is pressed until the action resolves. | `loading = true`                       |
-| `state`         | Defines the button’s current state (`default`, `active`, `focused`).            | `state = "default"`                    |
-| `boundary`      | Defines the boundary area for floating buttons.                                | `boundary = { top = "10px", bottom = "10px", left = "10px", right = "10px" }` |
-| `font`          | Defines font properties such as type and size.                                 | `font = { family = "Arial", size = "1rem" }` |
-| `background`    | Supports gradient colors or images for the button background.                  | `background = { type = "gradient", colors = ["#007BFF", "#0056b3"] }` |
-| `border`        | Defines the border style, width, and color.                                     | `border = "1px solid #007BFF"`         |
-| `border_radius` | Rounds the corners of the button.                                               | `border_radius = "5px"`                |
-| `shadow`        | Adds drop shadow effects to the button.                                         | `shadow = { color = "#000", blur = "5px", offset_x = "2px", offset_y = "2px" }` |
+> **Note**: Some devs prefer a single field `label` that changes dynamically. Others prefer separate `label_on` and `label_off` for clarity.
 
 ---
 
-### **Animation Parameters**
-Animations enhance user experience by providing visual feedback. Designers can use predefined animations or define custom ones.
+#### Example M3L Snippet
 
-| **Parameter**       | **Description**                                              | **Example**                               |
-|---------------------|--------------------------------------------------------------|-------------------------------------------|
-| `entrance.animation`| Defines the animation when the button appears.               | `entrance.animation = "fade-in"`          |
-| `hover.animation`   | Specifies the animation when the button is hovered over.     | `hover.animation = "scale-up"`            |
-| `click.animation`   | Defines the animation triggered on click or interaction.     | `click.animation = "progress-fill"`       |
-| `exit.animation`    | Specifies the animation when the button exits.               | `exit.animation = "fade-out"`             |
-| `duration`          | Duration of the animation (in seconds).                      | `duration = "1s"`                         |
-| `timing_function`   | Specifies easing for the animation.                          | `timing_function = "ease-in-out"`         |
-| `custom_animation`  | Allows developers to define their animations using custom logic. | `custom_animation = { steps = [{ opacity = "0" }, { opacity = "1" }], duration = "2s" }` |
-
----
-
-### **Example M3L Implementation**
 ```toml
-[[layout.container.content]]
-type = "button"
-label = "Submit"
-type = "confirmation"
-action = "purchase"
-target = "@Undline/api/buy"
-tooltip = "Hold to Confirm Purchase"
-confirmation = true
-click_and_hold = 2000
-boundary = { top = "10px", bottom = "10px", left = "10px", right = "10px" }
+# Minimal M3L snippet for a Toggle Button widget
 
-font = { family = "Arial", size = "1rem" }
-background = { type = "gradient", colors = ["#007BFF", "#0056b3"] }
-shadow = { color = "#000", blur = "5px", offset_x = "2px", offset_y = "2px" }
-border = "1px solid #007BFF"
-border_radius = "5px"
+[toggle_button]
+id = "mute_toggle"
+label_on = "Unmute"
+label_off = "Mute"
+initial_state = "off"
+action_on = "unmute_sound"
+action_off = "mute_sound"
+target = "@Undline/api/sound_toggle"
+tooltip_on = "Currently Unmuted"
+tooltip_off = "Currently Muted"
+order = 5
 
-on_click = [
-    { intent = "start_purchase", target = "@Undline/api/buy" }
+on_toggle = [
+  { intent = "toggle_sound", target = "@Undline/api/sound_toggle" }
 ]
 ```
 
+**Explanation**:
+- **id**: "mute_toggle" is used by logic or Pseudo.
+- **label_on** / **label_off**: Text for each state.
+- **initial_state**: By default, it starts in "off" (muted).
+- **action_on**, **action_off**: Short descriptors for each toggle action.
+- **tooltip_on**, **tooltip_off**: Optional hints to clarify the current state.
+- **on_toggle**: Ties into M3L event logic (like toggling an API call). A param might be passed to differentiate on/off.
+
 ---
 
-### **Example GSS Implementation**
+#### GSS Example
+
 ```toml
-[button.primary]
-background-color = "#007BFF"
-color = "#FFFFFF"
-border = "1px solid #007BFF"
-border-radius = "5px"
-padding = "10px 20px"
+[toggle_button]
+background-color = "#EEEEEE"
+color = "#333333"
+border-radius = "4px"
+border = "1px solid #999999"
+padding = "8px 16px"
 font-family = "Arial, sans-serif"
 font-size = "1rem"
+cursor = "pointer"
 
-[button.primary.hover]
-background-color = "#0056b3"
+# State: ON
+[toggle_button.on]
+background-color = "#00DD88"
+color = "#FFFFFF"
 
-[button.primary.animation]
-entrance.animation = "fade-in"
-hover.animation = "scale-up"
-click.animation = "progress-fill"
-exit.animation = "fade-out"
-duration = "1s"
-timing_function = "ease-in-out"
+# State: OFF
+[toggle_button.off]
+background-color = "#CC3333"
+color = "#FFFFFF"
 
-[button.floating]
-background = { type = "gradient", colors = ["#FF5733", "#FF4500"] }
+[toggle_button.hover]
+background-color = "#DDDDDD"
+
+[toggle_button.disabled]
+background-color = "#eeeeee"
+color = "#999999"
+cursor = "not-allowed"
+
+[toggle_button.loading]
+content = "Switching..."
+cursor = "wait"
+
+[toggle_button.shadow]
+value = [ "1px 1px 3px rgba(0,0,0,64)" ]
+
+[toggle_button.animation.on]
+# Suppose toggling ON has a quick fade-in
+type = "fade-in"
+duration = "0.3s"
+timing_function = "ease"
+
+[toggle_button.animation.off]
+# Suppose toggling OFF has a quick fade-out
+type = "fade-out"
+duration = "0.3s"
+timing_function = "ease"
+```
+
+**Explanation**:
+1. `[toggle_button]`: Base style shared by both states.
+2. `[toggle_button.on]` and `[toggle_button.off]` define distinctive looks (e.g., green for on, red for off). The engine picks which block applies based on the current toggle state.
+3. Additional states like `[toggle_button.hover]`, `[toggle_button.disabled]`, `[toggle_button.loading]` remain consistent with other button types.
+4. Animations can vary for switching ON vs. OFF.
+
+---
+
+#### Advanced Considerations
+
+1. **State Changes**: The engine or Pseudo might store the toggle state. M3L’s `on_toggle` event can pass along `new_state` ("on" or "off").
+2. **Labels & Tooltips**: GSS can show/hide `label_on` / `label_off` as needed, or even overlay icons.
+3. **Disabled & Loading**: If `disabled = true` or `loading = true`, that might prevent toggling or show a wait cursor.
+4. **Keyboard Navigation**: The `order` field ensures logical tabbing with other buttons.
+5. **Parent Scoping**: If inside `[card]`, you can override `[toggle_button]` with `[card.toggle_button]` for a different look.
+6. **Custom Shapes**: If you do a custom polygon or 3D shape, fields like `border-radius` might not apply.
+
+---
+
+#### Final Thoughts
+
+A **Toggle Button** is ideal for two-state UI flows—like enabling/disabling features or muting/unmuting audio. M3L sets the fields (labels, actions, state), while GSS renders each state’s appearance (`on`, `off`, plus hover/disabled/loading). This maintains clarity between UI logic and design.
+
+---
+
+### Floating Action Button (FAB)
+
+A **Floating Action Button** (FAB) is a **prominent, circular** button designed for a key action (e.g., “New Post,” “Compose,” or “Start Chat”). It often floats above other UI elements and can be draggable if desired.
+
+#### Core Fields
+
+| Field              | Description                                                                                       | Example                                   |
+|--------------------|---------------------------------------------------------------------------------------------------|-------------------------------------------|
+| `id`               | Unique identifier for referencing in **Pseudo** or logic (not used by GSS).                      | `id = "fab_chat"`                       |
+| `label`            | (Optional) Text label displayed near/under the FAB’s icon (if GSS chooses to show it).           | `label = "Chat"`                        |
+| `icon`             | Path to an icon/image forming the main face of the FAB.                                          | `icon = "@Undline/assets/chat_icon.svg"`|
+| `action`           | Short descriptor for the FAB’s primary role or action.                                           | `action = "new_chat"`                   |
+| `target`           | Resource, Pseudo script, or API call location.                                                   | `target = "@Undline/api/start_chat"`    |
+| `tooltip`          | Text shown on hover/focus (if supported).                                                        | `tooltip = "Start a New Chat"`          |
+| `disabled`         | Disables interaction if `true`.                                                                   | `disabled = false`                        |
+| `loading`          | Shows a loading state if `true`.                                                                  | `loading = false`                         |
+| `draggable`        | Allows the FAB to be moved around the screen if `true`.                                          | `draggable = true`                       |
+| `boundary`         | Defines how far the FAB can be dragged (top, bottom, left, right).                               | `boundary = { top = "0px", bottom = "0px", left = "0px", right = "0px" }` |
+| `keyboard_shortcut`| (Optional) Key combo to trigger the FAB (if supported).                                          | `keyboard_shortcut = "ctrl+n"`          |
+| `order`            | Numeric ordering for keyboard/controller tab navigation. Defaults to auto if none given.         | `order = 6`                              |
+| `on_click`         | Specifies an array of event actions (intent, etc.).                                              | `on_click = [{ intent = "create_new_chat" }]` |
+
+> **Note**: Typically a FAB is circular and stands out visually. GSS handles shape, size, and float layering.
+
+---
+
+#### Example M3L Snippet
+
+```toml
+# Minimal M3L snippet for a Floating Action Button
+
+[fab_button]
+id = "fab_chat"
+label = "Chat"
+icon = "@Undline/assets/chat_icon.svg"
+action = "new_chat"
+target = "@Undline/api/start_chat"
+tooltip = "Start a New Chat"
+draggable = true
+boundary = { top = "0px", bottom = "0px", left = "0px", right = "0px" }
+order = 6
+
+on_click = [
+  { intent = "create_new_chat", target = "@Undline/api/start_chat" }
+]
+```
+
+**Explanation**:
+- **id**: "fab_chat" for referencing in logic.
+- **label**: (Optional) “Chat” if the GSS decides to show it under/next to the icon.
+- **draggable**: `true` means the user can drag the FAB around.
+- **boundary**: Restricts how far the FAB can move.
+- **on_click**: Ties into M3L event logic.
+
+---
+
+#### GSS Example
+
+```toml
+[fab_button]
+# Typically circular and floating above other elements
+background-color = "#FF4081"
 color = "#FFFFFF"
 border-radius = "50%"
-shadow.color = "#000"
-shadow.blur = "10px"
-position = { x = "50px", y = "50px" }
-boundary = { top = "0px", bottom = "0px", left = "0px", right = "0px" }
+width = "56px"
+height = "56px"
+shadow = [ "2px 2px 6px rgba(0,0,0,128)" ]
+cursor = "pointer"
+position = { x = "calc(100% - 72px)", y = "calc(100% - 72px)" }
 
-[button.floating.draggable]
+[fab_button.hover]
+background-color = "#F50057"
+
+[fab_button.disabled]
+opacity = "0.6"
+cursor = "not-allowed"
+
+[fab_button.loading]
+# Could overlay a spinner or make the icon partially transparent
+opacity = "0.7"
+cursor = "wait"
+
+[fab_button.draggable]
+# If draggable, you might define a 'grab' cursor on hover or logic for drag states
 cursor = "grab"
 
-[button.custom_animation]
-steps = [
-    { opacity = "0" },
-    { opacity = "1" }
-]
-duration = "2s"
+[fab_button.animation.hover]
+type = "scale-up"
+duration = "0.3s"
+timing_function = "ease-in-out"
+
+[fab_button.animation.click]
+type = "bounce"
+duration = "0.4s"
+timing_function = "ease"
 ```
+
+**Explanation**:
+1. `[fab_button]`: Typically circular, sized ~56px (common in mobile design), with a strong shadow.
+2. `position = { x = "calc(100% - 72px)", y = "calc(100% - 72px)" }`: Example of anchoring near bottom-right corner. Real usage depends on your layout.
+3. `[fab_button.draggable]`: GSS might show a `grab` cursor, though actual drag logic is engine- or JS-level.
+4. Animations on hover or click for a satisfying user experience.
+
+---
+
+#### Advanced Considerations
+
+1. **Drag Logic**: If `draggable = true`, M3L or your engine might handle the actual drag events. GSS just sets the visual style (like `cursor = "grab"`).
+2. **Label Placement**: If `label` is provided, GSS can position text below or next to the icon. Sometimes it’s hidden until hover.
+3. **Disabled & Loading**: Setting these fields changes the look accordingly (lower opacity, cursor changes, etc.).
+4. **Keyboard Navigation**: The `order` field ensures it fits among other buttons in tab or arrow focus.
+5. **Parent Scoping**: If inside `[window]` or `[frame]`, GSS can do `[window.fab_button]` for a unique style.
+6. **Custom Shapes**: If you want a non-circular shape, define your own shape or 3D illusions. `border-radius` might be ignored in that case.
+
+---
+
+#### Final Thoughts
+
+A **Floating Action Button** stands out for critical or central actions—commonly used in mobile or modern UIs. By storing shape, size, and float position in GSS while M3L handles logic fields (`label`, `draggable`, etc.), you maintain a clear separation of concerns and a smooth user experience.
 
 ---
 
