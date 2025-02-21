@@ -142,7 +142,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **[Window](#window-widget)**: Creates a new widowed object within the virtual desktop so that users can contain a application.
 - **Fullscreen**: Not sure if this should be a widget type, but could describe a system where we want to take a full screen to show widgets. Common use would be console, mobile and desktop environments.
 - **[Frame](#frame-widget)**: A Frame widget is one that is meant to contain multiple widgets (including other frames). Types: Grid, Relative, Absolute and Flex.
-- **Side Bar**: This is a special type of frame widget that is designed to only take the area of a side of the screen: left or right.
+- **[Side Bar](#side-bar-widget)**: This is a special type of frame widget that is designed to only take the area of a side of the screen: left or right.
 - **[Primary Button](#primary-button-widget)**: This button is specifically designed as a call to action button, meaning you want the user to click this button over any other.
 - **[Secondary Button](#secondary-button-widget)**: This is designed to complement the primary button for things like cancel, back or skip.
 - **[Image Button](#image-button-widget)**: This button is designed for specific applications where the M3L developers wish to have a custom button that is not an icon.
@@ -2240,6 +2240,136 @@ text = "Buy Now"
 - Use `z_order` for future 3D layering support.
 - Avoid deeply nested layouts beyond **three levels** for readability; external files are recommended after this point.
 - Frames are fundamental in M3L UI design, and **choosing the right frame type ensures optimal user experience.**
+
+---
+
+### Side Bar Widget
+
+A **Side Bar** is a dedicated container, pinned to the **left** or **right** edge of the screen (or parent window), typically for secondary navigation or additional tools. Internally, it behaves like a **Frame** (defaulting to a flex layout) so you can place child widgets easily.
+
+---
+
+#### Core Purpose
+- A **Side Bar** organizes secondary navigation, filters, or extra tools outside the main workspace.
+- Pinned to either **left** or **right**, it can be optional to **collapse** if screen real estate is needed.
+- Because it’s essentially a **frame**, you can nest other widgets within it using any layout approach (but defaults to **flex**).
+
+---
+
+#### Core Fields
+
+| Field        | Description                                                                    | Example                                  |
+|--------------|--------------------------------------------------------------------------------|------------------------------------------|
+| `id`         | Unique identifier for referencing in **Pseudo** or logic (not used by GSS).    | `id = "nav_side_bar"`                  |
+| `side`       | Which edge the sidebar occupies (`left` or `right`).                           | `side = "left"`                        |
+| `collapsible`| If `true`, allows the user to toggle the bar open/closed.                      | `collapsible = true`                     |
+| `collapsed`  | Initial collapse state (true/false).                                           | `collapsed = false`                      |
+| `resizable`  | If `true`, user can drag the sidebar’s edge to resize width.                   | `resizable = true`                       |
+| `min_width`  | Minimum width if `resizable = true`.                                           | `min_width = "200px"`                  |
+| `max_width`  | Maximum width if `resizable = true`.                                           | `max_width = "400px"`                  |
+| `title`      | (Optional) Title displayed if the sidebar has a header area.                   | `title = "Navigation"`                 |
+| `on_toggle`  | (Optional) Array of event actions triggered when the user collapses/expands.   | `on_toggle = [{ intent = "toggle_side_bar" }]` |
+| `on_resize`  | (Optional) Array of event actions if the user resizes the bar.                 | `on_resize = [{ intent = "save_side_bar_width" }]` |
+
+> **Note**: The side bar also hosts child widgets, e.g. `[side_bar.button]` or `[side_bar.list]`. If you don’t specify a layout, it defaults to **flex**.
+
+---
+
+#### Example M3L Snippet
+
+```toml
+# Minimal M3L snippet for the Side Bar widget
+
+[side_bar]
+id = "nav_side_bar"
+side = "left"
+collapsible = true
+collapsed = false
+resizable = true
+min_width = "200px"
+max_width = "400px"
+title = "Navigation"
+
+on_toggle = [
+  { intent = "toggle_side_bar" }
+]
+
+on_resize = [
+  { intent = "save_side_bar_width" }
+]
+```
+
+**Explanation**:
+- **side**: "left" or "right" decides which edge it anchors to.
+- **collapsible** / **collapsed**: If `true`, user can hide or show the bar.
+- **resizable**: `true` means user can drag an edge to change width, within `min_width` / `max_width`.
+- **title**: (Optional) Shown if the sidebar has a header region.
+- **on_toggle** / **on_resize**: Hooks into M3L event logic.
+
+---
+
+#### GSS Example
+
+```toml
+[side_bar]
+background-color = "#F5F5F5"
+color = "#333"
+width = "250px" # default starting width
+height = "100%"
+
+# If you want a small border or shadow on the inside edge:
+shadow = [ "-2px 0px 4px rgba(0,0,0,0.1)" ] # for left side
+
+[side_bar.collapsed]
+width = "0px"
+overflow = "hidden" # or a minimal width if you prefer a small bar
+
+[side_bar.resizable]
+cursor = "col-resize" # only relevant at the boundary
+
+[side_bar.titlebar]
+height = "40px"
+font-size = "1.1rem"
+padding = "8px"
+color = "#000"
+background-color = "#E5E5E5"
+
+[side_bar.animation.toggle]
+# A simple transition for collapse/expand
+property = "width"
+duration = "0.3s"
+timing_function = "ease-in-out"
+
+[side_bar.animation.resize]
+# If you want a smooth drag feedback or an after-drag snap.
+property = "width"
+duration = "0.2s"
+timing_function = "linear"
+```
+
+**Explanation**:
+1. `[side_bar]`: Default style, e.g., a light background, initial `width = "250px"`.
+2. If anchored to the **right**, you might do a reversed shadow or define `[side_bar.side="right"]` scoping in GSS.
+3. `[side_bar.collapsed]`: Force `width=0px` (or small) if user collapses it.
+4. `[side_bar.resizable]`: Tells GSS to show a `col-resize` cursor at the boundary.
+5. **Animations**: Use transitions or keyframes for toggling/resizing.
+
+---
+
+#### Advanced Considerations
+
+1. **Layout Impact**: The side bar can push or overlay the main content. This might be a setting or GSS scoping (`overlay vs. push`).
+2. **Collapsing Behavior**: If `collapsed = true`, do you show a small handle or an icon to expand it?
+3. **Resizing**: Typically the user drags the boundary. The engine or your code might handle an `on_resize` event to store the new width.
+4. **Title & Child Widgets**: If `title` is set, GSS can place a small title bar area. Child widgets `[side_bar.button]`, `[side_bar.list]`, etc., can populate the side bar contents.
+5. **Side**: If `side = "left"`, you might define a right boundary for resizing; if `side = "right"`, the left boundary is the handle.
+6. **Accessibility**: Provide keyboard or other means to collapse/expand.
+
+---
+
+#### Final Thoughts
+
+A **Side Bar** is essentially a **specialized Frame** pinned to one screen edge, with optional **collapsing** and **resizing**. If you don’t specify a layout, it defaults to **flex**. M3L sets the basic fields (side, min/max width, collapsed), while GSS shapes its appearance and transition animations—maintaining clarity between structure and styling.
 
 ---
 
