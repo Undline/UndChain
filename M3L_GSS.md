@@ -215,6 +215,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 
 - **Asset View**: Provides a comprehensive shopping experience with product grids, sorting tools, a shopping cart, and detailed asset sections.
 - **Desktop**: This widget is really meant for the launch screen for UndChain, but it makes sense to also make this a Widget. Should have functions such as the coking widget for window management.
+- **Home Screen**: This is mean to be a space where users can openly share media on their own dedicated page. Think music, videos, articles as well as things they like and posts made to SMACK.
 - **Website**: Sets up a general website that can contain pre-defined sections. Allows for blank widgets so devs can make custom sections.
 - **Spreadsheet**: A grid-like table supporting formulas, edits, and data visualization.
 - **Text Editor**: Rich text editing with formatting tools, suggestions, and AI-powered generation.
