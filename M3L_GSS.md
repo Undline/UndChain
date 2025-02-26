@@ -175,7 +175,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Roadmap**: Widget that depicts a roadmap for a project. Contains markers that are designed for additional information.
 - **Skill Tree**: this widget creates a skill tree like widget that allows nodes (cards) to be activated when the parent of that node is 'activated'
 - **Badge**: This widget is meant to act between the an icon and a card. It allows more area that shows an icon and a name, but when 'viewed' can expand into a full description. It can also be 'unlocked'.
-- **Spellcheck**: Highlights misspelled words with corrections shown in a tooltip.
+- **Spellcheck**: Highlights misspelled words with corrections shown in a tooltip. Need to also create an option for spell help, in order to teach users how to spell rather than do it for them...
 - **Autocomplete**: Assists in writing by providing options to autocomplete words allowing for faster input. 
 - **Item Grid**: Displays items in a controller-friendly layout.
 - **Video**: Plays videos with predefined controls and settings.
@@ -210,6 +210,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **Affiliate Widget**: This is meant for referring other users to products or services. 
 - **Ad Widget**: This is meant to be a quick easy way to create Ads for the Ad hub (a Ad hub is where users can generate AdCoin so they have an Ad free experience)
 - **Onboarding Widget**: This widget type assists with onboarding new users to an application or interface. This is done by directing users attention to various widgets with pop-ups that explain what each element does.
+- **Avatar Widget**: This is meant to showcase a users digital Avatar on UndChain. *This is something provided inside of Player2*
 
 #### **High-Level Widgets**
 
