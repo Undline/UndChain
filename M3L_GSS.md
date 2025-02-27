@@ -149,7 +149,16 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **[Confirmation Button](#confirmation-button-widget)**: This button is designed to confirm a major action or event by the user. Think purchasing an item or signing a contract. This could be a click and hold or a slide confirmation, depending on the GSS designer.
 - **[Toggle Button](#toggle-button-widget)**: This button is designed as a true / false action type to indicate when a event is triggered or not. Think a light switch or a setting option that is either yes or no.
 - **[FAB Button](#floating-action-button-widget)**: A Floating Action Button (FAB) is a prominent, circular button designed for a key action (e.g., “New Post,” “Compose,” or “Start Chat”). It often floats above other UI elements and can be draggable if desired.
-- **[Text](text-widget)**: H1-H5 headers, ordered and unordered lists, highlighter text, hyperlinks and paragraph text.
+- **[Header](header-widget)**: This classifies text styling for headers between H1 - H6, that brings emphasis to a page / UI.
+- **[Paragraph](paragraph-widget)**: Used for normal inline text.
+- **[List](list-widget)**: Used for both ordered and unordered text lists
+- **[Highlight](highlight-widget)**: Emphasizes words or phrases with a background color.
+- **[Hyperlink](hyperlink-widget)**: Handles inline and block-level links. Supports on-hover effects, tooltips, and external/internal links.
+- **[Table](table-widget)**: Creates a table supporting header rows, column alignment, and cell customization.
+- **[Line Break](line-break-widget)**: Allows for custom styling of section separators.
+- **[Blockquote](blockquote-widget)**: Handles markdown-style blockquotes (>).
+- **[Code Block](code-block-widget)**: Handles markdown-style code blocks (``` or `). Should have easy copy options for ease of use.
+- **[Markdown](markdown-widget)**: Widget that is capable of parsing markdown files to be displayed on screen.
 - **Text Box**: Allows for single-line user input.
 - **Text Area**: Multi-line input for larger text blocks.
 - **Checkbox**: For binary selections, users can check one or more items.
