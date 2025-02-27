@@ -3359,6 +3359,113 @@ A **Paragraph Widget** handles plain textual content in a simple, block-level fo
 
 ---
 
+### List Widget
+
+A **List Widget** displays a collection of items in an **ordered** or **unordered** format. It’s a dedicated widget rather than mixing list logic into a generic text widget, ensuring clarity and modular design.
+
+---
+
+## Why a List Widget?
+- **Focus**: Separates list behavior (markers, ordering, nesting) from other text types.
+- **Customization**: GSS can define bullet styles for unordered lists, numbering or alpha markers for ordered lists, etc.
+- **Consistency**: Aligns with how we handle heading, paragraph, and other specialized widgets.
+
+---
+
+## Core Fields
+
+| Field         | Description                                                                      | Example                                     |
+|---------------|----------------------------------------------------------------------------------|---------------------------------------------|
+| `id`          | Unique identifier for referencing in logic (not used by GSS).                    | `id = "shopping_list"`                    |
+| `list_style`  | Specifies `ordered` or `unordered`.                                              | `list_style = "ordered"`                  |
+| `items`       | An array of text items for the list.                                             | `items = ["Milk", "Eggs", "Bread"]`      |
+| `disabled`    | (Optional) If `true`, list might appear grayed out or ignore clicks if it’s interactive. | `disabled = false`                      |
+| `selectable`  | (Optional) If `true`, items might be individually selectable or highlightable.   | `selectable = true`                        |
+| `order`       | (Optional) If the list is interactive, numeric ordering for tab navigation. If omitted, it’s skipped in tab focus. | `order = 4`  |
+| `on_item_click` | (Optional) Array of event actions when an item is clicked, often receiving an index or content param. | `on_item_click = [{ intent = "remove_item" }]` |
+
+> **Note**: For nested lists, devs might create multiple `[list]` widgets or rely on a “list of lists.”
+
+---
+
+## Example M3L Snippet
+
+```toml
+[list]
+id = "shopping_list"
+list_style = "unordered"
+items = [
+  "Milk",
+  "Eggs",
+  "Bread"
+]
+selectable = true
+order = 4
+
+on_item_click = [
+  { intent = "remove_item", param = "@index" } # hypothetical param to identify which was clicked
+]
+```
+
+**Explanation**:
+- **id**: For referencing in logic or Pseudo.
+- **list_style**: "unordered" => bullet points.
+- **items**: The text items in the list.
+- **selectable**: Possibly highlights items on hover/click.
+- **order**: If the entire list is considered a focusable element.
+- **on_item_click**: Hypothetically fires an event for each item, passing `@index` or similar param.
+
+---
+
+## GSS Example
+
+```toml
+[list.unordered]
+list-style-type = "disc"
+padding-left = "1.5rem"
+
+[list.ordered]
+list-style-type = "decimal"
+padding-left = "1.5rem"
+
+[list.disabled]
+opacity = "0.5"
+cursor = "not-allowed"
+
+[list.selectable]
+# Could define hover or selected states for each item
+
+[list.animation.hover]
+type = "highlight"
+duration = "0.2s"
+
+[list.animation.click]
+type = "pulse"
+```
+
+**Explanation**:
+1. **`[list.unordered]`** and **`[list.ordered]`**: Distinct styles for bullet vs. numeric.
+2. **`[list.disabled]`**: If the list is flagged as disabled.
+3. **`[list.selectable]`**: If items can be hovered/clicked individually, GSS can style them.
+4. Animations: e.g., highlight on hover.
+
+---
+
+## Advanced Considerations
+1. **Nesting**: If you want sub-lists, consider multiple `[list]` widgets or a structured approach.
+2. **Item Customization**: If items need more than plain text (like icons or multi-line paragraphs), you could embed child widgets.
+3. **Keyboard Navigation**: If you want to individually tab through each item, you might create sub-widgets or treat each item as a separate focusable object.
+4. **on_item_click**: Implementation details vary—some engines pass an index or content param to identify which item was clicked.
+5. **Styling**: `[list.unordered]` might define bullet shapes, `[list.ordered]` might define decimal, alpha, or Roman markers.
+
+---
+
+## Final Thoughts
+
+A **List Widget** provides an elegant, dedicated way to display items with ordering or bullet points. M3L defines the list style (ordered/unordered), plus each item’s text, while GSS handles bullet shapes, spacing, and interaction states. This keeps your app’s textual structure organized and consistent.
+
+---
+
 ### **Text Box**
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
