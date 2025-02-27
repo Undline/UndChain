@@ -3258,6 +3258,107 @@ A **Header Widget** focuses on **one** heading element (`H1`–`H6`), offering c
 
 ---
 
+### Paragraph Widget
+
+A **Paragraph Widget** provides a block of text for articles, descriptions, or general body content. It’s designed as a separate widget from headings, ensuring clear separation of concerns in your layout.
+
+---
+
+## Why a Paragraph Widget?
+- **Focus**: Instead of a multi-purpose text widget, this focuses on *paragraph content*. Complex features like lists, table data, or code blocks belong to other widgets.
+- **Simplicity**: Enforces consistent structure and styling (e.g., line height, letter spacing) for normal text blocks.
+- **Modularity**: Aligns with how we separated heading, button, etc.
+
+---
+
+## Core Fields
+
+| Field        | Description                                                                                                     | Example                                      |
+|--------------|-----------------------------------------------------------------------------------------------------------------|----------------------------------------------|
+| `id`         | Unique identifier for referencing in logic (not used by GSS).                                                   | `id = "intro_paragraph"`                   |
+| `content`    | The main text string or reference to external chain file.                                                       | `content = "This is a paragraph..."`        |
+| `alignment`  | (Optional) Text alignment (left, center, right, justify).                                                      | `alignment = "justify"`                    |
+| `disabled`   | (Optional) If `true`, paragraph might appear grayed out or block interactions if it’s clickable.               | `disabled = false`                          |
+| `order`      | (Optional) If the paragraph is interactive, numeric ordering for keyboard/controller tab navigation. If omitted, it’s skipped in tab focus. | `order = 2`  |
+| `on_click`   | (Optional) Array of event actions if the paragraph is clickable.                                               | `on_click = [{ intent = "expand_paragraph" }]` |
+| `line_spacing`  | (Optional) Adjusts line spacing for text.                                                                   | `line_spacing = "1.5"`                     |
+| `letter_spacing`| (Optional) Adjusts spacing between letters.                                                                 | `letter_spacing = "0.01em"`                |
+
+> **Note**: For multiple paragraphs, devs can either create multiple paragraph widgets or a single widget with an internal approach (like Markdown). If you want lists or code blocks, see dedicated widgets.
+
+---
+
+## Example M3L Snippet
+
+```toml
+[paragraph]
+id = "intro_paragraph"
+content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
+alignment = "justify"
+line_spacing = "1.6"
+letter_spacing = "0.01em"
+order = 2
+
+on_click = [
+  { intent = "expand_paragraph" }
+]
+```
+
+**Explanation**:
+- **id**: "intro_paragraph" for referencing in logic.
+- **content**: The textual content.
+- **alignment**: "justify" for an aligned block.
+- **line_spacing** / **letter_spacing**: For better readability.
+- **on_click**: If you want it to respond to user clicks (e.g., expanding or toggling something).
+- **order**: Places it in tab order if you want it focusable.
+
+---
+
+## GSS Example
+
+```toml
+[paragraph]
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+color = "#333"
+line-height = "1.5"
+letter-spacing = "0.01em"
+
+[paragraph.disabled]
+opacity = "0.5"
+cursor = "not-allowed"
+
+[paragraph.animation.hover]
+type = "highlight"
+duration = "0.2s"
+
+[paragraph.animation.click]
+type = "pulse"
+```
+
+**Explanation**:
+1. `[paragraph]`: Basic styling for paragraphs. Font family, size, color, line spacing.
+2. `[paragraph.disabled]`: If the paragraph is flagged as disabled.
+3. Animations: Possibly highlight on hover or pulse on click.
+
+---
+
+## Advanced Considerations
+
+1. **Inline vs. Block**: Paragraphs are typically block-level. Overriding display in GSS can force them inline if needed.
+2. **Disabled / Loading**: Usually paragraphs are not interactive, but if you do so, these states can matter.
+3. **Keyboard Navigation**: If the paragraph is interactive, `order` sets focus order. No `order` => no tab focus.
+4. **Large Text Blocks**: For bigger text sections or multi-paragraph content, consider multiple `[paragraph]` widgets or a **Markdown** widget.
+5. **Integration**: `[frame.paragraph]` or `[window.paragraph]` scoping in GSS can create context-specific styles.
+
+---
+
+## Final Thoughts
+
+A **Paragraph Widget** handles plain textual content in a simple, block-level format. By keeping headings, lists, code blocks, etc., in separate widgets, you maintain a modular approach. M3L sets paragraph logic (content, alignment, etc.), while GSS shapes its look (fonts, spacing, etc.). This fosters a clean, consistent typography system for your application.
+
+---
+
 ### **Text Box**
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
