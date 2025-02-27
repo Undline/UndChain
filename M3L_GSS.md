@@ -3124,176 +3124,137 @@ A **Floating Action Button** stands out for critical or central actions—common
 
 ---
 
-### **Text Widget**
+### Header Widget
 
-The Text Widget serves as a fundamental low-level component for displaying and styling text. It supports headers, paragraphs, lists, highlighter text, hyperlinks, tables, and breaks, with rich customization options for styling, interactivity, and animations.
-
----
-
-### **Core Text Types**
-1. **Headers (H1–H5)**:
-   - Structured headings for content hierarchy.
-   - Ranges from large, primary titles (H1) to smaller subheadings (H5).
-2. **Paragraph Text**:
-   - Used for general content, such as articles or descriptive text.
-3. **Lists**:
-   - **Ordered Lists**: Numbered sequences for instructions or steps.
-   - **Unordered Lists**: Bullet points for non-sequential items.
-4. **Highlighter Text**:
-   - Emphasizes specific words or phrases with a background color.
-5. **Hyperlinks**:
-   - Inline or block-level links to other pages or resources, with default tooltips displaying the link destination.
-6. **Tables**:
-   - Used to display structured data in rows and columns.
-   - Supports header rows, alignment, and custom styling for each cell.
-7. **Breaks (Lines)**:
-   - Horizontal rules or decorative breaks to separate sections of content.
+A **Header Widget** displays a **single heading** (e.g., H1–H6) to structure your content hierarchy. These headings mirror **HTML heading elements** (H1 through H6). Although H6 is less commonly used, it can be important in deeply nested sections.
 
 ---
 
-### **Proposed Fields**
-| **Field**       | **Description**                                                            | **Example**                                    |
-|-----------------|----------------------------------------------------------------------------|-----------------------------------------------|
-| `type`          | Specifies the text type (`header`, `paragraph`, `list`, `highlighter`, `link`, `table`, `break`). | `type = "header"`                             |
-| `content`       | The actual text to be displayed.                                           | `content = "Welcome to M3L!"`                 |
-| `style`         | Indicates the text style (e.g., H1-H5, or `paragraph`, `ordered`, etc.).   | `style = "H1"`                                |
-| `href`          | Specifies the hyperlink destination (only for `type = "link"`).            | `href = "@Undline/page.m3l"`                  |
-| `highlight`     | Enables background highlighting with a specified color (for highlighter).  | `highlight = "#FFFF00"`                       |
-| `list_style`    | Defines the marker style for lists (bullet, number, Roman numeral).         | `list_style = "bullet"`                       |
-| `font`          | Specifies the font family and size.                                        | `font = { family = "Verdana", size = "1rem" }` |
-| `alignment`     | Sets text alignment (e.g., left, center, right, justify).                  | `alignment = "center"`                        |
-| `line_spacing`  | Adjusts the spacing between lines of text.                                | `line_spacing = "1.5"`                         |
-| `letter_spacing`| Adjusts the spacing between letters.                                       | `letter_spacing = "0.1em"`                    |
-| `selectable`    | Allows the text to be selected for copying.                                | `selectable = true`                            |
-| `table_data`    | Defines the structure and content of a table (only for `type = "table"`). | `table_data = [ { row = ["Name", "Age"] }, { row = ["Alice", "30"] } ]` |
-| `line_style`    | Specifies the appearance of a break line (only for `type = "break"`).     | `line_style = { color = "#333", thickness = "2px" }` |
-| `animations`    | Defines enter/exit animations for text elements.                          | `animations = { enter = "fade-in", exit = "fade-out", duration = "1s" }` |
+## Why a Dedicated Header Widget?
+- **Focus**: Instead of handling headings among various text types, the Header Widget emphasizes one heading level at a time.
+- **Clarity**: Developers can quickly see which level they're using—H1 for main titles, down to H6 for deeper subheadings.
+- **Customization**: GSS can style each heading level differently, ensuring consistent yet flexible typography.
+- **Parity with HTML**: Aligns with standard HTML heading elements, making the system more intuitive.
 
 ---
 
-### **Intents and Events**
-| **Intent/Event** | **Description**                                                                 | **Example**                                   |
-|------------------|---------------------------------------------------------------------------------|-----------------------------------------------|
-| `on_click`       | Triggered when the text (e.g., a hyperlink) is clicked.                        | `on_click = [{ navigate = "@Undline/page.m3l" }]` |
-| `on_hover`       | Triggered when the text is hovered over (e.g., to show a tooltip).             | `on_hover = [{ tooltip = "Learn more at this link." }]` |
-| `on_focus`       | Triggered when the text gains focus (e.g., via Tab navigation).                 | `on_focus = [{ animate = "underline" }]`     |
+## Heading Levels & Typical Usage
+Below are common, unofficial conventions for each heading level in HTML:
+
+| Heading | Common Usage (Unofficial but typical)                     |
+| ------- | --------------------------------------------------------- |
+| **H1**  | Main page or document title (often used once per page).   |
+| **H2**  | Major section heading.                                    |
+| **H3**  | Sub-section under H2.                                     |
+| **H4**  | Sub-sub-section; used for further nested headings.        |
+| **H5**  | Minor heading; rarely used unless deeper nesting needed.  |
+| **H6**  | The smallest heading; typically used for very nested or nuanced headings.
 
 ---
 
-### **GSS Styling Parameters**
-| **Parameter**      | **Description**                                                            | **Example**                                   |
-|--------------------|----------------------------------------------------------------------------|-----------------------------------------------|
-| `font-family`      | Defines the font type for the text.                                        | `font-family = "Verdana, sans-serif"`         |
-| `font-size`        | Sets the font size.                                                       | `font-size = "1.5rem"`                        |
-| `font-color`       | Defines the color of the text.                                             | `font-color = "#333"`                         |
-| `background-color` | Sets a background color (useful for highlighter text).                    | `background-color = "#FFFF00"`                |
-| `text-decoration`  | Applies underline, strikethrough, or none.                                | `text-decoration = "underline"`               |
-| `alignment`        | Aligns text horizontally.                                                 | `alignment = "justify"`                       |
-| `line-spacing`     | Adjusts the spacing between lines of text.                                | `line-spacing = "1.5"`                         |
-| `letter-spacing`   | Adjusts the spacing between letters.                                       | `letter-spacing = "0.1em"`                    |
-| `list-style-type`  | Defines the list marker style (circle, square, decimal).                  | `list-style-type = "circle"`                  |
-| `hover.color`      | Changes the text color on hover.                                          | `hover.color = "#007BFF"`                     |
-| `table.border`     | Defines the border style for a table.                                      | `table.border = "1px solid #333"`             |
-| `table.header`     | Specifies styles for table headers.                                       | `table.header = { background-color = "#EEE" }` |
-| `break.color`      | Defines the color of a break line.                                         | `break.color = "#333"`                        |
-| `break.thickness`  | Defines the thickness of a break line.                                     | `break.thickness = "2px"`                     |
-| `animations.enter` | Animation type for text entry (e.g., fade-in, typewriter).                | `animations.enter = "typewriter"`             |
-| `animations.exit`  | Animation type for text exit (e.g., fade-out, slide).                     | `animations.exit = "fade-out"`                |
-| `animations.duration` | Duration of the animation.                                              | `animations.duration = "1s"`                  |
+## Core Fields
+
+| Field      | Description                                                                                                                            | Example                                     |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `id`       | Unique identifier for referencing in logic (not used by GSS).                                                                         | `id = "main_title"`                       |
+| `level`    | The heading level: `H1`, `H2`, `H3`, `H4`, `H5`, or `H6`.                                                                             | `level = "H2"`                            |
+| `content`  | The text string or external reference. Typically direct text, but can reference a chain file.                                         | `content = "Welcome to My App"`           |
+| `disabled` | (Optional) If `true`, heading might appear grayed out or ignore click events if it’s interactive.                                     | `disabled = false`                         |
+| `order`    | (Optional) If the heading is interactive, numeric ordering for keyboard/controller tab navigation. If omitted, the heading is skipped in tab focus. | `order = 3`                       |
+| `on_click` | (Optional) Array of event actions if the heading is clickable.                                                                        | `on_click = [{ intent = "scroll_to_top" }]` |
+
+> **Note**: For multi-line or advanced formatting, consider sub-widgets or a broader text system.
+
+**Important**: If `order` is **not** provided, the header does **not** receive a position in the focus cycle and is ignored when the user tabs through widgets.
 
 ---
 
-### **Example M3L Implementation**
+## Example M3L Snippet
+
 ```toml
-[[layout.container.content]]
-type = "text"
-style = "H1"
-content = "Welcome to M3L!"
-font = { family = "Verdana", size = "2rem" }
-alignment = "center"
-selectable = true
-animations = { enter = "fade-in", exit = "fade-out", duration = "1s" }
+# Minimal M3L snippet for a Header Widget
 
-[[layout.container.content]]
-type = "text"
-style = "paragraph"
-content = "This is an example paragraph for demonstrating M3L text widgets."
-font = { family = "Arial", size = "1rem" }
-alignment = "justify"
-line_spacing = "1.5"
-letter_spacing = "0.05em"
-selectable = true
+[header]
+id = "main_title"
+level = "H2"
+content = "Welcome to the Dashboard"
+order = 1
 
-[[layout.container.content]]
-type = "text"
-style = "link"
-content = "Click here to learn more."
-href = "@Undline/learn_more.m3l"
-selectable = true
-
-[[layout.container.content]]
-type = "text"
-style = "table"
-table_data = [
-    { row = ["Name", "Age"] },
-    { row = ["Alice", "30"] },
-    { row = ["Bob", "25"] }
+on_click = [
+  { intent = "scroll_to_top" }
 ]
-
-[[layout.container.content]]
-type = "text"
-style = "break"
-line_style = { color = "#333", thickness = "2px" }
 ```
+
+**Explanation**:
+- **id**: "main_title" for referencing in Pseudo or events.
+- **level**: "H2" for a second-level heading.
+- **content**: The actual heading text.
+- **order**: Places the heading in tab focus if it’s clickable. If omitted, it won't appear in the focus cycle.
+- **on_click**: If you want the heading to do something on click.
 
 ---
 
-### **Example GSS Implementation**
+## GSS Example
+
 ```toml
-[text.header]
-font-family = "Verdana, sans-serif"
-font-size = "2rem"
-font-color = "#333"
-alignment = "center"
-animations.enter = "fade-in"
-animations.exit = "fade-out"
-animations.duration = "1s"
+[header.H1]
+font-size = "2.25rem"
+font-weight = "bold"
+line-height = "1.2"
+letter-spacing = "0.02em"
 
-[text.paragraph]
-font-family = "Arial, sans-serif"
+[header.H2]
+font-size = "1.75rem"
+font-weight = "bold"
+line-height = "1.3"
+letter-spacing = "0.01em"
+
+[header.H3]
+font-size = "1.5rem"
+font-weight = "bold"
+
+[header.H4]
+font-size = "1.25rem"
+font-weight = "bold"
+
+[header.H5]
+font-size = "1.1rem"
+font-weight = "bold"
+
+[header.H6]
 font-size = "1rem"
-font-color = "#666"
-line-spacing = "1.5"
-letter-spacing = "0.05em"
+font-weight = "bold"
 
-[text.link]
-font-family = "Arial, sans-serif"
-font-size = "1rem"
-font-color = "#007BFF"
-text-decoration = "underline"
+[header.disabled]
+opacity = "0.5"
+cursor = "not-allowed"
 
-[text.link.hover]
-font-color = "#0056b3"
+[header.animation.hover]
+type = "underline"
+duration = "0.2s"
 
-[text.table]
-font-family = "Arial, sans-serif"
-font-size = "1rem"
-font-color = "#333"
-table.border = "1px solid #333"
-table.header = { background-color = "#EEE" }
-
-[text.break]
-break.color = "#333"
-break.thickness = "2px"
+[header.animation.click]
+type = "pulse"
 ```
+
+**Explanation**:
+1. **`[header.H1]`** through **`[header.H6]`**: Distinct style blocks for each heading level.
+2. **`[header.disabled]`**: If heading is flagged as disabled.
+3. **Animations**: If heading is interactive, define hover or click animations.
 
 ---
 
-### **Additional Considerations**
-- **UTF Support**: The M3L system fully supports UTF, enabling the use of multi-language text and non-ASCII characters.
-- **Tooltips for Hyperlinks**: By default, tooltips display the hyperlink destination, enhancing user clarity.
-- **Editable Text**: Not included by design; use a Text Area widget for editable content.
-- **Animated Emojis**: Currently not implemented, but future extensions could enable animation for emoji or specific inline text elements.
+## Advanced Considerations
+1. **Inline vs. Block**: Headings are typically block-level. Overriding display in GSS can make them inline if needed.
+2. **Disabled / Loading**: If headings are not clickable, these states may not matter. But if used interactively, they can apply.
+3. **Keyboard Navigation**: If your heading is interactive, `order` sets the focus order. **No `order` means no tab focus**.
+4. **Integration with Markdown**: If a Markdown file has headings, a parser might dynamically create multiple `[header]` widgets.
+
+---
+
+## Final Thoughts
+
+A **Header Widget** focuses on **one** heading element (`H1`–`H6`), offering clarity and modularity for top-level text structure. M3L sets the heading level and content, while GSS handles font size, weight, spacing, etc. This ensures a straightforward, consistent system for headings across your application.
 
 ---
 
