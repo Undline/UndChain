@@ -3558,6 +3558,123 @@ A **Highlight Widget** focuses on emphasizing a short inline text snippet, letti
 
 ---
 
+### Hyperlink Widget
+
+A **Hyperlink Widget** provides a dedicated mechanism for performing an **intent** (e.g., opening a file or navigating) upon interacting with link text or an icon. By separating link behavior from a broader text widget, you gain clarity and customization. **Which user action** triggers the intent—click, double-click, hover, etc.—is decided by GSS or environment logic.
+
+---
+
+## Why a Hyperlink Widget?
+
+- **Focus**: Keeps link logic separate from paragraphs, headings, and other text widgets.
+- **Customization**: GSS can define how events are triggered (click, double-click, hover for 2 seconds, etc.), plus distinct hover, visited, or disabled states.
+- **Consistency**: Aligns with other specialized widgets (e.g., button, heading) while paralleling anchor elements in HTML.
+
+---
+
+## Core Fields
+
+| Field      | Description                                                                                                                                           | Example                                                      |
+|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| `id`       | Unique identifier for referencing in logic (not used by GSS).                                                                                       | `id = "docs_link"`                                        |
+| `text`     | The visible text (or label) for the hyperlink.                                                                                                        | `text = "View Documentation"`                              |
+| `order`    | (Optional) If the link is interactive, numeric ordering for keyboard/controller tab nav. If omitted, it’s skipped in tab focus.                     | `order = 2`                                                 |
+| `intent`   | An array of objects describing the action(s) to be performed, e.g., `{ open = "@Undline/docs/readme.m3l" }`.                                        | `intent = [{ open = "@Undline/docs/readme.m3l" }]`         |
+| `disabled` | (Optional) If `true`, hyperlink might appear grayed out or ignore interactions if it’s intended to be inactive.                                      | `disabled = false`                                          |
+| `visited`  | (Optional) Whether the link is considered "visited" (some systems track this to style visited links).                                               | `visited = false`                                           |
+| `tooltip`  | (Optional) Hover/focus text to explain the link or show a preview.                                                                                    | `tooltip = "Opens the docs page."`                         |
+
+> **Note**: In M3L, `intent` declares the desired action(s). **How** those actions get triggered (on single-click, double-click, or hover) is up to GSS or environment logic.
+
+---
+
+## Example M3L Snippet
+
+```toml
+[hyperlink]
+id = "docs_link"
+text = "View Documentation"
+order = 2
+
+intent = [
+  { open = "@Undline/docs/readme.m3l" }
+]
+```
+
+**Explanation**:
+- **id**: "docs_link" for referencing in logic.
+- **text**: The link’s label.
+- **order**: If set, the link is included in tab focus. If omitted, it’s skipped.
+- **intent**: Declares an object (e.g., `{ open = "@Undline/docs/readme.m3l" }`) describing what action to perform. The environment or GSS logic decides the actual user interaction that triggers this intent.
+
+---
+
+## GSS Example
+
+```toml
+[hyperlink]
+color = "#007BFF"
+text-decoration = "underline"
+cursor = "pointer"
+
+[hyperlink.hover]
+color = "#0056b3"
+
+[hyperlink.visited]
+color = "#800080" # typical visited link color
+
+[hyperlink.disabled]
+opacity = "0.5"
+cursor = "not-allowed"
+
+# Hypothetical approach to hooking user interactions for the 'open' intent.
+[hyperlink.intent.open]
+on_click = 1       # standard single-click triggers the "open" intent
+on_hover = 2      # or if hovered for 2 seconds, also fire the "open" intent
+
+[hyperlink.animation.hover]
+type = "fade-in"
+duration = "0.2s"
+
+[hyperlink.animation.loop]
+# If you want a repeating effect
+type = "glow"
+repeat = "infinite"
+
+[hyperlink.animation.click]
+type = "pulse"
+duration = "0.4s"
+```
+
+**Explanation**:
+1. `[hyperlink]`: Default style for a normal link state (blue, underlined).
+2. `[hyperlink.hover]`, `[hyperlink.visited]`, `[hyperlink.disabled]`: Distinct states.
+3. `[hyperlink.intent.open]`: Defines how/when the `open` intent triggers. e.g., `on_click = 1` for a single-click, `on_hover = 2` for 2-second hover.
+4. **Animations**:
+   - `fade-in` on hover
+   - Possibly `glow` in a loop
+   - `pulse` on click
+
+> This is conceptual. The GSS engine must support custom triggers and repeated animations.
+
+---
+
+## Advanced Considerations
+1. **Inline vs. Block**: Typically a link is inline. Overriding display in GSS can make it block-level.
+2. **Disabled & Visited**: Some apps track visited states or disable a link if the user lacks permission.
+3. **Keyboard Navigation**: If `order` is set, the link is focusable. Pressing Enter or Space might then fire the `intent`.
+4. **Tooltips**: If `tooltip` is present, can appear on hover/focus.
+5. **Custom triggers**: Single-click, double-click, or timed hover can all be handled in GSS. M3L’s `intent` array just states what to do, not how.
+6. **Animations**: Repeated or indefinite animations (like glow) require GSS engine support.
+
+---
+
+## Final Thoughts
+
+A **Hyperlink Widget** isolates link functionality, letting M3L declare **intents** (like `open`) while GSS or environment logic decides which user actions (click, double-click, timed hover) trigger them. This preserves design freedom while keeping link usage consistent and modular.
+
+---
+
 ### **Text Box**
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
