@@ -3684,6 +3684,138 @@ A **Hyperlink Widget** now supports multiple **intents**—including opening ext
 
 ---
 
+### Table Widget
+
+A **Table Widget** displays structured data in rows and columns, supporting optional header rows, alignment options, custom styling for each cell, **and editing actions** (like adding/removing rows or columns). Rather than mixing table logic into a larger text or paragraph widget, this widget focuses on tabular content specifically.
+
+---
+
+## Why a Table Widget?
+- **Focus**: Helps keep row/column logic separate from other text types.
+- **Customization**: GSS can style headers, borders, alignment, zebra-striping, etc.
+- **Editing**: By defining editable actions in M3L’s `intent` array, you allow GSS or environment logic to decide **how** users add rows/columns.
+- **Clarity**: Each row and column is well-defined, and the M3L data structure remains straightforward.
+
+---
+
+## Core Fields
+
+| Field         | Description                                                                                                                | Example                                                                 |
+|---------------|----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| `id`          | Unique identifier for referencing in logic (not used by GSS).                                                              | `id = "scores_table"`                                                |
+| `table_data`  | An array describing rows and their cells. Typically each row is `{ row = ["Cell1", "Cell2"] }`.                         | `table_data = [ { row = ["Name", "Score"] }, { row = ["Alice", "100"] } ]` |
+| `has_header`  | (Optional) Indicates if the first row is treated as a header row.                                                           | `has_header = true`                                                    |
+| `alignment`   | (Optional) Controls cell alignment (left, center, right). Could also be per-column.                                         | `alignment = "center"`                                                |
+| `disabled`    | (Optional) If `true`, table might appear grayed out or ignore clicks if it’s interactive.                                   | `disabled = false`                                                     |
+| `order`       | (Optional) If the table or its cells are interactive, numeric ordering for tab focus. If omitted, skip in tab nav.          | `order = 4`                                                            |
+| `on_cell_click`| (Optional) Array of event actions if a user clicks a cell, with potential param indicating row/col.                        | `on_cell_click = [{ intent = "edit_cell", param = "@row,@col" }]`     |
+| `intent`      | (Optional) Array of objects describing editing actions, e.g. `{ add_row = "@row" }` or `{ add_col = "@col" }`.           | `intent = [{ add_row = "@row" }, { add_col = "@col" }]`             |
+
+> **Note**: For more advanced tables (nested widgets or multi-line cells), consider child widgets or custom logic. The new `intent` array can define additional behavior (like adding rows/columns), leaving GSS to decide **when** or **how** those are triggered.
+
+---
+
+## Example M3L Snippet
+
+```toml
+[table]
+id = "scores_table"
+table_data = [
+  { row = ["Player", "Score"] },
+  { row = ["Alice", "100"] },
+  { row = ["Bob", "80"] }
+]
+has_header = true
+alignment = "center"
+order = 4
+
+on_cell_click = [
+  { intent = "edit_cell", param = "@row,@col" }
+]
+
+intent = [
+  { add_row = "@row" },
+  { add_col = "@col" }
+]
+```
+
+**Explanation**:
+- **id**: "scores_table" for referencing in logic.
+- **table_data**: Each row is an object with a `row` array. The first row is used as the header.
+- **has_header**: True => The first row is a header row.
+- **alignment**: "center" aligns all cells.
+- **on_cell_click**: If the user clicks a cell, it might fire an event with `@row,@col` placeholders for editing.
+- **intent**: Additional editing actions, e.g. adding rows/columns. GSS can define **how** these happen (e.g., a plus button, context menu, etc.).
+- **order**: If set, the table is focusable in tab navigation.
+
+---
+
+## GSS Example
+
+```toml
+[table]
+border = "1px solid #333"
+width = "auto"
+font-size = "1rem"
+color = "#333"
+
+[table.header]
+# Example styling for the header row
+background-color = "#EEE"
+font-weight = "bold"
+
+[table.cell]
+padding = "8px"
+
+[table.cell.hover]
+background-color = "#f0f0f0"
+
+[table.disabled]
+opacity = "0.5"
+cursor = "not-allowed"
+
+[table.animation.hover]
+type = "highlight"
+duration = "0.2s"
+
+[table.animation.click]
+type = "pulse"
+duration = "0.3s"
+
+# Hypothetical approach to hooking user interactions for the editing intent.
+[table.intent.add_row]
+on_click = 1        # single-click triggers add_row
+
+[table.intent.add_col]
+on_double_click = 1 # double-click triggers add_col
+```
+
+**Explanation**:
+1. `[table]`: Basic table styling (border, width, color).
+2. `[table.header]`: Special styles for the header row if `has_header = true`.
+3. `[table.cell]`: Default cell styling (padding, etc.). `[table.cell.hover]` for a row or cell highlight.
+4. `[table.disabled]`: If the table is flagged as disabled.
+5. Animations: highlight on hover, pulse on click, etc.
+6. `[table.intent.add_row]`, `[table.intent.add_col]`: Example of how each intent can be triggered differently.
+
+---
+
+## Advanced Considerations
+1. **Row/Col Span**: If you need spanning cells, you might store extra info in `table_data` or use nested widgets.
+2. **on_cell_click**: Implementation details can pass row/col indexes. If you want cell-by-cell focus, treat each cell as its own sub-widget.
+3. **Alignment**: Per-column alignment could be stored in M3L or GSS. A simple approach is a single `alignment` property.
+4. **Header**: If `has_header = true`, GSS or environment can apply `[table.header]` style to row 0.
+5. **Keyboard Navigation**: If you want each cell to be focusable, consider sub-widgets or separate logic. If only the table as a whole is focusable, `order` suffices.
+6. **Add/Remove Rows/Columns**: `intent` array can define new actions, leaving GSS to decide how to trigger them (click, double-click, context menu, etc.).
+
+---
+
+## Final Thoughts
+
+A **Table Widget** now supports basic row/column additions via M3L `intent` (like `{ add_row = "@row" }` or `{ add_col = "@col" }`). The GSS or environment logic chooses how to trigger these (e.g., single-click, plus icon, context menu). This approach keeps your tabular data structure clear and your UI design flexible.
+
+---
+
 ### **Text Box**
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
