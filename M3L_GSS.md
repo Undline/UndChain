@@ -3816,6 +3816,100 @@ A **Table Widget** now supports basic row/column additions via M3L `intent` (lik
 
 ---
 
+### Line Break Widget
+
+A **Line Break Widget** provides a simple horizontal or vertical rule (divider) to separate sections of content. By creating a dedicated widget for breaks, you maintain a clean, modular approach, rather than mixing break logic into text or other widgets.
+
+---
+
+## Why a Line Break Widget?
+- **Clarity**: Separates layout logic (where breaks occur) from text or paragraph widgets.
+- **Customization**: GSS can define color, thickness, style (dotted, dashed, etc.), and orientation (horizontal or vertical).
+- **Modularity**: Avoids mixing line breaks within text, ensuring each element has a clear, singular purpose.
+
+---
+
+## Core Fields
+
+| Field          | Description                                                                                               | Example                               |
+|----------------|-----------------------------------------------------------------------------------------------------------|---------------------------------------|
+| `id`           | Unique identifier for referencing in logic (not used by GSS).                                            | `id = "horizontal_divider"`         |
+| `orientation`  | (Optional) Determines if the line break is `horizontal` or `vertical`. Default = `horizontal`.           | `orientation = "vertical"`           |
+| `line_style`   | (Optional) Object defining style properties, e.g., color, thickness.                                     | `line_style = { color = "#333", thickness = "2px" }` |
+| `disabled`     | (Optional) If `true`, might apply a dimmed or inactive style (in case the line break is interactive?).    | `disabled = false`                    |
+| `order`        | (Optional) If you want to treat this break as a focusable element in tab navigation (rarely needed).     | `order = 10`                          |
+| `on_click`     | (Optional) If you want an event on the line break (e.g., toggling orientation?), though unusual.         | `on_click = [{ intent = "toggle_orientation" }]` |
+
+> **Note**: Typically, a line break is purely decorative and doesn’t need interactivity. However, you can define events if you want a special effect on click/hover.
+
+---
+
+## Example M3L Snippet
+
+```toml
+[line_break]
+id = "horizontal_divider"
+orientation = "horizontal"
+line_style = { color = "#CCC", thickness = "2px" }
+
+on_click = [
+  { intent = "toggle_orientation" }
+]
+```
+
+**Explanation**:
+- **id**: Identifies the line break.
+- **orientation**: Horizontal by default.
+- **line_style**: A color of `#CCC` and thickness of `2px`.
+- **on_click**: Potentially toggles orientation (just an example intent).
+
+---
+
+## GSS Example
+
+```toml
+[line_break]
+margin = "1rem 0"  # some spacing above/below the line
+
+[line_break.horizontal]
+border-bottom = "2px solid #CCC"
+
+[line_break.vertical]
+border-left = "2px solid #CCC"
+
+[line_break.disabled]
+opacity = "0.5"
+cursor = "not-allowed"
+
+[line_break.animation.click]
+type = "pulse"
+duration = "0.3s"
+```
+
+**Explanation**:
+1. `[line_break]`: Base style—margin can ensure spacing.
+2. `[line_break.horizontal]`: A bottom border simulates a horizontal rule.
+3. `[line_break.vertical]`: A left border simulates a vertical rule.
+4. `[line_break.disabled]`: If we treat the line break as disabled, dim it.
+5. **Animations**: Possibly pulse on click, though unusual for a divider.
+
+---
+
+## Advanced Considerations
+1. **Vertical vs. Horizontal**: In most UIs, line breaks are horizontal. Vertical lines are occasionally used to separate columns.
+2. **Styling**: Dotted or dashed lines can be achieved by customizing border style.
+3. **Interactivity**: Rarely needed—use `[line_break]` purely decoratively unless you have special use cases.
+4. **Accessibility**: Typically not focusable. If it conveys important structure, ensure screen readers can interpret it (e.g., role="separator").
+5. **Dynamic or Collapsible**: Could be used to signal collapsible sections if GSS ties animations to an `intent`.
+
+---
+
+## Final Thoughts
+
+A **Line Break Widget** is a simple but valuable part of UI layout, providing clear, consistent dividers. M3L sets orientation (`horizontal` or `vertical`) and optional styling parameters, while GSS handles the appearance and possible interactions (if any). This ensures a clean, modular approach to layout dividers.
+
+---
+
 ### **Text Box**
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
