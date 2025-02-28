@@ -3560,31 +3560,32 @@ A **Highlight Widget** focuses on emphasizing a short inline text snippet, letti
 
 ### Hyperlink Widget
 
-A **Hyperlink Widget** provides a dedicated mechanism for performing an **intent** (e.g., opening a file or navigating) upon interacting with link text or an icon. By separating link behavior from a broader text widget, you gain clarity and customization. **Which user action** triggers the intent—click, double-click, hover, etc.—is decided by GSS or environment logic.
+A **Hyperlink Widget** provides a dedicated mechanism for performing **intents** (e.g., opening a file, scrolling to a section, or scrolling to top) upon interacting with link text. The separation of **intent** (what to do) from **events** (how/when it’s triggered) ensures design flexibility.
 
 ---
 
 ## Why a Hyperlink Widget?
 
 - **Focus**: Keeps link logic separate from paragraphs, headings, and other text widgets.
-- **Customization**: GSS can define how events are triggered (click, double-click, hover for 2 seconds, etc.), plus distinct hover, visited, or disabled states.
-- **Consistency**: Aligns with other specialized widgets (e.g., button, heading) while paralleling anchor elements in HTML.
+- **Customization**: GSS can define how events are triggered (click, double-click, hover, etc.).
+- **Versatility**: The `intent` array can include actions like opening documents, scrolling to specific sections, or jumping to top.
+- **Consistency**: Aligns with other specialized widgets (buttons, headings) while paralleling anchor elements in HTML.
 
 ---
 
 ## Core Fields
 
-| Field      | Description                                                                                                                                           | Example                                                      |
-|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
-| `id`       | Unique identifier for referencing in logic (not used by GSS).                                                                                       | `id = "docs_link"`                                        |
-| `text`     | The visible text (or label) for the hyperlink.                                                                                                        | `text = "View Documentation"`                              |
-| `order`    | (Optional) If the link is interactive, numeric ordering for keyboard/controller tab nav. If omitted, it’s skipped in tab focus.                     | `order = 2`                                                 |
-| `intent`   | An array of objects describing the action(s) to be performed, e.g., `{ open = "@Undline/docs/readme.m3l" }`.                                        | `intent = [{ open = "@Undline/docs/readme.m3l" }]`         |
-| `disabled` | (Optional) If `true`, hyperlink might appear grayed out or ignore interactions if it’s intended to be inactive.                                      | `disabled = false`                                          |
-| `visited`  | (Optional) Whether the link is considered "visited" (some systems track this to style visited links).                                               | `visited = false`                                           |
-| `tooltip`  | (Optional) Hover/focus text to explain the link or show a preview.                                                                                    | `tooltip = "Opens the docs page."`                         |
+| Field      | Description                                                                                                                                           | Example                                                              |
+|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
+| `id`       | Unique identifier for referencing in logic (not used by GSS).                                                                                       | `id = "docs_link"`                                                |
+| `text`     | The visible text (or label) for the hyperlink.                                                                                                        | `text = "View Documentation"`                                      |
+| `order`    | (Optional) If the link is interactive, numeric ordering for keyboard/controller tab nav. If omitted, it’s skipped in tab focus.                     | `order = 2`                                                         |
+| `intent`   | An array of objects describing the action(s) to be performed, e.g. `{ open = "@Undline/docs/readme.m3l" }`, `{ scroll_to_section = "#part2" }`, `{ scroll_to_top = true }`. | `intent = [{ open = "@Undline/docs/readme.m3l" }, { scroll_to_top = true }]`  |
+| `disabled` | (Optional) If `true`, hyperlink might appear grayed out or ignore interactions if it’s intended to be inactive.                                      | `disabled = false`                                                  |
+| `visited`  | (Optional) Whether the link is considered "visited" (some systems track this to style visited links).                                               | `visited = false`                                                   |
+| `tooltip`  | (Optional) Hover/focus text to explain the link or show a preview.                                                                                    | `tooltip = "Opens the docs page."`                                 |
 
-> **Note**: In M3L, `intent` declares the desired action(s). **How** those actions get triggered (on single-click, double-click, or hover) is up to GSS or environment logic.
+> **Note**: In M3L, `intent` declares the desired action(s). For instance, `scroll_to_section` can jump to a specific anchor, or `scroll_to_top` can jump to the top of the page. **How** those actions get triggered (on single-click, double-click, timed hover, etc.) is up to GSS or environment logic.
 
 ---
 
@@ -3597,7 +3598,9 @@ text = "View Documentation"
 order = 2
 
 intent = [
-  { open = "@Undline/docs/readme.m3l" }
+  { open = "@Undline/docs/readme.m3l" },
+  { scroll_to_section = "#part2" },
+  { scroll_to_top = true }
 ]
 ```
 
@@ -3605,7 +3608,8 @@ intent = [
 - **id**: "docs_link" for referencing in logic.
 - **text**: The link’s label.
 - **order**: If set, the link is included in tab focus. If omitted, it’s skipped.
-- **intent**: Declares an object (e.g., `{ open = "@Undline/docs/readme.m3l" }`) describing what action to perform. The environment or GSS logic decides the actual user interaction that triggers this intent.
+- **intent**: Multiple objects. e.g., `open` for an external doc, `scroll_to_section` for an anchor, `scroll_to_top` to jump up.
+- The environment or GSS decides how these are triggered.
 
 ---
 
@@ -3627,10 +3631,15 @@ color = "#800080" # typical visited link color
 opacity = "0.5"
 cursor = "not-allowed"
 
-# Hypothetical approach to hooking user interactions for the 'open' intent.
+# Hypothetical approach to hooking user interactions for the multiple intents.
 [hyperlink.intent.open]
-on_click = 1       # standard single-click triggers the "open" intent
-on_hover = 2      # or if hovered for 2 seconds, also fire the "open" intent
+on_click = 1       # single-click triggers open
+
+[hyperlink.intent.scroll_to_section]
+on_hover = 2      # if hovered 2 seconds, do scroll_to_section
+
+[hyperlink.intent.scroll_to_top]
+on_double_click = 1 # double-click triggers scroll_to_top
 
 [hyperlink.animation.hover]
 type = "fade-in"
@@ -3649,29 +3658,29 @@ duration = "0.4s"
 **Explanation**:
 1. `[hyperlink]`: Default style for a normal link state (blue, underlined).
 2. `[hyperlink.hover]`, `[hyperlink.visited]`, `[hyperlink.disabled]`: Distinct states.
-3. `[hyperlink.intent.open]`: Defines how/when the `open` intent triggers. e.g., `on_click = 1` for a single-click, `on_hover = 2` for 2-second hover.
+3. `[hyperlink.intent.*]`: Each declared intent (e.g. `open`, `scroll_to_section`, `scroll_to_top`) can map to different user interactions: single-click, timed hover, double-click, etc.
 4. **Animations**:
-   - `fade-in` on hover
-   - Possibly `glow` in a loop
-   - `pulse` on click
+   - `fade-in` on hover,
+   - Possibly `glow` in a loop,
+   - `pulse` on click.
 
-> This is conceptual. The GSS engine must support custom triggers and repeated animations.
+> This is conceptual. The GSS engine must support custom triggers, repeated animations, etc.
 
 ---
 
 ## Advanced Considerations
 1. **Inline vs. Block**: Typically a link is inline. Overriding display in GSS can make it block-level.
 2. **Disabled & Visited**: Some apps track visited states or disable a link if the user lacks permission.
-3. **Keyboard Navigation**: If `order` is set, the link is focusable. Pressing Enter or Space might then fire the `intent`.
-4. **Tooltips**: If `tooltip` is present, can appear on hover/focus.
-5. **Custom triggers**: Single-click, double-click, or timed hover can all be handled in GSS. M3L’s `intent` array just states what to do, not how.
+3. **Keyboard Navigation**: If `order` is set, the link is focusable. Pressing Enter or Space might then fire one or more `intent` actions.
+4. **Tooltips**: If `tooltip` is present, it can appear on hover/focus.
+5. **Custom triggers**: Single-click, double-click, timed hover, or any advanced logic is declared in GSS `[hyperlink.intent.*]` blocks.
 6. **Animations**: Repeated or indefinite animations (like glow) require GSS engine support.
 
 ---
 
 ## Final Thoughts
 
-A **Hyperlink Widget** isolates link functionality, letting M3L declare **intents** (like `open`) while GSS or environment logic decides which user actions (click, double-click, timed hover) trigger them. This preserves design freedom while keeping link usage consistent and modular.
+A **Hyperlink Widget** now supports multiple **intents**—including opening external docs, scrolling to specific sections, or jumping to top. M3L declares them, and GSS decides how/when they trigger. This approach fosters maximum design freedom and keeps link usage consistent and modular.
 
 ---
 
