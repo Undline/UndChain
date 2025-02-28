@@ -3466,6 +3466,98 @@ A **List Widget** provides an elegant, dedicated way to display items with order
 
 ---
 
+### Highlight Widget
+
+A **Highlight Widget** emphasizes a specific word, phrase, or small block of text by applying a background color or other visual effect. It’s an alternative to mixing highlight logic into a larger text widget, ensuring a clean and modular approach.
+
+---
+
+## Why a Highlight Widget?
+- **Modularity**: Instead of adding highlight fields to a broader text widget, we have a dedicated widget for emphasis.
+- **Flexibility**: GSS can define custom background colors, animations, or transitions specific to highlights.
+- **Interactive**: If needed, the highlight can be clickable or have tooltip interactions.
+
+---
+
+## Core Fields
+
+| Field             | Description                                                                                                    | Example                                        |
+|-------------------|----------------------------------------------------------------------------------------------------------------|------------------------------------------------|
+| `id`              | Unique identifier for referencing in logic (not used by GSS).                                                  | `id = "urgent_notice"`                       |
+| `content`         | The text to be highlighted.                                                                                    | `content = "Important Note"`                 |
+| `highlight_color` | (Optional) Color for the highlight background, e.g. `#FFFF00AA`.                                               | `highlight_color = "#FFD700"`                |
+| `disabled`        | (Optional) If `true`, highlight might appear grayed out or ignore clicks if it’s interactive.                  | `disabled = false`                            |
+| `order`           | (Optional) If the highlight is interactive, numeric ordering for tab navigation. If omitted, it’s skipped.     | `order = 5`                                   |
+| `on_click`        | (Optional) Array of event actions if the highlight is clickable.                                               | `on_click = [{ intent = "show_tooltip" }]`   |
+
+> **Note**: If you want multi-line or block-level highlight, consider a different approach or an embedded child widget.
+
+---
+
+## Example M3L Snippet
+
+```toml
+[highlight]
+id = "urgent_notice"
+content = "Server Maintenance at 2AM"
+highlight_color = "#FFE600"
+order = 5
+
+on_click = [
+  { intent = "show_tooltip", param = "Maintenance Info" }
+]
+```
+
+**Explanation**:
+- **id**: "urgent_notice" for referencing in logic.
+- **content**: "Server Maintenance at 2AM" is the emphasized text.
+- **highlight_color**: Yellow shade for the background.
+- **order**: If you want it in the tab cycle.
+- **on_click**: Could open a tooltip or show more details.
+
+---
+
+## GSS Example
+
+```toml
+[highlight]
+background-color = "#FFFF00"  # fallback if highlight_color not set
+color = "#000"
+padding = "2px 4px"  # small padding to emphasize highlight
+
+[highlight.disabled]
+opacity = "0.5"
+cursor = "not-allowed"
+
+[highlight.animation.hover]
+type = "glow"
+duration = "0.3s"
+
+[highlight.animation.click]
+type = "pulse"
+```
+
+**Explanation**:
+1. **[highlight]**: Basic styling. A default background color for highlight.
+2. **[highlight.disabled]**: If set, it dims or disables.
+3. **Animations**: Possibly glow on hover or pulse on click.
+
+---
+
+## Advanced Considerations
+1. **Inline vs. Block**: Typically highlight is inline. If you want block-level highlighting for an entire paragraph, see a different approach or nested widgets.
+2. **Disabled / Loading**: If not interactive, these states may not matter.
+3. **Keyboard Navigation**: If interactive, `order` sets the tab focus. No `order` => no focus.
+4. **Integration with Markdown**: A parser might convert `==some text==` or `::some text::` to a highlight widget.
+
+---
+
+## Final Thoughts
+
+A **Highlight Widget** focuses on emphasizing a short inline text snippet, letting M3L define the content and highlight color while GSS styles the background and interactions. This separation promotes clarity and consistency across your UI.
+
+---
+
 ### **Text Box**
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
