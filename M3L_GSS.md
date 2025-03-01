@@ -3910,6 +3910,111 @@ A **Line Break Widget** is a simple but valuable part of UI layout, providing cl
 
 ---
 
+### Block Quote Widget
+
+A **Block Quote Widget** displays an excerpt or quotation in a visually distinct manner, often with additional metadata like a source or citation. By dedicating a widget to quotes, you keep quote logic and styling separate from standard paragraphs, ensuring a clear, modular design.
+
+---
+
+## Why a Block Quote Widget?
+- **Focus**: Separates block quotes from generic paragraphs, offering unique styling and metadata handling.
+- **Customization**: GSS can define distinctive formatting, such as background color, border, or stylized quotation marks.
+- **Metadata**: M3L can store citation or source fields without mixing them into normal text.
+
+---
+
+## Core Fields
+
+| Field         | Description                                                                                          | Example                                                      |
+|---------------|------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| `id`          | Unique identifier for referencing in logic (not used by GSS).                                       | `id = "famous_quote"`                                      |
+| `content`     | The quoted text.                                                                                    | `content = "Some inspiring words..."`                      |
+| `source`      | (Optional) The author or source of the quote.                                                       | `source = "Albert Einstein"`                               |
+| `citation`    | (Optional) Additional citation details (e.g., publication date, link).                              | `citation = "NY Times, 1947"`                               |
+| `style`       | (Optional) A label if you have multiple quote styles.                                               | `style = "testimony"`                                      |
+| `disabled`    | (Optional) If `true`, might appear grayed out or ignore interactions (if interactive).             | `disabled = false`                                          |
+| `order`       | (Optional) If interactive, numeric ordering for keyboard/controller tab nav. If omitted, skip it.   | `order = 5`                                                 |
+| `on_click`    | (Optional) Array of event actions if the quote is clicked (e.g., to expand more context).           | `on_click = [{ intent = "show_details" }]`                 |
+
+> **Note**: Typically block quotes are static, but you can define events if you want expansions, toggles, or other behaviors.
+
+---
+
+## Example M3L Snippet
+
+```toml
+[blockquote]
+id = "famous_quote"
+content = "You never fail until you stop trying." # Example text
+source = "Albert Einstein"
+citation = "Interview, 1947"
+order = 5
+
+on_click = [
+  { intent = "show_details" }
+]
+```
+
+**Explanation**:
+- **id**: "famous_quote" for referencing in logic.
+- **content**: The actual quote.
+- **source**: "Albert Einstein."
+- **citation**: Additional info, e.g., "Interview, 1947."
+- **order**: If you want it in tab navigation.
+- **on_click**: Could show more context or open a link.
+
+---
+
+## GSS Example
+
+```toml
+[blockquote]
+border-left = "4px solid #CCC"
+padding = "1rem"
+font-style = "italic"
+background-color = "#f9f9f9"
+
+[blockquote.source]
+font-style = "normal"
+font-weight = "bold"
+
+[blockquote.citation]
+font-size = "0.9rem"
+color = "#666"
+
+[blockquote.disabled]
+opacity = "0.5"
+cursor = "not-allowed"
+
+[blockquote.animation.click]
+type = "pulse"
+duration = "0.3s"
+```
+
+**Explanation**:
+1. `[blockquote]`: Applies a subtle left border, italic text, and light background.
+2. `[blockquote.source]`: Distinct style for the source name.
+3. `[blockquote.citation]`: Possibly smaller text for references.
+4. `[blockquote.disabled]`: Dim or ignore clicks.
+5. **Animation**: On click, a slight "pulse." Could tie in with `on_click` in M3L.
+
+---
+
+## Advanced Considerations
+1. **Multi-Line Content**: If the quote is long, it may wrap. That’s normal for a block quote.
+2. **Interactive Quotes**: Rare, but you could embed child widgets or toggles if you want expansions.
+3. **Dynamic Sourcing**: In some apps, `source` might be a link or reference to a database (co-chain integration?).
+4. **Keyboard Navigation**: If `order` is set, pressing Enter/Space could fire `on_click` events.
+5. **Optional Title**: Some might want a `title` or `subject` field to label the quote.
+
+---
+
+## Final Thoughts
+
+A **Block Quote Widget** keeps quoted text distinct and well-styled, letting M3L define the quote, source, or citation, while GSS handles aesthetic details—like a left border or italic font. If needed, you can add interaction or advanced co-chain references, but often a block quote is purely visual. This ensures a clean, expressive UI for quoting content throughout your app.
+
+---
+
 ### **Text Box**
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
