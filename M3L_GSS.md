@@ -4015,6 +4015,131 @@ A **Block Quote Widget** keeps quoted text distinct and well-styled, letting M3L
 
 ---
 
+### Code Block Widget
+
+A **Code Block Widget** displays code snippets in a stylized format and optionally supports copying code, syntax highlighting, and collapsible sections. By dedicating a widget to code display, you maintain clarity and separation from other text or paragraph widgets.
+
+---
+
+## Why a Code Block Widget?
+
+- **Focus**: Keeps code display logic separate from normal text, ensuring consistent styling for code snippets.
+- **Customization**: GSS can define syntax highlighting, background color, line numbers, and copy-button styling.
+- **Interactive**: M3L can define an `intent` for copying or toggling collapsibility, leaving GSS to decide how/when it occurs.  
+
+---
+
+## Core Fields
+
+| Field          | Description                                                                                      | Example                                            |
+| -------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------- |
+| `id`           | Unique identifier for referencing in logic (not used by GSS).                                    | `id = "example_code_snippet"`                      |
+| `content`      | The code text to be displayed.                                                                   | `content = "function greet() { return 'Hello'; }"` |
+| `language`     | (Optional) Language label for syntax highlighting. E.g., "Pseudo", "python". Defaults to "text". | `language = "Pseudo"`                              |
+| `line_numbers` | (Optional) If `true`, shows line numbering.                                                      | `line_numbers = true`                              |
+| `collapsible`  | (Optional) If `true`, code can be collapsed or expanded.                                         | `collapsible = false`                              |
+| `order`        | (Optional) If interactive, numeric ordering for tab nav.                                         | `order = 5`                                        |
+| `intent`       | (Optional) Array of objects describing actions, e.g. `{ copy_code = true }`.                     | `intent = [{ copy_code = true }]`                  |
+| `disabled`     | (Optional) If `true`, code might appear grayed out or ignore events if it’s interactive.         | `disabled = false`                                 |
+
+> **Note**: `language` helps GSS or environment code with syntax highlighting. `intent` can define copying or toggling actions.
+
+---
+
+## Example M3L Snippet
+
+```toml
+[code_block]
+id = "example_code_snippet"
+content = "function greet() {\n  return 'Hello';\n}\n"
+language = "Pseudo"
+order = 5
+
+intent = [
+  { copy_code = true },
+  { toggle_section = "collapse" }
+]
+```
+
+**Explanation**:
+
+- **content**: A small Pseudo function.
+- **language**: "Pseudo" (for potential syntax highlighting).
+- **intent**: We have two possible actions—`copy_code` and `toggle_section`. GSS can define how/when these occur (clicking a copy button, etc.).
+- **order**: If set, the code block can be part of tab focus.
+
+---
+
+## GSS Example
+
+```toml
+[code_block]
+background-color = "#2d2d2d"
+color = "#ccc"
+font-family = "Consolas, 'Courier New', monospace"
+font-size = "0.9rem"
+padding = "1rem"
+line_numbers = true
+collapsible = true
+
+[code_block.line_numbers]
+# Hypothetical approach—some environment might inject line numbers
+color = "#999"
+
+[code_block.collapsible]
+# If the code block is collapsible, maybe show a toggle icon or button
+toggle.icon = "@assets/toggle.svg"
+
+[code_block.disabled]
+opacity = "0.5"
+cursor = "not-allowed"
+
+[code_block.intent.copy_code]
+on_click = 1       # single-click triggers the copying
+
+[code_block.intent.toggle_section]
+on_click = 2      # double-click toggles collapse/expand
+
+[code_block.animation.hover]
+type = "highlight"
+duration = "0.2s"
+
+[code_block.animation.click]
+type = "pulse"
+duration = "0.3s"
+
+```
+
+**Explanation**:
+
+1. **line_numbers**: `true` => GSS can show line numbering.
+2. **collapsible**: `true` => code can be expanded/collapsed if GSS or environment wants that.
+3. `[code_block]`: Basic styling: dark background, monospace font, etc.
+4. `[code_block.line_numbers]`: Potential approach to styling line numbers.
+5. `[code_block.collapsible]`: If collapsible, GSS can define or show a toggle icon.
+6. `[code_block.disabled]`: Dim the code block if it’s inactive.
+7. `[code_block.intent.copy_code]`: For single-click copying.
+8. `[code_block.intent.toggle_section]`: For double-click toggling collapse/expand.
+9. **Animations**: Possibly highlight on hover or pulse on click.
+
+---
+
+## Advanced Considerations
+
+1. **Syntax Highlighting**: Could be done by GSS or environment logic referencing `language`. Some systems might do server-side highlighting, others client-side.
+2. **Line Wrapping**: GSS or environment might define whether lines wrap or scroll horizontally.
+3. **Collapsibility**: If `collapsible = true`, environment decides how to store collapsed state.
+4. **Keyboard Navigation**: If `order` is set, pressing Enter or Space might copy code or toggle.
+5. **Copy Behavior**: Usually you’d have a button in the top-right corner or a small icon. By separating `intent.copy_code` in M3L from the actual event in GSS, you remain flexible.
+
+---
+
+## Final Thoughts
+
+A **Code Block Widget** is ideal for neatly displaying code snippets with optional highlighting, line numbers, collapsibility, and copy-to-clipboard functionality. M3L defines the code, language, and potential actions (`copy_code`, etc.), while GSS or environment logic handles styling, interactivity, and animations. This ensures consistency and clarity when sharing code throughout your application.
+
+---
+
 ### **Text Box**
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
