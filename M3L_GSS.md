@@ -4140,6 +4140,115 @@ A **Code Block Widget** is ideal for neatly displaying code snippets with option
 
 ---
 
+# Markdown Widget
+
+The **Markdown Widget** is responsible for loading `.md` content from a file or string and rendering it into the specialized M3L text widgets (e.g. `[header]`, `[paragraph]`, `[list]`, `[code_block]`, etc.). This allows developers to author content in Markdown while preserving the modular, structured approach of M3L.
+
+---
+
+## Core Fields
+
+| Field       | Description                                                                                                                | Example                                             |
+|-------------|----------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|
+| `id`        | A unique identifier for referencing in logic (not used by GSS).                                                            | `id = "release_notes"`                             |
+| `source`    | The path to a `.md` file or inline content (e.g., `@Undline/docs/readme.md`).                                              | `source = "@Undline/docs/guide.md"`               |
+| `lazy_load` | (Optional) If `true`, only loads/parses the visible portion of the Markdown, ideal for large files. Defaults to `false`.    | `lazy_load = true`                                  |
+| `border`    | (Optional) A boolean indicating whether to display a border around the rendered Markdown area. Defaults to `false`.         | `border = true`                                     |
+| `disabled`  | (Optional) If `true`, dims or prevents interaction (such as hyperlink clicks).                                              | `disabled = false`                                  |
+| `order`     | (Optional) Numeric order for keyboard/controller tab navigation. If omitted, the widget (and its sub-widgets) are skipped.  | `order = 3`                                         |
+| `on_error`  | (Optional) An array of actions to perform if parsing or loading fails (e.g. show an error message).                         | `on_error = [{ intent = "show_error" }]`          |
+
+**Note**: Animations, loading indicators, and related UI/UX details are handled entirely by GSS. The M3L portion only defines structure and logic. For example, `lazy_load` determines whether content is fetched incrementally, but the specifics of displaying a spinner or fade-in effect are left to GSS.
+
+---
+
+## Example M3L Snippet
+
+```toml
+[markdown]
+id = "release_notes"
+source = "@Undline/docs/release_notes.md"
+lazy_load = true
+border = true
+order = 3
+
+on_error = [
+  { intent = "show_error" }
+]
+```
+
+**Explanation**:
+- **`source`**: Points to the `.md` file containing content.
+- **`lazy_load`**: If `true`, only the visible sections are fetched/parsed at a time.
+- **`border`**: Instructs GSS to style a border around the Markdown container.
+- **`order`**: The position for keyboard/controller focus.
+- **`on_error`**: Fallback actions if the content fails to load or parse.
+
+---
+
+## GSS Integration
+
+GSS can define how the Markdown widget appears in various states:
+
+```toml
+[markdown]
+background-color = "#fff"
+color = "#333"
+padding = "1rem"
+
+[markdown.border.true]
+border = "1px solid #CCC"
+padding = "1rem" # Extra padding when a border is shown
+
+[markdown.disabled]
+opacity = "0.5"
+cursor = "not-allowed"
+
+# Hypothetical styles to manage loading, loaded, and error states.
+[markdown.loading]
+background-image = "@assets/spinner.gif"
+background-repeat = "no-repeat"
+background-position = "center"
+
+[markdown.loaded]
+animation = "fade-in"
+animation.duration = "0.5s"
+
+[markdown.error]
+animation = "shake"
+animation.duration = "0.3s"
+```
+
+**Key Points**:
+- **`border = true`** in M3L prompts `[markdown.border.true]` styling.
+- **`[markdown.loading]`** or `[markdown.loaded]` can be applied dynamically by the engine if it tracks loading state.
+- **`[markdown.error]`** can visually indicate an error, e.g. parse failure.
+
+---
+
+## Typical Rendering Flow
+1. **Initialization**: M3L sees `source`, `lazy_load`, and `border` fields.
+2. **Loading**: The system fetches `.md` content. If large and `lazy_load` is true, it only fetches/ parses portions as needed.
+3. **Parsing**: Markdown is converted into sub-widgets (`[header]`, `[paragraph]`, `[list]`, etc.).
+4. **Displaying**: Each sub-widget follows its own GSS styling. If GSS detects a loading or loaded state, it can apply transitions (e.g. spinners, fade-in).
+5. **Error Handling**: If file retrieval or parsing fails, `on_error` triggers and GSS may display `[markdown.error]` styling.
+
+---
+
+## Why Use a Markdown Widget?
+- **Separation of Content and Structure**: Authors can write `.md` files, while M3L automatically maps them to discrete widgets.
+- **Consistency**: Headings, paragraphs, lists, and code blocks each follow their existing M3L/GSS rules.
+- **Performance**: With `lazy_load`, large docs won’t slow down initial page load.
+- **Flexibility**: GSS handles visual presentation and transitions, so developers can customize the look without altering M3L.
+
+---
+
+## Conclusion
+
+The **Markdown Widget** allows you to load and parse Markdown content while preserving the structured, modular nature of M3L. By delegating animations and visual states entirely to GSS, it maintains a clean separation of concerns. Whether you’re showing short excerpts or entire documents, this approach helps keep your content easy to write and your UI easy to manage.
+
+---
+
 ### **Text Box**
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
