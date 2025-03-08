@@ -158,6 +158,7 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 - **[Line Break](line-break-widget)**: Allows for custom styling of section separators.
 - **[Blockquote](blockquote-widget)**: Handles markdown-style blockquotes (>).
 - **[Code Block](code-block-widget)**: Handles markdown-style code blocks (``` or `). Should have easy copy options for ease of use.
+- **[CheckItem](checkitem-widget)**: This is meant to create check boxes for things such as task list within text (not to be confused with check boxes which have their own dedicated widget).
 - **[Markdown](markdown-widget)**: Widget that is capable of parsing markdown files to be displayed on screen.
 - **Text Box**: Allows for single-line user input.
 - **Text Area**: Multi-line input for larger text blocks.
