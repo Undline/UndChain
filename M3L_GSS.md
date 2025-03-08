@@ -4249,6 +4249,8 @@ The **Markdown Widget** allows you to load and parse Markdown content while pres
 
 ---
 
+> **Stopping here to implement the parser and a simple engine based on these new formatting parameters. Will pick back up at this point!**
+
 ### **Text Box**
 - **Description**: A text box allows users to input single-line text. This widget supports rich interactivity and validation through events and intents.
 - **Use Cases**:
