@@ -4141,6 +4141,123 @@ A **Code Block Widget** is ideal for neatly displaying code snippets with option
 
 ---
 
+# CheckItem Widget
+
+A **CheckItem Widget** represents an item with a checkbox (checked/unchecked) and a label, usually for to-do lists or tasks. In Markdown, this maps to GitHub-style task-list syntax, such as:
+
+```
+- [ ] Write documentation
+- [x] Test code
+```
+
+When the Markdown parser sees lines like the above, it can produce one `[checkitem]` per line, setting `checked` to `false` or `true` accordingly.
+
+---
+
+## Why a CheckItem Widget?
+
+- **Task-List Support**: Gives a proper UI element for tasks (checked/unchecked) in your M3 environment.
+- **Interactivity**: If you want toggling or triggers when a box changes state, define an `intent` pointing to a script.
+- **Styling**: GSS can define how checked items appear (e.g., line-through text, color changes) or whether disabled items can be interacted with.
+
+---
+
+## Core Fields
+
+| Field      | Description                                                                                | Example                                                |
+| ---------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------ |
+| `id`       | Unique identifier for referencing in logic (not used by GSS).                              | `id = "todo_item1"`                                    |
+| `label`    | The text or label that appears beside the checkbox.                                        | `label = "Write documentation"`                        |
+| `checked`  | Boolean indicating whether the item is checked (`true`) or unchecked (`false`).            | `checked = false`                                      |
+| `disabled` | (Optional) If `true`, grays out or prevents toggling.                                      | `disabled = false`                                     |
+| `order`    | (Optional) Numeric order in tab navigation. If omitted, the widget is skipped in tab flow. | `order = 2`                                            |
+| `intent`   | (Optional) An array describing actions triggered when the checkbox toggles.                | `intent = [ { checked = "@UndChain/checkitem.psu" } ]` |
+
+**Note**: If your system automatically calls a script when `checked` changes, you can set `intent = [ { checked = "@UndChain/script.psu" } ].` That script can handle further logic (e.g. marking the item complete in a database). Sadly this is not default behavior for markdown so there won't be anything called if you pull your source from a markdown file.
+
+---
+
+## Example M3L Snippet
+
+```toml
+[checkitem]
+id = "todo_item1"
+label = "Write documentation"
+checked = false
+order = 2
+intent = [
+  { checked = "@UndChain/checkitem.psu" }
+]
+
+[checkitem]
+id = "todo_item2"
+label = "Test code"
+checked = true
+intent = [
+  { checked = "@UndChain/checkitem.psu" }
+]
+```
+
+**Explanation**:
+
+- **`label`**: The text displayed beside the box.
+- **`checked = false`** (for the first item) means it starts unchecked.
+- **`intent`**: When the user toggles the checkbox, it triggers a script at `@UndChain/checkitem.psu` to handle updates or logic.
+- The second `[checkitem]` shows a pre-checked item (`checked = true`).
+
+---
+
+## GSS Example
+
+```toml
+[checkitem]
+font-family = "Arial, sans-serif"
+font-size = "1rem"
+padding = "0.25rem 0"
+
+[checkitem.checked.true]
+# If the widget is flagged as checked
+text-decoration = "line-through"
+color = "#aaa"
+
+[checkitem.disabled]
+opacity = "0.5"
+cursor = "not-allowed"
+
+[checkitem.animation.toggle]
+type = "pulse"
+duration = "0.3s"
+```
+
+**Key Points**:
+
+1. **`[checkitem.checked.true]`**: If your engine notes `checked = true`, it could apply a line-through and lighter color.
+2. **`[checkitem.disabled]`**: Dims or removes interactivity if `disabled = true`.
+3. **Animations**: On toggle, you might pulse the text or show some highlight effect.
+
+---
+
+## Parsing from Markdown
+
+For lines like:
+
+```
+- [ ] Write documentation
+- [x] Test code
+```
+
+- The parser sees `- [ ]` or `- [x]`. If ` ` is empty, `checked = false`; if `x`, `checked = true`.
+- The remainder is the label (e.g. `"Write documentation"`).
+- Create a `[checkitem]` with those fields. If you want toggles to call a script, set `intent = [ { checked = "@UndChain/checkitem.psu" } ]`.
+
+---
+
+## Final Thoughts
+
+A **CheckItem Widget** is ideal for to-do lists or simple tasks in Markdown. By mapping "- [ ]" or "- [x]" lines to `[checkitem]` objects, you get an interactive, stylable component. GSS can handle the checked vs. unchecked visuals, and if you’d like back-end updates or side effects, the `intent` array can point to a script that runs whenever the checkbox state changes.
+
+---
+
 # Markdown Widget
 
 The **Markdown Widget** is responsible for loading `.md` content from a file or string and rendering it into the specialized M3L text widgets (e.g. `[header]`, `[paragraph]`, `[list]`, `[code_block]`, etc.). This allows developers to author content in Markdown while preserving the modular, structured approach of M3L.
