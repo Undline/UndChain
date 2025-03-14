@@ -4193,9 +4193,7 @@ intent = [
 id = "todo_item2"
 label = "Test code"
 checked = true
-intent = [
-  { checked = "@UndChain/checkitem.psu" }
-]
+# This intent is left blank showing that intents only trigger special events
 ```
 
 **Explanation**:
