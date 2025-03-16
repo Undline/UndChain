@@ -133,6 +133,98 @@ M3L seamlessly integrates with co-chains like SQeeL and Mimic:
 - Once loaded, GSS files remain consistent across applications, reducing network traffic and computation.
 - Shared styles enhance cross-application performance.
 
+#### **6. Keyframe Animations**
+
+- Special keyword used for all widgets `Keyframe` defines how an animation will take place (rather than relying on scripting). This is so it's more intuitive for designers to pick it up. 
+- Keyframes are based off of our senses and can be expanded in the future at this time it does the following:
+   1. Visual - Can be the target device or any visual element like an external smart light.
+   2. Audio - Handles sound any sound effects that are to be played when a user is perform this action type.
+   3. Haptic - Deals with tactile response of the system so users can feel the interface.
+   4. Resistance - Also, touch based can adjust the resistance of a connected device. Think PS5 controller adjusting the resistance on a trigger button.
+   5. External - This is for devices that are not connected to the computing device being used. Think smart lights, thermostats and blinds.
+
+Example:
+
+```toml
+[confirmation_button.animation.on_click]
+duration = "1.5s"
+keyframes = [
+  { percent = 0,
+    visual = [
+      { target = "self", scale = 0.9, opacity = 0.6, easing = "ease-in" },
+      { target = "confirmation_popup", action = "prepare", easing = "ease-in" },
+      { target = "app.background", blur = 5, easing = "ease-out" }
+    ],
+    audio = [
+      { target = "speakers", file = "@confirm_start.wav", volume = 0.3, easing = "linear" },
+      { target = "switch-controller.speaker", file = "@switch_beep.mp3", volume = 0.4 }
+    ],
+    haptic = [
+      { target = "controller", intensity = 0.4, easing = "linear" },
+      { target = "ps5-controller.left-grip", intensity = 0.6, easing = "ease-in" }
+    ],
+    resistance = [
+      { target = "ps5-controller.R2", intensity = 0.0, easing = "ease-in" },
+      { target = "xbox-controller.LT", intensity = 0.3 }
+    ],
+    external = [
+      { target = "smart-light.office", state = "on", color = "blue", brightness = 50, easing = "ease-in" }
+    ]
+  },
+
+  {
+    percent = 50,
+    visual = [
+      { target = "self", scale = 1.1, opacity = 1.0 },
+      { target = "confirmation_popup", action = "show", easing = "ease-out" }
+    ],
+    audio = [
+      { target = "speakers", volume = 0.5 }
+    ],
+    haptic = [
+      { target = "controller", intensity = 0.5, easing = "ease-in-out" },
+      { target = "ps5-controller.left-grip", intensity = 0.3 }
+    ],
+    resistance = [
+      { target = "ps5-controller.R2", intensity = 0.7, easing = "ease-in-out" }
+    ],
+    external = [
+      { target = "smart-light.office", color = "green", brightness = 100, easing = "linear" }
+    ]
+  },
+
+  {
+    percent = 100,
+    visual = [
+      { target = "self", scale = 1.0, opacity = 1.0 },
+      { target = "app.background", blur = 0, easing = "ease-in" }
+    ],
+    audio = [
+      { target = "controller.speaker", file = "@confirm_end.wav", volume = 0.5, easing = "ease-out" }
+    ],
+    haptic = [
+      { target = "controller", intensity = 0.0, easing = "ease-out" },
+      { target = "ps5-controller.left-grip", intensity = 0.0 }
+    ],
+    resistance = [
+      { target = "ps5-controller.R2", intensity = 0.0, easing = "ease-out" }
+    ],
+    external = [
+      { target = "smart-light.office", brightness = 50, easing = "ease-out" }
+    ]
+  },
+
+  {
+    percent = 100,
+    visual = [
+      { target = "self", scale = 1.0 },
+      { target = "confirmation_popup", action = "finalize" },
+      { target = "app.background", blur = 0 }
+    ]
+  }
+]
+```
+
 ### Widget Overview
 
 M3L and GSS support a diverse range of widgets, categorized into **Low-Level Widgets** and **High-Level Widgets**:
