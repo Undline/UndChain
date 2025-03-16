@@ -231,6 +231,8 @@ M3L and GSS support a diverse range of widgets, categorized into **Low-Level Wid
 
 #### **Low-Level Widgets**
 
+- **Entrance**: This widget is here to create an entrance animation for the GSS file that is being currently loaded. This could be as simple as a screen fade or as complex as the designer wishes. Primarily meant for when a user changes their GSS theme.
+- **Exit**: Just like the Entrance widget, this one is designer for when users leave or want to change out their GSS theme. This is meant to create a friendly transition into the new environment or returning to their real desktop.
 - **[Window](#window-widget)**: Creates a new widowed object within the virtual desktop so that users can contain a application.
 - **Fullscreen**: Not sure if this should be a widget type, but could describe a system where we want to take a full screen to show widgets. Common use would be console, mobile and desktop environments.
 - **[Frame](#frame-widget)**: A Frame widget is one that is meant to contain multiple widgets (including other frames). Types: Grid, Relative, Absolute and Flex.
