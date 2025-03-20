@@ -19,7 +19,7 @@ class ColoredFormatter(logging.Formatter):
         return formatted_record
 
 def setup_logger(name: str, log_file: str) -> logging.Logger:
-    """
+    '''
     Set up a logger with the specified name and log file, directing the log file to the logs/ directory.
 
     Args:
@@ -28,7 +28,8 @@ def setup_logger(name: str, log_file: str) -> logging.Logger:
 
     Returns:
         logging.Logger: Configured logger instance.
-    """
+    '''
+
     # Ensure the logs directory exists
     logs_dir = "logs"
     if not os.path.exists(logs_dir):
