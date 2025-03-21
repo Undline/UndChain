@@ -1,5 +1,6 @@
 import tomllib
 from typing import Any, Dict, List, Optional
+import os
 
 from logging import Logger
 from logger_util import setup_logger
@@ -30,11 +31,18 @@ class M3Parser:
 
     def _load_default_gss_path(self) -> str:
         '''
-        Loads default GSS path from UndChain.toml.
+        Loads default GSS path from UndChain.toml explicitly located in ../Run Rules/.
         '''
 
         try:
-            config = self.load_toml("UndChain.toml")
+            config_path = os.path.abspath(os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                "..",
+                "Run Rules",
+                "UndChain.toml"
+            ))
+
+            config = self.load_toml(config_path)
             default_gss = config.get("GSSFile", "example.gss")
             logger.info(f"Default GSS file loaded: {default_gss}")
             return default_gss
@@ -42,7 +50,7 @@ class M3Parser:
             logger.warning("UndChain.toml not found; using fallback 'example.gss'")
             return "example.gss"
         except Exception as e:
-            logger.error(f"Error loading default GSS path: {e}; using fallback 'internal.gss'")
+            logger.error(f"Error loading default GSS path: {e}; using fallback 'example.gss'")
             return "example.gss"
 
     def switch_gss(self, new_gss_path: str) -> None:
