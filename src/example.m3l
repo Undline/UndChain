@@ -1,0 +1,30 @@
+[checkitem]
+id = "todo_item1"
+label = "Write documentation"
+checked = false
+order = 2
+intent = [
+  { checked = "@UndChain/checkitem.psu" }
+]
+
+[checkitem.animation.on_check]
+duration = "0.5s"
+keyframes = [
+  { percent = 0, visual = { opacity = 0.0 } },
+  { percent = 100, visual = { opacity = 1.0 } }
+]
+
+[checkitem]
+id = "todo_item2"
+label = "Test code"
+checked = true
+intent = [
+  { checked = "@UndChain/checkitem.psu" }
+]
+
+[checkitem.animation.on_check]
+duration = "0.5s"
+keyframes = [
+  { percent = 0, visual = { opacity = 0.0 } },
+  { percent = 100, visual = { opacity = 1.0 } }
+]
