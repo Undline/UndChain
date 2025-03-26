@@ -1,7 +1,6 @@
 [checkitem]
 font-family = "Arial, sans-serif"
 font-size = "1rem"
-padding = "0.25rem 0"
 color = "#333"
 
 [checkitem.checked.true]
@@ -18,3 +17,7 @@ keyframes = [
   { percent = 0, visual = { opacity = 0.0, scale = 0.8 } },
   { percent = 100, visual = { opacity = 1.0, scale = 1.0 } }
 ]
+
+[frame.checkitem]
+# Additional or overridden styles for checkitems inside a frame
+border-left = "4px solid #00f"

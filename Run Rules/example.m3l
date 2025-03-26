@@ -1,16 +1,20 @@
-[[checkitem]]
-id = "todo_item1"
-label = "Write documentation"
-checked = false
-order = 2
-intent = [
-  { checked = "@UndChain/on_check.psu" }
-]
+version = "2025.03.25.1"
+
+[frame]
+id = "main_frame"
+type = "frame"
+
+  [[frame.checkitem]]
+  id = "todo_item1"
+  label = "Write documentation"
+  checked = false
+
+  [[frame.checkitem]]
+  id = "todo_item2"
+  label = "Test code"
+  checked = true
 
 [[checkitem]]
-id = "todo_item2"
-label = "Test code"
-checked = true
-intent = [
-  { checked = "@UndChain/on_check.psu" }
-]
+id = "todo_item3"
+label = "A stand-alone item"
+checked = false
