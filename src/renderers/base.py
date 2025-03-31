@@ -2,7 +2,7 @@ from typing import Any, Dict, List
 
 class BaseRenderer:
     
-    def setup(self):
+    def setup(self) -> None:
         '''
         Called once before rendering. Good place for engine initialization.
         '''
@@ -16,14 +16,14 @@ class BaseRenderer:
 
         raise NotImplementedError
 
-    def teardown(self):
+    def teardown(self) -> None:
         '''
         Called at shutdown to release resources, close windows, etc.
         '''
 
         pass
 
-    def update(self, dt: float):
+    def update(self, dt: float) -> None:
         '''
         (Optional) For real-time or game-like engines that need a per-frame update.
         '''
@@ -43,5 +43,5 @@ class BaseRenderer:
         Called when a single widget's data changes and we want
         to re-draw or adjust only that widget (and possibly children).
         '''
-        
+
         raise NotImplementedError
