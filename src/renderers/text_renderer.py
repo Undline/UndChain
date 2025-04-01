@@ -7,7 +7,7 @@ class TextRenderer(BaseRenderer):
     inherit from BaseRenderer and implement its methods.
     '''
 
-    def __init__(self):
+    def __init__(self) -> None:
         '''
         If you need a local data structure for tracking lines or partial updates,
         you can define them here.
@@ -42,7 +42,7 @@ class TextRenderer(BaseRenderer):
             line_num += 1
         print("\n-- End of Widget Tree --")
 
-    def teardown(self):
+    def teardown(self) -> None:
         '''
         Called at shutdown to release resources.
         For text-based, no real resources, so we might just print a message.
@@ -91,7 +91,7 @@ class TextRenderer(BaseRenderer):
         '''
         Returns a string representation of a single widget.
         '''
-        
+
         wtype = widget.get("type", "unknown")
         label = widget.get("label", "")
         checked = widget.get("checked", False)
