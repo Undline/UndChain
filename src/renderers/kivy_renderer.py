@@ -22,7 +22,7 @@ class KivyRenderer(BaseRenderer):
         # Kivy typically wants an App with a build() method returning the root layout.
         # So we might define an inner class or something. For simplicity:
         class M3LApp(App):
-            def build(app_self):
+            def build(self):
                 root = BoxLayout(orientation='vertical', padding=10, spacing=10)
                 for w in widget_tree:
                     kv = self.create_kivy_widget(w)

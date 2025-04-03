@@ -4,8 +4,6 @@ import pprint
 import tomllib
 from typing import Any, Dict, List, Optional
 
-# We assume you have a 'renderers' folder with 'factory.py', which exposes get_renderer(...)
-# e.g.  my_project/src/renderers/factory.py
 from renderers.factory import get_renderer
 
 def load_toml(filepath: str) -> Dict[str, Any]:
