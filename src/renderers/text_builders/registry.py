@@ -9,6 +9,7 @@ from .text_box_builder import build_text_box
 from .hyperlink_builder import build_hyperlink
 from .button_builder import build_button
 from .h1_builder import build_h1
+from .h2_builder import build_h2
 
 TEXT_BUILDERS: Dict[str, Callable[[Dict[str, Any]], str]] = {
     "checkitem": build_checkitem,
@@ -17,5 +18,6 @@ TEXT_BUILDERS: Dict[str, Callable[[Dict[str, Any]], str]] = {
     "text_box":  build_text_box,   
     "hyperlink": build_hyperlink,  
     "button":    build_button, 
-    "h1": build_h1, 
+    "h1": build_h1,
+    "h2": build_h2,
 }
