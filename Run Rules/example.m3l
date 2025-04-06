@@ -1,20 +1,61 @@
-version = "2025.03.25.1"
-
 [frame]
-id = "main_frame"
-type = "frame"
+id = "login_frame"
+# A top-level container (frame) for the entire layout
 
-  [[frame.checkitem]]
-  id = "todo_item1"
-  label = "Write documentation"
-  checked = false
+[[frame.header]]
+id = "login_title"
+level = "H1"
+content = "Crypto Account Login"
 
-  [[frame.checkitem]]
-  id = "todo_item2"
-  label = "Test code"
-  checked = true
+[[frame.text_box]]
+id = "username_field"
+label = "Username"
+placeholder = "Enter your username"
+is_password = false
 
-[[checkitem]]
-id = "todo_item3"
-label = "A stand-alone item"
+validate = {
+  min_length = 4
+  max_length = 128
+  forbidden_chars = "!@#$%^&*()_+"
+  errors = {
+    min_length = "Must be at least 4 chars."
+    max_length = "Cannot exceed 128 chars."
+    forbidden_chars = "No special punctuation allowed."
+  }
+}
+
+[[frame.text_box]]
+id = "password_field"
+label = "Password"
+placeholder = "Enter your password"
+is_password = true
+
+validate = {
+  min_length = 8
+  max_length = 64
+  errors = {
+    min_length = "Password must be at least 8 chars."
+    max_length = "Password cannot exceed 64 chars."
+  }
+}
+
+[[frame.checkbox]]
+id = "remember_me"
+label = "Remember Me?"
 checked = false
+
+[[frame.secondary_button]]
+id = "recover_account_button"
+label = "Recover Account"
+
+on_click = [
+  { intent = "recover_account", param = "@UndChain/auth/recovery.psu" }
+]
+
+[[frame.primary_button]]
+id = "login_button"
+label = "Log In"
+
+on_click = [
+  { intent = "do_login", param = "@UndChain/auth/login.psu" }
+]
