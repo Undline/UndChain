@@ -1,23 +1,66 @@
-[checkitem]
-font-family = "Arial, sans-serif"
-font-size = "1rem"
+[frame]
+background-color = "#f0f0f0"
+padding = "1rem"
+
+[header.H1]
+font-size = "2rem"
+font-weight = "bold"
 color = "#333"
+margin-bottom = "1rem"
 
-[checkitem.checked.true]
-text-decoration = "line-through"
-color = "#aaa"
+[text_box]
+font-size = "1rem"
+color = "#000"
+border = "1px solid #ccc"
+padding = "0.5rem"
+margin-bottom = "1rem"
 
-[checkitem.disabled]
+# If text_box has is_password = true, you can define a sub-style
+[text_box.is_password.true]
+mask_text = true
+
+[checkbox]
+# Basic styling for a checkbox
+font-size = "1rem"
+margin-bottom = "1rem"
+
+[primary_button]
+background-color = "#007BFF"
+color = "#fff"
+padding = "0.75rem 1.25rem"
+border = "none"
+border-radius = "4px"
+font-weight = "bold"
+margin-right = "0.5rem"
+
+[secondary_button]
+background-color = "#ccc"
+color = "#333"
+padding = "0.75rem 1.25rem"
+border = "none"
+border-radius = "4px"
+font-weight = "normal"
+margin-right = "0.5rem"
+
+[checkbox.disabled]
 opacity = "0.5"
 cursor = "not-allowed"
 
-[checkitem.animation.on_check]
-duration = "0.5s"
-keyframes = [
-  { percent = 0, visual = { opacity = 0.0, scale = 0.8 } },
-  { percent = 100, visual = { opacity = 1.0, scale = 1.0 } }
-]
+[primary_button.disabled]
+opacity = "0.6"
+cursor = "not-allowed"
 
-[frame.checkitem]
-# Additional or overridden styles for checkitems inside a frame
-border-left = "4px solid #00f"
+[secondary_button.disabled]
+opacity = "0.6"
+cursor = "not-allowed"
+
+# Example animations
+[primary_button.animation.hover]
+type = "scale-up"
+duration = "0.2s"
+timing_function = "ease-in-out"
+
+[secondary_button.animation.hover]
+type = "scale-up"
+duration = "0.2s"
+timing_function = "ease-in-out"
