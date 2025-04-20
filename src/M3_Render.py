@@ -218,7 +218,7 @@ if __name__ == "__main__":
     parser.parse()
 
     # 2) Render using 'text'
-    print("[MAIN] Now rendering with the text engine:\n")
+    print("[MAIN] Rendering with the text engine:\n")
     parser.render()
 
     # 3) Demonstrate switching to 'kivy'
