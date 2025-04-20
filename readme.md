@@ -242,7 +242,7 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
 
 ---
 
-### LINK
+### LINK (Localized Interface for Network Kinetics)
 
 LINK (Localized Interface for Networked Kinetics) is UndChain’s **standardized protocol for remote robotics**, designed to make piloting physical systems as seamless as accessing an app. Whether operating a humanoid surrogate, flying a drone, or steering an autonomous mower, LINK provides the ultra-responsive foundation for decentralized embodiment.
 
