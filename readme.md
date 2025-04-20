@@ -246,7 +246,7 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
 
 LINK (Localized Interface for Networked Kinetics) is UndChain’s **standardized protocol for remote robotics**, designed to make piloting physical systems as seamless as accessing an app. Whether operating a humanoid surrogate, flying a drone, or steering an autonomous mower, LINK provides the ultra-responsive foundation for decentralized embodiment.
 
-By creating a shared communication and control standard, LINK ensures **real-time, secure, and modular access** to machines—from anywhere in the world, across UndChain subdomains.
+By creating a shared communication and control standard, LINK ensures secure, modular, and low-latency access to machines within a user's region, while enabling global coordination and oversight through AI-assisted supervision across UndChain subdomains.
 
 ---
 
@@ -297,8 +297,7 @@ By creating a shared communication and control standard, LINK ensures **real-tim
         - **Fleet Management** for enterprise-scale deployments
         - **AI-Driven Swarms** for coordinated task execution
         - **Permissioned Control Leasing**, where users rent LINK-compatible bots across networks
-        - **On-chain action verification** via zk-motion logs and validator-signed events
-            
+        - **On-chain action verification** via zk-motion logs and validator-signed events       
 
 ---
 
@@ -318,15 +317,14 @@ By creating a shared communication and control standard, LINK ensures **real-tim
     
 - **Immersive Control & Gamified Workflows**  
     Train operators through Phantom Mode. Gamify real-world tasks. Reduce fatigue by turning repetitive operations into engaging digital interactions.
-    
 
 ---
 
 **In Summary**
 
-LINK makes it possible to **pilot the physical world** as effortlessly as opening an app. It’s more than a protocol—it’s a presence pipeline. Whether you're controlling a robot across the hall or a drone across the globe, LINK ensures that interaction is fast, secure, immersive, and open.
+LINK makes it possible to **pilot and coordinate physical machines** through a unified, decentralized control layer. Within a user’s local region, LINK offers **real-time, low-latency embodiment**—while globally, users can guide AI-driven systems through **Supervisor Mode** or interact via a lightweight simulation in **Phantom Mode**.
 
-With LINK, UndChain's **Access** layer becomes embodied.
+It’s more than a protocol—it’s how **Access becomes physical** on UndChain.
 
 ---
 
