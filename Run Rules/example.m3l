@@ -8,36 +8,36 @@ level = "H1"
 content = "Crypto Account Login"
 
 [[frame.text_box]]
-id = "username_field"
-label = "Username"
+id          = "username_field"
+label       = "Username"
 placeholder = "Enter your username"
-is_password = false
+is_password = false # Not needed since text box is clear text by default
 
-validate = {
-  min_length = 4
-  max_length = 128
-  forbidden_chars = "!@#$%^&*()_+"
-  errors = {
-    min_length = "Must be at least 4 chars."
-    max_length = "Cannot exceed 128 chars."
-    forbidden_chars = "No special punctuation allowed."
-  }
-}
+# ── validation rules ─────────────────────────────────────
+validate.min_length              = 4
+validate.max_length              = 128
+validate.forbidden_chars         = "!@#$%^&*()_+"
+
+validate.errors.min_length       = "Must be at least 4 chars."
+validate.errors.max_length       = "Cannot exceed 128 chars."
+validate.errors.forbidden_chars  = "No special punctuation allowed."
 
 [[frame.text_box]]
-id = "password_field"
-label = "Password"
+id          = "password_field"
+label       = "Password"
 placeholder = "Enter your password"
-is_password = true
+is_password = true      # ← masks the characters
 
-validate = {
-  min_length = 8
-  max_length = 64
-  errors = {
-    min_length = "Password must be at least 8 chars."
-    max_length = "Password cannot exceed 64 chars."
-  }
-}
+# ── validation rules ─────────────────────────────────────
+validate.min_length      = 8
+validate.max_length      = 64
+validate.require_digit   = true              # at least one 0‑9
+validate.require_special = true              # at least one !@#$… etc.
+
+validate.errors.min_length      = "Must be at least 8 characters."
+validate.errors.max_length      = "Cannot exceed 64 characters."
+validate.errors.require_digit   = "Include at least one number (0‑9)."
+validate.errors.require_special = "Include at least one special character."
 
 [[frame.checkbox]]
 id = "remember_me"
