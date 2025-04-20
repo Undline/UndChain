@@ -82,11 +82,11 @@ The Main Chain serves as the foundation of UndChain, coordinating critical proto
         - **UGP (UndChain Gold Piece)**: A connection token enabling interactions with validators.
         - **USP (UndChain Silver Piece)**: A utility token for partners to perform tasks across co-chains.
 	        - This is the token that can be overridden with a require collateral which will be paid out to users in the event that liquidity is removed from the token in a short time frame (UndChain's anti-rug protocol). *When we create AdCoin I will show how this process will work.*
-1. **Alias System (UnaS)**:
+3. **Alias System (UnaS)**:
     
     - Provides users with customizable usernames (e.g., `@username`) for simplified transactions and easier identification.
     - This system is case insensitive so users won't have to worry if any potion is capitalized or not.
-1. **Chain Rules Framework**:
+4. **Chain Rules Framework**:
     
     - Sets the format for defining co-chain-specific rules, including:
         - Developer compensation.
@@ -241,6 +241,95 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
 	- Pages provides users the ability to do A / B testing, allowing developers the ability to run two different sites to see which gets the most interaction.
 
 ---
+
+### LINK
+
+LINK (Localized Interface for Networked Kinetics) is UndChain’s **standardized protocol for remote robotics**, designed to make piloting physical systems as seamless as accessing an app. Whether operating a humanoid surrogate, flying a drone, or steering an autonomous mower, LINK provides the ultra-responsive foundation for decentralized embodiment.
+
+By creating a shared communication and control standard, LINK ensures **real-time, secure, and modular access** to machines—from anywhere in the world, across UndChain subdomains.
+
+---
+
+**Key Features:**
+
+1. **Unified Piloting Protocol**
+    
+    - LINK serves as a **hardware-agnostic communication layer** that can be implemented by any robot, drone, or control station. It standardizes how movement, vision, and feedback are encoded, ensuring interoperability across devices and vendors.
+    - Devices that support LINK can be driven manually, supervised by AI, or operated collaboratively—**enabling both real-time embodiment and semi-autonomous delegation.**
+        
+2. **Ultra-Low Latency Pipeline**
+    
+    - LINK is engineered to support **sub-12ms motion-to-action latency**, making it suitable for everything from tactile robotics to competitive drone piloting.
+        
+    - Its architecture includes:
+        - 360° visual systems for head-tracked VR environments
+        - UDP-based data channels for rapid control & feedback
+        - Timestamped motion frames for consistent state prediction
+            
+3. **Augmented Reality (AR) Guidance**
+    
+    - In **AR Mode**, LINK overlays spatial highlights to visualize interactable objects and predicted AI behavior.
+    - This is especially powerful in **Supervisor Mode**, where a user can observe the robot’s intended actions and intervene before errors occur—turning the user into a proactive guide rather than a passive viewer.
+        
+4. **Phantom Mode (Simulated Embodiment Layer)**
+    
+    - For environments with limited bandwidth or unpredictable input, LINK supports a **simulated piloting mode** where the world is mirrored into a lightweight, game-like 3D space.
+    - Instead of streaming high-bandwidth video, the user interacts with **preloaded 3D assets and sensor inputs**—dramatically reducing network load while enhancing control speed.
+    - This mode also enables **gamified task execution**, useful for training, coordination, or user-friendly job interfaces.
+        
+5. **Access by Design**
+    
+    - LINK was built to **embody UndChain’s “Access” layer**: the ability to control, touch, and affect the real world through secure, decentralized systems.
+    - From robots in homes and farms to machines in factories and cities, LINK ensures users can connect, control, and coordinate without centralized gateways or proprietary lock-in.
+        
+6. **Mimic Synergy**
+    
+    - LINK integrates tightly with the Mimic co-chain for **supervised automation and AI-directed operation**.
+    - Mimic will:
+        - Handle low-level motion planning
+        - Auto-suggest next actions
+        - Monitor operator behavior for safety and efficiency
+        - Swap users between “Full Pilot” and “Supervisor” roles on the fly
+            
+7. **Future-Proof Modularity**
+    
+    - LINK is designed for easy extension into:
+        - **Fleet Management** for enterprise-scale deployments
+        - **AI-Driven Swarms** for coordinated task execution
+        - **Permissioned Control Leasing**, where users rent LINK-compatible bots across networks
+        - **On-chain action verification** via zk-motion logs and validator-signed events
+            
+
+---
+
+**Use Cases and Potential:**
+
+- **Remote Farming & Equipment Control**  
+    Use LINK-enabled rigs to remotely operate tractors, pickers, and autonomous harvesters—with AR assistance and fallback Phantom Mode for unreliable network zones.
+    
+- **Surrogate Robotics for Home & Care**  
+    Allow users to step into LINK-compatible home bots to check on loved ones, assist with tasks, or provide companionship—controlled securely and respectfully.
+    
+- **Logistics & Infrastructure Maintenance**  
+    LINK offers a standardized framework for inspecting, repairing, or managing distributed systems such as pipelines, bridges, or transport hubs.
+    
+- **Security & Surveillance**  
+    Coordinate robotic patrols or autonomous drones with override-ready Supervisor Mode, reducing risk while maintaining accountability.
+    
+- **Immersive Control & Gamified Workflows**  
+    Train operators through Phantom Mode. Gamify real-world tasks. Reduce fatigue by turning repetitive operations into engaging digital interactions.
+    
+
+---
+
+**In Summary**
+
+LINK makes it possible to **pilot the physical world** as effortlessly as opening an app. It’s more than a protocol—it’s a presence pipeline. Whether you're controlling a robot across the hall or a drone across the globe, LINK ensures that interaction is fast, secure, immersive, and open.
+
+With LINK, UndChain's **Access** layer becomes embodied.
+
+---
+
 ### Auction House 
 
 The Auction House co-chain is UndChain’s decentralized marketplace for minting, trading, and protecting digital assets on the network. It uses **USP** (UndChain Silver Piece) as the default transaction token. Users can seamlessly swap other registered tokens like AdCoin for USP at checkout.
@@ -730,28 +819,28 @@ To spark inspiration for future development, here are a few ideas for co-chains 
 5. **Crowdfunding and DAO Co-Chains**  
     A co-chain designed for fundraising and decentralized autonomous organizations (DAOs). Projects can raise funds through transparent smart contracts, while contributors have voting power to decide the project’s direction. This system could include milestone-based funding, ensuring accountability for developers.
     
-5. **Digital Healthcare Services**  
+6. **Digital Healthcare Services**  
     A decentralized telehealth co-chain where patients can securely connect with healthcare providers for consultations, prescriptions, and medical advice. Health data could be stored privately on the network, and Mimic could assist with diagnostics or routine health inquiries.
     
-6. **Decentralized Talent Marketplaces**  
+7. **Decentralized Talent Marketplaces**  
     A co-chain where freelancers and businesses connect without intermediaries. Users can showcase their skills, bid on projects, and receive payments through UndChain’s token systems. Built-in reputation systems ensure fair and trustworthy transactions.
     
-7. **Event Ticketing and Management**  
+8. **Event Ticketing and Management**  
     A co-chain for creating, selling, and managing event tickets. Tickets would be issued as digital assets, ensuring authenticity and preventing fraud. Event organizers could even create virtual venues using Live and Player2 for decentralized concerts or esports events.
     
-8. **Decentralized Energy Sharing**  
+9. **Decentralized Energy Sharing**  
     A co-chain allowing users to buy, sell, or share surplus energy locally. Homeowners with solar panels, for instance, could sell excess electricity to their neighbors in real time, creating a decentralized energy market.
     
-9. **Legal and Compliance Services**  
+10. **Legal and Compliance Services**  
     A co-chain offering tools for creating, sharing, and enforcing digital contracts and agreements. It could feature a library of pre-built templates for licenses, NDAs, and other legal documents, with built-in dispute resolution protocols.
     
-10. **Decentralized Travel Booking**  
+11. **Decentralized Travel Booking**  
     A co-chain that connects users with travel providers, allowing them to book flights, hotels, and tours directly. This system would remove intermediaries, reducing costs and providing a more transparent booking experience.
     
-11. **Supply Chain Management**  
+12. **Supply Chain Management**  
     A CRM (Customer Resource Management) system that allows users to track and monitor manufactured goods over an entire organization. This system could provide manufacturing instructions, estimate material usage and plan accordingly and provide real time tracking that could be provided to customers. 
 
-12. **Decentralized Music and Video Streaming Services**  
+13. **Decentralized Music and Video Streaming Services**  
 	This co-chain enables creators and platforms to host music and video content in a decentralized ecosystem. By integrating features from **Live**, it facilitates seamless content streaming with robust scalability and low latency. The use of **rental digital asset contracts** allows content providers to define specific usage rights, such as viewing-only or limited-time access, ensuring creators maintain control over their work while providing users with a seamless experience.
 
 	This co-chain paves the way for decentralized streaming platforms—think of it as a blockchain-powered alternative to services like Netflix or Spotify—where content ownership, control, and monetization are shifted back to the creators and their audiences. Additionally, creators can use the built-in functionality of Pages to host their libraries and leverage AdCoin for monetization options.
