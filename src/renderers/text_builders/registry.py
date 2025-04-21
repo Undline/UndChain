@@ -11,13 +11,13 @@ from .button_builder import build_button
 from .h1_builder import build_h1
 from .h2_builder import build_h2
 
-TEXT_BUILDERS: Dict[str, Callable[[Dict[str, Any]], str]] = {
+TEXT_BUILDERS: Dict[str, Callable[..., str]] = {
     "checkitem": build_checkitem,
     "paragraph": build_paragraph,
     "frame":     build_frame,
-    "text_box":  build_text_box,   
-    "hyperlink": build_hyperlink,  
-    "button":    build_button, 
-    "h1": build_h1,
-    "h2": build_h2,
+    "text_box":  build_text_box,
+    "hyperlink": build_hyperlink,
+    "button":    build_button,
+    "h1":        build_h1,
+    "h2":        build_h2,
 }
