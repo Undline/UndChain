@@ -1,8 +1,8 @@
-from typing import Dict, Any
+#  text_builders/frame_builder.py
+from typing import Dict, Any, Optional
 
-def build_frame(widget_info: Dict[str, Any]) -> str:
-    fid = widget_info.get("id", "")
-    style = widget_info.get("style", {})
-    border = style.get("border", "noborder")
-
-    return f"--- FRAME ({fid}) --- (border={border})"
+def build_frame(widget_info: Dict[str, Any],
+                renderer: Optional[Any] = None) -> str:     # ← added
+    header = f"--- FRAME ({widget_info.get('id', '?')}) ---"
+    border = widget_info.get("style", {}).get("border", "noborder")
+    return f"{header} (border={border})"
