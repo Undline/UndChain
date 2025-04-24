@@ -7,12 +7,12 @@ from typing import Any, Dict, List, Optional
 from renderers.factory import get_renderer
 
 def load_toml(filepath: str) -> Dict[str, Any]:
-    """Simple loader using Python 3.11+ 'tomllib'."""
+    '''Simple loader using Python 3.11+ 'tomllib'.'''
     with open(filepath, "rb") as f:
         return tomllib.load(f)
 
 def deep_merge(a: Dict[str, Any], b: Dict[str, Any]) -> Dict[str, Any]:
-    """Recursively merge dict b into dict a, returning a new dict."""
+    '''Recursively merge dict b into dict a, returning a new dict.'''
     result = copy.deepcopy(a)
     for k, v in b.items():
         if k in result and isinstance(result[k], dict) and isinstance(v, dict):
@@ -22,10 +22,10 @@ def deep_merge(a: Dict[str, Any], b: Dict[str, Any]) -> Dict[str, Any]:
     return result
 
 def parse_gss(gss_data: Dict[str, Any]) -> Dict[str, Any]:
-    """
+    '''
     Convert a GSS dictionary into a nested style structure.
     E.g., [checkitem.checked.true] => gss_styles['checkitem']['checked']['true'] = {...}
-    """
+    '''
     styles = {}
     for section_name, props in gss_data.items():
         parts = section_name.split(".")  # e.g. ["checkitem","checked","true"]
@@ -45,11 +45,11 @@ def parse_gss(gss_data: Dict[str, Any]) -> Dict[str, Any]:
     return styles
 
 def parse_m3l(m3l_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """
+    '''
     Convert M3L data (as a dict) into a list of widget dictionaries,
     e.g. [ {type: 'checkitem', 'id': 'todo1', ...}, {type: 'paragraph', ...}, ... ].
     Handles array-of-tables (like [[checkitem]]) and nested ([frame.checkitem]).
-    """
+    '''
     widget_list = []
     for key, val in m3l_data.items():
         if isinstance(val, dict):
@@ -81,20 +81,21 @@ def parse_m3l(m3l_data: Dict[str, Any]) -> List[Dict[str, Any]]:
     return widget_list
 
 class M3Parser:
-    """
+    '''
     Class-based parser for M3L/GSS.
     Optionally, we can hold a renderer engine to show final UI output.
-    """
+    '''
 
     def __init__(self,
                  m3l_path: str,
                  gss_path: Optional[str] = None,
                  engine_name: str = "text") -> None:
-        """
+        '''
         :param m3l_path: Name of the M3L file (within ../Run Rules/).
         :param gss_path: Name of the GSS file (within ../Run Rules/). If None, loads from UndChain.toml or fallback.
         :param engine_name: e.g. 'text', 'kivy'. We'll create the renderer instance from that.
-        """
+        '''
+        
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
         self.run_rules_dir = os.path.join(self.base_dir, "..", "Run Rules")
 
@@ -115,10 +116,10 @@ class M3Parser:
         self._load_files()
 
     def _load_default_gss_path(self) -> str:
-        """
+        '''
         If user doesn't specify a GSS path, we try reading UndChain.toml's GSSFile
         or fallback to 'example.gss'.
-        """
+        '''
         config_path = os.path.join(self.run_rules_dir, "UndChain.toml")
         try:
             cfg = load_toml(config_path)
@@ -127,9 +128,9 @@ class M3Parser:
             return "example.gss"
 
     def _load_files(self):
-        """
+        '''
         Actually load M3L and GSS from disk into self.m3l_data / self.gss_data.
-        """
+        '''
         try:
             self.m3l_data = load_toml(self.m3l_path)
         except FileNotFoundError:
@@ -143,19 +144,19 @@ class M3Parser:
             self.gss_data = {}
 
     def parse(self) -> List[Dict[str, Any]]:
-        """
+        '''
         Parse the M3L + GSS data into a final widget_tree, stored in self.widget_tree.
         Returns the widget_tree as well.
-        """
+        '''
         self.widget_tree = parse_m3l(self.m3l_data)
         gss_styles = parse_gss(self.gss_data)
         self._merge_styles(self.widget_tree, gss_styles)
         return self.widget_tree
 
     def _merge_styles(self, widget_tree: List[Dict[str, Any]], gss_styles: Dict[str, Any]) -> None:
-        """
+        '''
         Merges the GSS style blocks into each widget in the widget_tree.
-        """
+        '''
         for widget in widget_tree:
             wtype = widget["type"]
             style_dict = {}
@@ -186,18 +187,18 @@ class M3Parser:
             widget["style"] = style_dict
 
     def set_renderer_engine(self, engine_name: str) -> None:
-        """
+        '''
         Dynamically switch to another engine. e.g. "kivy", "text", etc.
-        """
+        '''
         self.engine_name = engine_name
         self.renderer = get_renderer(engine_name)
         print(f"Switched to renderer engine: {engine_name}")
 
     def render(self) -> None:
-        """
+        '''
         Renders the widget_tree using the current renderer.
         If we haven't parsed yet, we'll parse first.
-        """
+        '''
         if not self.widget_tree:
             print("No widget_tree found yet, calling parse() first.")
             self.parse()
