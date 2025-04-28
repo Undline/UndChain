@@ -27,7 +27,7 @@ class M3Parser:
 
         # Resolve absolute paths:
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        self.run_rules_dir = os.path.join(base_dir, "..", "Run Rules")
+        self.run_rules_dir = os.path.join(base_dir, "../..", "Run Rules")
 
         self.m3l_path: str = os.path.join(self.run_rules_dir, m3l_path)
         self.logger.info(f"M3L path explicitly set to: {self.m3l_path}")

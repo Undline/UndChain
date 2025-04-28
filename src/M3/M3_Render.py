@@ -97,7 +97,7 @@ class M3Parser:
         '''
         
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
-        self.run_rules_dir = os.path.join(self.base_dir, "..", "Run Rules")
+        self.run_rules_dir = os.path.join(self.base_dir, "../..", "Run Rules")
 
         self.m3l_path: str = os.path.join(self.run_rules_dir, m3l_path)
         if gss_path is None:
