@@ -1,32 +1,33 @@
-# debug_builders.py
+# debug_runtime_builders.py
 
+from M3_Parser import M3Parser
 from renderers.text_builders.builder_registry import TEXT_BUILDERS
 
-def invoke_builder(wtype: str, builder_fn):
-    # minimal dummy widget
-    widget = {
-        "type": wtype,
-        "id": f"test_{wtype}",
-        # most text‐builders only look at widget["id"] or widget["style"], so this should suffice
-        "style": {}
-    }
-    try:
-        # try calling with just widget
-        return builder_fn(widget)
-    except TypeError:
-        try:
-            # or widget + None for context
-            return builder_fn(widget, None)
-        except Exception as e:
-            return f"<Error: {e}>"
+def run_debug():
+    parser = M3Parser(m3l_path="example.m3l")
+    widgets = parser.parse()
 
-if __name__ == "__main__":
-    print("=== Registered TEXT_BUILDERS keys ===")
-    for wtype in sorted(TEXT_BUILDERS):
-        print(f" - {wtype}")
+    print("=== Parsed Widgets ===")
+    for w in widgets:
+        print(f" • {w.get('id','<no id>')} ({w['type']}) → keys: {list(k for k in w if k not in ('type','id','parent','style'))}")
     print()
 
-    print("=== Builder invocation results ===")
-    for wtype, fn in TEXT_BUILDERS.items():
-        result = invoke_builder(wtype, fn)
-        print(f"{wtype:15s} -> {result}")
+    print("=== Builder Outputs ===")
+    for w in widgets:
+        wtype = w["type"]
+        wid   = w.get("id", "<no id>")
+        builder = TEXT_BUILDERS.get(wtype)
+        if not builder:
+            print(f"[NO BUILDER] {wid} ({wtype})")
+            continue
+
+        # Some builders take (widget) others (widget, context). We’ll try both.
+        try:
+            out = builder(w)
+        except TypeError:
+            out = builder(w, None)
+
+        print(f"[{wtype}] {wid} -> {out}")
+
+if __name__ == "__main__":
+    run_debug()

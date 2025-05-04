@@ -90,39 +90,58 @@ class M3Parser:
         return merged_tree
 
     def _parse_gss(self, gss_data: Dict[str, Any]) -> Dict[str, Any]:
-        styles = {}
+        styles: Dict[str, Any] = {}
         for section_name, props in gss_data.items():
             parts = section_name.split('.')
             current = styles
             for idx, part in enumerate(parts):
                 current = current.setdefault(part, {})
                 if idx == len(parts) - 1:
-                    current.update(props if isinstance(props, dict) else {})
+                    if isinstance(props, dict):
+                        current.update(props)
         return styles
 
     def _parse_m3l(self, m3l_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        widget_list = []
-        for key, val in m3l_data.items():
-            if isinstance(val, dict):
-                widget = val.copy()
-                widget['type'] = key
-                widget_list.append(widget)
-                for subkey, subval in val.items():
-                    if subkey == key and isinstance(subval, list):
-                        for item in subval:
-                            w = item.copy()
-                            w['type'] = key
-                            w['parent'] = key
-                            widget_list.append(w)
-            elif isinstance(val, list):
-                for item in val:
-                    if isinstance(item, dict):
-                        w = item.copy()
-                        w['type'] = key
-                        widget_list.append(w)
-            else:
-                self.logger.debug(f"Ignoring top-level scalar: {key}={val}")
-        return widget_list
+        """
+        Extract widgets from M3L data, flattening all [[frame.xxx]] arrays into
+        standalone widget dicts, and explicitly emitting the 'frame' as its own widget.
+        """
+        widgets: List[Dict[str, Any]] = []
+
+        # 1) Top-level [frame] container
+        frame_data = m3l_data.get("frame", {})
+        if not isinstance(frame_data, dict):
+            return widgets
+
+        # Build the root frame widget
+        root = frame_data.copy()
+        root["type"] = "frame"
+        widgets.append(root)
+
+        # 2) Flatten each array-of-tables under frame.*
+        for sect in ("header", "text_box", "checkbox", "secondary_button", "primary_button"):  # order matters if sequencing
+            items = root.pop(sect, [])
+            if not isinstance(items, list):
+                continue
+            for item in items:
+                w = item.copy()
+
+                # Normalize sect -> widget type
+                if sect == "header":
+                    lvl = w.get("level", "").lower()
+                    wtype = lvl if lvl in ("h1", "h2") else "header"
+                elif sect == "checkbox":
+                    wtype = "checkitem"
+                elif sect in ("primary_button", "secondary_button"):
+                    wtype = "button"
+                else:
+                    wtype = sect  # e.g. 'text_box'
+
+                w["type"] = wtype
+                w["parent"] = "frame"
+                widgets.append(w)
+
+        return widgets
 
     def _deep_merge(self, a: Dict[str, Any], b: Dict[str, Any]) -> Dict[str, Any]:
         result = copy.deepcopy(a)
@@ -135,23 +154,32 @@ class M3Parser:
 
     def _merge_styles(self, widget_tree: List[Dict[str, Any]], gss_styles: Dict[str, Any]) -> List[Dict[str, Any]]:
         for widget in widget_tree:
-            wtype = widget['type']
+            wtype = widget.get('type', '')
             style_dict: Dict[str, Any] = {}
+
+            # Base style block
             base_block = gss_styles.get(wtype, {})
             style_dict = self._deep_merge(style_dict, base_block)
+
+            # Conditionals
             for field_k, field_v in widget.items():
                 if field_k in base_block:
                     if isinstance(field_v, bool):
                         sub_map = base_block[field_k]
-                        str_bool = str(field_v).lower()
-                        if isinstance(sub_map, dict) and str_bool in sub_map:
-                            style_dict = self._deep_merge(style_dict, sub_map[str_bool])
+                        if isinstance(sub_map, dict):
+                            str_bool = str(field_v).lower()
+                            if str_bool in sub_map:
+                                style_dict = self._deep_merge(style_dict, sub_map[str_bool])
+
+            # Parent scoping
             parent_type = widget.get('parent')
             if parent_type:
                 parent_block = gss_styles.get(parent_type, {})
                 sub_style = parent_block.get(wtype, {})
                 style_dict = self._deep_merge(style_dict, sub_style)
+
             widget['style'] = style_dict
+
         return widget_tree
 
 if __name__ == '__main__':
