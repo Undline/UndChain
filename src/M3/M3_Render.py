@@ -3,6 +3,7 @@ import tomllib
 from typing import Any, Dict, List, Optional
 from argparse import ArgumentParser
 
+from M3.renderers.text_renderer import TextRenderer
 from M3_Parser import M3Parser
 from renderers.factory import get_renderer
 
@@ -21,7 +22,7 @@ def render_m3(
     widget_tree = parser.parse()
 
     # Create and run renderer
-    renderer = get_renderer(engine_name)
+    renderer: TextRenderer = get_renderer(engine_name)
     renderer.setup()
     renderer.render_widget_tree(widget_tree)
     renderer.teardown()
