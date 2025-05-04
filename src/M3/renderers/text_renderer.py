@@ -6,7 +6,7 @@ from typing import Any, Dict, List
 from .base import BaseRenderer
 
 # 🔵  USE THE *CENTRAL* REGISTRY – same place you’ve been adding builders
-from .text_builders.registry import TEXT_BUILDERS   # ← one canonical map
+from .text_builders.builder_registry import TEXT_BUILDERS   # ← one canonical map
 
 
 class TextRenderer(BaseRenderer):
