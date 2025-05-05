@@ -1,0 +1,54 @@
+# src/m3/examples/login.m3l
+
+# Main container is a vertically stacked frame
+[frame]
+id     = "login_frame"
+layout = "stack"       # your style/layout engine can interpret this
+style  = { padding="1rem", gap="0.5rem", "background-color"="#f0f0f0" }
+
+# Title
+[[frame.h1]]
+id      = "login_title"
+content = "Crypto Account Login"
+
+# Username / Password inputs
+[[frame.text_box]]
+id          = "username_field"
+label       = "Username"
+placeholder = "Enter your username"
+validate.min_length = 4
+validate.max_length = 128
+
+[[frame.text_box]]
+id          = "password_field"
+label       = "Password"
+placeholder = "Enter your password"
+is_password = true
+validate.min_length = 8
+validate.max_length = 64
+validate.require_digit   = true
+validate.require_special = true
+
+# Remember me
+[[frame.checkbox]]
+id      = "remember_me"
+label   = "Remember Me?"
+checked = false
+
+# Nested grid frame for buttons
+[[frame.frame]]
+id      = "button_grid"
+layout  = "grid"
+columns = 2
+style   = { gap="0.5rem", "margin-top"="1rem" }
+
+# Our two buttons now live inside that grid
+[[frame.frame.primary_button]]
+id    = "login_button"
+label = "Log In"
+on_click = [ { intent="do_login", param="@UndChain/auth/login.psu" } ]
+
+[[frame.frame.secondary_button]]
+id    = "recover_account_button"
+label = "Recover Account"
+on_click = [ { intent="recover_account", param="@UndChain/auth/recovery.psu" } ]

@@ -12,12 +12,14 @@ from .h1_builder import build_h1
 from .h2_builder import build_h2
 
 TEXT_BUILDERS: Dict[str, Callable[..., str]] = {
-    "checkitem": build_checkitem,
-    "paragraph": build_paragraph,
-    "frame":     build_frame,
-    "text_box":  build_text_box,
-    "hyperlink": build_hyperlink,
-    "button":    build_button,
-    "h1":        build_h1,
-    "h2":        build_h2,
+    "checkitem":        build_checkitem,
+    "paragraph":        build_paragraph,
+    "frame":            build_frame,
+    "text_box":         build_text_box,
+    "hyperlink":        build_hyperlink,
+    "button":           build_button,
+    "primary_button":   build_button, #need to implement a separate builder for this
+    "secondary_button": build_button,
+    "h1":               build_h1,
+    "h2":               build_h2,
 }
