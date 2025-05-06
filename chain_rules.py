@@ -12,7 +12,7 @@ def known_validator(account_info: Tuple[str, str], chain: Tuple[int, int]) -> bo
     chain that has been specified, else false
     '''
 
-    print(f'Looking at chian ID: {chain} to see if I am a known validator. My account info is: {account_info}')
+    print(f'Looking at chain ID: {chain} to see if I am a known validator. My account info is: {account_info}')
     print(f'{cli.RED}[Known Validator]: need to be fully implemented! Returns True, if you are on the main chain on the test net: {cli.RESET}')
     if chain == (0, 0):
         return True
