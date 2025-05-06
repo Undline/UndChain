@@ -69,7 +69,7 @@ payout_timing = "daily"
 
 [governance]
 voting_period = "7 days"
-quorum = "60%"
+quorum = "66%"
 
 # Performance Metrics
 [performance]
