@@ -30,10 +30,10 @@ class Validator:
         self.run_rules = RunRules(rules_file)
         logger.info(f"Rules for {rules_file} have been loaded")
         self.run = False
-        self.is_known_validator: bool = self.check_if_known_validator()
+        self.is_known_validator: bool = self.check_if_known_validator() # Do we need this anymore?
         self.comm: AbstractCommunication
 
-        self.packet_generator = PacketGenerator("2024.09.30.1") # Get the version from the run rules file
+        self.packet_generator = PacketGenerator("2024.09.30.1") # Need to get the version from the run rules file
         self.packet_handler = PacketHandler(self.packet_generator)
 
     async def start_listener(self) -> None:
