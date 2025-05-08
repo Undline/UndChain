@@ -1,7 +1,6 @@
 # General Information
 version = "2024.08.31"
 chain_name = "UndChain"
-priority_fee = 0.01  # Extra fee for priority requests
 owner_signature = "SIGNATURE_PLACEHOLDER"  # Placeholder for chain owner's signature
 code_location = "SELF" # This is the location on the blockchain where the Psueduo code can be found
 min_validator_score = 400
