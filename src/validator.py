@@ -95,7 +95,7 @@ class Validator:
             response: None | bytes = self.packet_handler.handle_packet(message)
 
             if response:
-                await self.comm.send_message(response, bytearray(b'recipient_public_key')) # Need to get teh public key of who we are sending this to
+                await self.comm.send_message(response, bytearray(b'recipient_public_key')) # Need to get the public key of who we are sending this to
                 logger.info("Response sent back to sender")
             else:
                 logger.warning("No response sent back for this packet type")
