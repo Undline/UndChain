@@ -519,3 +519,125 @@ At the end of nearly all Python modules, I add a small test at the end to ensure
 [ERROR]  - Failed to connect to validator validator_pub_key_1: [WinError 1225] The remote computer refused the network connection
 ```
 
+---
+
+# run_rules.py
+
+The `run_rules.py` file is meant to create a well structured system for taking in the run rules file for a specified co-chain and interpreting those rules so that validators (and later partners) can interpret how the chain is to operate / function. This script will need to be extended and there are some methods that are simply not implemented yet, but will need to be. The run rules file can be thought of as the closest UndChain will get to a 'smart contract' as this establishes ideas such as tokenomics and sets preferred validators. This is the entry point for any blockchain project that enters into UndChain. 
+
+```Python
+def __init__(self, config_filename: str) -> None:
+
+        # Construct the path to the run rules file
+
+        root_dir: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Navigate to the root directory
+
+        run_rules_path: str = os.path.join(root_dir, 'Run Rules', config_filename)
+
+  
+
+        # Load the TOML file
+
+        with open(run_rules_path, 'rb') as f:
+
+            self.config: Dict[str, Any] = tomllib.load(f)
+```
+
+This code defines where to look for the run rules files will exist (currently located a directory above the script itself) and based on which file is selected (co-chain), it loads the rules into a dictionary which is used to parse / extract through the remainder of the code. 
+
+Note: When the UI system (M3) is implemented users should be able to select which co-chains they wish to support. They will at that time be able to make a tier list of which they would like to support so that even when one validator pool is full they are able to support other co-chain validator pools. Users will be able to download addition run rules files as they subscribe to the co-chain. 
+
+**Future addition**: We need to add an error handler here so that in the event a run rules file is requested that doesn't exist the program doesn't crash, while also notifying what called this method what happened so it can handle this error accordingly.
+
+```Python
+def get_job_file_structure(self, co_chain_name: str = "base_job_file") -> Dict[str, Any]:
+
+        '''
+
+        Fetch the job file structure for the base job file or a specific co-chain.
+
+        '''
+
+  
+
+        job_structure: Dict[str, Any] = {
+
+            "fields": self.config[co_chain_name]["fields"],
+
+            "mandatory": self.config[co_chain_name]["mandatory"],
+
+            "job_types": self.config[co_chain_name]["job_types"],
+
+            "token": self.config[co_chain_name]["token"]
+
+        }
+
+        return job_structure
+```
+
+This section of code pulls out the job structure fields within the run rules file. It attempts to pull out the values inside fields:
+
+```TOML
+[base_job_file]
+
+fields = ["user_id", "job_type", "min_partners", "block_id", "block_time", "job_priority"]
+
+mandatory = ["user_id", "state", "block_id"]
+
+job_types = ["transfer", "auction", "naming_service", "store_req", "dmail"]
+
+token = "UGP"  # The token used for transactions
+```
+
+- **Fields** - This defines all of the various fields that can be sent to the validator during a request. For example, a validator could request the current block time which is important during a time sync. 
+- **Mandatory** - This defines fields that MUST be provided by a user when responding to any request. In this case, we must always so who we are, what status we are in (Validator state) and what block ID we are currently processing. 
+- **Job Types** - This field can be thought of what methods can be called from this chain. For example a user could request the store command in order to store data on the network.
+- **Token** - Directs which token is needed to perform this function, this is specific to partners as validators can only accept UGP. If not provided we should always assume USP. 
+
+The methods and fields listed are NOT final and will change as the system evolves, for example there is currently no command for our asset protection protocols at this time. 
+
+I believe that we should have error handling for missing (or empty) fields as that could happen if the file is corrupted someway on the end users computer. Think we should also have a hash that can be used to check against the network to ensure this file wasn't tampered with for security purposes.
+
+```Python
+def get_validator_info(self) -> Dict[str, Any]:
+
+        """
+
+        Fetch the validator information including max and known validators.
+
+        """
+
+  
+
+        max_validators = self.config["max_validators"]["max"]
+
+        known_validators = self.config["known_validators"]
+
+        return {
+
+            "max_validators": max_validators,
+
+            "known_validators": known_validators
+
+        }
+```
+
+Get validator info is meant for collecting the list of known validators from the run rules file, as well as what the maximum number of validators can exist on a network. This will give developers some flexibility to define what sort of network they want. The could go with less Validators which means they will reach consensus faster, but it may not have enough bandwidth for high throughput systems. 
+
+Even if a run rules file has more validators that the max 44% that the network allows, the network shall ignore those 'extra' validators and place them in an inactive state with the idea that they can be added if one of the others goes down. We must adhere to having no more that 44% of known validators on a co-chain as that increases concerns with centralization. 
+
+```Python
+def get_utilities(self) -> Dict[str, Any]:
+
+        """
+
+        Fetch the list of utilities available on the chain.
+
+        """
+
+  
+
+        return self.config.get("utilities", {})
+```
+
+This is one of those methods that I have yet to implement, but could be used. The idea is that we can get a list of utilities that the partners can perform. Each utility should have a fee, what the name of the method is and a description of what that method does.
