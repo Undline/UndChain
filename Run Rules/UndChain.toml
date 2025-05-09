@@ -29,7 +29,7 @@ contact = {method = "TCP", ip = "127.0.0.1", port = 4446}
 [base_job_file]
 fields = ["user_id", "job_type", "min_partners", "block_id", "block_time", "job_priority"]
 mandatory = ["user_id", "state", "block_id"]
-job_types = ["transfer", "auction", "naming_service", "store", "dmail"]
+job_types = ["transfer", "auction", "naming_service", "store_req", "dmail"]
 token = "USP"  # The token used for transactions
 
 [co_chains.auction_house]
