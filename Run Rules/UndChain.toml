@@ -1,8 +1,8 @@
 # General Information
 version = "2024.08.31"
-chain_name = "UndChain"
+chain_name = "UndChain Core"
 owner_signature = "SIGNATURE_PLACEHOLDER"  # Placeholder for chain owner's signature
-code_location = "SELF" # This is the location on the blockchain where the Psueduo code can be found
+code_location = "SELF" # This is the location on the blockchain where the Pseudo code can be found
 min_validator_score = 400
 min_partner_score = 420
 
@@ -22,15 +22,15 @@ contact = {method = "TCP", ip = "127.0.0.1", port = 4445}
 public_key = "validator_pub_key_3"
 contact = {method = "TCP", ip = "127.0.0.1", port = 4446}
 
-# Only up to 44% of max_validators can be known
-# For max = 10, up to 4 known validators
+# Only up to 44% of max_validators can be known validators
+# For example max = 10, up to 4 known validators
 
 # Job File Structure
 [base_job_file]
 fields = ["user_id", "job_type", "min_partners", "block_id", "block_time", "job_priority"]
-mandatory = ["user_id", "job_type", "block_id"]
-job_types = ["transfer", "auction", "naming_service", "digital_space", "dmail"]
-token = "UGP"  # The token used for transactions
+mandatory = ["user_id", "state", "block_id"]
+job_types = ["transfer", "auction", "naming_service", "store", "dmail"]
+token = "USP"  # The token used for transactions
 
 [co_chains.auction_house]
 fields = ["auction_details"]
