@@ -641,3 +641,138 @@ def get_utilities(self) -> Dict[str, Any]:
 ```
 
 This is one of those methods that I have yet to implement, but could be used. The idea is that we can get a list of utilities that the partners can perform. Each utility should have a suggested fee (partners will be able to set their own fees), what the name of the method is and a description of what that method does.
+
+```Python
+def get_sub_domain_info(self) -> Dict[str, Any]:
+
+        """
+
+        Fetch the sub-domain information including linked co-chains.
+
+        """
+
+  
+
+        return self.config.get("sub_domains", {})
+```
+
+This method (unimplemented), shall pull the sub-domain information for the co-chain (in this case UndChain Core). Sub-domains are apart of UndChain's scaling solution. In short when the network notes a significant amount of lag between users and validators it will create a subdomain. This ensures that the response times between all users is fast and responsive. All sub-domains will report back to the primary domain so that things such as transaction history are synced at all times. 
+
+Users will be able to select their sub-domain, but under normal operation a user will attempt to connect to a sub-domain and if the latency is too high another sub-domain will provided that they can try. 
+
+Just like the main chain; chain owners can set known validators for these sub-domains as a means of ensuring the network is operating as intended. Chain owners can also elect to NOT allow a sub-domain to be created as I can see this as a possible attack vector that will lure unsuspecting clients in. If over time a subdomain simply isn't being used it will be merged back with an adjacent sub-domain. 
+
+```Python
+def get_governance_rules(self) -> Dict[str, Any]:
+
+        """
+
+        Fetch the governance rules such as voting period and quorum.
+
+        """
+
+  
+
+        return self.config.get("governance", {})
+```
+
+This fetches the governance rules for a particular co-chain. In short if a co-chain uses a voting system to decided upon tokenomics or features of the network then this can be used as a standard structure for deciding qualifying factors. This includes:
+
+- Age of the account
+- Users perception score
+- fee associated with voting 
+- Timing window - Defines when and how long voting is active
+- Network Usage - Meaning how often does a user interact with that co-chain
+- access list that are set by the chain owner - *honestly not a fan of this one, but we are making a platform that anyone can use and at least you can see who is in control*
+
+As an example, USP will have a voting mechanism where users can select to either halve or double the supply of tokens every cycle (each cycle is four years in length).
+
+```Python
+def get_tokenomics_rules(self) -> Dict[str, Any]:
+
+        """
+
+        Fetch the tokenomics rules such as token issuance and payout timing.
+
+        """
+
+  
+
+        return self.config.get("tokenomics", {})
+```
+
+This extracts the tokenomics of the system which include:
+
+- **Startup** - This defines how many tokens were generated at the beginning of the co-chain. *For example USP will mint 44,444,444 at it's genesis*
+- **Emissions** - How many tokens are supposed to be emitted
+- **Share** - Defines how tokens are to be distributed. *My thoughts are it's either equally distributed **or** its based off of work load*
+- **Timing** - Defines how often this payout occurs
+- **Fee** - This defines transaction fees that may occur with this token; both sending and receiving. This is based in percent. You will have a base fee for transactions and then a breakdown of where that fee goes. *We may add validators as a group, but under normal circumstances they earn network tokens not utility tokens*
+- **Burn** - If the co-chain has a burn mechanism this would define how the burn would function. This is a lot like the fee except the recipient is no one. It will be recorded on the network that way too.
+- **Stake** - Defines lockup times for any sort of stake options that a token may have along with its reward.
+- **Cap** - This goes well with staking as this limits the amount of rewards any one account may receive. Debating if we should make this a progressive system or not. *Must keep code out of the config file.* 
+- **Vesting** - This defines how long a token must be held for stake rewards. Should help a project in major sell offs. 
+- **Bridge** - This one wont be useful until we have a bridge system working, but the idea is that this section will contain the lockup amount of tokens on the network. NOTE: This a location, not a value as this will fluctuate a lot we would be updating this file far too often to just set the value. 
+
+This is a massive feature for UndChain as it allows anyone to easily look at the structure of a token and know exactly how this token behaves, without needing to audit a smart contract. I believe these are the only tokenomic systems that are truly out there, but they could expand if there are any new systems in the future. 
+
+Example of what this *could* look like:
+
+```TOML
+[tokenomics]
+# Genesis mint
+startup = 44444444
+
+# Emission system
+emissions = 4444          # Total emissions
+timing = "daily"          # Distribution cycle (e.g., monthly)
+share = "workload"          # Can be "equal" or "workload"
+frequecy = 4              # States how often payout occurs in hours
+
+# Global fee applied to relevant tx types
+[fee]
+percent = 0.02              # 2% total fee on applicable transactions
+
+# Fee distribution (must sum to <= percent above)
+[[fee.distribution]]
+percent = 0.004
+to = "partner"              # System keyword for partner rewards
+
+[[fee.distribution]]
+percent = 0.010
+to = "validator"            # System keyword for validator reward bonus
+
+[[fee.distribution]]
+percent = 0.003
+to = "@UndChain Treasury"   # UnaS-registered public name
+
+[[fee.distribution]]
+percent = 0.003
+to = "@DevFund"             # Another registered name (could be multisig DAO)
+
+# Burn settings (optional deflation)
+[burn]
+on_transfer = 0.005         # 0.5% of each transfer is burned
+on_redemption = 0.01        # 1% burned on redemption events
+
+# Staking logic
+[stake]
+lockup_days = 30            # Required stake lock-in period
+reward_rate = 0.07          # APY (or proportional over timing cycle)
+
+# Optional cap to limit max rewards per account
+[cap]
+enabled = true
+max_rewards_per_account = 50000
+
+# Optional vesting schedule
+[vesting]
+enabled = true
+cliff_days = 90
+linear_release_days = 365
+
+# Bridge lockup placeholder (future use)
+[bridge]
+location = "@undchain/ethBridge"
+
+```
