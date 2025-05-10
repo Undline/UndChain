@@ -640,4 +640,4 @@ def get_utilities(self) -> Dict[str, Any]:
         return self.config.get("utilities", {})
 ```
 
-This is one of those methods that I have yet to implement, but could be used. The idea is that we can get a list of utilities that the partners can perform. Each utility should have a fee, what the name of the method is and a description of what that method does.
+This is one of those methods that I have yet to implement, but could be used. The idea is that we can get a list of utilities that the partners can perform. Each utility should have a suggested fee (partners will be able to set their own fees), what the name of the method is and a description of what that method does.
