@@ -776,3 +776,93 @@ linear_release_days = 365
 location = "@undchain/ethBridge"
 
 ```
+
+Should have mentioned earlier, but we will want to check these files prior to deployment. In this example we would want to check and ensure that the split in fees equal 100% and flag for anything over or under. *NOTE: Timing for blocks will be in upcoming section*
+
+```Python
+def get_performance_metrics(self) -> Dict[str, Any]:
+
+        """
+
+        Fetch the performance metrics like max block time and latency thresholds.
+
+        """
+
+  
+
+        return self.config.get("performance", {})
+```
+
+This section pulls the configuration needed to set the network’s block timing and latency thresholds, which are used to determine when a subdomain should be created. While this information is primarily consumed by validators, it’s publicly visible so any user can audit the performance parameters of the chain.
+
+In addition, this config defines how often validator rotation should occur — a key feature for ensuring decentralization by giving new users a chance to become validators, provided they meet network minimums and stay in the queue.
+
+We also define the maximum number of users allowed per subnetwork and introduce a cooldown timer to prevent subdomains from spawning too aggressively. This avoids edge cases where a few users with poor latency trigger unnecessary subdomain creation simply by connecting more efficiently to one validator.
+
+_Thought: It may be worth designing an M3 widget that displays these parameters in real time, offering transparency into performance targets and validator load._
+
+```Python
+def get_subscription_services(self) -> Dict[str, Any]:
+
+        """
+
+        Fetch the subscription services if they are defined.
+
+        """
+
+  
+
+        return self.config.get("subscription_services", {})
+```
+
+If a chain has a subscription based service on it's **utility** (which the main chain does not), then that can be entered here along with durations of the offer as well as any limits that are associated with it. It also allows a chain owner to decide **if** they will permit refunds and what those look like. 
+
+We shall also have the following fields so that chain owners can further customize their offerings. 
+
+- **Price** - Cost per each subscription tier and what services that provides. The simplest is the All subscription which is what the network token uses. It means that any function(s) called by the user are covered in the subscription service. 
+- **Duration** - How long does this subscription last
+- **Renewable** - Can users auto renew or not, double edge sword as if you auto-renew then you have guaranteed revenue, but if you later change the cost those users who set this up will still receive it at the same price...
+- **Limits** - Sort of defeats the purpose of a subscription, but you can set limits to each of the services you provide
+- **Throttle** - Like limit except it reduces the responsive time of the request
+- **Grace** - How long you give the customer before they are kicked from the program for non-payment. Losing access is immediate, this is if they lose the price they are currently paying for the service. 
+- **Refund** - Define the elapsed time for a refund (in hours) as well as the amount that will be funded in percent. 
+- **Description** - This helps with UI and gives the creators an opportunity to provide a brief on how pricing is managed.
+
+*IMPORTANT: The network token (UGP) does have a subscription system, but that will be hard coded. Remember that these rules apply to co-chains, NOT the main network*
+
+```Python
+def validate_job_file(self, job_data: Dict[str, Any], co_chain_name: str = "base_job_file") -> bool:
+
+        """
+
+        Validate a job file against the mandatory fields for a specific co-chain.
+
+        """
+
+  
+
+        mandatory_fields = self.config[co_chain_name]["mandatory"]
+
+        return all(field in job_data and job_data[field] is not None for field in mandatory_fields)
+```
+
+Not sure if we will keep this here or not, the idea is that we want to make sure that this is a properly formed run rules file. What I am thinking at this time is that it will be a utility inside code ledger. Sort of like a test in how we validate and compile code when we implement Pseudo. 
+
+```Python
+def get_known_validator_keys(self) -> list[str]:
+
+        '''
+
+        Retrieves a list of all the known validators from the run
+
+        rules file.
+
+        '''
+
+  
+
+        known_validators = self.config["known_validators"]
+
+        return [validator["public_key"] for validator in known_validators]
+```
+
