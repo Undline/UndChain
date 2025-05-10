@@ -8,7 +8,7 @@ If you're a developer interested in contributing to UndChain, have questions, or
 
 - **Telegram**: [Join our Developer Group on Telegram](https://t.me/UndChain_Dev)
 
-Whether you're just curious or ready to jump into development, join the group and start asking questions.
+Whether you're just curious or ready to jump into development, join the group and start asking questions. Developer can earn native UndChain tokens (UGP or USP) when the contribute to the project. Token earn will be automated in the future but for now they are based upon your PR. Some may even be hired full / part time to assist with development. 
 
 ---
 
