@@ -866,3 +866,175 @@ def get_known_validator_keys(self) -> list[str]:
         return [validator["public_key"] for validator in known_validators]
 ```
 
+This is to provide users the ability to encrypt messages that are being sent to the known validators that are listed. This is done to ensure that communications between entities are kept private the entire time. 
+
+```Python
+def get_known_validators(self) -> list:
+
+        return self.config["known_validators"]
+```
+
+This method pulls all of the known validators inside the run rules file. This is used to parse through when validators are being discover. It also assist other users the ability to contact the validator pool. 
+
+```Python
+def get_min_validator_score(self) -> int:
+
+        '''
+
+        Obtain the minimum validator perception score required to join
+
+        the network
+
+        '''
+
+  
+
+        score = self.config.get("min_validator_score", 0)
+
+        if isinstance(score, int):
+
+            return score
+
+        else:
+
+            logger.warning(f"'min_validator_score' is not an integer. Returning default of 420.")
+
+            return 420
+```
+
+Returns the minimum perception score for validators to be able to run on the network. Defaults to 420.
+
+Shouldn't we make a method for performance?
+
+```Python
+def get_min_partner_score(self) -> int:
+
+        '''
+
+        Obtain the minimum validator perception score required to join
+
+        the network
+
+        '''
+
+  
+
+        score = self.config.get("min_partner_score", 0)
+
+        if isinstance(score, int):
+
+            return score
+
+        else:
+
+            logger.warning(f"'min_validator_score' is not an integer. Returning default of 420.")
+
+            return 420
+```
+
+Exactly the same as the validator score requirement, just changed for the validator. I decided to keep these separate as validators should be held to a higher standard, but this gives chain owners more of an opportunity to customize what their platform needs.
+
+```Python
+if __name__ == "__main__":
+
+    run_rules = RunRules("UndChain.toml")
+
+  
+
+    # Print a list of known validators from the run rules file
+
+    known_validators = run_rules.get_known_validators()
+
+    print(f'Known validators: {known_validators}')
+
+    # Fetching job file structure for the base job file
+
+    job_file_structure: Dict[str, Any] = run_rules.get_job_file_structure()
+
+    print("Job File Structure:", job_file_structure)
+
+
+    # Fetching validator information
+
+    validator_info: Dict[str, Any] = run_rules.get_validator_info()
+
+    print("Validator Info:", validator_info)
+
+
+    # Fetching utilities available on the chain
+
+    utilities: Dict[str, Any] = run_rules.get_utilities()
+
+    print("Utilities:", utilities)
+
+
+    # Fetching sub-domain information
+
+    sub_domain_info: Dict[str, Any] = run_rules.get_sub_domain_info()
+
+    print("Sub-Domain Info:", sub_domain_info)
+  
+
+    # Fetching governance rules
+
+    governance_rules: Dict[str, Any] = run_rules.get_governance_rules()
+
+    print("Governance Rules:", governance_rules)
+
+
+    # Fetching tokenomics rules
+
+    tokenomics_rules: Dict[str, Any] = run_rules.get_tokenomics_rules()
+
+    print("Tokenomics Rules:", tokenomics_rules)
+
+
+    # Fetching performance metrics
+
+    performance_metrics: Dict[str, Any] = run_rules.get_performance_metrics()
+
+    print("Performance Metrics:", performance_metrics)
+
+
+    # Fetching subscription services
+
+    subscription_services: Dict[str, Any] = run_rules.get_subscription_services()
+
+    print("Subscription Services:", subscription_services)
+
+
+    # Example job data for validation
+
+    job_data: Dict[str, str] = {
+
+        "user_id": "user123",
+
+        "job_type": "transfer",
+
+        "block_id": "0001",
+
+        "block_time": "2024-08-30T12:34:56Z",
+
+        "job_priority": "high"
+
+    }
+
+
+    # Test retrieving minimum scores
+
+    min_validator_score = run_rules.get_min_validator_score()
+
+    min_partner_score = run_rules.get_min_partner_score()
+
+    print(f"Minimum Validator Score: {min_validator_score}")
+
+    print(f"Minimum Partner Score: {min_partner_score}")
+
+    # Validate the job file
+
+    is_valid: bool = run_rules.validate_job_file(job_data)
+
+    print(f"Is job file valid? {is_valid}")
+```
+
+Tests each method against `UndChain.toml` to test and make sure this class functions as intended.
