@@ -21,6 +21,7 @@ class PacketHandler:
         '''
         Initialize the packet handler
         '''
+        
         self.packet_generator: PacketGenerator = packet_generator
         self.handlers = {
             PacketType.VALIDATOR_REQUEST: self.handle_validator_request,
