@@ -521,7 +521,7 @@ At the end of nearly all Python modules, I add a small test at the end to ensure
 
 ---
 
-# run_rules.py
+# Run Rules
 
 The `run_rules.py` file is meant to create a well structured system for taking in the run rules file for a specified co-chain and interpreting those rules so that validators (and later partners) can interpret how the chain is to operate / function. This script will need to be extended and there are some methods that are simply not implemented yet, but will need to be. The run rules file can be thought of as the closest UndChain will get to a 'smart contract' as this establishes ideas such as tokenomics and sets preferred validators. This is the entry point for any blockchain project that enters into UndChain. 
 
@@ -1038,3 +1038,67 @@ if __name__ == "__main__":
 ```
 
 Tests each method against `UndChain.toml` to test and make sure this class functions as intended.
+
+## Conclusion
+
+The run rules file is essential to creating easy to read, contract information that goes into detail into how each co-chain functions. This section has introduced a lot of core concepts that the network will need in order to operate. What's important to not again is that the run rules file only deals with utility tokenomics and NOT the network tokens. All co-chain validators receive UGP as that is our network token. *The network tokenomics section has yet to be defined.*
+
+---
+
+# Packet Handler
+
+The idea of `packet_handler.py` is that its a centralized portion of the code that is dedicated to taking in a packet and then determining what method(s) need to be ran in order to handle that packet appropriately. You can think of the packet handler much like a mail sorter, it looks at the address (the packet header) and from there determines where the content is supposed to go. 
+
+```Python
+def __init__(self, packet_generator: PacketGenerator) -> None:
+
+        '''
+        Initialize the packet handler
+        '''
+
+        self.packet_generator: PacketGenerator = packet_generator
+
+        self.handlers = {
+
+            PacketType.VALIDATOR_REQUEST: self.handle_validator_request,
+
+            PacketType.VALIDATOR_CONFIRMATION: self.handle_validator_confirmation,
+
+            PacketType.VALIDATOR_STATE: self.handle_validator_state,
+
+            PacketType.VALIDATOR_LIST_REQUEST: self.handle_validator_list_request,
+
+            PacketType.VALIDATOR_LIST_RESPONSE: self.handle_validator_list_response,
+
+            PacketType.LATENCY: self.handle_latency,
+
+            PacketType.JOB_FILE: self.handle_job_file,
+
+            PacketType.PAYOUT_FILE: self.handle_payout_file,
+
+            PacketType.SHUT_UP: self.handle_shut_up,
+
+            PacketType.CONVERGENCE: self.handle_convergence,
+
+            PacketType.SYNC_CO_CHAIN: self.handle_sync_co_chain,
+
+            PacketType.SHARE_RULES: self.handle_share_rules,
+
+            PacketType.JOB_REQUEST: self.handle_job_request,
+
+            PacketType.VALIDATOR_CHANGE_STATE: self.handle_validator_change_state,
+
+            PacketType.VALIDATOR_VOTE: self.handle_validator_vote,
+
+            PacketType.RETURN_ADDRESS: self.handle_return_address,
+
+            PacketType.REPORT: self.handle_report_packet,
+
+            PacketType.PERCEPTION_UPDATE: self.handle_perception_update_packet,
+
+        }
+```
+
+Inside the init method we set our packet generator (which will be needed when we need to make a response to a user query) we then identify a master dictionary that takes in the type of packet and sets callers to where each packet type will go to be processed. Many of these packet types have yet to be fully defined so a lot of work needs to be done in this file so that we are not only interpreting the packets, but also preforming the correct actions. I chose this method as this is will run at O(1) dispatch via hash map ensures fast routing across dozens (or hundreds) of packet types. 
+
+*NOTE: This is NOT a complete list of all of the available packets as we have not implemented anything for any other user type outside of validators.* 
