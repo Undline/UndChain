@@ -1,11 +1,12 @@
 import struct
 from logging import Logger
 from typing import Optional
+from datetime import datetime
+
 from packet_generator import PacketType
 from packet_utils import PacketUtils
 from packet_generator import PacketGenerator
 
-from datetime import datetime
 
 from logger_util import setup_logger
 logger: Logger = setup_logger('PacketHandler', 'packet_handler.log')
