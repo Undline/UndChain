@@ -117,10 +117,10 @@ class PacketHandler:
 
     def handle_validator_confirmation(self, packet: bytes) -> None:
         '''
-        Handles validator confirmation packet
+        This handles the response from the validator request packet.
         '''
 
-        logger.info("Handling Validator Confirmation")
+        logger.info("Handling Validator Response")
         
         # Unpack the queue position directly (since the payload is already stripped)
         try:
