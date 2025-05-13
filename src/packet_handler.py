@@ -91,7 +91,12 @@ class PacketHandler:
 
     def handle_validator_request(self, packet: bytes) -> Optional[bytes]:
         '''
-        Handles validator request packet and returns a confirmation packet
+        Handles an incoming validator request packet and returns a confirmation packet.
+
+        A validator request packet is sent when a validator wishes to join the active pool.
+        This method extracts the validator’s public key and responds with a confirmation packet.
+
+        Note: Currently, the public key is logged but not yet added to any internal validator state list.
         '''
 
         logger.info("Handling Validator Request")
