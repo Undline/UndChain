@@ -118,6 +118,9 @@ class PacketHandler:
     def handle_validator_confirmation(self, packet: bytes) -> None:
         '''
         This handles the response from the validator request packet.
+
+        This packet is sent in response to a validator request and contains the validator’s
+        assigned position in the queue.
         '''
 
         logger.info("Handling Validator Response")
