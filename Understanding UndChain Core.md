@@ -635,12 +635,10 @@ def get_utilities(self) -> Dict[str, Any]:
 
         """
 
-  
-
         return self.config.get("utilities", {})
 ```
 
-This is one of those methods that I have yet to implement, but could be used. The idea is that we can get a list of utilities that the partners can perform. Each utility should have a suggested fee (partners will be able to set their own fees), what the name of the method is and a description of what that method does.
+This is one of those methods that I have yet to implement. The idea is that we can get a list of utilities that the partners can perform. Each utility should have a suggested fee (partners will be able to set their own fees), what the name of the method is and a description of what that method does.
 
 ```Python
 def get_sub_domain_info(self) -> Dict[str, Any]:
@@ -650,8 +648,6 @@ def get_sub_domain_info(self) -> Dict[str, Any]:
         Fetch the sub-domain information including linked co-chains.
 
         """
-
-  
 
         return self.config.get("sub_domains", {})
 ```
@@ -670,8 +666,6 @@ def get_governance_rules(self) -> Dict[str, Any]:
         Fetch the governance rules such as voting period and quorum.
 
         """
-
-  
 
         return self.config.get("governance", {})
 ```
@@ -695,8 +689,6 @@ def get_tokenomics_rules(self) -> Dict[str, Any]:
         Fetch the tokenomics rules such as token issuance and payout timing.
 
         """
-
-  
 
         return self.config.get("tokenomics", {})
 ```
@@ -787,8 +779,6 @@ def get_performance_metrics(self) -> Dict[str, Any]:
         Fetch the performance metrics like max block time and latency thresholds.
 
         """
-
-  
 
         return self.config.get("performance", {})
 ```
@@ -1102,3 +1092,240 @@ def __init__(self, packet_generator: PacketGenerator) -> None:
 Inside the init method we set our packet generator (which will be needed when we need to make a response to a user query) we then identify a master dictionary that takes in the type of packet and sets callers to where each packet type will go to be processed. Many of these packet types have yet to be fully defined so a lot of work needs to be done in this file so that we are not only interpreting the packets, but also preforming the correct actions. I chose this method as this is will run at O(1) dispatch via hash map ensures fast routing across dozens (or hundreds) of packet types. 
 
 *NOTE: This is NOT a complete list of all of the available packets as we have not implemented anything for any other user type outside of validators.* 
+
+```Python
+def handle_packet(self, packet: bytes) -> Optional[bytes]:
+
+        '''
+
+        Receives a packet, decodes it, and calls the appropriate handler.
+
+        Returns a response packet if needed, otherwise None.
+
+        '''
+
+        try:
+
+            # Extract the first 4 bytes for version and 8 bytes for timestamp (keep this data for later use)
+
+            version_data = struct.unpack('!HBBB', packet[:5])  # 16-bit year, 8-bit month, day, subversion
+
+            timestamp = struct.unpack('!Q', packet[5:13])[0]  # 64-bit timestamp
+
+            # Store version and timestamp for later use (or logging)
+
+            self.version_info = {
+
+                "year": version_data[0],
+
+                "month": version_data[1],
+
+                "day": version_data[2],
+
+                "sub_version": version_data[3],
+
+                "timestamp": timestamp
+
+            }
+
+            # Convert the timestamp to a human-readable format
+
+            human_readable_timestamp: str = datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S UTC')
+
+            logger.info(f"Packet version: {self.version_info}")
+
+            logger.info(f"Packet timestamp: {human_readable_timestamp}")
+
+            # Now that the version and timestamp are stripped, identify the packet type
+
+            packet_type_value = struct.unpack('!H', packet[13:15])[0]
+
+            packet_type = PacketType(packet_type_value)
+
+  
+
+            logger.info(f"Received packet of type: {packet_type.name}")
+
+            # Debugging: Print payload in hex format for comparison
+
+            logger.debug(f"Packet payload: {packet[15:].hex()}")
+
+            # Now pass the remainder of the packet (payload) to the handler
+
+            handler = self.handlers.get(packet_type)
+
+            if handler:
+
+                return handler(packet[15:])  # Pass the payload
+
+            else:
+
+                logger.error(f"Unknown packet type: {packet_type}")
+
+                return None
+
+        except Exception as e:
+
+            logger.error(f"Failed to handle packet: {e}")
+
+            return None
+```
+
+This method takes in a raw packet and then strips out the version information as well as the packet type. It then decodes the type of packet it is (also contained in the header) and calls `handlers.get()` so that it can direct what to do with the data that's inside the packet.  
+
+Just for clairity in the above code:
+
+```Python
+version_data = struct.unpack('!HBBB', packet[:5])  # 16-bit year, 8-bit month, day, subversion
+
+timestamp = struct.unpack('!Q', packet[5:13])[0]  # 64-bit timestamp
+```
+
+|Code|Stands For|Size (bytes)|Description|
+|---|---|---|---|
+|`!`|Network byte order|—|Big-endian (used in networking)|
+|`H`|**Unsigned short**|2|16-bit unsigned integer|
+|`B`|**Unsigned char**|1|8-bit unsigned integer|
+|`Q`|**Unsigned long long**|8|64-bit unsigned integer|
+
+
+```Python
+def handle_validator_request(self, packet: bytes) -> Optional[bytes]:
+
+        '''
+
+        Handles an incoming validator request packet and returns a confirmation packet.
+
+    A validator request packet is sent when a validator wishes to join the active pool.
+    This method extracts the validator’s public key and responds with a confirmation packet.
+
+    Note: Currently, the public key is logged but not yet added to any internal validator state list.
+
+        '''
+
+        logger.info("Handling Validator Request")
+
+        # Unpack the public key (the packet type has already been stripped)
+
+        try:
+
+            public_key = packet.decode("utf-8")  # The entire payload is the public key
+
+        except Exception as e:
+
+            logger.error(f"Failed to unpack the packet: {e}")
+
+            return None
+
+        logger.info(f"Validator request from: {public_key}")
+
+        # Generate a response using packet generator
+
+        confirmation_packet: bytes = self.packet_generator.generate_validator_confirmation(position_in_queue=4)
+
+        return confirmation_packet
+```
+
+This section defines what happens when a validator request packet has been sent. A validator request packet is sent when a validator wishes to become part of the validator pool, at the time of genesis this will be executed to each of the known validators listed in the run rules file so that they can be added and those known validators will sit in a pending state until they hear from six more unknown validators prior to going into the next phase which is **time sync**. 
+
+Currently this methods only goal is to extract the public key from the file so that it can be added to a validator list, inside that list we should note the status of the validator and what their performance score, perception score and position in queue. *NOTE: That list is not implemented yet it simply prints the public key and queue position.* Lastly a confirmation that the packet was received and it was added to the list is sent. 
+
+
+```Python
+def handle_validator_confirmation(self, packet: bytes) -> None:
+
+        '''
+
+        Handles validator confirmation packet
+        
+        This packet is sent in response to a validator request         and contains the validator’s assigned position in the          queue.
+
+        '''
+
+        logger.info("Handling Validator Confirmation")
+
+        # Unpack the queue position directly (since the payload is already stripped)
+
+        try:
+
+            queue_position = struct.unpack(">I", packet[:4])[0]  # First 4 bytes of the payload = queue position
+
+            logger.info(f"Validator confirmed in queue position: {queue_position}")
+
+        except Exception as e:
+
+            logger.error(f"Failed to unpack the packet: {e}")
+```
+
+This is called in the response of a validator packet being sent. It's goal is to return the que position of the validator. *Thought: Should we also send the validator list?*
+
+
+```Python
+def handle_validator_state(self, packet: bytes) -> None:
+
+        '''
+        Handles validator state packet.
+        '''
+
+        logger.info("Handling Validator State")
+
+        # Unpack and log the validator state
+
+        state = packet[2:].decode("utf-8")
+
+        logger.info(f"Validator state is: {state}")
+
+        ...
+```
+
+This is not fully implemented but will return the current validator state. 
+
+```Python
+def handle_validator_list_request(self, packet: bytes) -> None:
+
+        '''
+
+        Handles a validator list request packet.
+
+    This packet is used to retrieve the current list of validators in the pool.
+    The payload contains two parameters:
+    - `include_hash` (1 byte): If 1, return the hash of the validator list; if 0, return the full list
+    - `slice_index` (4 bytes): Used to paginate or split responses if the list is large
+
+    This method allows validators to sync their view of the network without always attaching the full list to every confirmation packet.
+
+        '''
+
+        logger.info("Handling Validator List Request")
+
+        # Unpack modifiers
+
+        include_hash, slice_index = struct.unpack(">BI", packet[2:7])
+
+        logger.info(f"Validator List Request: Include Hash: {include_hash}, Slice Index: {slice_index}")
+
+        ...
+```
+
+Handles a validator list request coming in from the user and (if sent) performs a slice on that list to save on bandwidth (used if the validator is missing some entries in their list). 
+
+```Python
+def handle_validator_list_response(self, packet: bytes) -> None:
+
+        '''
+        Handles validator list response packet
+        '''
+
+        logger.info("Handling Validator List Response")
+
+        # Extract the list of validators from the packet
+
+        validators_data = packet[2:]
+
+        validators = validators_data.decode("utf-8").split(",")  # Assuming comma-separated validators
+
+        logger.info(f"Received Validator List: {validators}")
+
+        ...
+```
+
