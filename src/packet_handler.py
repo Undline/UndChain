@@ -144,8 +144,16 @@ class PacketHandler:
 
     def handle_validator_list_request(self, packet: bytes) -> None:
         '''
-        Handles validator list request packet
+        Handles a validator list request packet.
+
+        This packet is used to retrieve the current list of validators in the pool.
+        The payload contains two parameters:
+        - `include_hash` (1 byte): If 1, return the hash of the validator list; if 0, return the full list
+        - `slice_index` (4 bytes): Used to paginate or split responses if the list is large
+
+        This method allows validators to sync their view of the network without always attaching the full list to every confirmation packet.
         '''
+        
         logger.info("Handling Validator List Request")
         # Unpack modifiers
         include_hash, slice_index = struct.unpack(">BI", packet[2:7])
