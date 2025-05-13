@@ -21,7 +21,7 @@ class PacketHandler:
         '''
         Initialize the packet handler
         '''
-        
+
         self.packet_generator: PacketGenerator = packet_generator
         self.handlers = {
             PacketType.VALIDATOR_REQUEST: self.handle_validator_request,
@@ -100,7 +100,7 @@ class PacketHandler:
         try:
             public_key = packet.decode("utf-8")  # The entire payload is the public key
         except Exception as e:
-            logger.error(f"Failed to unpack the packet: {e}")
+            logger.error(f"Unable to extract the public key. Failed to unpack the packet: {e}")
             return None
 
         logger.info(f"Validator request from: {public_key}")
