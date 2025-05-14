@@ -160,23 +160,33 @@ class PacketHandler:
         logger.info(f"Validator List Request: Include Hash: {include_hash}, Slice Index: {slice_index}")
         ...
 
-    def handle_validator_list_response(self, packet: bytes) -> None:
+    def handle_validator_list_response(self, packet: bytes, slice_index: Optional[int] = None) -> None:
         '''
         Handles validator list response packet
+
+        This packet includes either a full or partial list of validators, depending on
+        what was requested (via slice index). The payload is expected to be a
+        UTF-8 encoded comma-separated list of public keys, beginning at the requested offset.
         '''
 
         logger.info("Handling Validator List Response")
         # Extract the list of validators from the packet
         validators_data = packet[2:]
-        validators = validators_data.decode("utf-8").split(",")  # Assuming comma-separated validators
-        logger.info(f"Received Validator List: {validators}")
+        validators_data = packet.decode("utf-8")
+        validators = validators_data.split(",")
+
+        if slice_index is not None:
+            logger.info(f"Received validator slice at index {slice_index}: {validators}")
+        else:
+            logger.info(f"Received full validator list: {validators}")
+
         ...
 
     def handle_latency(self, packet: bytes) -> None:
         '''
         Handles latency packet
         '''
-        
+
         logger.info("Handling Latency Packet")
         # Extract latency counter and perform latency-related operations
         latency_counter = struct.unpack(">I", packet[2:6])[0]
