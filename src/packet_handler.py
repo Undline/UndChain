@@ -164,6 +164,7 @@ class PacketHandler:
         '''
         Handles validator list response packet
         '''
+
         logger.info("Handling Validator List Response")
         # Extract the list of validators from the packet
         validators_data = packet[2:]
@@ -175,6 +176,7 @@ class PacketHandler:
         '''
         Handles latency packet
         '''
+        
         logger.info("Handling Latency Packet")
         # Extract latency counter and perform latency-related operations
         latency_counter = struct.unpack(">I", packet[2:6])[0]
