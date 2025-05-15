@@ -196,7 +196,14 @@ class PacketHandler:
     def handle_job_file(self, packet: bytes) -> None:
         '''
         Handles job file packet
+
+        This packet contains job entries sent by clients (or other validators) and must be
+        unpacked, validated, and added to the active job pool.
+
+        Job files are a core part of UndChain — they are shared across validators,
+        stored temporarily in RAM, and ultimately hashed when a block is finalized.
         '''
+
         logger.info("Handling Job File")
         # Unpack job file data
         job_data = packet[2:]
@@ -216,7 +223,14 @@ class PacketHandler:
     def handle_shut_up(self, packet: bytes) -> None:
         '''
         Handles shut-up packet
+
+        This packet is sent to temporarily suppress communication from another validator
+        or user that is overloading the network with excessive requests.
+
+        Upon receipt, the sending party should enter a cooldown period and
+        reduce or pause outbound traffic to the issuing validator.
         '''
+
         logger.info("Handling Shut-Up Packet")
         # Perform logic to pause communication or reduce traffic load
         ...
@@ -224,7 +238,16 @@ class PacketHandler:
     def handle_convergence(self, packet: bytes) -> None:
         '''
         Handles convergence packet
+
+        The Convergence is the process of collapsing the current blockchain state into a
+        new genesis block. This is done by hashing the full ledger and storing the
+        previous state via UndChain's network storage protocol.
+
+        The convergence mechanism allows UndChain to:
+        - Reduce ledger bloat and speed up node bootstrapping
+        - Transition between different hashing or encryption algorithms
         '''
+
         logger.info("Handling Convergence Packet")
         # Extract convergence details
         convergence_time = struct.unpack(">I", packet[2:6])[0]
@@ -234,7 +257,18 @@ class PacketHandler:
     def handle_sync_co_chain(self, packet: bytes) -> None:
         '''
         Handles sync co-chain packet
+
+        This packet is sent by a validator that is joining an existing co-chain
+        and needs to synchronize its internal state. The payload contains the co-chain ID.
+
+        Upon receiving this request, the validator should respond with:
+        - The current active validator list
+        - The shared job file
+        - The Run Rules file
+        - The current payout file
+        - The blockchain
         '''
+
         logger.info("Handling Sync Co-Chain Packet")
         # Unpack and process the sync co-chain data
         co_chain_id = packet[2:].decode("utf-8")
