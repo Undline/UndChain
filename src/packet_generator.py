@@ -27,7 +27,11 @@ class PacketType(Enum):
 class PacketGenerator:
     def __init__(self, version: str) -> None:
         '''
-        Initialize the packet generator with the version information in 'YYYY.MM.DD.subversion' format.
+        The version string must follow the format: 'YYYY.MM.DD.subversion'
+
+        This version information is later embedded in every packet header,
+        allowing peers to determine protocol compatibility and negotiate
+        upgrades if needed.
         '''
 
         self.version: tuple[int, int, int, int] = self._parse_version(version)
