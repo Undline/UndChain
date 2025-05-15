@@ -1498,3 +1498,231 @@ def handle_job_request(self, packet: bytes) -> None:
         ...
 ```
 
+This method is specific in handling the job requests that are coming in from clients (or any user). These requests are placed in the job file upon receipt so that partners can view that file and respond based upon their availability and ability (to provide the requested service). *NOTE: I believe we should also have an algorithm that allows partners to 'subscribe' to certain jobs, that way we do not have partners constantly hitting up the system looking for jobs to perform (which could act like a DDoS attack from all the incoming request)*
+
+```Python
+def handle_validator_change_state(self, packet: bytes) -> None:
+
+        '''
+        Handles validator change state packet
+        '''
+
+        logger.info("Handling Validator Change State")
+
+        new_state = packet[2:].decode("utf-8")
+
+        logger.info(f"Validator changed to state: {new_state}")
+
+        ...
+```
+
+This handler is used when a validator is changing its state in the system (as you want to advertise that on the network). Examples of a change state is when a validator goes from being an active validator to a passive validator or when a validator is pending (getting ready to become an active validator). This should only go out to the active validators as I don't see a reason to advertise this to all validators *but I could be wrong*
+
+Current states:
+
+- Discovery
+- Sync
+- Pending
+- Redirect
+- Active
+- Error
+
+```Python
+def handle_report_packet(self, packet_data: bytearray) -> None:
+
+        '''
+        Handles the report packet, extracting the necessary information
+
+        and logging or acting on the report.
+        '''
+
+        reporter = PacketUtils._decode_public_key(packet_data[:64])
+
+        reported = PacketUtils._decode_public_key(packet_data[64:128])
+
+        reason = PacketUtils._decode_string(packet_data[128:])
+
+        logger.info(f"Received report from {reporter} about {reported} for reason: {reason}.")
+```
+
+This is meant to handle any reports that come in regarding a user who acts inappropriately. This system will be used to update perception scores and will be logged on the network as issues occur. 
+
+## Example Offenses (Validator-Specific)
+
+Although this handler applies to **all user types**, some examples of validator-specific reports might include:
+
+- Failing to reach consensus with peers repeatedly (proof: mismatched job hashes or late votes)
+- Excessive latency during job routing
+- Ignoring or rejecting valid job requests
+- Not responding to time sync or shut-up packets
+- Failing to submit receipts after job assignment
+
+*NOTE: This handler will be true of all user types. There are more negative behaviors that are listed inside of the readme document*
+
+The payload is parsed as follows:
+
+- `reporter`: Public key of the reporting user (first 64 bytes)
+- `reported`: Public key of the user being reported (next 64 bytes)
+- `reason`: UTF-8 string describing the offense (remainder of payload)
+
+*THOUGHT: We should build a report registry that lists all the possible report types and then store them as ENUMs so that we can just enter a code rather than a text description (space saving)*
+
+```Python
+def handle_perception_update_packet(self, packet_data: bytearray) -> None:
+
+        '''
+        Handles the perception score update packet, updating the perception score
+
+        for the user in the local validator's perception score table.
+        '''
+
+        user_id = PacketUtils._decode_public_key(packet_data[:64])
+
+        new_score = int.from_bytes(packet_data[64:68], byteorder='big')
+
+  
+
+        logger.info(f"Updating perception score for user {user_id} to {new_score}.")
+```
+
+This is one of UndChain's main core features; this will define how perception scores will be updated on the network. It will 
+
+1. Perform a consensus with the active validators using things such as a **report packet** in the event that a user is behaving negatively or a **achievement packet** for when a user performs a good service for the network. 
+2. Once validators preform consensus they share the update with the partners who then log it on network storage. Network storage is where we will bootstrap the perception score of each user (along with other items such as account age and a history of their score); this is done since you do NOT want validators holding this information for every user on the network. It also provides balance so that validators are not the only holders of this information, partners will also need to agree. 
+
+*NOTE: Users can choose to block validators or partners, but this can NEVER happen the other way on the main chain. I do see some chains blocking users due to malicious behavior but that should be via perception score. Don't want to block on main chain as that would prevent users from transferring funds. While a block will NOT produce a negative perception score, a partner or validator who is consistently blocked will decrease in perception score.* 
+
+
+```Python
+    def get_packet_type(self, packet: bytes) -> PacketType:
+
+        '''
+        Extracts the packet type from the first two bytes of the packet.
+        '''
+
+        try:
+
+            pack_type_value = struct.unpack(">H", packet[:2])[0] # First two bytes represent the packet type
+
+            return PacketType(pack_type_value)
+
+        except Exception as e:
+
+            logger.error(f'Failed to extract packet type: {e}')
+
+            raise ValueError(f'Unknown packet type from packet {e}')
+```
+
+This handlers only job is to classify the packet type that is coming in so that it can be processed correctly (this is a helper function). It looks at the first two bytes in order to determine the packet type.
+
+```Python
+# Example use
+
+if __name__ == "__main__":
+
+    packet_generator = PacketGenerator("2024.10.09.1")
+
+    handler = PacketHandler(packet_generator)
+  
+    # Simulate generating a VALIDATOR_REQUEST packet using PacketGenerator
+
+    public_key = b"validator_pub_key_12345"
+
+    sample_packet: bytes = packet_generator.generate_validator_request(public_key)
+
+    print(f'Sample Packet: {sample_packet}')
+
+    # Now pass the sample packet to the PacketHandler for processing
+
+    return_packet = handler.handle_packet(sample_packet)
+
+    print(f"Generated return packet: {return_packet}")
+
+    if return_packet:
+
+        return_packet = handler.handle_packet(return_packet)
+
+        print(f"Interpreted confirmation packet: {return_packet}")
+```
+
+This `__main__` block serves as a **self-test and usage demo** for the `PacketHandler` system.
+
+### Step-by-Step:
+
+1. A `PacketGenerator` is initialized with a version number (e.g. `2024.10.09.1`) — this will define how the packet is structured.
+2. A fake public key is generated to simulate a new validator joining the network.
+3. A **VALIDATOR_REQUEST** packet is created and passed to the handler.
+4. The handler decodes it and returns a **VALIDATOR_CONFIRMATION** response.
+5. That confirmation is then re-processed to demonstrate two-way packet flow.
+    
+
+This allows you to quickly validate that:
+
+- Packets are **being encoded correctly**
+- The correct handler method is being invoked
+- The payload is being decoded accurately
+
+This example MUST be updated as we add more methods to this class so that we can ensure its being tested correctly.
+
+
+## Summary
+
+The `PacketHandler` class centralizes **packet classification and response logic** for all known packet types on the network.
+
+- It separates concerns between **packet generation** and **packet interpretation**
+- It routes each incoming packet to its appropriate handler method via a clean dictionary map
+- It logs and decodes payloads in a consistent, predictable format
+- It will evolve as new user types and services are added to UndChain (e.g., partners, clients, chain owners)
+    
+
+> Right now, the focus is on validator packet types — but this architecture ensures that adding new user-specific packet flows (like partner-to-client job confirmations or perception updates) will be easy to expand without cluttering the validator logic.
+
+---
+
+# Packet Generator
+
+The `PacketGenerator` class is the **counterpart to the `PacketHandler`** — where the handler **listens**, the generator **speaks**. This class creates properly formatted packets that can be transmitted across the UndChain network.
+
+It serves as a **centralized factory** for all packet types a validator may need to send — whether it's:
+
+- A response to an incoming request (e.g., validator confirmation)
+- A status announcement (e.g., validator change state)
+- A broadcast (e.g., job file or perception update)
+    
+
+Standardizing packets through this generator:
+
+- Keeps your message format consistent
+- Makes future protocol upgrades easier to manage
+- Keeps packet versioning and encoding in a single, testable place
+
+```Python
+class PacketType(Enum):
+
+    VALIDATOR_REQUEST = 1
+    VALIDATOR_CONFIRMATION = 2
+    VALIDATOR_STATE = 3
+    VALIDATOR_LIST_REQUEST = 4
+    VALIDATOR_LIST_RESPONSE = 5
+    JOB_FILE = 6
+    PAYOUT_FILE = 7
+    SHUT_UP = 8
+    LATENCY = 9
+    CONVERGENCE = 10
+    SYNC_CO_CHAIN = 11
+    SHARE_RULES = 12
+    JOB_REQUEST = 13
+    VALIDATOR_CHANGE_STATE = 14
+    VALIDATOR_VOTE = 15
+    RETURN_ADDRESS = 16
+    REPORT = 17
+    PERCEPTION_UPDATE = 18
+```
+
+The `PacketType` ENUM defines all currently supported packet categories. Instead of using plain-text labels (which are longer and inconsistent), we assign each a fixed **integer value**, which improves:
+
+- **Network efficiency** (fewer bytes)
+- **Parsing speed** (known header size)
+- **Protocol upgradeability** (easy to insert new packet types without changing the parser logic)
+
+This ENUM is used at the beginning of every packet header to help the handler identify which operation to execute.
