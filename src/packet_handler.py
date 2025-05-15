@@ -38,8 +38,6 @@ class PacketHandler:
             PacketType.SHARE_RULES: self.handle_share_rules,
             PacketType.JOB_REQUEST: self.handle_job_request,
             PacketType.VALIDATOR_CHANGE_STATE: self.handle_validator_change_state,
-            PacketType.VALIDATOR_VOTE: self.handle_validator_vote,
-            PacketType.RETURN_ADDRESS: self.handle_return_address,
             PacketType.REPORT: self.handle_report_packet,
             PacketType.PERCEPTION_UPDATE: self.handle_perception_update_packet,
         }
@@ -288,7 +286,15 @@ class PacketHandler:
     def handle_job_request(self, packet: bytes) -> None:
         '''
         Handles job request packet
+
+        This packet is sent by a client (or any user) to submit a request for utility
+        services (e.g., storage, compute, access). Once received, the job is validated
+        and added to the shared job file, which is visible to eligible partners.
+
+        Partners will scan the job file and respond to requests that match their
+        capabilities and availability.
         '''
+
         logger.info("Handling Job Request")
         job_data = packet[2:].decode("utf-8")
         logger.info(f"Job Request Data: {job_data}")
@@ -297,35 +303,34 @@ class PacketHandler:
     def handle_validator_change_state(self, packet: bytes) -> None:
         '''
         Handles validator change state packet
+
+        This packet notifies other active validators that a given validator has
+        changed its operational state. This may include transitions such as:
+
+        - `PENDING` → `ACTIVE`
+        - `ACTIVE` → `PASSIVE` (stepping down)
+        - `DISCOVERY` → `SYNC`
+
+        This ensures the network has an up-to-date view of validator availability,
+        routing behavior, and participation.
         '''
+
         logger.info("Handling Validator Change State")
         new_state = packet[2:].decode("utf-8")
         logger.info(f"Validator changed to state: {new_state}")
         ...
 
-    def handle_validator_vote(self, packet: bytes) -> None:
-        '''
-        Handles validator vote packet
-        '''
-        logger.info("Handling Validator Vote")
-        vote_for_validator = packet[2:].decode("utf-8")
-        logger.info(f"Vote for validator: {vote_for_validator}")
-        ...
-
-    def handle_return_address(self, packet: bytes) -> None:
-        '''
-        Handles return address packet
-        '''
-        logger.info("Handling Return Address")
-        ip, port = packet[2:].decode("utf-8").split(":")
-        logger.info(f"Return Address: {ip}:{port}")
-        ...
-
     def handle_report_packet(self, packet_data: bytearray) -> None:
         '''
-        Handles the report packet, extracting the necessary information
-        and logging or acting on the report.
+        Handles a report packet, used to log and act on misbehavior across the network.
+
+        This packet is submitted when one user (reporter) believes another user
+        (reported) has violated protocol expectations or engaged in disruptive behavior.
+
+        The report is parsed and logged, and will influence the perception score
+        of the reported party based on validator consensus or accumulated evidence.
         '''
+
         reporter = PacketUtils._decode_public_key(packet_data[:64])
         reported = PacketUtils._decode_public_key(packet_data[64:128])
         reason = PacketUtils._decode_string(packet_data[128:])
@@ -334,9 +339,13 @@ class PacketHandler:
 
     def handle_perception_update_packet(self, packet_data: bytearray) -> None:
         '''
-        Handles the perception score update packet, updating the perception score
-        for the user in the local validator's perception score table.
+        Handles a perception update packet.
+
+        This packet contains an updated perception score for a specific user, calculated
+        through consensus among active validators. Once processed, this score should
+        be shared with partners for persistence in UndChain’s decentralized network storage.
         '''
+
         user_id = PacketUtils._decode_public_key(packet_data[:64])
         new_score = int.from_bytes(packet_data[64:68], byteorder='big')
 
@@ -344,8 +353,13 @@ class PacketHandler:
 
     def get_packet_type(self, packet: bytes) -> PacketType:
         '''
-        Extracts the packet type from the first twp bytes of the packet.
+        Extracts the packet type from the first two bytes of the packet.
+
+        This helper function is used to determine the appropriate handler for
+        an incoming packet based on its type ID. The type is represented as a
+        16-bit unsigned integer and mapped to the PacketType enum.
         '''
+        
         try:
             pack_type_value = struct.unpack(">H", packet[:2])[0] # First two bytes represent the packet type
             return PacketType(pack_type_value)
