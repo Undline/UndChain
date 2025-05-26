@@ -59,10 +59,16 @@ class TextRenderer(BaseRenderer):
 
         # recurse into nested lists of dicts
         for subkey, subval in widget.items():
-            if isinstance(subval, list) and subval and isinstance(subval[0], dict):
+            if (
+                isinstance(subval, list)
+                and subval
+                and isinstance(subval[0], dict)
+                and "type" in subval[0]      # <-- only walk lists of real widgets
+            ):
                 for child in subval:
                     child.setdefault("parent", wtype)
                     self._render_subtree(child, indent + self.INDENT_STEP)
+
 
     def on_intent(self, intent_name: str, widget_info: Dict[str, Any]) -> None:
         w_id = widget_info.get("widget_id") or widget_info.get("id", "<no-id>")
