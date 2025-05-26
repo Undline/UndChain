@@ -437,3 +437,101 @@ On this step new epoch should start - with new active validators set, new block 
 
 ![](./assets/Pasted%20image%2020250522160450.png)
 
+
+
+## So, what the sense of getting AEFP
+
+It's crucial moment because we need AEFP to connect epochs with each other
+
+
+> **EACH BLOCK CREATOR NEEDS TO INCLUDE AEFP PROOFS TO HIS FIRST BLOCKS TO GET A 100% GUARANTEE OF SECURITY AND CHAIN INTEGRITY**
+
+
+Let's take a look at the block creators sequence for epoch 1
+
+![](./assets/Pasted%20image%2020250522160945.png)
+
+
+In this case we de-jure mark with **orange color** the first block but de-facto, remember the cases when nodes can be offline/malicious. In this case it's a rule - **each block creator should include AEFP for previous epoch to own first block**:
+
+
+![](./assets/Pasted%20image%2020250522161435.png)
+
+
+
+# Final words about types of proofs
+
+So, we have mentioned several types of proofs:
+
+#### AFP - Aggregated Finalization Proof
+
+Proof that 2/3 of the active validators set agree with the block **B** created by block creator **C**. This block has index **I** and hash **H**
+
+
+This is what we get during finalization of blocks
+
+![](./assets/Pasted%20image%2020250522163658.png)
+
+
+#### ALRP - Aggregated Leader Rotation Proof
+
+Proof that 2/3 of the active validators set agree to finish finalizing blocks creator **C** at index **I** and hash **H** and are ready to move on to finalizing blocks of the next block creator
+
+This is what each next block creator includes to his first block.
+
+> Note: In case you're the first block creator in sequence - you shouldn't include something because there is no other block creators before you
+
+
+For example in epoch 2, the Node2 shouldn't include any ALRP because it's the first block creator
+
+![](./assets/Pasted%20image%2020250522164317.png)
+
+
+In epoch 0 (below):
+
+![](./assets/Pasted%20image%2020250522164405.png)
+
+
+1. Node3 - no ALRP
+2. Node6 - should include ALRP for Node5, Node3
+
+**BUT**
+
+If the Node5 created at least one block then:
+
+![](./assets/Pasted%20image%2020250522164606.png)
+
+In this case Node6 can include ALRP for Node5, but no need to include for Node3
+
+
+#### AEFP - Aggregated Epoch Finalization Proof
+
+Proof that 2/3 of the active validators set agree that it is time to end the epoch on block creator **C**, index of its last block **I** and hash **H**
+
+This is what each block creator includes to their first block
+
+> **Note:** In case it's epoch 0 - no one should include AEFP to header - because it's the first epoch so no previous epoch exists
+
+
+Take a look:
+
+![](./assets/Pasted%20image%2020250522165256.png)
+
+
+# Conclusion
+
+
+In this large research was showed the process of creating an L1 chain that follows the principles of BFT consensus.
+
+I tried to mention and visualize all the details necessary for understanding and creating a blockchain.
+
+We went from the initial launch of epoch 0 and data in the genesis to the development of the chain up to epoch 2 - to show the rotation of epoches. Further development of the network (to the next epoches) follows the same principles
+
+It was also mentioned:
+
+1) The process of calculating the active validators set and block creators sequence
+2) The process of collecting proofs for finalizing a block is demonstrated
+3) The process of rotating the block creator and the necessary proofs for this is shown
+4) The process of rotating the epoch, the process of collecting proofs and further work of the network in the next epoches is shown
+
+Additionally, this document can be expanded with a section "Assembling the pieces" (like in OffSec manuals) in which to collect all the mentioned sections and simulate the process of network workflow along with visualization.
