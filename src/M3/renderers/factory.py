@@ -1,5 +1,5 @@
 from .text_renderer import TextRenderer
-from .kivy_renderer import KivyRenderer
+# from .kivy_renderer import KivyRenderer
 
 def get_renderer(engine_name: str):
     if engine_name == "text":
