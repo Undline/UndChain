@@ -518,6 +518,21 @@ Take a look:
 ![](./assets/Pasted%20image%2020250522165256.png)
 
 
+# Next step - resolve the blocks sequence
+
+In the previous chapters, we looked at the mechanism of block generation, rotation of block creators and changing the epoch.
+
+All this perfectly shows how to keep block generation - from creator to creator and from epoch to epoch.
+
+However, the question remains unclear:
+
+> How can we now have a clear understanding of the block sequence?
+
+In the previous chapters, we got acquainted with different types of proofs - AFP, ALRP, AEFP.
+
+It is on their basis that we will be able to apply special algorithms to resolve the sequence and have a clear idea of ​​the first, second, third and so on blocks.
+
+
 # Conclusion
 
 
