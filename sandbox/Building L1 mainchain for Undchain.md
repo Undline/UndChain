@@ -532,6 +532,67 @@ In the previous chapters, we got acquainted with different types of proofs - AFP
 
 It is on their basis that we will be able to apply special algorithms to resolve the sequence and have a clear idea of ​​the first, second, third and so on blocks.
 
+# Next step - resolve the blocks sequence
+
+To know how to modify the state, we need to have a clear understanding which block is the first, the second, the third and so on.
+
+Because of async, distributed, permissionless nature of L1 blockchain some specific algorithms should be used to use the blocks from block creators and majority proofs and based on this - build the traditional sequence of blocks.
+
+In the previous chapters, we looked at the mechanism of block generation, rotation of block creators and changing the epoch.
+
+All this perfectly shows how to **keep block generation** - from creator to creator and from epoch to epoch.
+
+However, the question remains unclear:
+
+> **How can we now have a clear understanding of the block sequence?**
+
+
+In the previous chapters, we got acquainted with different types of proofs - AFP, ALRP, AEFP.
+
+
+It is on their basis that we will be able to apply special algorithms to resolve the sequence and have a clear idea of ​​the first, second, third and so on blocks.
+
+### High level overview
+
+First, we should think of the block processing system as a black box that takes 2 things as input:
+
+1) Block itself
+2) Cryptographic proof that the block is indeed should be the next one in sequence.
+
+Only with this pair we can extract the transactions inside the block and safely execute - this will change the local state.
+
+![](./assets/Pasted%20image%2020250528011213.png)
+
+#### Important moment
+
+The whole secret of the block ordering system will lie in this place
+
+![](./assets/Pasted%20image%2020250528012023.png)
+
+At first glance, it may seem that this is a simple AFP (Aggregated Finalization Proof) - just 2/3 of the signatures from the active set of validators approving this block.
+
+**However, this is not always the case - and we will discuss this further.**
+
+# Overview of sequencing scheme in general
+
+Let's recall our general scheme of network workflow
+
+![[Intermediate_General.svg]]
+
+So, since we have both **block creator rotation** and **epoch rotation**, we need to somehow organize the created blocks to simply get a sequence like this:
+
+```
+block 0
+block 1
+block 2
+...
+block N
+```
+
+Now let's pay attention to the right part of the image.
+
+![](./assets/Pasted%20image%2020250528013240.png)
+
 
 # Conclusion
 
