@@ -64,3 +64,27 @@ timing_function = "ease-in-out"
 type = "scale-up"
 duration = "0.2s"
 timing_function = "ease-in-out"
+
+# ─── Media-Query Overrides ───
+# (These only apply when env.device == "tv")
+[media.device.tv.frame]
+# hide the entire login UI on a big screen
+display          = "none"
+
+# on TV, make buttons extra‐big
+[media.device.tv.button]
+padding          = "2rem"
+font-size        = "1.5rem"
+
+# (These only apply when env.device == "phone")
+[media.device.phone.frame]
+# full-screen phone form
+padding          = "0.5rem"
+
+[media.device.phone.text_box]
+font-size        = "1.2rem"
+
+# (Controller input makes everything bigger & spaced out)
+[media.input.controller.button]
+padding          = "2rem"
+margin-right     = "1rem"
