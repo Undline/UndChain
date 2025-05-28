@@ -594,6 +594,33 @@ Now let's pay attention to the right part of the image.
 ![](./assets/Pasted%20image%2020250528013240.png)
 
 
+In an ideal world, the sequence of blocks would look like this:
+
+![](./assets/Pasted%20image%2020250528145541.png)
+
+But in reality, it is worth remembering that:
+
+1) Some block creators may be **inactive**
+2) The diagram CONDITIONALLY shows 4 blocks created by each creator, but in reality their number depends on the timeframe of the block creator and the block time.
+
+> *For example, if a maximum per one creator is 100 blocks during a time interval (green timeframe in the figure), then there may be situations where someone creates 100 blocks, someone 74, someone 89, and so on.*
+
+
+For example, here is a situation that could be real
+
+![](./assets/Pasted%20image%2020250528150316.png)
+
+In this situation:
+
+1. In epoch 0, the creator of Node6 was malicious, and in epoch 1, Node4 and Node6 were offline so they did not create a single block
+2. In epoch 0, Node5 created only 3 blocks, and Node1 created six blocks.
+3. In epoch 1, Node7 created eight blocks, and in epoch 2, Node4 created two blocks.
+
+
+
+
+
+
 # Conclusion
 
 
