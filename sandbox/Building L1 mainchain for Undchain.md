@@ -700,11 +700,94 @@ if hash(Block("0:Node3:0")) == afp1.PrevBlockHash) {
 
 #### Step 2 - migrate to the next block creator
 
+Due to some features of the consensus, we cannot know for sure on which block the set of active validators finished voting.
+
+That is why, in order to know for sure which block of one of the creators was the last one, we must take this information from ALRP (Aggregated Leader Rotation Proof).
+
+If you remember from the previous pictures, we indicated that:
+
+> In their first block in the epoch, each creator must include ALRPs for previous creators
+
+Here is a picture to remind you this:
+
+![](./assets/Pasted%20image%2020250528170027.png)
+
+
+### *If the essence of ALRP was previously unclear to you, now its role is clear. It is needed to maintain the integrity of the chain*
+
+
+##### Algorithm
+
 Let's say in our core source code, in a separate thread, there is a mechanism that constantly polls active validators about the next block creator.
 
 For example, if we know that Node3 is currently creating blocks. But at the same time, we send requests to active validators to ask if they have switched to Node5
 
-TODO
+![](./assets/Pasted%20image%2020250528175030.png)
+
+When the time is more than 13:15, then the next scenario is possible
+
+![](./assets/Pasted%20image%2020250528175340.png)
+
+Once we have received from the active validators set:
+
+1. The first block from Node5 (its ID will be `0:Node5:0`)
+2. And AFP on block `0:Node5:1`
+
+##### We can do the following:
+
+
+![](./assets/Pasted%20image%2020250528181051.png)
+
+
+1. From block 0:Node5:0 - get ALRP for Node3
+2. From this ALRP we check that 2/3 really voted for it
+3. Take data about the last block and hash and compare with our local state
+4. Let's say we have already processed blocks up to 0:Node3:27 locally, while in reality the validator set confirmed up to block 0:Node3:30
+5. All that remains for us is to download blocks 28,29,30 from the network and process the transactions inside them
+
+#### What's after that ?
+
+After that, already knowing that Node3 finished work in epoch 0 at height 30 - you can move on to searching for blocks from Node5
+
+
+#### Edge case: What if Node5 created no blocks
+
+Sometimes a situation like this may occur on the network:
+
+![](./assets/Pasted%20image%2020250528181522.png)
+
+>**In this situation it becomes clear why each block creator should include ALRPs FOR ALL THE PREVIOUS BLOCK CREATORS UP TO THE CREATOR WHO CREATED AT LEAST ONE BLOCK**
+
+
+If we look at the figure above, using the ALRP proofs for Node5 and Node3 we can get the following sequence
+
+```
+Block 0 - 0:Node3:0
+Block 1 - 0:Node3:1
+Block 2 - 0:Node3:2
+Block 3 - 0:Node3:3
+Block 4 - 0:Node3:4
+Block 5 - 0:Node6:0
+Block 6 - 0:Node6:1
+Block 7 - 0:Node6:2
+Block 8 - 0:Node6:3
+Block 9 - 0:Node6:4
+```
+
+#### Summary for first part
+
+
+In the first part we explained how to understand and verify the sequence of blocks within one epoch, but between rotations of block creators.
+
+In general, the algorithm can be described as follows:
+
+1. While the timeframe for Node_X - look for AFP for the block and execute it
+2. When the timeframe for Node_X is finished - look for the first block of Node_X+1 (the next block creator), extract ALRP from there and based on this proof - complete the execution of the sequence for Node_X
+3. When finished - start looking for AFP for blocks created by the new creator (Node_X+1)
+
+Now it's time to link blocks between different epochs. We will discuss this in the second part of the algorithm.
+
+
 
 ### The second part of the algorithm - what if the epoch has changed
 
