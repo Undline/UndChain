@@ -617,7 +617,98 @@ In this situation:
 3. In epoch 1, Node7 created eight blocks, and in epoch 2, Node4 created two blocks.
 
 
+### The first part of the algorithm - within one epoch
 
+To begin with, we will consider only single epoch. Let's assume (for simplicity) that it is infinite epoch and our only task is to understand how to resolve the sequence of blocks.
+
+So we have this epoch
+
+![](./assets/Pasted%20image%2020250528152710.png)
+
+#### Step 1 - just ask currrently active block creator for AFPs (aggregated finalization proofs)
+
+As long as your local clock shows the timeframe of the current block creator (in our case, it's Node3, so the time is about 13:00-13:15) - you can simply send requests to the network to get a block and AFP for it.
+
+Remember that Node3 (current block creator) generates blocks and sends it to active validators set for finalization.
+
+![](./assets/Pasted%20image%2020250528154108.png)
+
+Remember the AFP structure (pseudocode - Golang):
+
+```go
+type AggregatedFinalizationProof struct {
+
+    PrevBlockHash string            `json:"prevBlockHash"`
+
+    BlockID       string            `json:"blockId"`
+
+    BlockHash     string            `json:"blockHash"`
+
+    Proofs        map[string]string `json:"proofs"`
+
+}
+```
+
+This is the example of AFP for block `0:Node3:0`
+
+```go
+afp0 := AggregatedFinalizationProof{
+	PrevBlockHash: "000000000000000000000000000000000000000000000000000000000000",
+	BlockID:       "0:Node3:0",
+	BlockHash:     "abcd1234efgh5678ijkl9012mnop3456qrst7890uvwx",
+	Proofs: map[string]string{
+		"validator1": "signature1",
+		"validator2": "signature2",
+		"validator3": "signature3",
+	},
+}
+```
+
+
+And AFP for block `0:Node3:1`
+
+```go
+afp1 := AggregatedFinalizationProof{
+	PrevBlockHash: "abcd1234efgh5678ijkl9012mnop3456qrst7890uvwx",
+	BlockID:       "0:Node3:1",
+	BlockHash:     "ffff1111aaaa2222bbbb3333cccc4444dddd5555eeee",
+	Proofs: map[string]string{
+		"validator1": "signature1",
+		"validator2": "signature2",
+		"validator3": "signature3",
+	},
+}
+```
+
+So, your local system will do the following:
+
+![](./assets/Pasted%20image%2020250528155135.png)
+
+1. Quickly poll the network for new blocks and proof of finality (AFP)
+2. Once you receive a block and AFP for the next block, you can perform transactions inside and be 100% sure that the state is finalized
+3. Just get the hash of block `0:Node3:0` and compare with hash inside AFP for block `0:Node3:1`
+
+Like this
+
+```go
+if hash(Block("0:Node3:0")) == afp1.PrevBlockHash) {
+
+ // execute txs inside block
+
+}
+```
+
+#### Step 2 - migrate to the next block creator
+
+Let's say in our core source code, in a separate thread, there is a mechanism that constantly polls active validators about the next block creator.
+
+For example, if we know that Node3 is currently creating blocks. But at the same time, we send requests to active validators to ask if they have switched to Node5
+
+TODO
+
+### The second part of the algorithm - what if the epoch has changed
+
+TODO
 
 
 
