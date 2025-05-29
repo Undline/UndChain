@@ -759,7 +759,7 @@ Block 8 - 0:Node6:3
 Block 9 - 0:Node6:4
 ```
 
-#### Summary for first part
+#### Summary for the first part
 
 
 In the first part we explained how to understand and verify the sequence of blocks within one epoch, but between rotations of block creators.
@@ -776,12 +776,143 @@ Now it's time to link blocks between different epochs. We will discuss this in t
 
 ### The second part of the algorithm - what if the epoch has changed
 
-TODO
+Now we need to look at how to resolve the block sequence between epochs. This is slightly different from what was shown earlier for one reason - **in the next epoch, the active set of validators will be different**. So we can't go the same way as in the first part of the algorithm where we discussed events within **one epoch**
+
+Let's get started
+
+#### Step 1 - calculate the active validators set and block creators sequence for the next epoch
+
+Let's recall our previous images for epoch 0 and epoch 1
+
+![](./assets/Pasted%20image%2020250528234729.png)
+
+This is general scheme which shows how to use the hash of first block in epoch X to calculate required data for epoch X+1
+
+Remember that we are working with the "real" scenario of epoch 0 which looks like this:
+
+![](./assets/Pasted%20image%2020250528152710.png)
+
+Using the algorithm mentioned in the previous part - we can use a chain of ALRPs to have a 100% guarantee of understanding which block was the first.
+
+![](./assets/Pasted%20image%2020250529011558.png)
+
+Because each ALRP also includes the hash of first block created by appropriate creator:
+
+```go
+type AggregatedFinalizationProof struct {
+
+    PrevBlockHash string            `json:"prevBlockHash"`
+
+    BlockID       string            `json:"blockId"`
+
+    BlockHash     string            `json:"blockHash"`
+
+    Proofs        map[string]string `json:"proofs"`
+
+}
+```
+
+So on this step we know that the first block on epoch 0 was violet block:
+
+![](./assets/Pasted%20image%2020250529011809.png)
+
+Based on this hash - get the active validators set and block creators sequence for next epoch:
+
+![](./assets/Pasted%20image%2020250528234729.png)
+
+Like this
+
+![](./assets/Pasted%20image%2020250529012325.png)
+
+#### Step 2 - let the network start to generate blocks in a new epoch
+
+As we discussed in previous chapters [[#So, what the sense of getting AEFP|here]] - **every first block in a new epoch must contain an AEFP that will point to the previous epoch**
+
+![](./assets/Pasted%20image%2020250529015316.png)
+
+Let's formalize the AEFP structure
+
+```go
+type AggregatedEpochFinalizationProof struct {
+
+    LastCreator          uint              `json:"lastCreator"`
+
+    LastIndex            uint              `json:"lastIndex"`
+
+    LastHash             string            `json:"lastHash"`
+    
+    HashOfFirstBlock     string            `json:"hashOfFirstBlockByLastCreator"`
+
+    Proofs               map[string]string `json:"proofs"`
+
+}
+```
+
+AEFP for epoch 1 might look like
+
+```go
+aefp := AggregatedEpochFinalizationProof{
+	LastCreator:   3, // index of Node1 in block creators sequence in epoch 0
+	LastIndex:     5, // index of last block by Node1 in epoch 0
+	LastHash:     "abcd1234efgh5678ijkl9012mnop3456qrst7890uvwx", // hash of block
+	HashOfFirstBlock: "aaadsaddfsdfdsfdfsdsfgdfgdfgdfgdfgdfgdf", // green block 
+	
+	// This proofs is signed by active validators set of epoch 0
+	Proofs: map[string]string{
+		"validator1": "signature1",
+		"validator2": "signature2",
+		"validator3": "signature3",
+	},
+}
+```
+
+Now we just have to wait for the first block in the new epoch, as well as the proof of its finality (AFP). There are only 2 possible scenarios:
+
+![](./assets/Pasted%20image%2020250529021240.png)
+
+1. The first block of the new epoch will be the block from the first creator (Node4 in epoch 1)
+2. The first block will be the first block of one of the next creators (let's say Node1 in epoch 1)
+
+###### If the first block is the block from Node4 - just read the AEFP about last block in epoch 0
+
+![](./assets/Pasted%20image%2020250529021952.png)
+
+1. We just take the `aefp.LastIndex` and `aefp.LastCreator` to build the ID of last block - it's `0:Node1:5` in this case
+2. Then we fetch this block from network and compare hashes - must be the same as `aefp.LastHash`
+3. In `aefp.HashOfFirstBlock` we also have the hash of first block by Node1 in epoch 0 - the ID of this block will be `0:Node1:0`. Just compare hashes and extract the ALRP from this first block - this let you to understand were Node5 finished, from first block of Node5 - where Node3 finished and so on
+
+###### If Node4 created no blocks - AEFP will be in the first blocks of next creators (Node1 or next creators)
+
+![](./assets/Pasted%20image%2020250529023221.png)
 
 
+1. From block `1:Node1:0` (first block in epoch 1 by Node1) - take the ALRP, verify and understand that Node4 in epoch 1 created no blocks so we can ignore him
+2. From the same block - we take the AEFP which points to latest block in previous epoch
+3. We now know the latest block in epoch 0 and from AEFP - have the hash to first block by last leader in epoch 0 (**green block**).
+4. From this block we can extract the ALRP for Node5 and understand the final block by it and from first block of Node5 (**blue block**) we can get the ALRP for Node3 and understand where it finished
 
-# Conclusion
 
+### Conclusion to this chapter
+
+In this large chapter we have shown a mechanism that using different types of proofs - AFP, ALRP and AEFP can unambiguously resolve a sequence of blocks so that each node in the network can precisely synchronize the sequence and obtain a local sequence of the form:
+
+```
+Block 0 - 0:Node3:0
+Block 1 - 0:Node3:1
+Block 2 - 0:Node3:2
+Block 3 - 0:Node3:3
+Block 4 - 0:Node3:4
+Block 5 - 0:Node6:0
+Block 6 - 0:Node6:1
+Block 7 - 0:Node6:2
+Block 8 - 0:Node6:3
+Block 9 - 0:Node6:4
+
+... (and so on)
+```
+
+
+# Final words
 
 In this large research was showed the process of creating an L1 chain that follows the principles of BFT consensus.
 
