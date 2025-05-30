@@ -1,76 +1,77 @@
-# kivy_renderer.py
-from typing import Dict, Any, List
+# ---------------------------------------------------------------------------
+# renderers/kivy_renderer.py
+# ---------------------------------------------------------------------------
+from typing import Any, Dict, List
 from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.label import Label
 from .base import BaseRenderer
+# Central registry of Kivy builders (one builder per widget type)
+from .kivy_builders.builder_registry import KIVY_BUILDERS
 
 class KivyRenderer(BaseRenderer):
-    def __init__(self):
-        super().__init__()
-        self.app = None
-        self.widget_tree = []
-
-    def setup(self):
+    """
+    Modular Kivy renderer: delegates widget construction to builder functions,
+    then recursively adds child widgets.
+    """
+    def setup(self) -> None:
         print("KivyRenderer: setup called")
 
-    def render_widget_tree(self, widget_tree: List[Dict[str, Any]]) -> None:
-        print("KivyRenderer: render_widget_tree called")
-        self.widget_tree = widget_tree
+    def teardown(self) -> None:
+        print("KivyRenderer: teardown called")
 
-        # Kivy typically wants an App with a build() method returning the root layout.
-        # So we might define an inner class or something. For simplicity:
+    def render_widget_tree(self, widget_tree: List[Dict[str, Any]]) -> None:
+        # Expect first entry to be the root frame
+        root_def = widget_tree[0]
+
+        # Build Kivy widget hierarchy
+        root_widget = self._build_node(root_def)
+
+        # Wrap in App
         class M3LApp(App):
-            def build(self):
-                root = BoxLayout(orientation='vertical', padding=10, spacing=10)
-                for w in widget_tree:
-                    kv = self.create_kivy_widget(w)
-                    if kv:
-                        root.add_widget(kv)
-                return root
+            def build(inner):
+                return root_widget
 
         self.app = M3LApp()
         self.app.run()
 
-    def teardown(self):
-        print("KivyRenderer: teardown called")
+    def _build_node(self, widget: Dict[str, Any]) -> Any:
+        """
+        Lookup the builder for this widget type, build it, then attach children.
+        """
+        wtype = widget.get('type', 'unknown')
+        builder = KIVY_BUILDERS.get(wtype)
+        if not builder:
+            raise ValueError(f"No Kivy builder registered for '{wtype}'")
 
-    def update(self, dt: float):
-        # If you want real-time updates or any special scheduling
-        pass
+        # Builder signature: build_fn(widget_info: dict, renderer: KivyRenderer) -> Kivy Widget
+        try:
+            kivy_widget = builder(widget, self)
+        except TypeError:
+            # fallback if builder only expects (widget)
+            kivy_widget = builder(widget)
+
+        # Recursively add any nested widget lists
+        for subkey, subval in widget.items():
+            if (
+                isinstance(subval, list)
+                and subval
+                and isinstance(subval[0], dict)
+                and 'type' in subval[0]
+            ):
+                for child_def in subval:
+                    # build child and add to container if possible
+                    child_widget = self._build_node(child_def)
+                    if hasattr(kivy_widget, 'add_widget'):
+                        kivy_widget.add_widget(child_widget)
+        return kivy_widget
 
     def on_intent(self, intent_name: str, widget_info: Dict[str, Any]) -> None:
-        print(f"KivyRenderer: on_intent '{intent_name}' triggered by {widget_info.get('id')}")
-        # Possibly do something with widget references if you store them
+        print(f"KivyRenderer: intent '{intent_name}' from '{widget_info.get('id', '<no-id>')}'")
+        # TODO: dispatch to business logic
+
+    def update(self, dt: float) -> None:
+        # No real-time loop by default
+        pass
 
     def update_widget(self, widget_info: Dict[str, Any]) -> None:
-        print("KivyRenderer: partial widget update not fully implemented yet")
-
-    def create_kivy_widget(self, widget: Dict[str, Any]):
-        """
-        Actually convert a single M3L widget dict into a Kivy Widget
-        """
-        wtype = widget.get("type")
-        label = widget.get("label","")
-        content = widget.get("content","")
-        checked = widget.get("checked",False)
-
-        if wtype == "paragraph":
-            lbl = Label(text=content)
-            return lbl
-        elif wtype == "checkitem":
-            # Maybe a Button that toggles text from [ ] to [X]
-            mark = "[X]" if checked else "[ ]"
-            btn = Button(text=f"{mark} {label}")
-            # You could do btn.bind(on_press=...) to call self.on_intent
-            return btn
-        elif wtype == "frame":
-            box = BoxLayout(orientation='vertical')
-            # If we want to sub-render inside a frame, we can do so:
-            # or rely on the top-level logic to flatten. For now, assume top-level.
-            box.add_widget(Label(text=f"Frame: {widget.get('id','')}"))
-            return box
-        else:
-            # fallback
-            return Label(text=f"{wtype}: {label or content}")
+        # Partial updates can be no-ops or small in-place tweaks
+        print(f"KivyRenderer: update_widget called for {widget_info}")
