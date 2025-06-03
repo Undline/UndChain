@@ -10,3 +10,4 @@ accounts/
 *.3
 *.4
 *.pyc
+*.db
