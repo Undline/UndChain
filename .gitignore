@@ -1,4 +1,5 @@
 .venv/
+venv
 .vscode/
 __pycache__/
 test/
@@ -9,3 +10,4 @@ accounts/
 *.3
 *.4
 *.pyc
+*.db
