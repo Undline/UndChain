@@ -7,7 +7,7 @@ class Transaction:
     fee: str
     creator: str
     sig: str
-    txType: str
-    sigType: str
+    tx_type: str
+    sig_type: str
     nonce: int
     payload: Dict[str, Any] = field(default_factory=dict)
