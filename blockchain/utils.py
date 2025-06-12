@@ -10,7 +10,7 @@ def get_utc_timestamp() -> int:
     return int(time.time() * 1000)
 
 def is_my_core_version_old(thread: ApprovementThreadMetadataHandler) -> bool:
-    thread.coreMajorVersion > CORE_MAJOR_VERSION
+    thread.core_major_version > CORE_MAJOR_VERSION
 
 def epoch_still_fresh(thread: ApprovementThreadMetadataHandler) -> bool:
-    thread.epoch.startTimestamp+thread.networkParameters.get("EPOCH_TIME") > get_utc_timestamp()
+    thread.epoch.start_timestamp+thread.network_parameters.get("EPOCH_TIME") > get_utc_timestamp()

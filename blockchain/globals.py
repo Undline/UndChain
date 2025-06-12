@@ -48,17 +48,17 @@ GLOBAL_CACHES: Dict[str, Any] = {
 
 # Initialize Generation Thread handler instance
 GENERATION_THREAD = GenerationThreadMetadataHandler(
-    epochFullId=sha256(
+    epoch_full_id=sha256(
         "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" + BLOCKCHAIN_GENESIS["NETWORK_ID"]
     ) + "#-1",
-    prevHash="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
-    nextIndex=0
+    prev_hash="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    next_index=0
 )
 
 # Initialize Approvement Thread handler instance
 APPROVEMENT_THREAD = ApprovementThreadMetadataHandler(
-    coreMajorVersion=-1,
-    networkParameters={},
+    core_major_version=-1,
+    network_parameters={},
     epoch=EpochHandler(),  # Make sure EpochHandler has a default constructor
     cache={}
 )

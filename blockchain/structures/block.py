@@ -23,17 +23,17 @@ def verify_signature(message: str, pubkey: str, signature: str) -> bool:
 
 @dataclass
 class DelayedTxsBatch:
-    epochIndex: int
-    delayedTransactions: List[Dict[str, str]]
+    epoch_index: int
+    delayed_transaction: List[Dict[str, str]]
     proofs: Dict[str, str]
 
 
 @dataclass
 class ExtraData:
     rest: Dict[str, str]
-    aefpForPreviousEpoch: AggregatedEpochFinalizationProof
-    delayedTxsBatch: DelayedTxsBatch
-    aggregatedLeadersRotationProofs: Dict[str, AggregatedLeaderRotationProof] # leader -> proof
+    aefp_for_previous_epoch: AggregatedEpochFinalizationProof
+    delayed_txs_batch: DelayedTxsBatch
+    aggregated_leaders_rotation_proofs: Dict[str, AggregatedLeaderRotationProof] # leader -> proof
 
 
 @dataclass
