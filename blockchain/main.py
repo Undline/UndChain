@@ -6,10 +6,11 @@ from working_threads.block_sharing_and_proofs_grabbing import block_sharing
 from working_threads.find_new_epoch import find_new_epoch
 from working_threads.leader_rotation import leader_rotation
 from working_threads.next_epoch_proposer import next_epoch_proposer
+from working_threads.verification_thread_aligner import verification_thread_aligner
 
 
 async def main():
-    
+
     server_task = asyncio.create_task(start_tcp_server())
 
     worker_tasks = [
@@ -18,6 +19,7 @@ async def main():
         asyncio.create_task(find_new_epoch()),
         asyncio.create_task(leader_rotation()),
         asyncio.create_task(next_epoch_proposer()),
+        asyncio.create_task(verification_thread_aligner())
     ]
 
     all_tasks = [server_task] + worker_tasks

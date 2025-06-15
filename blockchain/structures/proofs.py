@@ -3,25 +3,25 @@ from typing import Dict
 
 @dataclass
 class AggregatedFinalizationProof:
-    prevBlockHash: str
-    blockId: str
-    blockHash: str
+    prev_block_hash: str
+    block_id: str
+    block_hash: str
     proofs: Dict[str, str]
 
 @dataclass
 class AggregatedEpochFinalizationProof:
-    lastLeader: int
-    lastIndex: int
-    lastHash: str
-    hashOfFirstBlockByLastLeader: str
+    last_leader: int
+    last_index: int
+    last_hash: str
+    hash_of_first_block_by_last_leader: str
     proofs: Dict[str, str]
 
 
 @dataclass
 class AggregatedLeaderRotationProof:
-    firstBlockHash: str
-    skipIndex: int
-    skipHash: str
+    first_block_hash: str
+    skip_index: int
+    skip_hash: str
     proofs: Dict[str, str]
 
 
@@ -30,9 +30,9 @@ class PoolVotingStat:
     index: int = -1
     hash: str = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
     afp: AggregatedFinalizationProof = field(default_factory=lambda: AggregatedFinalizationProof(
-        prevBlockHash="",
-        blockId="",
-        blockHash="",
+        prev_block_hash="",
+        block_id="",
+        block_hash="",
         proofs={}
     ))
 
@@ -43,8 +43,8 @@ def new_pool_voting_stat_template() -> PoolVotingStat:
 
 @dataclass
 class AlrpSkeleton:
-    afpForFirstBlock: AggregatedFinalizationProof = field(default_factory=lambda: AggregatedFinalizationProof("", "", "", {}))
-    skipData: PoolVotingStat = field(default_factory=lambda: new_pool_voting_stat_template())
+    afp_for_first_block: AggregatedFinalizationProof = field(default_factory=lambda: AggregatedFinalizationProof("", "", "", {}))
+    skip_data: PoolVotingStat = field(default_factory=lambda: new_pool_voting_stat_template())
     proofs: Dict[str, str] = field(default_factory=dict)
 
 
