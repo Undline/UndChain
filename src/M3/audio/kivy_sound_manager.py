@@ -85,7 +85,7 @@ if __name__ == "__main__":
     '''
     import time
 
-    mgr = test_mgr
+    mgr: KivySoundManager = test_mgr
     sounds = {"test": "assets/test_sound.wav"}
     print("Preloading sounds...")
     mgr.preload(sounds)
