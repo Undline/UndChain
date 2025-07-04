@@ -1,0 +1,85 @@
+{
+  "PUBLIC_KEY": "9GQ46rqY238rk2neSwgidap9ww5zbAN4dyqyC7j5ZnBK",
+  "PRIVATE_KEY": "MC4CAQAwBQYDK2VwBCIEILdhTMVYFz2GP8+uKUA+1FnZTEdN8eHFzbb8400cpEU9",
+
+  "STORE_BLOCKS_IN_LOCAL_DATABASE": true,
+
+  "POINT_OF_DISTRIBUTION_WS": "ws://localhost:9999",
+  "POINT_OF_DISTRIBUTION_HTTP": "http://localhost:7332",
+
+  "EXTRA_DATA_TO_BLOCK": {
+    "hello": "world"
+  },
+
+  "WAIT_IF_CANT_FIND_AEFP": 4000,
+
+  "POLLING_TIMEOUT_TO_FIND_AEFP_FOR_QUORUM_THREAD": 10000,
+  "TIMEOUT_TO_FIND_TEMP_INFO_ABOUT_LAST_BLOCKS_BY_PREVIOUS_POOLS": 10000,
+
+  "TXS_MEMPOOL_SIZE": 300000,
+  "BLOCK_TO_BLOCK_CACHE_SIZE": 100000,
+
+  "BOOTSTRAP_NODES": [
+    "http://localhost:7332",
+    "http://localhost:7333",
+    "http://localhost:44444"
+  ],
+
+  "MAX_CONNECTIONS": 15,
+  "MY_HOSTNAME": "http://localhost:7332",
+
+  "ROUTE_TTL": {
+    "API": {
+      "FROM_STATE": 5,
+      "BLOCK": 6000,
+      "POOL_STATS": 5,
+      "LATEST_N_BLOCKS": 5,
+      "BLOCK_BY_SID": 6000,
+      "SYNC_STATS": 2,
+      "CHAIN_INFO": 5,
+      "TX_RECEIPT": 100,
+      "DATA_ABOUT_EPOCH_ON_THREAD": 5,
+      "GET_EPOCH_BY_INDEX": 5,
+      "QUORUM_URLS_AND_PUBKEYS": 5,
+      "VT_TOTAL_STATS": 5,
+      "VT_STATS_PER_EPOCH": 5
+    }
+  },
+
+  "ROUTE_TRIGGERS": {
+    "MAIN": {
+      "ACCEPT_BLOCKS_AND_RETURN_FINALIZATION_PROOFS": 1,
+      "ACCEPT_TXS": 1,
+      "GET_AGGREGATED_FINALIZATION_PROOFS": 1,
+      "GET_AGGREGATED_EPOCH_FINALIZATION_PROOF": 1,
+      "NEW_NODES": 1
+    },
+
+    "API": {
+      "FROM_STATE": 1,
+      "NODES": 1,
+      "POOL_STATS": 1,
+      "BLOCK": 1,
+      "BLOCK_BY_SID": 1,
+      "LATEST_N_BLOCKS": 1,
+      "VT_TOTAL_STATS": 1,
+      "VT_STATS_PER_EPOCH": 1,
+
+      "SYNC_STATS": 1,
+      "CHAIN_INFO": 1,
+      "TX_RECEIPT": 1,
+      "VERIFICATION_STATS_PER_POOL": 1,
+      "DATA_ABOUT_EPOCH_ON_THREAD": 1,
+      "GET_EPOCH_BY_INDEX": 1
+    }
+  },
+
+  "INTERFACE": "0.0.0.0",
+  "PORT": 7332,
+
+  "WEBSOCKET_INTERFACE": "0.0.0.0",
+  "WEBSOCKET_PORT": 9999,
+
+  "PAYLOAD_SIZE": 1000,
+  "MAX_PAYLOAD_SIZE": 10000000
+}
