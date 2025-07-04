@@ -1,7 +1,9 @@
 import asyncio
+
 from structures.threads_metadata_handlers import ApprovementThreadMetadataHandler
 from utils import get_utc_timestamp
 from global_vars import APPROVEMENT_THREAD
+
 
 def time_is_out_for_current_leader(thread: ApprovementThreadMetadataHandler) -> bool:
     leadership_timeframe = thread.network_parameters.get("LEADERSHIP_TIMEFRAME")
@@ -11,6 +13,7 @@ def time_is_out_for_current_leader(thread: ApprovementThreadMetadataHandler) -> 
 
 
 async def leader_rotation():
+
     while True:
 
         # TODO: Set mutex here

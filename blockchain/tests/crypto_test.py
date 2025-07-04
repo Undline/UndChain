@@ -4,7 +4,6 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import (
 )
 from cryptography.hazmat.primitives import serialization
 
-
 def generate_key_pair() -> tuple[str, str]:
 
     private_key = Ed25519PrivateKey.generate()
@@ -42,3 +41,27 @@ def verify_signature(public_key_hex: str, message: str, signature_hex: str) -> b
         return True
     except Exception:
         return False
+
+
+def main():
+    # Generate key pair
+    priv, pub = generate_key_pair()
+    print("🔐 Ed25519 key pair generated")
+    print("Private key:", priv)
+    print("Public key :", pub)
+
+    # Original message
+    msg = "Secret message"
+    print("\n📨 Message:", msg)
+
+    # Sign the message
+    sig = sign_message(priv, msg)
+    print("✍️ Signature:", sig)
+
+    # Verify the signature
+    valid = verify_signature(pub, msg, sig)
+    print("✅ Signature is valid!" if valid else "❌ Signature is invalid!")
+
+
+if __name__ == "__main__":
+    main()

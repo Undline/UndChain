@@ -1,6 +1,6 @@
 import os
 import json
-import blockchain.global_vars as global_vars
+import global_vars
 from structures.threads_metadata_handlers import GenerationThreadMetadataHandler, ApprovementThreadMetadataHandler
 from utils import sha256
 

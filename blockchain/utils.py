@@ -2,7 +2,7 @@ import hashlib
 import time
 
 from structures.threads_metadata_handlers import EpochHandler, ApprovementThreadMetadataHandler
-from blockchain.global_vars import CORE_MAJOR_VERSION
+from global_vars import CORE_MAJOR_VERSION
 from structures.misc import QuorumMemberData
 
 def sha256(data: str) -> str:

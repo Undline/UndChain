@@ -3,10 +3,16 @@ import hashlib
 from pathlib import Path
 from typing import Dict, List, Any
 import toml
+
 from kv_storage import SimpleSQLiteDB
+
 from structures.transaction import Transaction
 from structures.threads_metadata_handlers import EpochHandler,ApprovementThreadMetadataHandler,GenerationThreadMetadataHandler
-from utils import sha256
+
+
+def sha256(data: str) -> str:
+    return hashlib.sha256(data.encode()).hexdigest()
+
 
 def resolve_database(name: str) -> SimpleSQLiteDB:
     db_path: str = os.path.join(os.environ.get(CHAINDATA_PATH,''), f"{name}.db")
