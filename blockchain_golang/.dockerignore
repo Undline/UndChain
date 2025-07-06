@@ -1,0 +1,38 @@
+# Go binary output
+/bin/
+/obj/
+
+# Go workspace files
+.idea/
+.vscode/
+
+# VSCode settings
+.vscode/settings.json
+
+# Dependency directories
+/vendor/
+
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test coverage
+*.out
+*.test
+
+# IDE files (e.g., JetBrains, Visual Studio)
+*.iml
+*.sublime-project
+*.sublime-workspace
+*.swp
+*~.nfs
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+XTESTNET
+XTESTNET_DIR
