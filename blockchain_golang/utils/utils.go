@@ -290,7 +290,7 @@ func IsMyCoreVersionOld(thread *structures.ApprovementThreadMetadataHandler) boo
 
 }
 
-func GetRandomFromArray(arr []structures.QuorumMemberData) structures.QuorumMemberData {
+func GetRandomFromSlice(arr []structures.QuorumMemberData) structures.QuorumMemberData {
 
 	return arr[rng.Intn(len(arr))]
 
