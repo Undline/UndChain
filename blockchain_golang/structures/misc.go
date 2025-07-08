@@ -18,3 +18,8 @@ type DelayedTransactionsBatch struct {
 	DelayedTransactions []map[string]string `json:"delayedTransactions"`
 	Proofs              map[string]string   `json:"proofs"`
 }
+
+type ExecutionStatsPerPool struct {
+	Index int32
+	Hash  string
+}
