@@ -16,9 +16,10 @@ import (
 type ErrMsg struct {
 	Err string `json:"err"`
 }
-
-type SequenceAlignmentProposition struct {
-	PossibleLeaderIndex int `json:"possibleLeaderIndex"`
+type AlignmentData struct {
+	ProposedIndexOfLeader            int                                    `json:"proposedIndexOfLeader"`
+	FirstBlockByCurrentLeader        block.Block                            `json:"firstBlockByCurrentLeader"`
+	AfpForSecondBlockByCurrentLeader structures.AggregatedFinalizationProof `json:"afpForSecondBlockByCurrentLeader"`
 }
 
 func sendJson(ctx *fasthttp.RequestCtx, payload any) {
@@ -88,8 +89,6 @@ func GetSequenceAlignmentData(ctx *fasthttp.RequestCtx) {
 
 	ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
 
-	// var proposition SequenceAlignmentProposition
-
 	globals.APPROVEMENT_THREAD_METADATA_HANDLER.RWMutex.RLock()
 
 	defer globals.APPROVEMENT_THREAD_METADATA_HANDLER.RWMutex.RUnlock()
@@ -104,16 +103,36 @@ func GetSequenceAlignmentData(ctx *fasthttp.RequestCtx) {
 
 	firstBlockIdByThisLeader := strconv.Itoa(epochIndex) + ":" + pubKeyOfCurrentLeader + ":0"
 
-	firstBlockAsBytes, err := globals.BLOCKS.Get([]byte(firstBlockIdByThisLeader), nil)
+	firstBlockAsBytes, dbErr := globals.BLOCKS.Get([]byte(firstBlockIdByThisLeader), nil)
 
-	if err == nil {
+	if dbErr == nil {
 
 		var firstBlockParsed block.Block
 
-		err = json.Unmarshal(firstBlockAsBytes, &firstBlockParsed)
+		parseErr := json.Unmarshal(firstBlockAsBytes, &firstBlockParsed)
 
-		if err == nil {
-			//
+		if parseErr == nil {
+
+			secondBlockID := strconv.Itoa(epochIndex) + ":" + pubKeyOfCurrentLeader + ":1"
+
+			afpForSecondBlockByCurrentLeader := common_functions.GetVerifiedAggregatedFinalizationProofByBlockId(secondBlockID, epochHandler)
+
+			if afpForSecondBlockByCurrentLeader != nil {
+
+				alignmentDataResponse := AlignmentData{
+					ProposedIndexOfLeader:            localIndexOfLeader,
+					FirstBlockByCurrentLeader:        firstBlockParsed,
+					AfpForSecondBlockByCurrentLeader: *afpForSecondBlockByCurrentLeader,
+				}
+
+				sendJson(ctx, alignmentDataResponse)
+
+			} else {
+
+				sendJson(ctx, ErrMsg{Err: "No AFP for second block"})
+
+			}
+
 		} else {
 
 			sendJson(ctx, ErrMsg{Err: "No first block"})
