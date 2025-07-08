@@ -285,6 +285,68 @@ func CheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, epochHandl
 
 }
 
+func ExtendedCheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, epochHandler *structures.EpochHandler, position int, dontCheckSigna bool) (bool, map[string]structures.ExecutionStatsPerPool) {
+
+	aggregatedLeadersRotationProofsRef := firstBlockInThisEpochByPool.ExtraData.AggregatedLeadersRotationProofs
+
+	infoAboutFinalBlocksInThisEpoch := make(map[string]structures.ExecutionStatsPerPool)
+
+	arrayIndexer := 0
+
+	arrayForIteration := slices.Clone(epochHandler.LeadersSequence[:position])
+
+	slices.Reverse(arrayForIteration) // we need reversed version
+
+	bumpedWithPoolWhoCreatedAtLeastOneBlock := false
+
+	for _, poolPubKey := range arrayForIteration {
+
+		if alrpForThisPool, ok := aggregatedLeadersRotationProofsRef[poolPubKey]; ok {
+
+			signaIsOk := dontCheckSigna || VerifyAggregatedLeaderRotationProof(poolPubKey, alrpForThisPool, epochHandler)
+
+			if signaIsOk {
+
+				infoAboutFinalBlocksInThisEpoch[poolPubKey] = structures.ExecutionStatsPerPool{
+					Index:          alrpForThisPool.SkipIndex,
+					Hash:           alrpForThisPool.SkipHash,
+					FirstBlockHash: alrpForThisPool.FirstBlockHash,
+				}
+
+				arrayIndexer++
+
+				if alrpForThisPool.SkipIndex >= 0 {
+
+					bumpedWithPoolWhoCreatedAtLeastOneBlock = true
+
+					break
+
+				}
+
+			} else {
+
+				return false, make(map[string]structures.ExecutionStatsPerPool)
+
+			}
+
+		} else {
+
+			return false, make(map[string]structures.ExecutionStatsPerPool)
+
+		}
+
+	}
+
+	if arrayIndexer == position || bumpedWithPoolWhoCreatedAtLeastOneBlock {
+
+		return true, infoAboutFinalBlocksInThisEpoch
+
+	}
+
+	return false, make(map[string]structures.ExecutionStatsPerPool)
+
+}
+
 func GetFirstBlockInEpoch(epochHandler *structures.EpochHandler) *FirstBlockResult {
 
 	pivotData := CURRENT_PIVOT

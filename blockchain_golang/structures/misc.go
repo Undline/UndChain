@@ -20,6 +20,7 @@ type DelayedTransactionsBatch struct {
 }
 
 type ExecutionStatsPerPool struct {
-	Index int32
-	Hash  string
+	Index          int
+	Hash           string
+	FirstBlockHash string
 }
