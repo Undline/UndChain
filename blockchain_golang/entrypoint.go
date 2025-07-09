@@ -135,22 +135,50 @@ func prepareBlockchain() {
 
 	}
 
-	// Init genesis if version is -1
-	if globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.CoreMajorVersion == -1 {
+	// Load ET - Execution Thread handler
 
-		setGenesisToState()
+	if data, err := globals.STATE.Get([]byte("ET"), nil); err == nil {
 
-		serialized, err := json.Marshal(globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler)
+		var etHandler structures.ExecutionThreadMetadataHandler
 
-		if err != nil {
+		if err := json.Unmarshal(data, &etHandler); err == nil {
 
-			fmt.Printf("failed to marshal APPROVEMENT_THREAD: %v\n", err)
+			if etHandler.Cache == nil {
+
+				etHandler.Cache = make(map[string]string)
+
+			}
+
+			globals.EXECUTION_THREAD_METADATA_HANDLER.Handler = etHandler
+
+		} else {
+
+			fmt.Printf("failed to unmarshal EXECUTION_THREAD: %v\n", err)
 
 			return
 
 		}
 
-		if err := globals.APPROVEMENT_THREAD_METADATA.Put([]byte("AT"), serialized, nil); err != nil {
+	}
+
+	// Init genesis if version is -1
+	if globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.CoreMajorVersion == -1 {
+
+		setGenesisToState()
+
+		serializedApprovementThread, err := json.Marshal(globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler)
+
+		serializedExecutionThread, err2 := json.Marshal(globals.EXECUTION_THREAD_METADATA_HANDLER.Handler)
+
+		if err != nil || err2 != nil {
+
+			fmt.Printf("failed to marshal handlers: %v\n", err)
+
+			return
+
+		}
+
+		if err := globals.APPROVEMENT_THREAD_METADATA.Put([]byte("AT"), serializedApprovementThread, nil); err != nil {
 
 			fmt.Printf("failed to save APPROVEMENT_THREAD: %v\n", err)
 
@@ -158,7 +186,13 @@ func prepareBlockchain() {
 
 		}
 
-		return
+		if err := globals.STATE.Put([]byte("ET"), serializedExecutionThread, nil); err != nil {
+
+			fmt.Printf("failed to save EXECUTION_THREAD: %v\n", err)
+
+			return
+
+		}
 	}
 
 	// Version check
@@ -174,11 +208,13 @@ func prepareBlockchain() {
 
 func setGenesisToState() error {
 
-	batch := new(leveldb.Batch)
+	approvementThreadBatch := new(leveldb.Batch)
 
 	epochTimestamp := globals.GENESIS.FirstEpochStartTimestamp
 
 	poolsRegistryForEpochHandler := make(map[string]struct{})
+
+	poolsRegistryForEpochHandler2 := make(map[string]struct{})
 
 	// __________________________________ Load info about pools __________________________________
 
@@ -192,18 +228,26 @@ func setGenesisToState() error {
 			return err
 		}
 
-		batch.Put([]byte(poolPubKey+"(POOL)_STORAGE_POOL"), serialized)
+		approvementThreadBatch.Put([]byte(poolPubKey+"(POOL)_STORAGE_POOL"), serialized)
 
 		poolsRegistryForEpochHandler[poolPubKey] = struct{}{}
+
+		poolsRegistryForEpochHandler2[poolPubKey] = struct{}{}
+
+		globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.ExecutionData[poolPubKey] = structures.NewExecutionStatsTemplate()
 
 	}
 
 	globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.CoreMajorVersion = globals.GENESIS.CoreMajorVersion
 
-	globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.NetworkParameters = globals.GENESIS.NetworkParameters
+	globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.CoreMajorVersion = globals.GENESIS.CoreMajorVersion
+
+	globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.NetworkParameters = structures.CopyNetworkParameters(globals.GENESIS.NetworkParameters)
+
+	globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.NetworkParameters = structures.CopyNetworkParameters(globals.GENESIS.NetworkParameters)
 
 	// Commit changes
-	if err := globals.APPROVEMENT_THREAD_METADATA.Write(batch, nil); err != nil {
+	if err := globals.APPROVEMENT_THREAD_METADATA.Write(approvementThreadBatch, nil); err != nil {
 		return err
 	}
 
@@ -211,8 +255,7 @@ func setGenesisToState() error {
 
 	initEpochHash := utils.Blake3(hashInput)
 
-	// Create new epochHandler handler
-	epochHandler := structures.EpochDataHandler{
+	epochHandlerForApprovementThread := structures.EpochDataHandler{
 		Id:                 0,
 		Hash:               initEpochHash,
 		PoolsRegistry:      poolsRegistryForEpochHandler,
@@ -222,13 +265,31 @@ func setGenesisToState() error {
 		CurrentLeaderIndex: 0,
 	}
 
+	epochHandlerForExecThread := structures.EpochDataHandler{
+		Id:                 0,
+		Hash:               initEpochHash,
+		PoolsRegistry:      poolsRegistryForEpochHandler2,
+		StartTimestamp:     epochTimestamp,
+		Quorum:             []string{}, // will be assigned
+		LeadersSequence:    []string{}, // will be assigned
+		CurrentLeaderIndex: 0,
+	}
+
 	// Assign quorum - pseudorandomly and in deterministic way
-	epochHandler.Quorum = common_functions.GetCurrentEpochQuorum(&epochHandler, globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.NetworkParameters.QuorumSize, initEpochHash)
+
+	epochHandlerForApprovementThread.Quorum = common_functions.GetCurrentEpochQuorum(&epochHandlerForApprovementThread, globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.NetworkParameters.QuorumSize, initEpochHash)
+
+	epochHandlerForExecThread.Quorum = common_functions.GetCurrentEpochQuorum(&epochHandlerForExecThread, globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.NetworkParameters.QuorumSize, initEpochHash)
 
 	// Now set the block generators for epoch pseudorandomly and in deterministic way
-	common_functions.SetLeadersSequence(&epochHandler, initEpochHash)
 
-	globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler = epochHandler
+	common_functions.SetLeadersSequence(&epochHandlerForApprovementThread, initEpochHash)
+
+	common_functions.SetLeadersSequence(&epochHandlerForExecThread, initEpochHash)
+
+	globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler = epochHandlerForApprovementThread
+
+	globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochDataHandler = epochHandlerForExecThread
 
 	return nil
 

@@ -10,6 +10,13 @@ type BigInt struct {
 	*big.Int
 }
 
+func (b BigInt) Copy() BigInt {
+	if b.Int == nil {
+		return BigInt{nil}
+	}
+	return BigInt{new(big.Int).Set(b.Int)}
+}
+
 func (b *BigInt) UnmarshalJSON(data []byte) error {
 	var s string
 	if err := json.Unmarshal(data, &s); err == nil {
@@ -52,6 +59,19 @@ type NetworkParameters struct {
 	BlockTime             int64  `json:"BLOCK_TIME"`
 	MaxBlockSizeInBytes   int64  `json:"MAX_BLOCK_SIZE_IN_BYTES"`
 	TxLimitPerBlock       int    `json:"TXS_LIMIT_PER_BLOCK"`
+}
+
+func CopyNetworkParameters(src NetworkParameters) NetworkParameters {
+	return NetworkParameters{
+		ValidatorStake:        src.ValidatorStake.Copy(),
+		MinimalStakePerEntity: src.MinimalStakePerEntity.Copy(),
+		QuorumSize:            src.QuorumSize,
+		EpochTime:             src.EpochTime,
+		LeadershipTimeframe:   src.LeadershipTimeframe,
+		BlockTime:             src.BlockTime,
+		MaxBlockSizeInBytes:   src.MaxBlockSizeInBytes,
+		TxLimitPerBlock:       src.TxLimitPerBlock,
+	}
 }
 
 type Staker struct {

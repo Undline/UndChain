@@ -24,3 +24,13 @@ type ExecutionStatsPerPool struct {
 	Hash           string
 	FirstBlockHash string
 }
+
+func NewExecutionStatsTemplate() ExecutionStatsPerPool {
+
+	return ExecutionStatsPerPool{
+		Index:          -1,
+		Hash:           "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+		FirstBlockHash: "",
+	}
+
+}
