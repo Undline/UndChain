@@ -27,7 +27,7 @@ type FirstBlockResult struct {
 	FirstBlockCreator, FirstBlockHash string
 }
 
-var CURRENT_PIVOT *PivotSearchData
+var APPROVEMENT_THREAD_PIVOT, EXECUTION_THREAD_PIVOT *PivotSearchData
 
 func GetBlock(epochIndex int, blockCreator string, index uint, epochHandler *structures.EpochDataHandler) *block.Block {
 
@@ -347,9 +347,15 @@ func ExtendedCheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, ep
 
 }
 
-func GetFirstBlockInEpoch(epochHandler *structures.EpochDataHandler) *FirstBlockResult {
+func GetFirstBlockInEpoch(epochHandler *structures.EpochDataHandler, threadType string) *FirstBlockResult {
 
-	pivotData := CURRENT_PIVOT
+	var pivotData *PivotSearchData = APPROVEMENT_THREAD_PIVOT
+
+	if threadType == "EXECUTION" {
+
+		pivotData = EXECUTION_THREAD_PIVOT
+
+	}
 
 	if pivotData == nil {
 
@@ -460,7 +466,15 @@ func GetFirstBlockInEpoch(epochHandler *structures.EpochDataHandler) *FirstBlock
 		if pivotData.Position == 0 {
 
 			defer func() {
-				CURRENT_PIVOT = nil
+
+				if threadType == "EXECUTION" {
+
+					EXECUTION_THREAD_PIVOT = nil
+
+				} else {
+					APPROVEMENT_THREAD_PIVOT = nil
+				}
+
 			}()
 
 			return &FirstBlockResult{
@@ -479,7 +493,15 @@ func GetFirstBlockInEpoch(epochHandler *structures.EpochDataHandler) *FirstBlock
 			if position == 0 {
 
 				defer func() {
-					CURRENT_PIVOT = nil
+
+					if threadType == "EXECUTION" {
+
+						EXECUTION_THREAD_PIVOT = nil
+
+					} else {
+						APPROVEMENT_THREAD_PIVOT = nil
+					}
+
 				}()
 
 				if leaderRotationProof.SkipIndex == -1 {
