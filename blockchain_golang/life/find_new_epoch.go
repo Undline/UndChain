@@ -89,7 +89,7 @@ func EpochRotationThread() {
 
 		if !utils.EpochStillFresh(&globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler) {
 
-			epochHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler
+			epochHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler
 
 			epochFullID := epochHandlerRef.Hash + "#" + strconv.Itoa(epochHandlerRef.Id)
 
@@ -291,7 +291,7 @@ func EpochRotationThread() {
 
 						nextEpochQuorumSize := globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.NetworkParameters.QuorumSize
 
-						nextEpochHandler := structures.EpochHandler{
+						nextEpochHandler := structures.EpochDataHandler{
 							Id:                 nextEpochId,
 							Hash:               nextEpochHash,
 							PoolsRegistry:      epochHandlerRef.PoolsRegistry,
@@ -305,7 +305,7 @@ func EpochRotationThread() {
 
 						atomicBatch.Put([]byte("LATEST_BATCH_INDEX:"), []byte(strconv.Itoa(int(latestBatchIndex))))
 
-						globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler = nextEpochHandler
+						globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler = nextEpochHandler
 
 						jsonedHandler, _ := json.Marshal(globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler)
 

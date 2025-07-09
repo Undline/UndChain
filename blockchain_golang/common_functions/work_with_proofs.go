@@ -29,7 +29,7 @@ type FirstBlockResult struct {
 
 var CURRENT_PIVOT *PivotSearchData
 
-func GetBlock(epochIndex int, blockCreator string, index uint, epochHandler *structures.EpochHandler) *block.Block {
+func GetBlock(epochIndex int, blockCreator string, index uint, epochHandler *structures.EpochDataHandler) *block.Block {
 
 	blockID := strconv.Itoa(epochIndex) + ":" + blockCreator + ":" + strconv.Itoa(int(index))
 
@@ -153,7 +153,7 @@ func VerifyAggregatedEpochFinalizationProof(
 
 func VerifyAggregatedFinalizationProof(
 	proof *structures.AggregatedFinalizationProof,
-	epochHandler *structures.EpochHandler,
+	epochHandler *structures.EpochDataHandler,
 ) bool {
 
 	epochFullID := epochHandler.Hash + "#" + strconv.Itoa(epochHandler.Id)
@@ -191,7 +191,7 @@ func VerifyAggregatedFinalizationProof(
 func VerifyAggregatedLeaderRotationProof(
 	pubKeyOfSomePreviousLeader string,
 	proof *structures.AggregatedLeaderRotationProof,
-	epochHandler *structures.EpochHandler,
+	epochHandler *structures.EpochDataHandler,
 ) bool {
 
 	epochFullID := epochHandler.Hash + "#" + strconv.Itoa(epochHandler.Id)
@@ -231,7 +231,7 @@ func VerifyAggregatedLeaderRotationProof(
 
 }
 
-func CheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, epochHandler *structures.EpochHandler, position int) bool {
+func CheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, epochHandler *structures.EpochDataHandler, position int) bool {
 
 	aggregatedLeadersRotationProofsRef := firstBlockInThisEpochByPool.ExtraData.AggregatedLeadersRotationProofs
 
@@ -285,7 +285,7 @@ func CheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, epochHandl
 
 }
 
-func ExtendedCheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, epochHandler *structures.EpochHandler, position int, dontCheckSigna bool) (bool, map[string]structures.ExecutionStatsPerPool) {
+func ExtendedCheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, epochHandler *structures.EpochDataHandler, position int, dontCheckSigna bool) (bool, map[string]structures.ExecutionStatsPerPool) {
 
 	aggregatedLeadersRotationProofsRef := firstBlockInThisEpochByPool.ExtraData.AggregatedLeadersRotationProofs
 
@@ -347,7 +347,7 @@ func ExtendedCheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, ep
 
 }
 
-func GetFirstBlockInEpoch(epochHandler *structures.EpochHandler) *FirstBlockResult {
+func GetFirstBlockInEpoch(epochHandler *structures.EpochDataHandler) *FirstBlockResult {
 
 	pivotData := CURRENT_PIVOT
 
@@ -529,7 +529,7 @@ func GetFirstBlockInEpoch(epochHandler *structures.EpochHandler) *FirstBlockResu
 
 }
 
-func GetVerifiedAggregatedFinalizationProofByBlockId(blockID string, epochHandler *structures.EpochHandler) *structures.AggregatedFinalizationProof {
+func GetVerifiedAggregatedFinalizationProofByBlockId(blockID string, epochHandler *structures.EpochDataHandler) *structures.AggregatedFinalizationProof {
 
 	localAfpAsBytes, err := globals.EPOCH_DATA.Get([]byte("AFP:"+blockID), nil)
 

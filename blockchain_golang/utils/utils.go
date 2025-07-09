@@ -284,9 +284,9 @@ type CurrentLeaderData struct {
 	Url        string
 }
 
-func IsMyCoreVersionOld(thread *structures.ApprovementThreadMetadataHandler) bool {
+func IsMyCoreVersionOld(thread structures.LogicalThread) bool {
 
-	return thread.CoreMajorVersion > globals.CORE_MAJOR_VERSION
+	return thread.GetCoreMajorVersion() > globals.CORE_MAJOR_VERSION
 
 }
 
@@ -296,9 +296,9 @@ func GetRandomFromSlice(arr []structures.QuorumMemberData) structures.QuorumMemb
 
 }
 
-func EpochStillFresh(thread *structures.ApprovementThreadMetadataHandler) bool {
+func EpochStillFresh(thread structures.LogicalThread) bool {
 
-	return (thread.EpochHandler.StartTimestamp + uint64(thread.NetworkParameters.EpochTime)) > uint64(GetUTCTimestampInMilliSeconds())
+	return (thread.GetEpochHandler().StartTimestamp + uint64(thread.GetNetworkParams().EpochTime)) > uint64(GetUTCTimestampInMilliSeconds())
 
 }
 
@@ -308,9 +308,9 @@ func GetCurrentLeader() CurrentLeaderData {
 
 	defer globals.APPROVEMENT_THREAD_METADATA_HANDLER.RWMutex.RUnlock()
 
-	currentLeaderIndex := globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler.CurrentLeaderIndex
+	currentLeaderIndex := globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.CurrentLeaderIndex
 
-	currentLeaderPubKey := globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler.LeadersSequence[currentLeaderIndex]
+	currentLeaderPubKey := globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.LeadersSequence[currentLeaderIndex]
 
 	if currentLeaderPubKey == globals.CONFIGURATION.PublicKey {
 

@@ -93,6 +93,12 @@ var EXECUTION_THREAD_METADATA_HANDLER = struct {
 		Cache:            make(map[string]string),
 		LastHeight:       -1,
 		LastBlockHash:    "",
+		ExecutionData:    make(map[string]structures.ExecutionStatsPerPool),
+		AlignmentData: structures.AlignmentDataHandler{
+			CurrentLeader:              0,
+			CurrentToExecute:           0,
+			InfoAboutLastBlocksInEpoch: make(map[string]structures.ExecutionStatsPerPool),
+		},
 	},
 }
 

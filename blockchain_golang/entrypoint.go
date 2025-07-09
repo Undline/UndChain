@@ -212,7 +212,7 @@ func setGenesisToState() error {
 	initEpochHash := utils.Blake3(hashInput)
 
 	// Create new epochHandler handler
-	epochHandler := structures.EpochHandler{
+	epochHandler := structures.EpochDataHandler{
 		Id:                 0,
 		Hash:               initEpochHash,
 		PoolsRegistry:      poolsRegistryForEpochHandler,
@@ -228,7 +228,7 @@ func setGenesisToState() error {
 	// Now set the block generators for epoch pseudorandomly and in deterministic way
 	common_functions.SetLeadersSequence(&epochHandler, initEpochHash)
 
-	globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler = epochHandler
+	globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler = epochHandler
 
 	return nil
 

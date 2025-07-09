@@ -16,6 +16,7 @@ import (
 type ErrMsg struct {
 	Err string `json:"err"`
 }
+
 type AlignmentData struct {
 	ProposedIndexOfLeader            int                                    `json:"proposedIndexOfLeader"`
 	FirstBlockByCurrentLeader        block.Block                            `json:"firstBlockByCurrentLeader"`
@@ -93,7 +94,7 @@ func GetSequenceAlignmentData(ctx *fasthttp.RequestCtx) {
 
 	defer globals.APPROVEMENT_THREAD_METADATA_HANDLER.RWMutex.RUnlock()
 
-	epochHandler := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler
+	epochHandler := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler
 
 	epochIndex := epochHandler.Id
 
@@ -167,7 +168,7 @@ func EpochProposition(ctx *fasthttp.RequestCtx) {
 
 	defer globals.APPROVEMENT_THREAD_METADATA_HANDLER.RWMutex.RUnlock()
 
-	epochHandler := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler
+	epochHandler := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler
 
 	epochIndex := epochHandler.Id
 

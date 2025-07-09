@@ -1,16 +1,22 @@
 package structures
 
+type LogicalThread interface {
+	GetCoreMajorVersion() int
+	GetNetworkParams() NetworkParameters
+	GetEpochHandler() EpochDataHandler
+}
+
 type ApprovementThreadMetadataHandler struct {
 	CoreMajorVersion  int                     `json:"coreMajorVersion"`
 	NetworkParameters NetworkParameters       `json:"networkParameters"`
-	EpochHandler      EpochHandler            `json:"epoch"`
+	EpochDataHandler  EpochDataHandler        `json:"epoch"`
 	Cache             map[string]*PoolStorage `json:"-"`
 }
 
 type ExecutionThreadMetadataHandler struct {
 	CoreMajorVersion  int               `json:"coreMajorVersion"`
 	NetworkParameters NetworkParameters `json:"networkParameters"`
-	EpochHandler      EpochHandler      `json:"epoch"`
+	EpochDataHandler  EpochDataHandler  `json:"epoch"`
 
 	LastHeight    int64  `json:"lastHeight"`
 	LastBlockHash string `json:"lastBlockHash"`
@@ -19,6 +25,30 @@ type ExecutionThreadMetadataHandler struct {
 	AlignmentData AlignmentDataHandler             `json:"alignmentData"`
 
 	Cache map[string]string `json:"-"`
+}
+
+func (handler *ApprovementThreadMetadataHandler) GetCoreMajorVersion() int {
+	return handler.CoreMajorVersion
+}
+
+func (handler *ExecutionThreadMetadataHandler) GetCoreMajorVersion() int {
+	return handler.CoreMajorVersion
+}
+
+func (handler *ApprovementThreadMetadataHandler) GetNetworkParams() NetworkParameters {
+	return handler.NetworkParameters
+}
+
+func (handler *ApprovementThreadMetadataHandler) GetEpochHandler() EpochDataHandler {
+	return handler.EpochDataHandler
+}
+
+func (handler *ExecutionThreadMetadataHandler) GetNetworkParams() NetworkParameters {
+	return handler.NetworkParameters
+}
+
+func (handler *ExecutionThreadMetadataHandler) GetEpochHandler() EpochDataHandler {
+	return handler.EpochDataHandler
 }
 
 type GenerationThreadMetadataHandler struct {

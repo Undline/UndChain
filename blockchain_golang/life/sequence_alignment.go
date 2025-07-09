@@ -27,11 +27,11 @@ func SequenceAlignmentThread() {
 
 		globals.EXECUTION_THREAD_METADATA_HANDLER.RWMutex.RLock()
 
-		epochHandlerRef := &globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochHandler
+		epochHandlerRef := &globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochDataHandler
 
 		localVersionOfCurrentLeader := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.AlignmentData.CurrentLeader
 
-		quorumMembers := common_functions.GetQuorumUrlsAndPubkeys(&globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochHandler)
+		quorumMembers := common_functions.GetQuorumUrlsAndPubkeys(&globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochDataHandler)
 
 		randomTarget := utils.GetRandomFromSlice(quorumMembers)
 
@@ -187,13 +187,13 @@ func SequenceAlignmentThread() {
 
 								// Release read mutex and immediately acquire mutex to write operation
 
-								storedEpochIndex := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochHandler.Id
+								storedEpochIndex := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.Id
 
 								globals.EXECUTION_THREAD_METADATA_HANDLER.RWMutex.RUnlock()
 
 								globals.EXECUTION_THREAD_METADATA_HANDLER.RWMutex.Lock()
 
-								if globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochHandler.Id == storedEpochIndex {
+								if globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.Id == storedEpochIndex {
 
 									slices.Reverse(collectionOfAlrpsFromAllThePreviousLeaders)
 

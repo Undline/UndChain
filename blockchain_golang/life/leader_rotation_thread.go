@@ -16,9 +16,9 @@ func timeIsOutForCurrentLeader(approvementThread *structures.ApprovementThreadMe
 
 	leaderShipTimeframe := approvementThread.NetworkParameters.LeadershipTimeframe
 
-	currentIndex := int64(approvementThread.EpochHandler.CurrentLeaderIndex)
+	currentIndex := int64(approvementThread.EpochDataHandler.CurrentLeaderIndex)
 
-	return utils.GetUTCTimestampInMilliSeconds() >= int64(approvementThread.EpochHandler.StartTimestamp)+(currentIndex+1)*leaderShipTimeframe
+	return utils.GetUTCTimestampInMilliSeconds() >= int64(approvementThread.EpochDataHandler.StartTimestamp)+(currentIndex+1)*leaderShipTimeframe
 
 }
 
@@ -28,7 +28,7 @@ func LeaderRotationThread() {
 
 		globals.APPROVEMENT_THREAD_METADATA_HANDLER.RWMutex.RLock()
 
-		epochHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler
+		epochHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler
 
 		haveNextCandidate := epochHandlerRef.CurrentLeaderIndex+1 < len(epochHandlerRef.LeadersSequence)
 
@@ -42,9 +42,9 @@ func LeaderRotationThread() {
 
 			threadMetadataHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler
 
-			if storedEpochIndex == threadMetadataHandlerRef.EpochHandler.Id {
+			if storedEpochIndex == threadMetadataHandlerRef.EpochDataHandler.Id {
 
-				threadMetadataHandlerRef.EpochHandler.CurrentLeaderIndex++
+				threadMetadataHandlerRef.EpochDataHandler.CurrentLeaderIndex++
 
 				// Store the updated AT
 
