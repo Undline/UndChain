@@ -38,10 +38,10 @@ func RunBlockchain() {
 	go life.LeaderRotationThread()
 
 	//✅ 6.Logical thread to build the temporary sequence of blocks to verify them
-	go life.SequenceAlignmentThread()
+	//go life.SequenceAlignmentThread()
 
 	//✅ 7.Start execution process - take blocks and execute transactions
-	go life.ExecutionThread()
+	//go life.ExecutionThread()
 
 	//___________________ RUN SERVERS - WEBSOCKET AND HTTP __________________
 
