@@ -24,7 +24,7 @@ func GetFinalizationProof(parsedRequest WsFinalizationProofRequest, connection *
 
 	defer globals.APPROVEMENT_THREAD_METADATA_HANDLER.RWMutex.RUnlock()
 
-	epochHandler := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler
+	epochHandler := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler
 
 	epochIndex := epochHandler.Id
 
@@ -91,7 +91,7 @@ func GetFinalizationProof(parsedRequest WsFinalizationProofRequest, connection *
 
 					} else {
 
-						var legacyEpochHandler structures.EpochHandler
+						var legacyEpochHandler structures.EpochDataHandler
 
 						prevEpochIndex := epochHandler.Id - 1
 
@@ -273,7 +273,7 @@ func GetLeaderRotationProof(parsedRequest WsLeaderRotationProofRequest, connecti
 
 	defer globals.APPROVEMENT_THREAD_METADATA_HANDLER.RWMutex.RUnlock()
 
-	epochHandler := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler
+	epochHandler := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler
 
 	epochIndex := epochHandler.Id
 

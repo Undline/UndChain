@@ -84,4 +84,22 @@ var APPROVEMENT_THREAD_METADATA_HANDLER = struct {
 	},
 }
 
+var EXECUTION_THREAD_METADATA_HANDLER = struct {
+	RWMutex sync.RWMutex
+	Handler structures.ExecutionThreadMetadataHandler
+}{
+	Handler: structures.ExecutionThreadMetadataHandler{
+		CoreMajorVersion: -1,
+		Cache:            make(map[string]string),
+		LastHeight:       -1,
+		LastBlockHash:    "",
+		ExecutionData:    make(map[string]structures.ExecutionStatsPerPool),
+		AlignmentData: structures.AlignmentDataHandler{
+			CurrentLeader:              0,
+			CurrentToExecute:           0,
+			InfoAboutLastBlocksInEpoch: make(map[string]structures.ExecutionStatsPerPool),
+		},
+	},
+}
+
 var BLOCKS, STATE, EPOCH_DATA, APPROVEMENT_THREAD_METADATA, FINALIZATION_VOTING_STATS *leveldb.DB

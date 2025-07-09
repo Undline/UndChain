@@ -81,10 +81,10 @@ func UpdateStakingPool(delayedTransaction map[string]string) bool {
 
 		if activated {
 			if poolStorage.TotalStaked.Int.Cmp(requiredStake.Int) >= 0 {
-				globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler.PoolsRegistry[creator] = struct{}{}
+				globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.PoolsRegistry[creator] = struct{}{}
 			}
 		} else {
-			delete(globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler.PoolsRegistry, creator)
+			delete(globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.PoolsRegistry, creator)
 		}
 
 		globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.Cache[creator+"(POOL)_STORAGE_POOL"] = poolStorage
@@ -139,9 +139,9 @@ func Stake(delayedTransaction map[string]string) bool {
 
 		if poolStorage.Activated && poolStorage.TotalStaked.Cmp(requiredStake.Int) >= 0 {
 
-			if _, exists := globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler.PoolsRegistry[poolPubKey]; !exists {
+			if _, exists := globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.PoolsRegistry[poolPubKey]; !exists {
 
-				globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler.PoolsRegistry[poolPubKey] = struct{}{}
+				globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.PoolsRegistry[poolPubKey] = struct{}{}
 
 			}
 
@@ -203,7 +203,7 @@ func Unstake(delayedTransaction map[string]string) bool {
 
 		if poolStorage.TotalStaked.Cmp(requiredStake.Int) < 0 {
 
-			delete(globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler.PoolsRegistry, poolPubKey)
+			delete(globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.PoolsRegistry, poolPubKey)
 
 		}
 

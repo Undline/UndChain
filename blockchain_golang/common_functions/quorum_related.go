@@ -41,7 +41,7 @@ func GetFromApprovementThreadState(poolId string) *structures.PoolStorage {
 
 }
 
-func SetLeadersSequence(epochHandler *structures.EpochHandler, epochSeed string) {
+func SetLeadersSequence(epochHandler *structures.EpochDataHandler, epochSeed string) {
 
 	epochHandler.LeadersSequence = []string{} // [pool0, pool1,...poolN]
 
@@ -113,7 +113,7 @@ func SetLeadersSequence(epochHandler *structures.EpochHandler, epochSeed string)
 
 }
 
-func GetQuorumMajority(epochHandler *structures.EpochHandler) int {
+func GetQuorumMajority(epochHandler *structures.EpochDataHandler) int {
 
 	quorumSize := len(epochHandler.Quorum)
 
@@ -128,7 +128,7 @@ func GetQuorumMajority(epochHandler *structures.EpochHandler) int {
 	return majority
 }
 
-func GetQuorumUrlsAndPubkeys(epochHandler *structures.EpochHandler) []structures.QuorumMemberData {
+func GetQuorumUrlsAndPubkeys(epochHandler *structures.EpochDataHandler) []structures.QuorumMemberData {
 
 	var toReturn []structures.QuorumMemberData
 
@@ -144,7 +144,7 @@ func GetQuorumUrlsAndPubkeys(epochHandler *structures.EpochHandler) []structures
 
 }
 
-func GetCurrentEpochQuorum(epochHandler *structures.EpochHandler, quorumSize int, newEpochSeed string) []string {
+func GetCurrentEpochQuorum(epochHandler *structures.EpochDataHandler, quorumSize int, newEpochSeed string) []string {
 
 	totalNumberOfValidators := len(epochHandler.PoolsRegistry)
 
