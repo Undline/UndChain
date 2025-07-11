@@ -36,7 +36,6 @@ func CreateStakingPool(delayedTransaction map[string]string) bool {
 		}
 
 		globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.Cache[storageKey] = &structures.PoolStorage{
-			Activated:   true,
 			Percentage:  percentage,
 			TotalStaked: structures.BigInt{Int: big.NewInt(0)},
 			Stakers: map[string]structures.Staker{
@@ -44,7 +43,7 @@ func CreateStakingPool(delayedTransaction map[string]string) bool {
 					Stake: structures.BigInt{Int: big.NewInt(0)},
 				},
 			},
-			PoolURL:    poolURL,
+			PoolUrl:    poolURL,
 			WssPoolUrl: wssPoolURL,
 		}
 
@@ -58,11 +57,10 @@ func UpdateStakingPool(delayedTransaction map[string]string) bool {
 
 	creator := delayedTransaction["creator"]
 	percentage, err1 := strconv.Atoi(delayedTransaction["percentage"])
-	activated, err2 := strconv.ParseBool(delayedTransaction["activated"])
 	poolURL := delayedTransaction["poolURL"]
 	wssPoolURL := delayedTransaction["wssPoolURL"]
 
-	if err1 != nil || err2 != nil || percentage < 0 || percentage > 100 || poolURL == "" || wssPoolURL == "" {
+	if err1 != nil || percentage < 0 || percentage > 100 || poolURL == "" || wssPoolURL == "" {
 
 		return false
 
@@ -72,17 +70,14 @@ func UpdateStakingPool(delayedTransaction map[string]string) bool {
 
 	if poolStorage != nil {
 
-		poolStorage.Activated = activated
 		poolStorage.Percentage = percentage
-		poolStorage.PoolURL = poolURL
+		poolStorage.PoolUrl = poolURL
 		poolStorage.WssPoolUrl = wssPoolURL
 
 		requiredStake := globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.NetworkParameters.ValidatorStake
 
-		if activated {
-			if poolStorage.TotalStaked.Int.Cmp(requiredStake.Int) >= 0 {
-				globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.PoolsRegistry[creator] = struct{}{}
-			}
+		if poolStorage.TotalStaked.Int.Cmp(requiredStake.Int) >= 0 {
+			globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.PoolsRegistry[creator] = struct{}{}
 		} else {
 			delete(globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.PoolsRegistry, creator)
 		}
@@ -137,7 +132,7 @@ func Stake(delayedTransaction map[string]string) bool {
 
 		requiredStake := globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.NetworkParameters.ValidatorStake
 
-		if poolStorage.Activated && poolStorage.TotalStaked.Cmp(requiredStake.Int) >= 0 {
+		if poolStorage.TotalStaked.Cmp(requiredStake.Int) >= 0 {
 
 			if _, exists := globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.PoolsRegistry[poolPubKey]; !exists {
 

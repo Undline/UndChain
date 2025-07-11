@@ -87,12 +87,6 @@ func AcceptTransaction(ctx *fasthttp.RequestCtx) {
 
 	}
 
-	if globals.CONFIGURATION.RouteTriggers.Main.AcceptTxs != 1 {
-		ctx.SetStatusCode(fasthttp.StatusForbidden)
-		ctx.Write([]byte(`{"err":"Route is off"}`))
-		return
-	}
-
 	currentLeader := utils.GetCurrentLeader()
 
 	if !currentLeader.IsMeLeader {

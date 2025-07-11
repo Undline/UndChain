@@ -220,8 +220,6 @@ func setGenesisToState() error {
 
 	for poolPubKey, poolStorage := range globals.GENESIS.Pools {
 
-		poolStorage.Activated = true
-
 		serialized, err := json.Marshal(poolStorage)
 
 		if err != nil {

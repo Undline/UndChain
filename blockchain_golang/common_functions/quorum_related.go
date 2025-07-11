@@ -136,7 +136,7 @@ func GetQuorumUrlsAndPubkeys(epochHandler *structures.EpochDataHandler) []struct
 
 		poolStorage := GetFromApprovementThreadState(pubKey + "(POOL)_STORAGE_POOL")
 
-		toReturn = append(toReturn, structures.QuorumMemberData{PubKey: pubKey, Url: poolStorage.PoolURL})
+		toReturn = append(toReturn, structures.QuorumMemberData{PubKey: pubKey, Url: poolStorage.PoolUrl})
 
 	}
 
