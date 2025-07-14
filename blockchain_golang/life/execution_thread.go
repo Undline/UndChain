@@ -9,97 +9,133 @@ import (
 
 func ExecutionThread() {
 
-	globals.EXECUTION_THREAD_METADATA_HANDLER.RWMutex.RLock()
+	for {
 
-	epochHandler := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler
+		globals.EXECUTION_THREAD_METADATA_HANDLER.RWMutex.RLock()
 
-	currentEpochIsFresh := utils.EpochStillFresh(&epochHandler)
+		epochHandler := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler
 
-	// Struct is {currentLeader,currentToVerify,infoAboutFinalBlocksInThisEpoch:{poolPubKey:{index,hash}}}
-	//alignmentData := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.CurrentEpochAlignmentData
+		currentEpochIsFresh := utils.EpochStillFresh(&epochHandler)
 
-	shouldMoveToNextEpoch := false
+		// Struct is {currentLeader,currentToVerify,infoAboutFinalBlocksInThisEpoch:{poolPubKey:{index,hash}}}
+		//alignmentData := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.CurrentEpochAlignmentData
 
-	if epochHandler.LegacyEpochAlignmentData.Activated {
+		shouldMoveToNextEpoch := false
 
-		infoFromAefpAboutLastBlocksByPools := epochHandler.LegacyEpochAlignmentData.InfoAboutLastBlocksInEpoch
+		if epochHandler.LegacyEpochAlignmentData.Activated {
 
-		var localExecMetadataForLeader, metadataFromAefpForLeader structures.ExecutionStatsPerPool
+			infoFromAefpAboutLastBlocksByPools := epochHandler.LegacyEpochAlignmentData.InfoAboutLastBlocksInEpoch
 
-		dataExists := false
+			var localExecMetadataForLeader, metadataFromAefpForLeader structures.ExecutionStatsPerPool
 
-		for {
+			dataExists := false
 
-			indexOfLeaderToExec := epochHandler.LegacyEpochAlignmentData.CurrentToExecute
+			for {
 
-			pubKeyOfLeader := epochHandler.EpochDataHandler.LeadersSequence[indexOfLeaderToExec]
+				indexOfLeaderToExec := epochHandler.LegacyEpochAlignmentData.CurrentToExecute
 
-			localExecMetadataForLeader = epochHandler.ExecutionData[pubKeyOfLeader]
+				pubKeyOfLeader := epochHandler.EpochDataHandler.LeadersSequence[indexOfLeaderToExec]
 
-			metadataFromAefpForLeader, dataExists = infoFromAefpAboutLastBlocksByPools[pubKeyOfLeader]
+				localExecMetadataForLeader = epochHandler.ExecutionData[pubKeyOfLeader]
 
-			if !dataExists {
+				metadataFromAefpForLeader, dataExists = infoFromAefpAboutLastBlocksByPools[pubKeyOfLeader]
 
-				metadataFromAefpForLeader = structures.NewExecutionStatsTemplate()
-			}
+				if !dataExists {
 
-			finishedToExecBlocksByThisLeader := localExecMetadataForLeader.Index == metadataFromAefpForLeader.Index
+					metadataFromAefpForLeader = structures.NewExecutionStatsTemplate()
+				}
 
-			if finishedToExecBlocksByThisLeader {
+				finishedToExecBlocksByThisLeader := localExecMetadataForLeader.Index == metadataFromAefpForLeader.Index
 
-				itsTheLastBlockInSequence := len(epochHandler.EpochDataHandler.LeadersSequence) == indexOfLeaderToExec+1
+				if finishedToExecBlocksByThisLeader {
 
-				if itsTheLastBlockInSequence {
+					itsTheLastBlockInSequence := len(epochHandler.EpochDataHandler.LeadersSequence) == indexOfLeaderToExec+1
 
-					break
+					if itsTheLastBlockInSequence {
 
-				} else {
+						break
 
-					epochHandler.LegacyEpochAlignmentData.CurrentToExecute++
+					} else {
 
-					continue
+						epochHandler.LegacyEpochAlignmentData.CurrentToExecute++
+
+						continue
+
+					}
 
 				}
 
+				/*
+
+					Next:
+
+					1) Check connection with pool or point of blocks distribution
+
+					2) Fetch blocks
+
+					3) Execute
+
+
+				*/
+
 			}
 
-			/*
+			allBlocksWereExecutedInLegacyEpoch := len(epochHandler.EpochDataHandler.LeadersSequence) == epochHandler.LegacyEpochAlignmentData.CurrentToExecute+1
 
-				Next:
+			finishedToExecBlocksByLastLeader := localExecMetadataForLeader.Index == metadataFromAefpForLeader.Index
 
-				1) Check connection with pool or point of blocks distribution
+			if allBlocksWereExecutedInLegacyEpoch && finishedToExecBlocksByLastLeader {
 
-				2) Fetch blocks
+				shouldMoveToNextEpoch = true
+			}
 
-				3) Execute
+		} else if currentEpochIsFresh && epochHandler.CurrentEpochAlignmentData.Activated {
 
+			// Take the pool by it's position
 
-			*/
+			currentEpochAlignmentData := &epochHandler.CurrentEpochAlignmentData
+
+			leaderPubkeyToExecBlocks := epochHandler.EpochDataHandler.LeadersSequence[currentEpochAlignmentData.CurrentToExecute]
+
+			execStatsOfLeader := epochHandler.ExecutionData[leaderPubkeyToExecBlocks] // {index,hash}
+
+			infoAboutLastBlockByThisLeader, exists := currentEpochAlignmentData.InfoAboutLastBlocksInEpoch[leaderPubkeyToExecBlocks] // {index,hash}
+
+			if exists && execStatsOfLeader.Index == infoAboutLastBlockByThisLeader.Index {
+
+				// Move to next one
+
+				epochHandler.CurrentEpochAlignmentData.CurrentToExecute++
+
+				if !currentEpochIsFresh {
+
+					TryToFinishCurrentEpoch(&epochHandler.EpochDataHandler)
+
+				}
+
+				// TODO: Here we need to skip the following logic and start next iteration
+				// TODO: Cope with mutexes here
+				continue
+
+			}
+
+			// Try check if we have established a WSS channel to fetch blocks
+
+			// Now, when we have connection with some entity which has an ability to give us blocks via WS(s) tunnel
 
 		}
 
-		allBlocksWereExecutedInLegacyEpoch := len(epochHandler.EpochDataHandler.LeadersSequence) == epochHandler.LegacyEpochAlignmentData.CurrentToExecute+1
+		if !currentEpochIsFresh && !epochHandler.LegacyEpochAlignmentData.Activated {
 
-		finishedToExecBlocksByLastLeader := localExecMetadataForLeader.Index == metadataFromAefpForLeader.Index
+			TryToFinishCurrentEpoch(&epochHandler.EpochDataHandler)
 
-		if allBlocksWereExecutedInLegacyEpoch && finishedToExecBlocksByLastLeader {
-
-			shouldMoveToNextEpoch = true
 		}
 
-	} else if currentEpochIsFresh && epochHandler.CurrentEpochAlignmentData.Activated {
-		// Take the pool by it's position
-	}
+		if shouldMoveToNextEpoch {
 
-	if !currentEpochIsFresh && !epochHandler.LegacyEpochAlignmentData.Activated {
+			SetupNextEpoch(&epochHandler.EpochDataHandler)
 
-		TryToFinishCurrentEpoch(&epochHandler.EpochDataHandler)
-
-	}
-
-	if shouldMoveToNextEpoch {
-
-		SetupNextEpoch(&epochHandler.EpochDataHandler)
+		}
 
 	}
 
@@ -114,6 +150,12 @@ func ExecuteBlock(block *block.Block) {
 }
 
 func ExecuteTransaction(tx *structures.Transaction) {}
+
+/*
+The following 3 functions are responsible of final sequence alignment before we finish
+with epoch X and move to epoch X+1
+*/
+func FindInfoAboutLastBlocks(epochHandler *structures.EpochDataHandler) {}
 
 func TryToFinishCurrentEpoch(epochHandler *structures.EpochDataHandler) {}
 
