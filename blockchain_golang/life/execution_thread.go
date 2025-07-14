@@ -21,9 +21,74 @@ func ExecutionThread() {
 	shouldMoveToNextEpoch := false
 
 	if epochHandler.LegacyEpochAlignmentData.Activated {
-		// Stub
+
+		infoFromAefpAboutLastBlocksByPools := epochHandler.LegacyEpochAlignmentData.InfoAboutLastBlocksInEpoch
+
+		var localExecMetadataForLeader, metadataFromAefpForLeader structures.ExecutionStatsPerPool
+
+		dataExists := false
+
+		for {
+
+			indexOfLeaderToExec := epochHandler.LegacyEpochAlignmentData.CurrentToExecute
+
+			pubKeyOfLeader := epochHandler.EpochDataHandler.LeadersSequence[indexOfLeaderToExec]
+
+			localExecMetadataForLeader = epochHandler.ExecutionData[pubKeyOfLeader]
+
+			metadataFromAefpForLeader, dataExists = infoFromAefpAboutLastBlocksByPools[pubKeyOfLeader]
+
+			if !dataExists {
+
+				metadataFromAefpForLeader = structures.NewExecutionStatsTemplate()
+			}
+
+			finishedToExecBlocksByThisLeader := localExecMetadataForLeader.Index == metadataFromAefpForLeader.Index
+
+			if finishedToExecBlocksByThisLeader {
+
+				itsTheLastBlockInSequence := len(epochHandler.EpochDataHandler.LeadersSequence) == indexOfLeaderToExec+1
+
+				if itsTheLastBlockInSequence {
+
+					break
+
+				} else {
+
+					epochHandler.LegacyEpochAlignmentData.CurrentToExecute++
+
+					continue
+
+				}
+
+			}
+
+			/*
+
+				Next:
+
+				1) Check connection with pool or point of blocks distribution
+
+				2) Fetch blocks
+
+				3) Execute
+
+
+			*/
+
+		}
+
+		allBlocksWereExecutedInLegacyEpoch := len(epochHandler.EpochDataHandler.LeadersSequence) == epochHandler.LegacyEpochAlignmentData.CurrentToExecute+1
+
+		finishedToExecBlocksByLastLeader := localExecMetadataForLeader.Index == metadataFromAefpForLeader.Index
+
+		if allBlocksWereExecutedInLegacyEpoch && finishedToExecBlocksByLastLeader {
+
+			shouldMoveToNextEpoch = true
+		}
+
 	} else if currentEpochIsFresh && epochHandler.CurrentEpochAlignmentData.Activated {
-		// Stub
+		// Take the pool by it's position
 	}
 
 	if !currentEpochIsFresh && !epochHandler.LegacyEpochAlignmentData.Activated {
