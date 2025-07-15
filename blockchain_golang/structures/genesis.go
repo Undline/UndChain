@@ -82,9 +82,8 @@ type PoolStorage struct {
 	Percentage  int               `json:"percentage"`
 	TotalStaked BigInt            `json:"totalStaked"`
 	Stakers     map[string]Staker `json:"stakers"`
-	PoolURL     string            `json:"poolURL"`
+	PoolUrl     string            `json:"poolURL"`
 	WssPoolUrl  string            `json:"wssPoolURL"`
-	Activated   bool              `json:"activated"`
 }
 
 type Genesis struct {

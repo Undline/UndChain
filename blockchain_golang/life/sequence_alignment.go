@@ -29,7 +29,7 @@ func SequenceAlignmentThread() {
 
 		epochHandlerRef := &globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochDataHandler
 
-		localVersionOfCurrentLeader := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.AlignmentData.CurrentLeader
+		localVersionOfCurrentLeader := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.CurrentEpochAlignmentData.CurrentLeader
 
 		quorumMembers := common_functions.GetQuorumUrlsAndPubkeys(&globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochDataHandler)
 
@@ -203,11 +203,11 @@ func SequenceAlignmentThread() {
 
 										for poolPubKey, poolExecData := range poolsExecStats {
 
-											_, dataAlreadyExists := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.AlignmentData.InfoAboutLastBlocksInEpoch[poolPubKey]
+											_, dataAlreadyExists := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.CurrentEpochAlignmentData.InfoAboutLastBlocksInEpoch[poolPubKey]
 
 											if !dataAlreadyExists {
 
-												globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.AlignmentData.InfoAboutLastBlocksInEpoch[poolPubKey] = poolExecData
+												globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.CurrentEpochAlignmentData.InfoAboutLastBlocksInEpoch[poolPubKey] = poolExecData
 
 											}
 
@@ -217,7 +217,7 @@ func SequenceAlignmentThread() {
 
 									// Finally, set the <currentLeader> to the new pointer
 
-									globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.AlignmentData.CurrentLeader = targetResponse.ProposedIndexOfLeader
+									globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.CurrentEpochAlignmentData.CurrentLeader = targetResponse.ProposedIndexOfLeader
 
 									globals.EXECUTION_THREAD_METADATA_HANDLER.RWMutex.Unlock()
 
