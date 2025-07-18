@@ -45,7 +45,7 @@ var BLOCK_TO_SHARE *block.Block = &block.Block{
 
 var QUORUM_WAITER_FOR_FINALIZATION_PROOFS *utils.QuorumWaiter
 
-func runFinalizationProofsGrabbing(epochHandler *structures.EpochHandler) {
+func runFinalizationProofsGrabbing(epochHandler *structures.EpochDataHandler) {
 
 	// Call SendAndWait here
 	// Once received 2/3 votes for block - continue
@@ -216,7 +216,7 @@ func BlocksSharingAndProofsGrabingThread() {
 
 		globals.APPROVEMENT_THREAD_METADATA_HANDLER.RWMutex.RLock()
 
-		epochHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler
+		epochHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler
 
 		currentLeaderPubKey := epochHandlerRef.LeadersSequence[epochHandlerRef.CurrentLeaderIndex]
 

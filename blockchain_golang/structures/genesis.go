@@ -10,6 +10,13 @@ type BigInt struct {
 	*big.Int
 }
 
+func (b BigInt) Copy() BigInt {
+	if b.Int == nil {
+		return BigInt{nil}
+	}
+	return BigInt{new(big.Int).Set(b.Int)}
+}
+
 func (b *BigInt) UnmarshalJSON(data []byte) error {
 	var s string
 	if err := json.Unmarshal(data, &s); err == nil {
@@ -54,6 +61,19 @@ type NetworkParameters struct {
 	TxLimitPerBlock       int    `json:"TXS_LIMIT_PER_BLOCK"`
 }
 
+func CopyNetworkParameters(src NetworkParameters) NetworkParameters {
+	return NetworkParameters{
+		ValidatorStake:        src.ValidatorStake.Copy(),
+		MinimalStakePerEntity: src.MinimalStakePerEntity.Copy(),
+		QuorumSize:            src.QuorumSize,
+		EpochTime:             src.EpochTime,
+		LeadershipTimeframe:   src.LeadershipTimeframe,
+		BlockTime:             src.BlockTime,
+		MaxBlockSizeInBytes:   src.MaxBlockSizeInBytes,
+		TxLimitPerBlock:       src.TxLimitPerBlock,
+	}
+}
+
 type Staker struct {
 	Stake BigInt `json:"stake"`
 }
@@ -62,9 +82,8 @@ type PoolStorage struct {
 	Percentage  int               `json:"percentage"`
 	TotalStaked BigInt            `json:"totalStaked"`
 	Stakers     map[string]Staker `json:"stakers"`
-	PoolURL     string            `json:"poolURL"`
+	PoolUrl     string            `json:"poolURL"`
 	WssPoolUrl  string            `json:"wssPoolURL"`
-	Activated   bool              `json:"activated"`
 }
 
 type Genesis struct {

@@ -27,9 +27,9 @@ type FirstBlockResult struct {
 	FirstBlockCreator, FirstBlockHash string
 }
 
-var CURRENT_PIVOT *PivotSearchData
+var APPROVEMENT_THREAD_PIVOT, EXECUTION_THREAD_PIVOT *PivotSearchData
 
-func GetBlock(epochIndex int, blockCreator string, index uint, epochHandler *structures.EpochHandler) *block.Block {
+func GetBlock(epochIndex int, blockCreator string, index uint, epochHandler *structures.EpochDataHandler) *block.Block {
 
 	blockID := strconv.Itoa(epochIndex) + ":" + blockCreator + ":" + strconv.Itoa(int(index))
 
@@ -153,7 +153,7 @@ func VerifyAggregatedEpochFinalizationProof(
 
 func VerifyAggregatedFinalizationProof(
 	proof *structures.AggregatedFinalizationProof,
-	epochHandler *structures.EpochHandler,
+	epochHandler *structures.EpochDataHandler,
 ) bool {
 
 	epochFullID := epochHandler.Hash + "#" + strconv.Itoa(epochHandler.Id)
@@ -191,7 +191,7 @@ func VerifyAggregatedFinalizationProof(
 func VerifyAggregatedLeaderRotationProof(
 	pubKeyOfSomePreviousLeader string,
 	proof *structures.AggregatedLeaderRotationProof,
-	epochHandler *structures.EpochHandler,
+	epochHandler *structures.EpochDataHandler,
 ) bool {
 
 	epochFullID := epochHandler.Hash + "#" + strconv.Itoa(epochHandler.Id)
@@ -231,7 +231,7 @@ func VerifyAggregatedLeaderRotationProof(
 
 }
 
-func CheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, epochHandler *structures.EpochHandler, position int) bool {
+func CheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, epochHandler *structures.EpochDataHandler, position int) bool {
 
 	aggregatedLeadersRotationProofsRef := firstBlockInThisEpochByPool.ExtraData.AggregatedLeadersRotationProofs
 
@@ -285,9 +285,77 @@ func CheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, epochHandl
 
 }
 
-func GetFirstBlockInEpoch(epochHandler *structures.EpochHandler) *FirstBlockResult {
+func ExtendedCheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, epochHandler *structures.EpochDataHandler, position int, dontCheckSigna bool) (bool, map[string]structures.ExecutionStatsPerPool) {
 
-	pivotData := CURRENT_PIVOT
+	aggregatedLeadersRotationProofsRef := firstBlockInThisEpochByPool.ExtraData.AggregatedLeadersRotationProofs
+
+	infoAboutFinalBlocksInThisEpoch := make(map[string]structures.ExecutionStatsPerPool)
+
+	arrayIndexer := 0
+
+	arrayForIteration := slices.Clone(epochHandler.LeadersSequence[:position])
+
+	slices.Reverse(arrayForIteration) // we need reversed version
+
+	bumpedWithPoolWhoCreatedAtLeastOneBlock := false
+
+	for _, poolPubKey := range arrayForIteration {
+
+		if alrpForThisPool, ok := aggregatedLeadersRotationProofsRef[poolPubKey]; ok {
+
+			signaIsOk := dontCheckSigna || VerifyAggregatedLeaderRotationProof(poolPubKey, alrpForThisPool, epochHandler)
+
+			if signaIsOk {
+
+				infoAboutFinalBlocksInThisEpoch[poolPubKey] = structures.ExecutionStatsPerPool{
+					Index:          alrpForThisPool.SkipIndex,
+					Hash:           alrpForThisPool.SkipHash,
+					FirstBlockHash: alrpForThisPool.FirstBlockHash,
+				}
+
+				arrayIndexer++
+
+				if alrpForThisPool.SkipIndex >= 0 {
+
+					bumpedWithPoolWhoCreatedAtLeastOneBlock = true
+
+					break
+
+				}
+
+			} else {
+
+				return false, make(map[string]structures.ExecutionStatsPerPool)
+
+			}
+
+		} else {
+
+			return false, make(map[string]structures.ExecutionStatsPerPool)
+
+		}
+
+	}
+
+	if arrayIndexer == position || bumpedWithPoolWhoCreatedAtLeastOneBlock {
+
+		return true, infoAboutFinalBlocksInThisEpoch
+
+	}
+
+	return false, make(map[string]structures.ExecutionStatsPerPool)
+
+}
+
+func GetFirstBlockInEpoch(epochHandler *structures.EpochDataHandler, threadType string) *FirstBlockResult {
+
+	var pivotData *PivotSearchData = APPROVEMENT_THREAD_PIVOT
+
+	if threadType == "EXECUTION" {
+
+		pivotData = EXECUTION_THREAD_PIVOT
+
+	}
 
 	if pivotData == nil {
 
@@ -398,7 +466,15 @@ func GetFirstBlockInEpoch(epochHandler *structures.EpochHandler) *FirstBlockResu
 		if pivotData.Position == 0 {
 
 			defer func() {
-				CURRENT_PIVOT = nil
+
+				if threadType == "EXECUTION" {
+
+					EXECUTION_THREAD_PIVOT = nil
+
+				} else {
+					APPROVEMENT_THREAD_PIVOT = nil
+				}
+
 			}()
 
 			return &FirstBlockResult{
@@ -417,7 +493,15 @@ func GetFirstBlockInEpoch(epochHandler *structures.EpochHandler) *FirstBlockResu
 			if position == 0 {
 
 				defer func() {
-					CURRENT_PIVOT = nil
+
+					if threadType == "EXECUTION" {
+
+						EXECUTION_THREAD_PIVOT = nil
+
+					} else {
+						APPROVEMENT_THREAD_PIVOT = nil
+					}
+
 				}()
 
 				if leaderRotationProof.SkipIndex == -1 {
@@ -467,7 +551,7 @@ func GetFirstBlockInEpoch(epochHandler *structures.EpochHandler) *FirstBlockResu
 
 }
 
-func GetVerifiedAggregatedFinalizationProofByBlockId(blockID string, epochHandler *structures.EpochHandler) *structures.AggregatedFinalizationProof {
+func GetVerifiedAggregatedFinalizationProofByBlockId(blockID string, epochHandler *structures.EpochDataHandler) *structures.AggregatedFinalizationProof {
 
 	localAfpAsBytes, err := globals.EPOCH_DATA.Get([]byte("AFP:"+blockID), nil)
 

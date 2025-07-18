@@ -48,7 +48,7 @@ func NewEpochProposerThread() {
 			continue
 		}
 
-		epochHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler
+		epochHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler
 
 		epochIndex := epochHandlerRef.Id
 

@@ -45,7 +45,7 @@ func BlocksGenerationThread() {
 
 }
 
-func alrpRequestTemplate(leaderID string, epochHandler *structures.EpochHandler) []byte {
+func alrpRequestTemplate(leaderID string, epochHandler *structures.EpochDataHandler) []byte {
 
 	alrpMetadataForPool := ALRP_METADATA[leaderID]
 
@@ -71,7 +71,7 @@ func alrpRequestTemplate(leaderID string, epochHandler *structures.EpochHandler)
 }
 
 // To grab proofs for multiple previous leaders in a parallel way
-func (collector *RotationProofCollector) AlrpForLeadersCollector(ctx context.Context, leaderIDs []string, epochHandler *structures.EpochHandler) DoubleMap {
+func (collector *RotationProofCollector) AlrpForLeadersCollector(ctx context.Context, leaderIDs []string, epochHandler *structures.EpochDataHandler) DoubleMap {
 
 	var wg sync.WaitGroup
 	mu := sync.Mutex{}
@@ -129,7 +129,7 @@ func getTransactionsFromMempool() []structures.Transaction {
 	return transactions
 }
 
-func getAggregatedEpochFinalizationProof(epochHandler *structures.EpochHandler) *structures.AggregatedEpochFinalizationProof {
+func getAggregatedEpochFinalizationProof(epochHandler *structures.EpochDataHandler) *structures.AggregatedEpochFinalizationProof {
 
 	previousEpochIndex := epochHandler.Id - 1
 
@@ -163,7 +163,7 @@ func getAggregatedEpochFinalizationProof(epochHandler *structures.EpochHandler) 
 		return nil
 	}
 
-	legacyEpochHandler := new(structures.EpochHandler)
+	legacyEpochHandler := new(structures.EpochDataHandler)
 
 	errParse := json.Unmarshal(legacyEpochHandlerRaw, legacyEpochHandler)
 
@@ -319,7 +319,7 @@ func getAggregatedLeaderRotationProof(majority, epochIndex int, leaderPubkey str
 
 func getBatchOfApprovedDelayedTxsByQuorum(indexOfLeader int) structures.DelayedTransactionsBatch {
 
-	epochHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler
+	epochHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler
 
 	prevEpochIndex := epochHandlerRef.Id - 2
 
@@ -345,7 +345,7 @@ func generateBlock() {
 
 	defer globals.APPROVEMENT_THREAD_METADATA_HANDLER.RWMutex.RUnlock()
 
-	epochHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochHandler
+	epochHandlerRef := &globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler.EpochDataHandler
 
 	if !utils.EpochStillFresh(&globals.APPROVEMENT_THREAD_METADATA_HANDLER.Handler) {
 

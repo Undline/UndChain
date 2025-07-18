@@ -1,6 +1,6 @@
 package structures
 
-type EpochHandler struct {
+type EpochDataHandler struct {
 	Id                 int                 `json:"id"`
 	Hash               string              `json:"hash"`
 	PoolsRegistry      map[string]struct{} `json:"poolsRegistry"`
