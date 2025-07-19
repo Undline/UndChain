@@ -1,6 +1,5 @@
 import datetime
 
-
 class PacketUtils:
     '''
     Utility class to handle encoding and decoding of values 
