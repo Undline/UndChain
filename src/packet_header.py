@@ -31,7 +31,7 @@ class PacketHeader(NamedTuple):
         packet_type_bytes = struct.pack("!H", self.packet_type)
 
         # Bit-pack: user_type in bits 7-6, rest reserved (set to 0 for now)
-        flags_byte = ((self.user_type & 0b11) << 6)
+        flags_byte = ((self.user_type & 0b11) << 6) | (0b00000001 if self.ack_requested else 0)
         flags_bytes = struct.pack("!B", flags_byte)
 
         return version_bytes + timestamp_bytes + packet_type_bytes + flags_bytes
@@ -50,9 +50,11 @@ class PacketHeader(NamedTuple):
 
         flags_byte = header_data[15]
         user_type_bits = (flags_byte >> 6) & 0b11
+        ack_requested = bool(flags_byte & 0b00000001)
+
         user_type = UserType(user_type_bits)
 
-        return PacketHeader((y, m, d, sub), timestamp, packet_type, user_type)
+        return PacketHeader((y, m, d, sub), timestamp, packet_type, user_type, ack_requested)
 
     @property
     def version_string(self) -> str:
