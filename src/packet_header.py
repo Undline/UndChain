@@ -79,7 +79,8 @@ class PacketHeader(NamedTuple):
             "version": self.version_string,
             "timestamp": self.timestamp,
             "packet_type": self.packet_type,
-            "user_type": self.user_type_name
+            "user_type": self.user_type_name,
+            "ack_requested": self.ack_requested
         }
 
     def __str__(self) -> str:
@@ -88,7 +89,8 @@ class PacketHeader(NamedTuple):
             f"PacketHeader(version={y}.{m:02}.{d:02}.{sub}, "
             f"timestamp={self.timestamp}, "
             f"packet_type={self.packet_type}, "
-            f"user_type={self.user_type.name})"
+            f"user_type={self.user_type.name}), "
+            f"ack_requested={self.ack_requested})"
         )
 
 if __name__ == "__main__":
