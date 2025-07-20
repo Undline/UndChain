@@ -3,6 +3,8 @@ The purpose of this class is because every user type will have a common
 set of packets that they will send across teh network. This is meant to 
 keep them all in one module to make it easier to debug and manage.
 
+These are user driven packets. The handler is for network generated events
+
 THIS IS A MOCKUP AND NEEDS TO BE FULLY IMPLEMENTED!!!
 '''
 import time
@@ -28,8 +30,7 @@ class BasePacketType(IntEnum):
     FREEZE = 8          # User initiated. Used in the event of a hacked account
     AUTHORIZE = 9       # Authorizes a network transaction using proof 
     DENY = 10           # Prevents a transaction from occurring
-    ACKNOWLEDGE = 11    # Acknowledges data sent (useful in UDP situations)
-    TIMESTAMP = 12      # Request for network time
+    TIMESTAMP = 11      # Request for network time
 
 class BasePacketGenerator:
     def __init__(self, version: tuple[int, int, int, int], user_type: UserType):
@@ -168,14 +169,6 @@ class BasePacketGenerator:
         tx_id_bytes = transaction_id.encode('utf-8')[:64]
         payload = len(tx_id_bytes).to_bytes(1, 'big') + tx_id_bytes
         return header + payload
-
-    def generate_acknowledge(self, packet_id: int) -> bytes:
-        '''
-        Sends a basic acknowledgment for a single received packet.
-        The `packet_id` is a 4-byte identifier originally included in the sender's packet.
-        '''
-        header = self._generate_header(BasePacketType.ACKNOWLEDGE)
-        return header + packet_id.to_bytes(4, byteorder='big')
 
 
     def generate_timestamp_request(self) -> bytes:

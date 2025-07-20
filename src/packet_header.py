@@ -15,6 +15,7 @@ class PacketHeader(NamedTuple):
     timestamp: int
     packet_type: int
     user_type: UserType
+    ack_requested: bool = False # Used for unreliable connections
 
     def encode(self) -> bytes:
         '''
