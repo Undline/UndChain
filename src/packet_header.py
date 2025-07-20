@@ -19,10 +19,10 @@ class PacketHeader(NamedTuple):
     def encode(self) -> bytes:
         '''
         Used to generate a packet header which currently consists of 16 bytes of 
-        data. This is used for latency calculations, identifying which packet list to 
-        look from and to see if the end device has the latest version of this system 
-        iof not it should return its latest version (and attempt to download it from 
-        the network)
+        data. 
+            -Used for latency calculations 
+            -identifying which packet dictionary to look from 
+            -Determine if the end device has the latest version of this system
         '''
 
         y, m, d, sub = self.version
@@ -41,7 +41,7 @@ class PacketHeader(NamedTuple):
         '''
         Decodes the header so we can see if this system can handle this packet request
         '''
-        
+
         if len(data) < 16:
             raise ValueError("Insufficient data for packet header.")
 
