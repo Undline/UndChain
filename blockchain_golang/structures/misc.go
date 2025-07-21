@@ -8,6 +8,10 @@ type QuorumMemberData struct {
 	PubKey, Url string
 }
 
+type FirstBlockResult struct {
+	FirstBlockCreator, FirstBlockHash string
+}
+
 type FirstBlockAssumption struct {
 	IndexOfFirstBlockCreator int                         `json:"indexOfFirstBlockCreator"`
 	AfpForSecondBlock        AggregatedFinalizationProof `json:"afpForSecondBlock"`
