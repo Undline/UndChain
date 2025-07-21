@@ -314,7 +314,7 @@ func TryToFinishCurrentEpoch(epochHandler *structures.EpochDataHandler) {
 
 		// Find the first blocks for epoch X+1
 
-		var firstBlockDataOnNextEpoch structures.FirstBlockResult
+		var firstBlockDataOnNextEpoch structures.FirstBlockDataForNextEpoch
 
 		rawHandler, dbErr := globals.EPOCH_DATA.Get([]byte("FIRST_BLOCKS_IN_NEXT_EPOCH:"+strconv.Itoa(epochIndex)), nil)
 
@@ -350,7 +350,23 @@ func TryToFinishCurrentEpoch(epochHandler *structures.EpochDataHandler) {
 
 		//____________After we get the first blocks for epoch X+1 - get the AEFP from it and build the data for VT to finish epoch X____________
 
-		// firstBlockInThisEpoch := common_functions.GetBlock(nextEpochIndex, firstBlockDataOnNextEpoch.FirstBlockCreator, 0)
+		firstBlockInThisEpoch := common_functions.GetBlock(nextEpochIndex, firstBlockDataOnNextEpoch.FirstBlockCreator, 0, epochHandler)
+
+		if firstBlockInThisEpoch != nil && firstBlockInThisEpoch.GetHash() == firstBlockDataOnNextEpoch.FirstBlockHash {
+
+			firstBlockDataOnNextEpoch.Aefp = firstBlockInThisEpoch.ExtraData.AefpForPreviousEpoch
+
+		}
+
+		if firstBlockDataOnNextEpoch.Aefp != nil {
+
+			// Activate to start get data from it
+
+			globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.LegacyEpochAlignmentData.Activated = true
+
+			FindInfoAboutLastBlocks(epochHandler, firstBlockDataOnNextEpoch.Aefp)
+
+		}
 
 	}
 
