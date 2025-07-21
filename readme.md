@@ -815,10 +815,10 @@ To spark inspiration for future development, here are a few ideas for co-chains 
     A co-chain dedicated to education, offering decentralized courses, certifications, and knowledge sharing. Instructors can host live classes, sell pre-recorded lessons, or even provide one-on-one tutoring sessions. This co-chain could integrate Mimic to act as a personalized tutor, guiding students through material and answering their questions.
     
 5. **Crowdfunding and DAO Co-Chains**  
-    A co-chain designed for fundraising and decentralized autonomous organizations (DAOs). Projects can raise funds through transparent smart contracts, while contributors have voting power to decide the project’s direction. This system could include milestone-based funding, ensuring accountability for developers.
+    A co-chain designed for fundraising via decentralized autonomous organizations (DAOs). Projects can raise funds through transparent smart contracts, while contributors have voting power to decide the project’s direction. This system could include milestone-based funding, ensuring accountability for developers.
     
 6. **Digital Healthcare Services**  
-    A decentralized telehealth co-chain where patients can securely connect with healthcare providers for consultations, prescriptions, and medical advice. Health data could be stored privately on the network, and Mimic could assist with diagnostics or routine health inquiries.
+    A decentralized Tela-Health co-chain where patients can securely connect with healthcare providers for consultations, prescriptions, and medical advice. Health data could be stored privately on the network, and Mimic could assist with diagnostics or routine health inquiries.
     
 7. **Decentralized Talent Marketplaces**  
     A co-chain where freelancers and businesses connect without intermediaries. Users can showcase their skills, bid on projects, and receive payments through UndChain’s token systems. Built-in reputation systems ensure fair and trustworthy transactions.
