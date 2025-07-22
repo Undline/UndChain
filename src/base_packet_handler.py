@@ -16,12 +16,38 @@ from packet_header import PacketHeader, UserType
 
 class BasePacketHandler:
     def __init__(self) -> None:
-        pass
+        self.dispatch = {
+            BasePacketType.SHUT_UP: self.handle_shut_up,
+        }
 
     def handle(self, data: bytes) -> None:
+        '''
+        Takes in the packet as raw bytes and looks for a header if none is 
+        found it returns and the packet is assumed to just be a payload packet.
+        '''
+        
+        header_size: int = PacketHeader.size()
+
         try:
-            header: PacketHeader = PacketHeader.decode(data[:16])
-            payload = data[16:]
+            header: PacketHeader = PacketHeader.decode(data[:header_size])
         except ValueError as e:
-            logger.warning(f'[BasePacketHandler] Invalid header received: {e}')
+            logger.error(f'[BasePacketHandler] Failed to decode header: {e}')
             return
+        
+        payload: bytes = data[header_size:]
+
+        try:
+            packet_enum =BasePacketType(header.packet_type)
+        except ValueError:
+            logger.warning(f'Unknown Packet Type: {header.packet_type}')
+            return
+
+        handler = self.dispatch.get(packet_enum)
+        if handler is None:
+            logger.warning(f'No handler exists for: {packet_enum}') 
+            return
+        
+        handler(header, payload)
+        
+    def handle_shut_up(self, header, payload) -> None:
+        print(f"[SHUT_UP] from {header.user_type_name}")
