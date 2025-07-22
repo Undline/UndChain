@@ -9,3 +9,11 @@ type EpochDataHandler struct {
 	StartTimestamp     uint64              `json:"startTimestamp"`
 	CurrentLeaderIndex int                 `json:"currentLeaderIndex"`
 }
+
+type NextEpochDataHandler struct {
+	NextEpochHash            string              `json:"nextEpochHash"`
+	NextEpochPoolsRegistry   map[string]struct{} `json:"nextEpochPoolsRegistry"`
+	NextEpochQuorum          []string            `json:"nextEpochQuorum"`
+	NextEpochLeadersSequence []string            `json:"nextEpochLeadersSequence"`
+	DelayedTransactions      []map[string]string `json:"delayedTransactions"`
+}

@@ -9,6 +9,7 @@ import (
 	"github.com/VladChernenko/UndchainCore/globals"
 	"github.com/VladChernenko/UndchainCore/structures"
 	"github.com/VladChernenko/UndchainCore/utils"
+	"github.com/syndtr/goleveldb/leveldb"
 )
 
 func ExecutionThread() {
@@ -374,20 +375,90 @@ func TryToFinishCurrentEpoch(epochHandler *structures.EpochDataHandler) {
 
 func SetupNextEpoch(epochHandler *structures.EpochDataHandler) {
 
-	// epochFullID := epochHandler.Hash + "#" + strconv.Itoa(epochHandler.Id)
+	currentEpochIndex := epochHandler.Id
 
-	// currentEpochIndex := epochHandler.Id
+	nextEpochIndex := currentEpochIndex + 1
 
-	// nextEpochIndex := currentEpochIndex + 1
+	var nextEpochData *structures.NextEpochDataHandler
 
-	// var nextEpochData *structures.EpochDataHandler // TODO: Take from DB
+	// Take from DB
 
-	// if nextEpochData != nil {
+	rawHandler, dbErr := globals.EPOCH_DATA.Get([]byte("EPOCH_DATA:"+strconv.Itoa(nextEpochIndex)), nil)
 
-	// 	dbBatch := new(leveldb.Batch)
+	if dbErr == nil {
 
-	// 	// TODO: Exec delayed txs here
+		json.Unmarshal(rawHandler, &nextEpochData)
 
-	// }
+	}
+
+	if nextEpochData != nil {
+
+		dbBatch := new(leveldb.Batch)
+
+		// Exec delayed txs here
+
+		for _, delayedTx := range nextEpochData.DelayedTransactions {
+
+			ExecuteDelayedTransaction(delayedTx)
+
+		}
+
+		// Prepare epoch handler for next epoch
+
+		var templateForNextEpoch *structures.EpochDataHandler
+
+		templateForNextEpoch.Id = nextEpochIndex
+
+		templateForNextEpoch.Hash = nextEpochData.NextEpochHash
+
+		templateForNextEpoch.PoolsRegistry = nextEpochData.NextEpochPoolsRegistry
+
+		templateForNextEpoch.StartTimestamp += uint64(globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.NetworkParameters.EpochTime)
+
+		templateForNextEpoch.Quorum = nextEpochData.NextEpochQuorum
+
+		templateForNextEpoch.LeadersSequence = nextEpochData.NextEpochLeadersSequence
+
+		// Nullify values for the upcoming epoch
+
+		globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.ExecutionData = make(map[string]structures.ExecutionStatsPerPool)
+
+		for poolPubkey := range globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.PoolsRegistry {
+
+			globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.ExecutionData[poolPubkey] = structures.NewExecutionStatsTemplate()
+
+			// TODO: Close connections here
+
+		}
+
+		// Finally, clean useless data
+
+		globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.CurrentEpochAlignmentData = structures.AlignmentDataHandler{
+			Activated:                  true,
+			InfoAboutLastBlocksInEpoch: make(map[string]structures.ExecutionStatsPerPool),
+		}
+
+		globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.LegacyEpochAlignmentData = structures.AlignmentDataHandler{
+			InfoAboutLastBlocksInEpoch: make(map[string]structures.ExecutionStatsPerPool),
+		}
+
+		// TODO: Commit the changes of state using atomic batch. Because we modified state via delayed transactions when epoch finished
+
+		if err := globals.STATE.Write(dbBatch, nil); err != nil {
+
+			panic("Impossible to modify the state when epoch finished")
+
+		}
+
+		// Version check once new epoch started
+		if utils.IsMyCoreVersionOld(&globals.EXECUTION_THREAD_METADATA_HANDLER.Handler) {
+
+			utils.LogWithTime("New version detected on EXECUTION_THREAD. Please, upgrade your node software", utils.YELLOW_COLOR)
+
+			utils.GracefulShutdown()
+
+		}
+
+	}
 
 }
