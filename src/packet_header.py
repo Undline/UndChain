@@ -55,6 +55,15 @@ class PacketHeader(NamedTuple):
         user_type = UserType(user_type_bits)
 
         return PacketHeader((y, m, d, sub), timestamp, packet_type, user_type, ack_requested)
+    
+    @staticmethod
+    def size() -> int:
+        '''
+        Returns the size of the encoded header in bytes.
+        This helps eliminate magic numbers from handler logic.
+        '''
+        return 2 + 1 + 1 + 1 + 8 + 2 + 1  # version (5), timestamp (8), type (2), flags (1)
+
 
     @property
     def version_string(self) -> str:
