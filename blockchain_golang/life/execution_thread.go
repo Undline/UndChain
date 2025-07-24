@@ -298,7 +298,15 @@ func TryToFinishCurrentEpoch(epochHandler *structures.EpochDataHandler) {
 
 	nextEpochIndex := epochIndex + 1
 
-	var nextEpochData *structures.EpochDataHandler
+	var nextEpochData *structures.NextEpochDataHandler
+
+	rawHandler, dbErr := globals.EPOCH_DATA.Get([]byte("EPOCH_DATA:"+strconv.Itoa(nextEpochIndex)), nil)
+
+	if dbErr == nil {
+
+		json.Unmarshal(rawHandler, &nextEpochData)
+
+	}
 
 	if nextEpochData != nil {
 
@@ -306,11 +314,11 @@ func TryToFinishCurrentEpoch(epochHandler *structures.EpochDataHandler) {
 
 			Id: nextEpochIndex,
 
-			Hash: nextEpochData.Hash,
+			Hash: nextEpochData.NextEpochHash,
 
-			Quorum: nextEpochData.Quorum,
+			Quorum: nextEpochData.NextEpochQuorum,
 
-			LeadersSequence: nextEpochData.LeadersSequence,
+			LeadersSequence: nextEpochData.NextEpochLeadersSequence,
 		}
 
 		// Find the first blocks for epoch X+1
@@ -405,19 +413,16 @@ func SetupNextEpoch(epochHandler *structures.EpochDataHandler) {
 
 		// Prepare epoch handler for next epoch
 
-		var templateForNextEpoch *structures.EpochDataHandler
+		templateForNextEpoch := &structures.EpochDataHandler{
+			Id:              nextEpochIndex,
+			Hash:            nextEpochData.NextEpochHash,
+			PoolsRegistry:   nextEpochData.NextEpochPoolsRegistry,
+			StartTimestamp:  epochHandler.StartTimestamp + uint64(globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.NetworkParameters.EpochTime),
+			Quorum:          nextEpochData.NextEpochQuorum,
+			LeadersSequence: nextEpochData.NextEpochLeadersSequence,
+		}
 
-		templateForNextEpoch.Id = nextEpochIndex
-
-		templateForNextEpoch.Hash = nextEpochData.NextEpochHash
-
-		templateForNextEpoch.PoolsRegistry = nextEpochData.NextEpochPoolsRegistry
-
-		templateForNextEpoch.StartTimestamp += uint64(globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.NetworkParameters.EpochTime)
-
-		templateForNextEpoch.Quorum = nextEpochData.NextEpochQuorum
-
-		templateForNextEpoch.LeadersSequence = nextEpochData.NextEpochLeadersSequence
+		globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochDataHandler = *templateForNextEpoch
 
 		// Nullify values for the upcoming epoch
 

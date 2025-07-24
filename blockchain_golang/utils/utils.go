@@ -72,6 +72,33 @@ func OpenDb(dbName string) *leveldb.DB {
 	return db
 }
 
+func OpenWebsocketConnectionWithPool(poolPubkey string) (*websocket.Conn, error) {
+
+	// Retrieve pool metadata from LevelDB
+	raw, err := globals.APPROVEMENT_THREAD_METADATA.Get([]byte(poolPubkey+"(POOL)_STORAGE_POOL"), nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get pool metadata: %w", err)
+	}
+
+	var pool structures.PoolStorage
+	if err := json.Unmarshal(raw, &pool); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal pool metadata: %w", err)
+	}
+
+	// Check if WebSocket URL is present
+	if pool.WssPoolUrl == "" {
+		return nil, fmt.Errorf("pool %s has empty WssPoolUrl", poolPubkey)
+	}
+
+	// Attempt to establish WebSocket connection
+	conn, _, err := websocket.DefaultDialer.Dial(pool.WssPoolUrl, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to dial websocket for pool %s: %w", poolPubkey, err)
+	}
+
+	return conn, nil
+}
+
 func OpenWebsocketConnectionsWithQuorum(quorum []string, wsConnMap map[string]*websocket.Conn) {
 
 	// Close and remove any existing connections
