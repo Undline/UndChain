@@ -23,10 +23,6 @@ type PivotSearchData struct {
 	FirstBlockHash    string
 }
 
-type FirstBlockResult struct {
-	FirstBlockCreator, FirstBlockHash string
-}
-
 var APPROVEMENT_THREAD_PIVOT, EXECUTION_THREAD_PIVOT *PivotSearchData
 
 func GetBlock(epochIndex int, blockCreator string, index uint, epochHandler *structures.EpochDataHandler) *block.Block {
@@ -347,7 +343,7 @@ func ExtendedCheckAlrpChainValidity(firstBlockInThisEpochByPool *block.Block, ep
 
 }
 
-func GetFirstBlockInEpoch(epochHandler *structures.EpochDataHandler, threadType string) *FirstBlockResult {
+func GetFirstBlockInEpoch(epochHandler *structures.EpochDataHandler, threadType string) *structures.FirstBlockResult {
 
 	var pivotData *PivotSearchData = APPROVEMENT_THREAD_PIVOT
 
@@ -477,7 +473,7 @@ func GetFirstBlockInEpoch(epochHandler *structures.EpochDataHandler, threadType 
 
 			}()
 
-			return &FirstBlockResult{
+			return &structures.FirstBlockResult{
 
 				FirstBlockCreator: pivotData.PivotPubKey,
 				FirstBlockHash:    pivotData.FirstBlockHash,
@@ -505,12 +501,12 @@ func GetFirstBlockInEpoch(epochHandler *structures.EpochDataHandler, threadType 
 				}()
 
 				if leaderRotationProof.SkipIndex == -1 {
-					return &FirstBlockResult{
+					return &structures.FirstBlockResult{
 						FirstBlockCreator: pivotData.PivotPubKey,
 						FirstBlockHash:    pivotData.FirstBlockHash,
 					}
 				} else {
-					return &FirstBlockResult{
+					return &structures.FirstBlockResult{
 						FirstBlockCreator: previousPool,
 						FirstBlockHash:    leaderRotationProof.FirstBlockHash,
 					}
