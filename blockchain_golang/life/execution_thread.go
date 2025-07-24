@@ -405,7 +405,7 @@ func SetupNextEpoch(epochHandler *structures.EpochDataHandler) {
 
 		// Prepare epoch handler for next epoch
 
-		var templateForNextEpoch *structures.EpochDataHandler
+		var templateForNextEpoch *structures.EpochDataHandler = &structures.EpochDataHandler{}
 
 		templateForNextEpoch.Id = nextEpochIndex
 
