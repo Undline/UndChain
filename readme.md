@@ -26,7 +26,7 @@ UndChain is a PoU (Proof of Utility) blockchain; that can best be thought of as 
 
 # Co-Chains
 
-Co-Chains is how the network expands it's abilities and services. Anyone can create and own a co-chain, in fact there is a classification of user called **chain owners** mentioned later. The goal of a co-chain is to expand the functionality of the network and not to make new coins, as such it is up to the chain owner if they wish to create a new token or use the blockchain's native utility token (USP). The chain owner can still set their fees even with the native chains token just as they can with their own. The difference is you cannot control the emission rate nor the quantity. The goal in doing this is to reduce the amount of tokens that go in circulation. It also simplifies the usability of the blockchain the less swaps that need to be performed at the action house. 
+Co-Chains is how the network expands it's abilities and services. Anyone can create and own a co-chain, in fact there is a classification of user called **Creators** mentioned later. The goal of a co-chain is to expand the functionality of the network and not to make new coins, as such it is up to the Creator if they wish to create a new token or use the blockchain's native utility token (USP). The Creator can still set their fees even with the native chains token just as they can with their own. The difference is you cannot control the emission rate nor the quantity. The goal in doing this is to reduce the amount of tokens that go in circulation. It also simplifies the usability of the blockchain the less swaps that need to be performed at the action house. 
 
 ## Why Co-Chains?
 
@@ -75,7 +75,7 @@ The Main Chain serves as the foundation of UndChain, coordinating critical proto
 1. **Messaging and Communication**:
     
     - Establishes base peer to peer messaging protocols to facilitate interaction between user types (validators, partners, and clients).
-    - Introduces an **emergency messaging system** that allows chain owners to broadcast critical updates and alert messages to all users on the network.
+    - Introduces an **emergency messaging system** that allows Creators to broadcast critical updates and alert messages to all users on the network.
 2. **Token Management**:
     
     - Creates two native tokens:
@@ -844,7 +844,7 @@ To spark inspiration for future development, here are a few ideas for co-chains 
 	This co-chain paves the way for decentralized streaming platforms—think of it as a blockchain-powered alternative to services like Netflix or Spotify—where content ownership, control, and monetization are shifted back to the creators and their audiences. Additionally, creators can use the built-in functionality of Pages to host their libraries and leverage AdCoin for monetization options.
 ## Open vs. Closed Source
 
-While I firmly believe in the principles of open-source development, UndChain also provides the flexibility to run closed-source code. This capability is achieved through **Preferred Partners**, systems that execute chain owner code directly without requiring compilation by the Code Ledger co-chain. However, implementing closed-source systems introduces challenges, particularly regarding security and transparency, as public scrutiny of the code is limited.
+While I firmly believe in the principles of open-source development, UndChain also provides the flexibility to run closed-source code. This capability is achieved through **Preferred Partners**, systems that execute Creator code directly without requiring compilation by the Code Ledger co-chain. However, implementing closed-source systems introduces challenges, particularly regarding security and transparency, as public scrutiny of the code is limited.
 
 This approach may seem to contrast with the ideals of decentralization, but UndChain is designed to go beyond rigid definitions. By blending the strengths of both decentralized and centralized systems, UndChain ensures developers have the freedom to use the tools that best meet the unique requirements of their applications. Whether it’s full transparency through open-source projects or the tailored control of closed-source solutions, UndChain is built for the future—empowering developers to innovate without compromise.
 
@@ -853,8 +853,8 @@ This approach may seem to contrast with the ideals of decentralization, but UndC
 
 UndChain features four distinct user types, each designed to balance power and ensure no single entity can compromise the integrity of the chain. Here's how they function:
 
-1. **Chain Owners**  
-    Chain Owners are the architects of a co-chain. They define its functionality, tokenomics (fees), and governance rules. Upon launching a chain, owners receive a digital asset certifying their ownership, which can be transferred or shared with up to two additional partners. Owners also select **preferred validators** (often themselves) and determine the number of validators on their network, with a minimum of three.  
+1. **Creators**  
+    Creators are the architects of a co-chain. They define its functionality, tokenomics (fees), and governance rules. Upon launching a chain, owners receive a digital asset certifying their ownership, which can be transferred or shared with up to two additional partners. Owners also select **preferred validators** (often themselves) and determine the number of validators on their network, with a minimum of three.  
     _Concerns about centralization? Don't worry; safeguards are in place._
     
 2. **Validators**  
@@ -914,7 +914,7 @@ Utility tasks are not required to conclude within a single block and may span mu
 
 1. **Receipt:** Both the client and partner must submit a receipt of the utility. This receipt, signed by both parties, serves as verification of the transaction. Submissions from both parties are recommended to ensure redundancy.
 2. **Utility Complete:** Validators mark the utility task as complete, recording the completion block and appending the transaction receipt. _Note: Receipts must remain under 128 characters to optimize storage, though they may link to larger off-chain files._
-3. **Payout:** At the chain owner’s defined intervals, payouts are processed. Transactions not included in the current payout are appended to the **pay sheet** for inclusion in the next interval. Validators hash the payout data and append it to the block, sharing the hash with interconnected co-chains.
+3. **Payout:** At the Creator’s defined intervals, payouts are processed. Transactions not included in the current payout are appended to the **pay sheet** for inclusion in the next interval. Validators hash the payout data and append it to the block, sharing the hash with interconnected co-chains.
 4. **Subscription Model**: UGP will introduce the subscription style model system. If users choose they can subscribe to UndChain's services for a flat rate which allows near infinite requests. *There is an anti-spam system*
 
 ---
@@ -1004,7 +1004,7 @@ AdCoin is the native token of the Pages co-chain and integrates into other syste
 
 UndChain’s fee system reflects its core principles of digital ownership and fairness:
 
-1. **Partner-Set Fees:** Partners can independently set fees for services, with a portion allocated to the chain owner. Validators cannot set fees.
+1. **Partner-Set Fees:** Partners can independently set fees for services, with a portion allocated to the Creator. Validators cannot set fees.
 2. **Network Suggested Fee:** Partners can opt for a network-suggested fee based on what the UndChain protocol recommends.
 3. **Auto-Fee System:** Dynamically adjusts fees based on token value and network activity.
 4. **Fee Reduction Voting:** Users and partners can vote to reduce fees temporarily if token values become overinflated.
@@ -1230,7 +1230,7 @@ The president can also appoint managers to handle member additions and deletions
 
 ### Consensus and Rotation
 
-UndChain operates on a 2/3 majority consensus mechanism, the reason behind this is that since a chain owner is able to set up to 44% of the available slots with **known validators** (which guarantees them a spot), they have to get buy in from another 23% of unknown validators. This consensus system also works in regulating unknown validators since they must have buy in from at least 11% of the known validators. There is a potential problem with this however, the chain owner could simply create more validators that are not listed and have them run on the network. 
+UndChain operates on a 2/3 majority consensus mechanism, the reason behind this is that since a Creator is able to set up to 44% of the available slots with **known validators** (which guarantees them a spot), they have to get buy in from another 23% of unknown validators. This consensus system also works in regulating unknown validators since they must have buy in from at least 11% of the known validators. There is a potential problem with this however, the Creator could simply create more validators that are not listed and have them run on the network. 
 
 Due to this potential vulnerability, a rotation schedule for validators will be implemented that forces **active validators** to swap out with **passive validators** which should reduce the risk. 
 
@@ -1285,7 +1285,7 @@ UndChain should move very quickly since we use so few validators in order to iss
 
 ##### How do you create a new network? You don't :) 
 
-I still haven't decided just how I am going to do this, but I believe it will most likely be a mixture of algorithmic as well as chain owner responsibility. Perhaps I could leave it to a vote?
+I still haven't decided just how I am going to do this, but I believe it will most likely be a mixture of algorithmic as well as Creator responsibility. Perhaps I could leave it to a vote?
 
 #### Convergence
 
@@ -1302,11 +1302,11 @@ There is a concern with quantum computing on the rise that traditional cryptogra
 
 #### What is Pseudo?
 
-Pseudo is a Pythonic-style language designed for securely creating real-world programs that run directly on chain within the UndChain protocol. It's main goal is to allow developers (chain owners) a way to execute decentralized applications while maintaining a high level of security, fixability and accuracy. It provides a sandboxed environment that ensures no partner nor validator can exploit the system, protecting personal files and resources during the execution of these scripts. Pseudo is a heavily typed language so you will need to declare a variables type prior to using it such as: `my_var: i32 = 0`.
+Pseudo is a Pythonic-style language designed for securely creating real-world programs that run directly on chain within the UndChain protocol. It's main goal is to allow developers (Creators) a way to execute decentralized applications while maintaining a high level of security, fixability and accuracy. It provides a sandboxed environment that ensures no partner nor validator can exploit the system, protecting personal files and resources during the execution of these scripts. Pseudo is a heavily typed language so you will need to declare a variables type prior to using it such as: `my_var: i32 = 0`.
 
 ##### Sandbox Environment
 
-Pseudo runs all of it's scripts within a sandboxed environment that is designed to limit access to the hosts (partner or clients) machine, so that malicious code should not be able to access data or resources that are outside the scope that the program can run within. This is done by the partner dedicating portions of their system for UndChain specific tasks; for example when setting up a new worker the user is asked how much of their storage space they want to dedicate to the blockchain (has to be within 4GB segments). At that point the 'working folder' cannot go outside this area. Any attempts to do so will result in a drop in perception score from the chain owner. 
+Pseudo runs all of it's scripts within a sandboxed environment that is designed to limit access to the hosts (partner or clients) machine, so that malicious code should not be able to access data or resources that are outside the scope that the program can run within. This is done by the partner dedicating portions of their system for UndChain specific tasks; for example when setting up a new worker the user is asked how much of their storage space they want to dedicate to the blockchain (has to be within 4GB segments). At that point the 'working folder' cannot go outside this area. Any attempts to do so will result in a drop in perception score from the Creator. 
 
 ##### On Chain Compilation
 
@@ -1370,17 +1370,17 @@ At this time it is our intent to make the language case insensitive, meaning tha
 
 Ensuring that the network stays decentralized and ensuring that there is no concentration of resources going to one area is a key factor with UndChain. With that in mind the chain will envelop protocols that are designed to keep with those philosophies. One such method is the separation of powers between the different user types. With that in mind this section will discuss how these separation of powers come into play regarding the network.
 
-#### Chain Owners
+#### Creators
 
-While Chain Owners do create the rules for the chain, they are bound by the fact that they cannot enforce them as this is a role that is split between Clients, Validators and Partners. It is very possible that a Chain Owner could release an update and if the Validators and partners choose not to run observe it, the new version would simply be skipped. This was done to stop potentially bad code from running on the network and to keep Chain Owners honest in their updates. This doesn't mean they cannot spin up a new chain with this new code, but it does ensure that the community agrees to the terms outlined in those changes. 
+While Creators do create the rules for the chain, they are bound by the fact that they cannot enforce them as this is a role that is split between Clients, Validators and Partners. It is very possible that a Creator could release an update and if the Validators and partners choose not to run observe it, the new version would simply be skipped. This was done to stop potentially bad code from running on the network and to keep Creators honest in their updates. This doesn't mean they cannot spin up a new chain with this new code, but it does ensure that the community agrees to the terms outlined in those changes. 
 
 #### Validators
 
-Validators are only as authoritative as clients allow them to be, if a group of validators are acting within self interest clients can simply ignore them and drop their perception scores and since the network is only interested in staying online it will switch over to validators that have that higher perception score. Validators can also be blocked by a chain owner through various means (primarily through setting the minimum threshold on the perception score), but a chain owner could block a particular chain owner from participating. Lastly validators are graded based on the connections they make and if partners are not contacting them this lowers their perception score (as it does with clients) and they will be taken offline. There is a small exception to this with the use of known validators, but there is a threshold to which even a known validator will lose their spot if the perception score drops. 
+Validators are only as authoritative as clients allow them to be, if a group of validators are acting within self interest clients can simply ignore them and drop their perception scores and since the network is only interested in staying online it will switch over to validators that have that higher perception score. Validators can also be blocked by a Creator through various means (primarily through setting the minimum threshold on the perception score), but a Creator could block a particular Creator from participating. Lastly validators are graded based on the connections they make and if partners are not contacting them this lowers their perception score (as it does with clients) and they will be taken offline. There is a small exception to this with the use of known validators, but there is a threshold to which even a known validator will lose their spot if the perception score drops. 
 
 #### Partners
 
-What use is a partner that is never used? If a partner is not being utilized then they are just burning electricity for no tokens and just like validators partners can loose perception score if they are providing no utility. Unlike partners, a chain owner cannot remove them from the chain from providing utility (I don't think its necessary). Partners can drop in perception if they claim to perform utility and either cannot perform the utility as promised or doesn't do it at all. The validator has the choice to not provide a partner with work *only if* they have a proven track of being unreliable.
+What use is a partner that is never used? If a partner is not being utilized then they are just burning electricity for no tokens and just like validators partners can loose perception score if they are providing no utility. Unlike partners, a Creator cannot remove them from the chain from providing utility (I don't think its necessary). Partners can drop in perception if they claim to perform utility and either cannot perform the utility as promised or doesn't do it at all. The validator has the choice to not provide a partner with work *only if* they have a proven track of being unreliable.
 
 #### Clients
 
@@ -1403,7 +1403,7 @@ Had a thought while doing some development work in regards to having hot and col
 
 In this section I am going to list out the active *bounties* for the UndChain project. The Bounty program is meant to not only list what is needed for chain development, but also provide reward structures for each *contract* that is listed. 
 
-One of the ideas I have for UndChain is to make it so that open source software doesn't mean free, which means for everyone not just the project. This not only refers to the organization which can receive tokens, nor the chain owner(s) who can collect fees, but also freelance developers who are looking to assist in a project. 
+One of the ideas I have for UndChain is to make it so that open source software doesn't mean free, which means for everyone not just the project. This not only refers to the organization which can receive tokens, nor the Creator(s) who can collect fees, but also freelance developers who are looking to assist in a project. 
 
 UndChain itself has a startup developer fund of 1 million GP as well as 10 million SP. UndChain will also use this fund to support new co-chains since new blockchains coming into UndChain help support the eco system and make UndChain better. 
 
