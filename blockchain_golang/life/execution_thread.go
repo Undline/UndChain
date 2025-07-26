@@ -1,11 +1,15 @@
 package life
 
 import (
+	"encoding/json"
+	"strconv"
+
 	"github.com/VladChernenko/UndchainCore/block"
 	"github.com/VladChernenko/UndchainCore/common_functions"
 	"github.com/VladChernenko/UndchainCore/globals"
 	"github.com/VladChernenko/UndchainCore/structures"
 	"github.com/VladChernenko/UndchainCore/utils"
+	"github.com/syndtr/goleveldb/leveldb"
 )
 
 func ExecutionThread() {
@@ -14,18 +18,18 @@ func ExecutionThread() {
 
 		globals.EXECUTION_THREAD_METADATA_HANDLER.RWMutex.RLock()
 
-		epochHandler := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler
+		epochHandlerRef := &globals.EXECUTION_THREAD_METADATA_HANDLER.Handler
 
-		currentEpochIsFresh := utils.EpochStillFresh(&epochHandler)
+		currentEpochIsFresh := utils.EpochStillFresh(epochHandlerRef)
 
 		// Struct is {currentLeader,currentToVerify,infoAboutFinalBlocksInThisEpoch:{poolPubKey:{index,hash}}}
 		//alignmentData := globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.CurrentEpochAlignmentData
 
 		shouldMoveToNextEpoch := false
 
-		if epochHandler.LegacyEpochAlignmentData.Activated {
+		if epochHandlerRef.LegacyEpochAlignmentData.Activated {
 
-			infoFromAefpAboutLastBlocksByPools := epochHandler.LegacyEpochAlignmentData.InfoAboutLastBlocksInEpoch
+			infoFromAefpAboutLastBlocksByPools := epochHandlerRef.LegacyEpochAlignmentData.InfoAboutLastBlocksInEpoch
 
 			var localExecMetadataForLeader, metadataFromAefpForLeader structures.ExecutionStatsPerPool
 
@@ -33,11 +37,11 @@ func ExecutionThread() {
 
 			for {
 
-				indexOfLeaderToExec := epochHandler.LegacyEpochAlignmentData.CurrentToExecute
+				indexOfLeaderToExec := epochHandlerRef.LegacyEpochAlignmentData.CurrentToExecute
 
-				pubKeyOfLeader := epochHandler.EpochDataHandler.LeadersSequence[indexOfLeaderToExec]
+				pubKeyOfLeader := epochHandlerRef.EpochDataHandler.LeadersSequence[indexOfLeaderToExec]
 
-				localExecMetadataForLeader = epochHandler.ExecutionData[pubKeyOfLeader]
+				localExecMetadataForLeader = epochHandlerRef.ExecutionData[pubKeyOfLeader]
 
 				metadataFromAefpForLeader, dataExists = infoFromAefpAboutLastBlocksByPools[pubKeyOfLeader]
 
@@ -50,7 +54,7 @@ func ExecutionThread() {
 
 				if finishedToExecBlocksByThisLeader {
 
-					itsTheLastBlockInSequence := len(epochHandler.EpochDataHandler.LeadersSequence) == indexOfLeaderToExec+1
+					itsTheLastBlockInSequence := len(epochHandlerRef.EpochDataHandler.LeadersSequence) == indexOfLeaderToExec+1
 
 					if itsTheLastBlockInSequence {
 
@@ -58,7 +62,7 @@ func ExecutionThread() {
 
 					} else {
 
-						epochHandler.LegacyEpochAlignmentData.CurrentToExecute++
+						epochHandlerRef.LegacyEpochAlignmentData.CurrentToExecute++
 
 						continue
 
@@ -81,7 +85,7 @@ func ExecutionThread() {
 
 			}
 
-			allBlocksWereExecutedInLegacyEpoch := len(epochHandler.EpochDataHandler.LeadersSequence) == epochHandler.LegacyEpochAlignmentData.CurrentToExecute+1
+			allBlocksWereExecutedInLegacyEpoch := len(epochHandlerRef.EpochDataHandler.LeadersSequence) == epochHandlerRef.LegacyEpochAlignmentData.CurrentToExecute+1
 
 			finishedToExecBlocksByLastLeader := localExecMetadataForLeader.Index == metadataFromAefpForLeader.Index
 
@@ -90,15 +94,15 @@ func ExecutionThread() {
 				shouldMoveToNextEpoch = true
 			}
 
-		} else if currentEpochIsFresh && epochHandler.CurrentEpochAlignmentData.Activated {
+		} else if currentEpochIsFresh && epochHandlerRef.CurrentEpochAlignmentData.Activated {
 
 			// Take the pool by it's position
 
-			currentEpochAlignmentData := &epochHandler.CurrentEpochAlignmentData
+			currentEpochAlignmentData := &epochHandlerRef.CurrentEpochAlignmentData
 
-			leaderPubkeyToExecBlocks := epochHandler.EpochDataHandler.LeadersSequence[currentEpochAlignmentData.CurrentToExecute]
+			leaderPubkeyToExecBlocks := epochHandlerRef.EpochDataHandler.LeadersSequence[currentEpochAlignmentData.CurrentToExecute]
 
-			execStatsOfLeader := epochHandler.ExecutionData[leaderPubkeyToExecBlocks] // {index,hash}
+			execStatsOfLeader := epochHandlerRef.ExecutionData[leaderPubkeyToExecBlocks] // {index,hash}
 
 			infoAboutLastBlockByThisLeader, exists := currentEpochAlignmentData.InfoAboutLastBlocksInEpoch[leaderPubkeyToExecBlocks] // {index,hash}
 
@@ -106,11 +110,11 @@ func ExecutionThread() {
 
 				// Move to next one
 
-				epochHandler.CurrentEpochAlignmentData.CurrentToExecute++
+				epochHandlerRef.CurrentEpochAlignmentData.CurrentToExecute++
 
 				if !currentEpochIsFresh {
 
-					TryToFinishCurrentEpoch(&epochHandler.EpochDataHandler)
+					TryToFinishCurrentEpoch(&epochHandlerRef.EpochDataHandler)
 
 				}
 
@@ -126,15 +130,15 @@ func ExecutionThread() {
 
 		}
 
-		if !currentEpochIsFresh && !epochHandler.LegacyEpochAlignmentData.Activated {
+		if !currentEpochIsFresh && !epochHandlerRef.LegacyEpochAlignmentData.Activated {
 
-			TryToFinishCurrentEpoch(&epochHandler.EpochDataHandler)
+			TryToFinishCurrentEpoch(&epochHandlerRef.EpochDataHandler)
 
 		}
 
 		if shouldMoveToNextEpoch {
 
-			SetupNextEpoch(&epochHandler.EpochDataHandler)
+			SetupNextEpoch(&epochHandlerRef.EpochDataHandler)
 
 		}
 
@@ -288,6 +292,173 @@ func FindInfoAboutLastBlocks(epochHandler *structures.EpochDataHandler, aefp *st
 
 }
 
-func TryToFinishCurrentEpoch(epochHandler *structures.EpochDataHandler) {}
+func TryToFinishCurrentEpoch(epochHandler *structures.EpochDataHandler) {
 
-func SetupNextEpoch(epochHandler *structures.EpochDataHandler) {}
+	epochIndex := epochHandler.Id
+
+	nextEpochIndex := epochIndex + 1
+
+	var nextEpochData *structures.EpochDataHandler
+
+	if nextEpochData != nil {
+
+		nextEpochDataTemplate := structures.EpochDataHandler{
+
+			Id: nextEpochIndex,
+
+			Hash: nextEpochData.Hash,
+
+			Quorum: nextEpochData.Quorum,
+
+			LeadersSequence: nextEpochData.LeadersSequence,
+		}
+
+		// Find the first blocks for epoch X+1
+
+		var firstBlockDataOnNextEpoch structures.FirstBlockDataForNextEpoch
+
+		rawHandler, dbErr := globals.EPOCH_DATA.Get([]byte("FIRST_BLOCKS_IN_NEXT_EPOCH:"+strconv.Itoa(epochIndex)), nil)
+
+		if dbErr == nil {
+
+			json.Unmarshal(rawHandler, &firstBlockDataOnNextEpoch)
+
+		}
+
+		if firstBlockDataOnNextEpoch.FirstBlockCreator == "" {
+
+			findResult := common_functions.GetFirstBlockInEpoch(&nextEpochDataTemplate, "EXECUTION")
+
+			if findResult != nil {
+
+				firstBlockDataOnNextEpoch.FirstBlockCreator = findResult.FirstBlockCreator
+
+				firstBlockDataOnNextEpoch.FirstBlockHash = findResult.FirstBlockHash
+
+			}
+
+			// Store the info about first blocks on next epoch
+
+			serializedData, serialErr := json.Marshal(firstBlockDataOnNextEpoch)
+
+			if serialErr == nil {
+
+				globals.EPOCH_DATA.Put([]byte("FIRST_BLOCKS_IN_NEXT_EPOCH:"+strconv.Itoa(epochIndex)), serializedData, nil)
+
+			}
+
+		}
+
+		//____________After we get the first blocks for epoch X+1 - get the AEFP from it and build the data for VT to finish epoch X____________
+
+		firstBlockInThisEpoch := common_functions.GetBlock(nextEpochIndex, firstBlockDataOnNextEpoch.FirstBlockCreator, 0, epochHandler)
+
+		if firstBlockInThisEpoch != nil && firstBlockInThisEpoch.GetHash() == firstBlockDataOnNextEpoch.FirstBlockHash {
+
+			firstBlockDataOnNextEpoch.Aefp = firstBlockInThisEpoch.ExtraData.AefpForPreviousEpoch
+
+		}
+
+		if firstBlockDataOnNextEpoch.Aefp != nil {
+
+			// Activate to start get data from it
+
+			globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.LegacyEpochAlignmentData.Activated = true
+
+			FindInfoAboutLastBlocks(epochHandler, firstBlockDataOnNextEpoch.Aefp)
+
+		}
+
+	}
+
+}
+
+func SetupNextEpoch(epochHandler *structures.EpochDataHandler) {
+
+	currentEpochIndex := epochHandler.Id
+
+	nextEpochIndex := currentEpochIndex + 1
+
+	var nextEpochData *structures.NextEpochDataHandler
+
+	// Take from DB
+
+	rawHandler, dbErr := globals.EPOCH_DATA.Get([]byte("EPOCH_DATA:"+strconv.Itoa(nextEpochIndex)), nil)
+
+	if dbErr == nil {
+
+		json.Unmarshal(rawHandler, &nextEpochData)
+
+	}
+
+	if nextEpochData != nil {
+
+		dbBatch := new(leveldb.Batch)
+
+		// Exec delayed txs here
+
+		for _, delayedTx := range nextEpochData.DelayedTransactions {
+
+			ExecuteDelayedTransaction(delayedTx)
+
+		}
+
+		// Prepare epoch handler for next epoch
+
+		var templateForNextEpoch *structures.EpochDataHandler
+
+		templateForNextEpoch.Id = nextEpochIndex
+
+		templateForNextEpoch.Hash = nextEpochData.NextEpochHash
+
+		templateForNextEpoch.PoolsRegistry = nextEpochData.NextEpochPoolsRegistry
+
+		templateForNextEpoch.StartTimestamp += uint64(globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.NetworkParameters.EpochTime)
+
+		templateForNextEpoch.Quorum = nextEpochData.NextEpochQuorum
+
+		templateForNextEpoch.LeadersSequence = nextEpochData.NextEpochLeadersSequence
+
+		// Nullify values for the upcoming epoch
+
+		globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.ExecutionData = make(map[string]structures.ExecutionStatsPerPool)
+
+		for poolPubkey := range globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.EpochDataHandler.PoolsRegistry {
+
+			globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.ExecutionData[poolPubkey] = structures.NewExecutionStatsTemplate()
+
+			// TODO: Close connections here
+
+		}
+
+		// Finally, clean useless data
+
+		globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.CurrentEpochAlignmentData = structures.AlignmentDataHandler{
+			Activated:                  true,
+			InfoAboutLastBlocksInEpoch: make(map[string]structures.ExecutionStatsPerPool),
+		}
+
+		globals.EXECUTION_THREAD_METADATA_HANDLER.Handler.LegacyEpochAlignmentData = structures.AlignmentDataHandler{
+			InfoAboutLastBlocksInEpoch: make(map[string]structures.ExecutionStatsPerPool),
+		}
+
+		// TODO: Commit the changes of state using atomic batch. Because we modified state via delayed transactions when epoch finished
+
+		if err := globals.STATE.Write(dbBatch, nil); err != nil {
+
+			panic("Impossible to modify the state when epoch finished")
+
+		}
+
+		// Version check once new epoch started
+		if utils.IsMyCoreVersionOld(&globals.EXECUTION_THREAD_METADATA_HANDLER.Handler) {
+
+			utils.LogWithTime("New version detected on EXECUTION_THREAD. Please, upgrade your node software", utils.YELLOW_COLOR)
+
+			utils.GracefulShutdown()
+
+		}
+
+	}
+
+}
