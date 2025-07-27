@@ -119,7 +119,7 @@ The Main Chain serves as the foundation of UndChain, coordinating critical proto
 10. **Redemption System**:
     
     - Allows users to generate unique codes that others can redeem for assets, similar to prepaid or gift cards.
-11. **Perception Score**:
+11. **Reliability Score**:
     
     - Tracks and evaluates user behavior to identify trustworthy participants and mitigate bad actors.
 12. **Activity Metrics and Ratings**:
@@ -215,8 +215,8 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
     - Content is also **classified and rated** to ensure users know what to expect from a site. Ratings are especially useful for identifying mature content or categorizing pages by their intended audience.
 4. **Page Rating System**
     
-    - Users can **rate pages**, helping to maintain honesty and accountability. If creators falsely claim their pages are safer than they are, they receive a penalty to their perception score. Similarly, users who submit false negative claims about a page’s rating will also experience a decrease in their perception score.
-    - Only ratings from users with **reputable perception scores** are taken seriously, ensuring the system rewards fairness and transparency.
+    - Users can **rate pages**, helping to maintain honesty and accountability. If creators falsely claim their pages are safer than they are, they receive a penalty to their Reliability score. Similarly, users who submit false negative claims about a page’s rating will also experience a decrease in their Reliability score.
+    - Only ratings from users with **reputable Reliability scores** are taken seriously, ensuring the system rewards fairness and transparency.
 5. **Privacy by Design**
     
     - By eliminating cookies and intrusive tracking methods, Pages protects user privacy while still providing a seamless browsing experience.
@@ -347,12 +347,12 @@ The Auction House co-chain is UndChain’s decentralized marketplace for minting
 2. **Fraud Detection and Claims**:
     
     - The Auction House connects users to **Digital Asset Protection Providers (DAPPs)**, who handle protection, disputes, and enforcement actions.
-    - Filing a claim requires a **fee**, with the amount determined by the **perception score** of the claimant. Users with lower scores pay higher fees to discourage abuse.
-    - Winning claims result in asset ownership being transferred to the rightful owner, along with the claim fee. False claims reduce the claimant’s perception score and reward the accused with the fee.
+    - Filing a claim requires a **fee**, with the amount determined by the **Reliability score** of the claimant. Users with lower scores pay higher fees to discourage abuse.
+    - Winning claims result in asset ownership being transferred to the rightful owner, along with the claim fee. False claims reduce the claimant’s Reliability score and reward the accused with the fee.
     - **RWA Protection**: Digital assets proven to infringe on real-world copyrights (RWAs) are transferred to rightful owners or destroyed.
 3. **Trust and Transparency**:
     
-    - Sellers are classified visually on the Auction House based on their **perception score**:
+    - Sellers are classified visually on the Auction House based on their **Reliability score**:
         - High-trust sellers are marked with a **verified badge** or highlighted visually for buyers.
         - Low-trust sellers have clear **warnings or indicators** near their listings.
     - Listings display whether the seller is the **original creator** or a **reseller** of the asset, helping buyers identify primary sources.
@@ -370,7 +370,7 @@ The Auction House co-chain is UndChain’s decentralized marketplace for minting
     - Buyers receive warnings if flagged assets are listed for sale, ensuring informed purchases.
 6. **Buyer Protections**:
     
-    - Buyers are encouraged to research sellers’ **perception scores** and **transaction histories**.
+    - Buyers are encouraged to research sellers’ **Reliability scores** and **transaction histories**.
     - If a purchased asset is later proven to infringe an RWA, buyers can **file claims** for compensation against sellers through the DAPP system.
 7. **Subscription Features**:
     
@@ -396,10 +396,10 @@ The Auction House offers a fair, transparent, and decentralized experience for c
 
 To improve trust and clarity, sellers will be visually classified:
 
-- **Verified Sellers**: Creators or trusted resellers with high perception scores receive a **verified badge** and enhanced listing visibility.
-- **Warning Sellers**: Sellers with low perception scores or flagged histories have **warnings** displayed near their listings.
+- **Verified Sellers**: Creators or trusted resellers with high Reliability scores receive a **verified badge** and enhanced listing visibility.
+- **Warning Sellers**: Sellers with low Reliability scores or flagged histories have **warnings** displayed near their listings.
 
-**Perception scores** are dynamic and affected by seller behavior, claims, and buyer feedback.
+**Reliability scores** are dynamic and affected by seller behavior, claims, and buyer feedback.
 
 #### Final Notes
 
@@ -508,7 +508,7 @@ Code ledger is the heart of software development on UndChain, specifically desig
     - Developers can monetize their modules through a **one-time purchase** or **royalty-based licensing**.
 3. **Decentralized Code Audits and Verification**
     
-    - Code Ledger introduces a **peer verification system** where trusted developers (high Perception Scores) audit code for security, compliance, and performance.
+    - Code Ledger introduces a **peer verification system** where trusted developers (high Reliability Scores) audit code for security, compliance, and performance.
     - Audited projects receive a **Trusted Badge**, helping other developers and users confidently adopt or contribute to the project.
     - Auditors are incentivized through rewards for their contributions, with a focus on accuracy and reputation building.
 4. **Interactive Developer Education**
@@ -546,13 +546,13 @@ Code ledger is the heart of software development on UndChain, specifically desig
         - Collaborative code reviews.
         - Real-time development sessions.
     - By streaming the **M3L content** of a developer’s screen instead of video, Live ensures minimal bandwidth usage and a lag-free experience.
-10.  **Perception Score for Contributors**
+10.  **Reliability Score for Contributors**
 
-    - Developers’ contributions are reflected in their **Perception Score** based on:
+    - Developers’ contributions are reflected in their **Reliability Score** based on:
         - Successful code merges and accepted contributions.
         - Positive peer audits or reviews from trusted developers.
         - Community adoption of their modules or projects.
-    - A higher Perception Score unlocks more opportunities for developers, such as:
+    - A higher Reliability Score unlocks more opportunities for developers, such as:
         - Eligibility for high-impact project bounties.
         - Faster approvals for code merges.
         - Trusted status when conducting audits or reviews.
@@ -973,7 +973,7 @@ USP rewards partners for providing computational, storage, and access services. 
 1. **Initial Supply:** 44,444,444 USP minted at launch.
 2. **Daily Emission:** Begins at **4,444 tokens per day** with periodic adjustments through partner voting.
 3. **Voting Mechanism:** Partners vote every four years to either halve or double the emission rate.
-4. **Eligibility for Voting:** Partners must complete at least one transaction per week and maintain a perception score above **444** to participate in the vote.
+4. **Eligibility for Voting:** Partners must complete at least one transaction per week and maintain a Reliability score above **444** to participate in the vote.
 
 This dynamic voting mechanism enables decentralized governance and can serve as a testing ground for broader governance features across UndChain.
 
@@ -1085,7 +1085,7 @@ To ensure transparency and fairness, UndChain incorporates a decentralized proce
     Creators or rights holders can file a claim via a DAG. To initiate, they must:
     
     - Provide evidence supporting their ownership or IP rights (e.g., copyright documentation, timestamps, or original work).
-    - Pay a **claim fee** (determined by the DAG and dependent on their perception score) to discourage frivolous claims.
+    - Pay a **claim fee** (determined by the DAG and dependent on their Reliability score) to discourage frivolous claims.
 2. **Sponsor Involvement:**  
     Claimants select a **sponsor**, an independent DAG member or organization, to vouch for their claim’s validity. Sponsors validate the provided evidence and enhance the credibility of the claim.
     
@@ -1099,7 +1099,7 @@ To ensure transparency and fairness, UndChain incorporates a decentralized proce
     The accused owner can contest the claim by presenting their own evidence, such as proofs of prior creation or purchase.
     
 2. **Counter-Claim Filing:**  
-    If the accused believes the claim is false or malicious, they can file a **counter-claim**, which also requires a fee based on their perception score.
+    If the accused believes the claim is false or malicious, they can file a **counter-claim**, which also requires a fee based on their Reliability score.
     
 3. **Resolution through DAGs:**  
     DAGs mediate the process by reviewing evidence, consulting sponsors, and reaching a verdict. All findings and outcomes are transparently logged on-chain.
@@ -1112,12 +1112,12 @@ To ensure transparency and fairness, UndChain incorporates a decentralized proce
     
     - The asset is transferred to the rightful owner.
     - The claim fee is returned to the claimant.
-    - The original owner may face a **perception score penalty** for knowingly or unknowingly minting an infringing asset.
+    - The original owner may face a **Reliability score penalty** for knowingly or unknowingly minting an infringing asset.
 2. **Invalid Claim:**  
     If the claim is rejected:
     
     - The claim fee is awarded to the accused owner as compensation.
-    - The claimant’s perception score is penalized to discourage baseless claims.
+    - The claimant’s Reliability score is penalized to discourage baseless claims.
 3. **Legal Escalation:**  
     In cases involving significant legal implications, DAGs may require both parties to identify themselves and comply with jurisdictional laws.
     
@@ -1234,15 +1234,15 @@ UndChain operates on a 2/3 majority consensus mechanism, the reason behind this 
 
 Due to this potential vulnerability, a rotation schedule for validators will be implemented that forces **active validators** to swap out with **passive validators** which should reduce the risk. 
 
-Between the rotation schedule and the 2/3 consensus mechanism I believe this will enforce the network to move forward. This also allows up to 32% of the validators to act in a deceptive way. There is a mechanism for validators and partners who operate in a deceptive manner which is called the perception score. If malice is detected your perception score is dropped. 
+Between the rotation schedule and the 2/3 consensus mechanism I believe this will enforce the network to move forward. This also allows up to 32% of the validators to act in a deceptive way. There is a mechanism for validators and partners who operate in a deceptive manner which is called the Reliability score. If malice is detected your Reliability score is dropped. 
 
-### Perception Score
+### Reliability Score
 
-The idea behind the perception score is so that a validator or client can judge the merits of a user without having to do blockchain analysis on that user. This system **MUST** be closely monitored and can **NEVER** be used as a means of preventing transactions from occurring. This isn't a social credit score, but more of a reliability rating of that particular user. All users can experience a reduction in their perception score, but validators and partners are the most affected since it can prevent them from providing service on the network. Much like the ledger, the score is maintained by the validators (meaning they request the score to be updated), but is stored by the partners. 
+The idea behind the Reliability score is so that a validator or client can judge the merits of a user without having to do blockchain analysis on that user. This system **MUST** be closely monitored and can **NEVER** be used as a means of preventing transactions from occurring. This isn't a social credit score, but more of a reliability rating of that particular user. All users can experience a reduction in their Reliability score, but validators and partners are the most affected since it can prevent them from providing service on the network. Much like the ledger, the score is maintained by the validators (meaning they request the score to be updated), but is stored by the partners. 
 
-#### Perception Score - Loss
+#### Reliability Score - Loss
 
-Validators can loose their perception score if
+Validators can loose their Reliability score if
 
 1. They provide false records of transactional events
 2. They do not maintain up to date user / job / work / payout files
@@ -1250,7 +1250,7 @@ Validators can loose their perception score if
 4. Drop connection without notice
 5. Being blocked from a large number of clients
 
-Partners can lower their perception score if
+Partners can lower their Reliability score if
 
 1. Failure to maintain saved files
 2. Falsify a transaction with a client
@@ -1258,26 +1258,26 @@ Partners can lower their perception score if
 4. Drop connection without notice
 5. Blocked from several clients - *Not sure about this one*
 
-#### Perception Score - Gain
+#### Reliability Score - Gain
 
 It's important to stress that this is **NOT** a social credit score, but like a credit score you can rebuild it. Since I am sure there will be instances where this happens by accident (especially with disconnects). 
 
-Validators can gain perception score by
+Validators can gain Reliability score by
 
 1. Being a passive validator
 2. Participating on the test net
 3. Recovering from a outage 7x (that means the resource has been used 7 times with no problems)
 4. Having a higher number of connections than your peers
 
-Partners can gain perception tokens by
+Partners can gain Reliability tokens by
 
 1. Participating in the test net
 2. Getting un-blocked
 3. Recovering from a outage 7x (that means the resource has been used 7 times with no problems)
 
-I am concerned about using the block feature as a means of determining a perception score as I am sure it will be used in a poor manner however, clients only hurt themselves when they block other users since that prevents them from using their services. Also, we should consider placing a mechanism that disregards the block if it's noted that client has a abnormally large blocked list. 
+I am concerned about using the block feature as a means of determining a Reliability score as I am sure it will be used in a poor manner however, clients only hurt themselves when they block other users since that prevents them from using their services. Also, we should consider placing a mechanism that disregards the block if it's noted that client has a abnormally large blocked list. 
 
-In order to make building the perception score more transparent we are introducing the XP system. With this system you will be able to see how much XP you need to get to the next level on your perception score. Along with XP, we will have seasonal events where if a participant meets the goals of the network they can earn XP boosts. 
+In order to make building the Reliability score more transparent we are introducing the XP system. With this system you will be able to see how much XP you need to get to the next level on your Reliability score. Along with XP, we will have seasonal events where if a participant meets the goals of the network they can earn XP boosts. 
 
 ### Scaling and Security
 
@@ -1306,7 +1306,7 @@ Pseudo is a Pythonic-style language designed for securely creating real-world pr
 
 ##### Sandbox Environment
 
-Pseudo runs all of it's scripts within a sandboxed environment that is designed to limit access to the hosts (partner or clients) machine, so that malicious code should not be able to access data or resources that are outside the scope that the program can run within. This is done by the partner dedicating portions of their system for UndChain specific tasks; for example when setting up a new worker the user is asked how much of their storage space they want to dedicate to the blockchain (has to be within 4GB segments). At that point the 'working folder' cannot go outside this area. Any attempts to do so will result in a drop in perception score from the Creator. 
+Pseudo runs all of it's scripts within a sandboxed environment that is designed to limit access to the hosts (partner or clients) machine, so that malicious code should not be able to access data or resources that are outside the scope that the program can run within. This is done by the partner dedicating portions of their system for UndChain specific tasks; for example when setting up a new worker the user is asked how much of their storage space they want to dedicate to the blockchain (has to be within 4GB segments). At that point the 'working folder' cannot go outside this area. Any attempts to do so will result in a drop in Reliability score from the Creator. 
 
 ##### On Chain Compilation
 
@@ -1376,20 +1376,20 @@ While Creators do create the rules for the chain, they are bound by the fact tha
 
 #### Validators
 
-Validators are only as authoritative as clients allow them to be, if a group of validators are acting within self interest clients can simply ignore them and drop their perception scores and since the network is only interested in staying online it will switch over to validators that have that higher perception score. Validators can also be blocked by a Creator through various means (primarily through setting the minimum threshold on the perception score), but a Creator could block a particular Creator from participating. Lastly validators are graded based on the connections they make and if partners are not contacting them this lowers their perception score (as it does with clients) and they will be taken offline. There is a small exception to this with the use of known validators, but there is a threshold to which even a known validator will lose their spot if the perception score drops. 
+Validators are only as authoritative as clients allow them to be, if a group of validators are acting within self interest clients can simply ignore them and drop their Reliability scores and since the network is only interested in staying online it will switch over to validators that have that higher Reliability score. Validators can also be blocked by a Creator through various means (primarily through setting the minimum threshold on the Reliability score), but a Creator could block a particular Creator from participating. Lastly validators are graded based on the connections they make and if partners are not contacting them this lowers their Reliability score (as it does with clients) and they will be taken offline. There is a small exception to this with the use of known validators, but there is a threshold to which even a known validator will lose their spot if the Reliability score drops. 
 
 #### Partners
 
-What use is a partner that is never used? If a partner is not being utilized then they are just burning electricity for no tokens and just like validators partners can loose perception score if they are providing no utility. Unlike partners, a Creator cannot remove them from the chain from providing utility (I don't think its necessary). Partners can drop in perception if they claim to perform utility and either cannot perform the utility as promised or doesn't do it at all. The validator has the choice to not provide a partner with work *only if* they have a proven track of being unreliable.
+What use is a partner that is never used? If a partner is not being utilized then they are just burning electricity for no tokens and just like validators partners can loose Reliability score if they are providing no utility. Unlike partners, a Creator cannot remove them from the chain from providing utility (I don't think its necessary). Partners can drop in Reliability if they claim to perform utility and either cannot perform the utility as promised or doesn't do it at all. The validator has the choice to not provide a partner with work *only if* they have a proven track of being unreliable.
 
 #### Clients
 
-It is illegal on UndChain to not process a transaction regardless of how poorly a user acts on chain. If you make a request and you meet the fee then the transaction is performed. So, what UndChain does in cases where a client who has a low perception score, is in cases where you are submitting a claim against another user it reduces the likelihood you will win that claim without substantial proof. How do clients have low perception scores? Mainly through false claims, but also when they act in either of the other user types. Think that you are a partner who has earned tokens and then you want to use network resources with those tokens, but you provided poor service. As always, you can redeem yourself by acting as a partner or validator. 
+It is illegal on UndChain to not process a transaction regardless of how poorly a user acts on chain. If you make a request and you meet the fee then the transaction is performed. So, what UndChain does in cases where a client who has a low Reliability score, is in cases where you are submitting a claim against another user it reduces the likelihood you will win that claim without substantial proof. How do clients have low Reliability scores? Mainly through false claims, but also when they act in either of the other user types. Think that you are a partner who has earned tokens and then you want to use network resources with those tokens, but you provided poor service. As always, you can redeem yourself by acting as a partner or validator. 
 
 
 ### Latency / Cost
 
-While a balance of power is key that doesn't completely ensure decentralization, so another method we use is latency. Along with affecting your perception score, having a low response time (or cost) makes you more preferred on the network and in the case of partners, gives higher rewards. This encourages the network to be more spread out since if you are closer to the client (assuming the same hardware and networking) then it will guarantee you win the latency game. Remember that latency is how fast you can respond to a clients request. You could be right next door to your client using LoFi, but if it takes you 10ms to process a request that another partner a state away can process in 1ms then you will loose. 
+While a balance of power is key that doesn't completely ensure decentralization, so another method we use is latency. Along with affecting your Reliability score, having a low response time (or cost) makes you more preferred on the network and in the case of partners, gives higher rewards. This encourages the network to be more spread out since if you are closer to the client (assuming the same hardware and networking) then it will guarantee you win the latency game. Remember that latency is how fast you can respond to a clients request. You could be right next door to your client using LoFi, but if it takes you 10ms to process a request that another partner a state away can process in 1ms then you will loose. 
 
 ### Pool-less Protocol
 
