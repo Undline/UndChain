@@ -28,4 +28,21 @@ in a decentralized storage market. It prioritizes validator efficiency and scale
 without central dependencies.
 '''
 
+import hashlib
+from typing import List, Dict
 
+class SectorManager:
+    def __init__(self, sector_id: str, version: int = 1):
+        self.sector_id = sector_id
+        self.version = version
+        self.files: Dict[str, str] = {}  # file_id -> mock content
+        self.mutations: List[Dict] = []  # committed mutations (chronological)
+        self.sector_size_limit = self.get_configured_sector_size()
+
+    def get_configured_sector_size(self) -> int:
+        '''
+        Pretends to read this value from run rules or validator config. Must
+        update this later to pull from that file!
+        '''
+
+        return 4 * 1024 ** 3  # 4 GB
