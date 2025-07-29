@@ -29,7 +29,7 @@ without central dependencies.
 '''
 
 import hashlib
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 class SectorManager:
     def __init__(self, sector_id: str, version: int = 1):
@@ -46,3 +46,45 @@ class SectorManager:
         '''
 
         return 4 * 1024 ** 3  # 4 GB
+
+    def apply_mutation(self, job: dict) -> None:
+            '''
+            Applies a mutation (write/update/delete) to the current state
+            and logs it in mutation history.
+            job must include: timestamp, user, action, job_id, affected
+            '''
+
+            for file_id in job.get("affected", []):
+                if job["action"] == "write" or job["action"] == "update":
+                    self.files[file_id] = f"data::{job['timestamp']}::{file_id}"
+                elif job["action"] == "delete":
+                    self.files.pop(file_id, None)
+            self.mutations.append(job)
+
+    def get_state_at(self, timestamp: int) -> Dict[str, str]:
+        '''
+        Reconstructs the sector state as of the given timestamp
+        by replaying mutations up to that point.
+        '''
+
+        state = {}
+        for job in sorted(self.mutations, key=lambda x: x["timestamp"]):
+            if job["timestamp"] > timestamp:
+                break
+            for file_id in job.get("affected", []):
+                if job["action"] == "write" or job["action"] == "update":
+                    state[file_id] = f"data::{job['timestamp']}::{file_id}"
+                elif job["action"] == "delete":
+                    state.pop(file_id, None)
+        return state
+
+    def calculate_merkle_root(self, state: Optional[Dict[str, str]] = None) -> str:
+        '''
+        Computes a simulated Merkle root by hashing the sorted file:content pairs.
+        This is a placeholder for later tree-based implementations.
+        '''
+        
+        if state is None:
+            state = self.files
+        flat = "".join(f"{k}:{v}" for k, v in sorted(state.items()))
+        return hashlib.sha256(flat.encode()).hexdigest()
