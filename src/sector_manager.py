@@ -1,3 +1,18 @@
+'''
+SectorManager
+
+Tracks per-sector state changes on a partner node between validator confirmations.
+Its primary job is to monitor which files exist in the sector, record all
+mutations (writes, updates, deletions), and allow reconstruction of sector
+state at any given timestamp.
+
+This is critical for validating storage challenges and ensuring a partner
+can prove they handled mutations honestly before a validator confirmed the new Merkle root.
+
+Once the validator confirms the new root, old mutation records can be safely
+cleared using `commit_checkpoint()` to conserve memory.
+'''
+
 import hashlib
 from typing import List, Dict, Optional
 
@@ -8,6 +23,7 @@ class SectorManager:
         self.files: Dict[str, str] = {}  # file_id -> mock content
         self.mutations: List[Dict] = []  # committed mutations (chronological)
         self.sector_size_limit = self.get_configured_sector_size()
+        self.last_confirmed_root: Optional[str] = None
 
     def get_configured_sector_size(self) -> int:
         '''
@@ -18,18 +34,23 @@ class SectorManager:
         return 4 * 1024 ** 3  # 4 GB
 
     def apply_mutation(self, job: dict) -> None:
-            '''
-            Applies a mutation (write/update/delete) to the current state
-            and logs it in mutation history.
-            job must include: timestamp, user, action, job_id, affected
-            '''
+        '''
+        Applies a mutation (write/update/delete) to the current state
+        and logs it in mutation history.
+        job must include: timestamp, user, action, job_id, affected
+        '''
 
-            for file_id in job.get("affected", []):
-                if job["action"] == "write" or job["action"] == "update":
-                    self.files[file_id] = f"data::{job['timestamp']}::{file_id}"
-                elif job["action"] == "delete":
-                    self.files.pop(file_id, None)
-            self.mutations.append(job)
+        required_fields = ["job_id", "timestamp", "user_pubkey", "action", "affected"]
+        for field in required_fields:
+            if field not in job:
+                raise ValueError(f"Missing required field in job: {field}")
+
+        for file_id in job["affected"]:
+            if job["action"] == "write" or job["action"] == "update":
+                self.files[file_id] = f"data::{job['timestamp']}::{file_id}"
+            elif job["action"] == "delete":
+                self.files.pop(file_id, None)
+        self.mutations.append(job)
 
     def get_state_at(self, timestamp: int) -> Dict[str, str]:
         '''
@@ -41,7 +62,7 @@ class SectorManager:
         for job in sorted(self.mutations, key=lambda x: x["timestamp"]):
             if job["timestamp"] > timestamp:
                 break
-            for file_id in job.get("affected", []):
+            for file_id in job["affected"]:
                 if job["action"] == "write" or job["action"] == "update":
                     state[file_id] = f"data::{job['timestamp']}::{file_id}"
                 elif job["action"] == "delete":
@@ -53,11 +74,20 @@ class SectorManager:
         Computes a simulated Merkle root by hashing the sorted file:content pairs.
         This is a placeholder for later tree-based implementations.
         '''
-        
+
         if state is None:
             state = self.files
         flat = "".join(f"{k}:{v}" for k, v in sorted(state.items()))
         return hashlib.sha256(flat.encode()).hexdigest()
+
+    def commit_checkpoint(self, root_hash: str, confirmed_time: int) -> None:
+        '''
+        Confirms that all mutations up to 'confirmed_time' are permanent and verifiable.
+        Clears mutation history prior to that point to reduce memory footprint.
+        '''
+
+        self.last_confirmed_root = root_hash
+        self.mutations = [m for m in self.mutations if m["timestamp"] > confirmed_time]
     
 if __name__ == "__main__":
     import pprint
@@ -123,3 +153,15 @@ if __name__ == "__main__":
 
     snapshot_root = sm.calculate_merkle_root(snapshot)
     print(f"\nMerkle Root (Snapshot @ {ts_challenge}): {snapshot_root}")
+
+    # Commit state up to Sally's delete and clear earlier mutations
+    print(f"\n--- Committing Checkpoint @ {ts_challenge} ---")
+    sm.commit_checkpoint(snapshot_root, confirmed_time=ts_challenge)
+
+    # Show remaining mutations (should only include job-004)
+    print("\n--- Remaining Mutations After Commit ---")
+    pprint.pprint(sm.mutations)
+
+    # Merkle root should still match the current one (unchanged files)
+    print(f"\nMerkle Root (Post-Commit): {sm.calculate_merkle_root()}")
+
