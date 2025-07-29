@@ -67,7 +67,7 @@ class SectorManager:
         by replaying mutations up to that point.
         '''
 
-        state = {}
+        state: Dict[str, str] = {}
         for job in sorted(self.mutations, key=lambda x: x["timestamp"]):
             if job["timestamp"] > timestamp:
                 break
