@@ -88,3 +88,68 @@ class SectorManager:
             state = self.files
         flat = "".join(f"{k}:{v}" for k, v in sorted(state.items()))
         return hashlib.sha256(flat.encode()).hexdigest()
+    
+if __name__ == "__main__":
+    import pprint
+
+    sm = SectorManager(sector_id="sector_001")
+
+    # Simulate some job files
+    job1 = {
+        "job_id": "job-001",
+        "timestamp": 1723451000,
+        "user_pubkey": "0xBOB",
+        "action": "write",
+        "affected": ["bob_notes.txt"]
+    }
+
+    job2 = {
+        "job_id": "job-002",
+        "timestamp": 1723451100,
+        "user_pubkey": "0xSALLY",
+        "action": "write",
+        "affected": ["sally_resume.pdf"]
+    }
+
+    job3 = {
+        "job_id": "job-003",
+        "timestamp": 1723451200,
+        "user_pubkey": "0xBOB",
+        "action": "update",
+        "affected": ["bob_notes.txt"]
+    }
+
+    job4 = {
+        "job_id": "job-004",
+        "timestamp": 1723451300,
+        "user_pubkey": "0xSALLY",
+        "action": "delete",
+        "affected": ["sally_resume.pdf"]
+    }
+
+    # Apply mutations in order
+    sm.apply_mutation(job1)
+    sm.apply_mutation(job2)
+    sm.apply_mutation(job3)
+    sm.apply_mutation(job4)
+
+    # Sanity: Show current state
+    print("\n--- Current Sector State ---")
+    pprint.pprint(sm.files)
+
+    # Sanity: Show mutation history
+    print("\n--- Mutation Log ---")
+    pprint.pprint(sm.mutations)
+
+    # Merkle root of current state
+    current_root = sm.calculate_merkle_root()
+    print(f"\nMerkle Root (Current): {current_root}")
+
+    # Reconstruct sector state BEFORE Sally’s delete
+    ts_challenge = 1723451250
+    print(f"\n--- Reconstructed State @ {ts_challenge} ---")
+    snapshot = sm.get_state_at(ts_challenge)
+    pprint.pprint(snapshot)
+
+    snapshot_root = sm.calculate_merkle_root(snapshot)
+    print(f"\nMerkle Root (Snapshot @ {ts_challenge}): {snapshot_root}")
