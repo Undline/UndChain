@@ -6,9 +6,9 @@ We're thrilled to have you here! UndChain is building the next generation of dec
 
 If you're a developer interested in contributing to UndChain, have questions, or simply want to join the discussion with like-minded enthusiasts, we invite you to connect with our community:
 
-- **Telegram**: [Join our Developer Group on Telegram](https://t.me/UndChain_Dev)
-
-Whether you're just curious or ready to jump into development, join the group and start asking questions. Developer can earn native UndChain tokens (UGP or USP) when the contribute to the project. Token earn will be automated in the future but for now they are based upon your PR. Some may even be hired full / part time to assist with development. 
+>**Discord**
+>
+  We will be releasing a discord so that developers can easily communicate and help with the project. Keep in mind that all contributions are rewarded. i.e. you can earn on network tokens. This will be automated in the future with Code Ledger.
 
 ---
 
