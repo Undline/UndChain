@@ -1,10 +1,10 @@
-# Welcome to UndChain!
+# Welcome to Modulr!
 
-We're thrilled to have you here! UndChain is building the next generation of decentralized cloud services, and we'd love for you to join us in shaping the future.
+We're thrilled to have you here! Modulr is building the next generation of decentralized cloud services, and we'd love for you to join us in shaping the future.
 
 ### 🛠️ **Developer Discussions & Community Support**
 
-If you're a developer interested in contributing to UndChain, have questions, or simply want to join the discussion with like-minded enthusiasts, we invite you to connect with our community:
+If you're a developer interested in contributing to Modulr, have questions, or simply want to join the discussion with like-minded enthusiasts, we invite you to connect with our community:
 
 >**Discord**
 >
@@ -12,13 +12,13 @@ If you're a developer interested in contributing to UndChain, have questions, or
 
 ---
 
-# What is UndChain?
+# What is Modulr?
 
-UndChain is a PoU (Proof of Utility) blockchain; that can best be thought of as a decentralized cloud service in which anyone can participate. There are three different utilities that can be performed on the network, that work together to create similar functionality as conventional cloud service providers.
+Modulr is a PoU (Proof of Utility) blockchain; that can best be thought of as a decentralized cloud service in which anyone can participate. There are three different utilities that can be performed on the network, that work together to create similar functionality as conventional cloud service providers.
 
 1. **Computation** - The thought behind this function would be items that either are too complex for a ordinary machine to complete in a reasonable amount of time (training AI models, 3D rendering or DNA sequencing) or something that requires modifying data that must be shared with a group (think servers).
 
-2. **Storage** - In order to compute you must have access to data to compute on. UndChain has storage built into it's language so you don't have to use another service. This allows for things such as databases and the ability to store large AI models. 
+2. **Storage** - In order to compute you must have access to data to compute on. Modulr has storage built into it's language so you don't have to use another service. This allows for things such as databases and the ability to store large AI models. 
 
 3. **Access** - This is a functionality that will be expanded more in the future, but for now think of this as the ability to have access to specialty equipment in a specific location such as linking two or more users together, surrogates or VPN like services. When fully realized it is meant to replace the IP protocol by enable secure communications that are digital signed from the source.
 
@@ -34,19 +34,19 @@ The purpose of utilizing co-chains rather than having traditional layer 2 blockc
 
 1. It allows for better security since at each block completion a co-chain blends it's hash with a co-chain it's linked to, this reduces the risk of a attack on the network.
 
-2. It expands Pseudo (UndChain's Pythonic programing language), by allowing others to import functions from other chains. You can choose to private a function or set fees on it. Remember you own it...
+2. It expands Pseudo (Modulr's Pythonic programing language), by allowing others to import functions from other chains. You can choose to private a function or set fees on it. Remember you own it...
 
 3. It provides a sense of ownership for your work and allows you to monetize on it so you can continue to make it better and help you with your personal goals. You can also transfer ownership of a co-chain to another user on the network.  
 
 4. Personally it's better than saying layer two; you're a creator on this network and providing value, you should be recognized for it. Even the main chain is a co-chain. *Note: There will be some verbiage changes in here that I believe are more accurate and beneficial to the industry.*
 
-## Understanding Co-Chains: Building Blocks of UndChain
+## Understanding Co-Chains: Building Blocks of Modulr
 
-Co-chains are specialized blockchain applications built on UndChain’s decentralized protocol. They enable developers to create targeted solutions, each tailored to specific use cases, while still integrating seamlessly with the broader ecosystem. To illustrate their potential, I’ve designed several foundational co-chains. These not only add value to the network but also serve as practical examples for developers aiming to build on UndChain.
+Co-chains are specialized blockchain applications built on Modulr’s decentralized protocol. They enable developers to create targeted solutions, each tailored to specific use cases, while still integrating seamlessly with the broader ecosystem. To illustrate their potential, I’ve designed several foundational co-chains. These not only add value to the network but also serve as practical examples for developers aiming to build on Modulr.
 
 ### Why I’m Building These Co-Chains
 
-As the creator of UndChain, my goal is to demonstrate how co-chains can unlock innovative solutions. By developing these foundational co-chains, I aim to:
+As the creator of Modulr, my goal is to demonstrate how co-chains can unlock innovative solutions. By developing these foundational co-chains, I aim to:
 
 1. **Showcase Efficient Data Management:**  
     Demonstrate how to use storage, computation and access, to interact with the network in a secure and efficient manner.
@@ -70,7 +70,7 @@ These co-chains are not just standalone solutions; they are stepping stones for 
 
 ### Main Chain
 
-The Main Chain serves as the foundation of UndChain, coordinating critical protocols, utilities, and governance across the network. Its responsibilities include:
+The Main Chain serves as the foundation of Modulr, coordinating critical protocols, utilities, and governance across the network. Its responsibilities include:
 
 1. **Messaging and Communication**:
     
@@ -79,9 +79,9 @@ The Main Chain serves as the foundation of UndChain, coordinating critical proto
 2. **Token Management**:
     
     - Creates two native tokens:
-        - **UGP (UndChain Gold Piece)**: A connection token enabling interactions with validators.
-        - **USP (UndChain Silver Piece)**: A utility token for partners to perform tasks across co-chains.
-	        - This is the token that can be overridden with a require collateral which will be paid out to users in the event that liquidity is removed from the token in a short time frame (UndChain's anti-rug protocol). *When we create AdCoin I will show how this process will work.*
+        - **UGP (Modulr Gold Piece)**: A connection token enabling interactions with validators.
+        - **USP (Modulr Silver Piece)**: A utility token for partners to perform tasks across co-chains.
+	        - This is the token that can be overridden with a require collateral which will be paid out to users in the event that liquidity is removed from the token in a short time frame (Modulr's anti-rug protocol). *When we create AdCoin I will show how this process will work.*
 3. **Alias System (UnaS)**:
     
     - Provides users with customizable usernames (e.g., `@username`) for simplified transactions and easier identification.
@@ -139,7 +139,7 @@ The Main Chain serves as the foundation of UndChain, coordinating critical proto
 ---
 ### Mimic
 
-Mimic is UndChain’s dedicated AI co-chain, designed to revolutionize how artificial intelligence is deployed and used across decentralized networks. The Mimic co-chain focuses on creating **specialized AI models** tailored for specific tasks, ensuring efficiency, modularity, and adaptability. These models are connected to a **hypervisor system**, which intelligently routes incoming requests to the appropriate AI for seamless performance.
+Mimic is Modulr’s dedicated AI co-chain, designed to revolutionize how artificial intelligence is deployed and used across decentralized networks. The Mimic co-chain focuses on creating **specialized AI models** tailored for specific tasks, ensuring efficiency, modularity, and adaptability. These models are connected to a **hypervisor system**, which intelligently routes incoming requests to the appropriate AI for seamless performance.
 
 **Key Features:**
 
@@ -185,18 +185,18 @@ Mimic is UndChain’s dedicated AI co-chain, designed to revolutionize how artif
 
 **In Summary**
 
-Mimic redefines AI for decentralized networks, combining modularity, scalability, and user empowerment. It’s not just an AI service—it’s a foundation for innovation, creativity, and community-driven progress on UndChain.
+Mimic redefines AI for decentralized networks, combining modularity, scalability, and user empowerment. It’s not just an AI service—it’s a foundation for innovation, creativity, and community-driven progress on Modulr.
 
 ---
 ### Pages (Decentralized Web Platform)
 
-**Pages** is UndChain’s decentralized Web4 system, offering a modern alternative to traditional web technologies. Replacing HTML and CSS with **M3L** (Multi-Media Markup Language) and **GSS** (Global Style Sheets), Pages provides a scalable, efficient, and privacy-centric experience for both creators and users. 
+**Pages** is Modulr’s decentralized Web4 system, offering a modern alternative to traditional web technologies. Replacing HTML and CSS with **M3L** (Multi-Media Markup Language) and **GSS** (Global Style Sheets), Pages provides a scalable, efficient, and privacy-centric experience for both creators and users. 
 
 **Legacy Domain Protection**
 
-UndChain respects legacy (HTTP) domain names ending in **.com**, **.org**, **.gov**, **.edu**, and **.net**. These domains are reserved exclusively for their rightful owners as registered on the traditional internet to prevent impersonation and fraud. This ensures that trusted brands and institutions retain their identity in the transition to decentralized web technologies.
+Modulr respects legacy (HTTP) domain names ending in **.com**, **.org**, **.gov**, **.edu**, and **.net**. These domains are reserved exclusively for their rightful owners as registered on the traditional internet to prevent impersonation and fraud. This ensures that trusted brands and institutions retain their identity in the transition to decentralized web technologies.
 
-All other domain types (e.g., **.io**, **.xyz**) are not automatically recognized or reserved within the UndChain ecosystem. This boundary is established to maintain clarity and fairness while minimizing complexity.
+All other domain types (e.g., **.io**, **.xyz**) are not automatically recognized or reserved within the Modulr ecosystem. This boundary is established to maintain clarity and fairness while minimizing complexity.
 
 #### Key Features:
 
@@ -228,10 +228,10 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
 7. **Age Verification and Content Control**
     
     - The **Adult_Swim Protocol** introduces a decentralized age verification system. Instead of storing user data, it uses markers to verify whether an account holder meets age requirements.
-    - Verified entities can grant age status, but any organization providing false records loses its ability to verify accounts, and all associated accounts lose their status. The UndChain organization can act as the default age verifier but primarily delegates this function to trusted entities.
+    - Verified entities can grant age status, but any organization providing false records loses its ability to verify accounts, and all associated accounts lose their status. The Modulr organization can act as the default age verifier but primarily delegates this function to trusted entities.
 8. **Seamless Integration with Web4**
     
-    - Pages works seamlessly with other UndChain co-chains, leveraging **M3L** and **GSS** to enable powerful tools like Mimic-powered assistants. These assistants can guide users through the network, troubleshoot issues, and provide real-time help for specific features in the apps they support.
+    - Pages works seamlessly with other Modulr co-chains, leveraging **M3L** and **GSS** to enable powerful tools like Mimic-powered assistants. These assistants can guide users through the network, troubleshoot issues, and provide real-time help for specific features in the apps they support.
 9. **Content Reaction System**
     
     - Pages includes built-in tools for users to react to and interact with content. This feedback helps site owners gauge audience sentiment and improve their offerings. For example, news articles and videos can be rated positively or negatively, providing valuable insights.
@@ -244,9 +244,9 @@ All other domain types (e.g., **.io**, **.xyz**) are not automatically recognize
 
 ### LINK (Localized Interface for Network Kinetics)
 
-LINK (Localized Interface for Networked Kinetics) is UndChain’s **standardized protocol for remote robotics**, designed to make piloting physical systems as seamless as accessing an app. Whether operating a humanoid surrogate, flying a drone, or steering an autonomous mower, LINK provides the ultra-responsive foundation for decentralized embodiment.
+LINK (Localized Interface for Networked Kinetics) is Modulr’s **standardized protocol for remote robotics**, designed to make piloting physical systems as seamless as accessing an app. Whether operating a humanoid surrogate, flying a drone, or steering an autonomous mower, LINK provides the ultra-responsive foundation for decentralized embodiment.
 
-By creating a shared communication and control standard, LINK ensures secure, modular, and low-latency access to machines within a user's region, while enabling global coordination and oversight through AI-assisted supervision across UndChain subdomains.
+By creating a shared communication and control standard, LINK ensures secure, modular, and low-latency access to machines within a user's region, while enabling global coordination and oversight through AI-assisted supervision across Modulr subdomains.
 
 ---
 
@@ -279,7 +279,7 @@ By creating a shared communication and control standard, LINK ensures secure, mo
         
 5. **Access by Design**
     
-    - LINK was built to **embody UndChain’s “Access” layer**: the ability to control, touch, and affect the real world through secure, decentralized systems.
+    - LINK was built to **embody Modulr’s “Access” layer**: the ability to control, touch, and affect the real world through secure, decentralized systems.
     - From robots in homes and farms to machines in factories and cities, LINK ensures users can connect, control, and coordinate without centralized gateways or proprietary lock-in.
         
 6. **Mimic Synergy**
@@ -324,19 +324,19 @@ By creating a shared communication and control standard, LINK ensures secure, mo
 
 LINK makes it possible to **pilot and coordinate physical machines** through a unified, decentralized control layer. Within a user’s local region, LINK offers **real-time, low-latency embodiment**—while globally, users can guide AI-driven systems through **Supervisor Mode** or interact via a lightweight simulation in **Phantom Mode**.
 
-It’s more than a protocol—it’s how **Access becomes physical** on UndChain.
+It’s more than a protocol—it’s how **Access becomes physical** on Modulr.
 
 ---
 
 ### Auction House 
 
-The Auction House co-chain is UndChain’s decentralized marketplace for minting, trading, and protecting digital assets on the network. It uses **USP** (UndChain Silver Piece) as the default transaction token. Users can seamlessly swap other registered tokens like AdCoin for USP at checkout.
+The Auction House co-chain is Modulr’s decentralized marketplace for minting, trading, and protecting digital assets on the network. It uses **USP** (Modulr Silver Piece) as the default transaction token. Users can seamlessly swap other registered tokens like AdCoin for USP at checkout.
 
 #### Key Features
 
 1. **Digital Asset Contracts**:
     
-    - Assets are minted using UndChain’s **standard Digital Asset Contracts** as defined by the main chain. Those assets are as follows:
+    - Assets are minted using Modulr’s **standard Digital Asset Contracts** as defined by the main chain. Those assets are as follows:
         - **Gray (Unregistered)**: Default for unprotected assets.
         - **Green (Rental)**: Allows limited-use rentals with royalties sent to the creator.
         - **Blue (Single Use + Sharing)**: Enables personal use and sharing, with a kickback for creators when shared content generates value.
@@ -390,7 +390,7 @@ The Auction House offers a fair, transparent, and decentralized experience for c
 
 3. **Resellers** can list assets while ensuring creators receive royalties if applicable.
 
-4. **DAPPs** ensure claims, enforcement, and disputes are handled without UndChain involvement, preserving decentralization.
+4. **DAPPs** ensure claims, enforcement, and disputes are handled without Modulr involvement, preserving decentralization.
 
 #### Visual Seller Classification
 
@@ -409,7 +409,7 @@ The Auction House ensures that digital assets remain protected, accessible, and 
 
 ### Live - Decentralized Real Time Streaming
 
-The Live co-chain is UndChain’s dedicated decentralized audio/video streaming co-chain, built to deliver **low-latency**, **interactive streaming**, and enhanced accessibility while empowering creators to retain ownership and monetization of their content. Its modular design integrates directly into other co-chains like **Pages** and **Smack**, with advanced tools for user interaction, adaptive scaling, and intelligent AI integration through **Mimic**.
+The Live co-chain is Modulr’s dedicated decentralized audio/video streaming co-chain, built to deliver **low-latency**, **interactive streaming**, and enhanced accessibility while empowering creators to retain ownership and monetization of their content. Its modular design integrates directly into other co-chains like **Pages** and **Smack**, with advanced tools for user interaction, adaptive scaling, and intelligent AI integration through **Mimic**.
 
 #### Key Features
 
@@ -429,7 +429,7 @@ The Live co-chain is UndChain’s dedicated decentralized audio/video streaming 
     - **Audience-Driven Content**: Viewers’ actions and interactions can influence the flow or content of the stream, creating a uniquely immersive experience.
 4. **Intelligent AI Integration with Mimic**
     
-    - Live incorporates **Mimic**, UndChain’s AI co-chain, to enhance content accessibility and usability:
+    - Live incorporates **Mimic**, Modulr’s AI co-chain, to enhance content accessibility and usability:
         - **Screen Reading**: When users pause a stream, Mimic analyzes the screen to enable text recognition. Users can copy and paste relevant text, such as captions, notes, or displayed information.
         - **Closed Captioning**: Mimic automatically generates real-time captions, making streams accessible to a broader audience, including those with hearing impairments.
         - **Intelligent Insights**: Mimic can assist streamers by analyzing viewer behaviors and content interactions, helping optimize future broadcasts.
@@ -453,7 +453,7 @@ The Live co-chain is UndChain’s dedicated decentralized audio/video streaming 
 8. **Regional and Adaptive Scaling**
     
     - Popular content is redistributed to local partners dynamically, enhancing performance and reducing latency.
-    - Partners are incentivized to prioritize streams with high demand, aligning with UndChain’s decentralized resource-sharing model.
+    - Partners are incentivized to prioritize streams with high demand, aligning with Modulr’s decentralized resource-sharing model.
 9. **Monetization with USP and AdCoin**
     
     - Live content can be monetized using:
@@ -462,7 +462,7 @@ The Live co-chain is UndChain’s dedicated decentralized audio/video streaming 
     - Users benefit from flexible payment options, while streamers enjoy consistent monetization streams.
 10. **Content Ratings and User Safety**
     
-	- Live adheres to UndChain’s **content rating system**, ensuring streams are appropriately classified.
+	- Live adheres to Modulr’s **content rating system**, ensuring streams are appropriately classified.
 	- Stream creators can implement **age restrictions** for sensitive content using the Adult_Swim protocol, which verifies users’ eligibility without exposing personal data.
 
 #### Use Cases
@@ -475,29 +475,29 @@ The Live co-chain is UndChain’s dedicated decentralized audio/video streaming 
 
 #### Why Live Stands Out
 
-Live combines decentralized streaming, low latency, interactive features, and AI-driven enhancements to deliver a streaming platform unlike any other. It empowers creators, enriches viewer experiences, and integrates seamlessly into UndChain’s broader Web4 ecosystem. Whether embedded in Pages, used on Smack, or powering standalone applications, Live provides the tools to build the next generation of interactive, decentralized streaming solutions.
+Live combines decentralized streaming, low latency, interactive features, and AI-driven enhancements to deliver a streaming platform unlike any other. It empowers creators, enriches viewer experiences, and integrates seamlessly into Modulr’s broader Web4 ecosystem. Whether embedded in Pages, used on Smack, or powering standalone applications, Live provides the tools to build the next generation of interactive, decentralized streaming solutions.
 
 #### Developer Focus: Building with Live
 
-Live demonstrates how UndChain’s co-chains work together to create powerful, interconnected systems. By integrating components like **Mimic’s AI tools**, **Pages’ content distribution**, and **Smack’s social sharing features**, Live showcases the flexibility and modularity developers can leverage when building their own co-chains.
+Live demonstrates how Modulr’s co-chains work together to create powerful, interconnected systems. By integrating components like **Mimic’s AI tools**, **Pages’ content distribution**, and **Smack’s social sharing features**, Live showcases the flexibility and modularity developers can leverage when building their own co-chains.
 
-With UndChain, developers are encouraged to think beyond isolated systems—creating dynamic, interoperable applications that scale effortlessly and provide unmatched user experiences.
+With Modulr, developers are encouraged to think beyond isolated systems—creating dynamic, interoperable applications that scale effortlessly and provide unmatched user experiences.
 
 ---
 
 ### Code Ledger 
 
-Code ledger is the heart of software development on UndChain, specifically designed for Pseudo. It combines decentralized collaboration, code verification, interactive education, and monetization into one seamless experience for developers. Code Ledger isn’t just a repository—it’s a **living ecosystem** that rewards innovation, encourages learning, and ensures secure development.
+Code ledger is the heart of software development on Modulr, specifically designed for Pseudo. It combines decentralized collaboration, code verification, interactive education, and monetization into one seamless experience for developers. Code Ledger isn’t just a repository—it’s a **living ecosystem** that rewards innovation, encourages learning, and ensures secure development.
 
 #### Key Features
 
 1. **Date-Based Versioning**
     
-    - Instead of traditional VCS (e.g., Git), Code Ledger adopts **UndChain’s date-based versioning** (e.g., 2024.12.17.0) as the default. This ensures clarity and consistency across all projects.
+    - Instead of traditional VCS (e.g., Git), Code Ledger adopts **Modulr’s date-based versioning** (e.g., 2024.12.17.0) as the default. This ensures clarity and consistency across all projects.
     - The **current version** is displayed prominently in the project view, ensuring developers and users always see the latest state of the code.
 2. **Module Marketplace**
     
-    - A **dedicated marketplace** where developers can share, buy, or sell standalone modules as **digital assets** (protected under UndChain’s Digital Asset Contracts).
+    - A **dedicated marketplace** where developers can share, buy, or sell standalone modules as **digital assets** (protected under Modulr’s Digital Asset Contracts).
     - Modules can be imported from other co-chains, offering tremendous flexibility for developers. For instance:
         - Use **Live** modules for streaming and interactive tutorials.
         - Use **Mimic** modules for AI-powered assistance.
@@ -524,13 +524,13 @@ Code ledger is the heart of software development on UndChain, specifically desig
 6. **Blockchain-Based Licensing**
     
     - Code Ledger supports **standard software licenses** like MIT, GPL3, or Apache. Developers can choose these licenses during project creation.
-    - All licenses are protected under **Digital Asset Contracts**, ensuring clarity and enforceability within UndChain’s ecosystem.
+    - All licenses are protected under **Digital Asset Contracts**, ensuring clarity and enforceability within Modulr’s ecosystem.
     - Custom licensing options are also supported, empowering developers to define unique usage rights and monetization terms.
 7. **Milestone-Based Funding**
     
     - Code Ledger introduces a **milestone-based funding system** to help projects gain traction and community sentiment.
     - Developers can create funding proposals tied to specific project milestones. Contributions can come from:
-        - The UndChain grant system.
+        - The Modulr grant system.
         - Community-based funding.
         - Bounty submissions for specific features.
     - Milestone payouts are transparent, immutable, and tied to clear deliverables—building trust between developers and funders.
@@ -569,12 +569,12 @@ Code Ledger sets a new standard for decentralized software development by:
 
 #### Final Thoughts
 
-With Code Ledger, UndChain doesn’t just provide a decentralized alternative to platforms like GitHub—it builds an **evolutionary system** that rewards developers, fosters innovation, and ensures secure, scalable development for the future. It’s the ultimate toolkit for building the decentralized applications of tomorrow.
+With Code Ledger, Modulr doesn’t just provide a decentralized alternative to platforms like GitHub—it builds an **evolutionary system** that rewards developers, fosters innovation, and ensures secure, scalable development for the future. It’s the ultimate toolkit for building the decentralized applications of tomorrow.
 
 ---
 ### SQeeL (Decentralized SQL Database System)
 
-SQeeL is UndChain’s decentralized SQL database system, designed to create and manage on-chain databases with seamless scalability, robust user features, and enhanced developer tools. Built to balance power and usability, SQeeL transforms decentralized database management into a streamlined, interactive experience.
+SQeeL is Modulr’s decentralized SQL database system, designed to create and manage on-chain databases with seamless scalability, robust user features, and enhanced developer tools. Built to balance power and usability, SQeeL transforms decentralized database management into a streamlined, interactive experience.
 
 #### Key Features
 
@@ -590,7 +590,7 @@ SQeeL is UndChain’s decentralized SQL database system, designed to create and 
     - **Interactive Tutorials**: Mimic provides interactive tutorials on features, query writing, and best practices, helping both beginners and experienced developers.
 3. **Cross-Chain Data Linking**
     
-    - SQeeL enables seamless integration with other UndChain co-chains, enriching datasets without duplication.
+    - SQeeL enables seamless integration with other Modulr co-chains, enriching datasets without duplication.
     - Example: Pull user profiles from Smack, transaction data from the Auction House, or content metadata from Pages.
 4. **Real-Time Collaboration**
     
@@ -602,10 +602,10 @@ SQeeL is UndChain’s decentralized SQL database system, designed to create and 
     - **Audit Logs**: Every change (e.g., row insertion, update, or deletion) is immutably logged on-chain for full transparency and compliance.
 6. **Decentralized Data Storage**
     
-    - SQeeL integrates natively with UndChain’s decentralized storage providers for scalable, secure, and redundant storage of large datasets.
+    - SQeeL integrates natively with Modulr’s decentralized storage providers for scalable, secure, and redundant storage of large datasets.
 7. **Data Monetization Marketplace**
     
-    - Public or private datasets can be monetized as digital assets through UndChain’s marketplace.
+    - Public or private datasets can be monetized as digital assets through Modulr’s marketplace.
     - Subscription models or pay-per-query access unlock valuable datasets for researchers, businesses, and developers.
 8. **Module Marketplace**
     
@@ -613,7 +613,7 @@ SQeeL is UndChain’s decentralized SQL database system, designed to create and 
     - Example: Developers building a video library can import modules for content tagging, search functions, or user interaction systems.
 9. **Forking and Licensing**
     
-    - SQeeL respects UndChain’s digital asset contracts to ensure proper licensing and monetization.
+    - SQeeL respects Modulr’s digital asset contracts to ensure proper licensing and monetization.
     - Databases or modules can be forked for customization while adhering to the creator’s licensing terms.
 10. **Clone Protocol for External Data Integration**
     
@@ -624,7 +624,7 @@ SQeeL is UndChain’s decentralized SQL database system, designed to create and 
 
 SQeeL revolutionizes decentralized database management by combining powerful SQL capabilities with a visual, user-friendly interface and AI-driven assistance. With tools for collaboration, monetization, and integration across co-chains, SQeeL provides a seamless experience for developers, creators, and enterprises alike.
 
-Whether building public datasets, private repositories, or interactive applications, SQeeL empowers you to store, visualize, and manage data effectively on UndChain.
+Whether building public datasets, private repositories, or interactive applications, SQeeL empowers you to store, visualize, and manage data effectively on Modulr.
 
 ---
 
@@ -667,7 +667,7 @@ Smack redefines decentralized messaging and social interaction, offering a robus
 
 **5. Monetization Opportunities**
 
-- Users can monetize content directly using UndChain’s native tokens (e.g., USP or AdCoin).
+- Users can monetize content directly using Modulr’s native tokens (e.g., USP or AdCoin).
 - Supports subscription-based models, tipping systems, and ad revenue sharing to reward creators.
 
 **6. Integration with Pages and M3L/GSS**
@@ -697,7 +697,7 @@ Smack redefines decentralized messaging and social interaction, offering a robus
 
 **11. Dynamic Content Scaling**
 
-- Uses UndChain’s dynamic spread protocol to scale content delivery based on demand and region, ensuring smooth interaction even during high traffic.
+- Uses Modulr’s dynamic spread protocol to scale content delivery based on demand and region, ensuring smooth interaction even during high traffic.
 
 #### Why Smack?
 
@@ -709,7 +709,7 @@ With tools for personalized content discovery, transparent propagation, and adap
 
 ### Player2
 
-Player2 is UndChain’s innovative co-chain designed to revolutionize gaming through decentralized technology, immersive storytelling, and cutting-edge tools for developers and players. From multiplayer experiences to single-player narratives, Player2 empowers creators to build the next generation of games while offering players unparalleled ownership and interactivity.
+Player2 is Modulr’s innovative co-chain designed to revolutionize gaming through decentralized technology, immersive storytelling, and cutting-edge tools for developers and players. From multiplayer experiences to single-player narratives, Player2 empowers creators to build the next generation of games while offering players unparalleled ownership and interactivity.
 
 At the core of Player2 is the **Echoes Trilogy**, a showcase of Player2’s capabilities that spans generations and genres. This episodic RPG series invites players to explore rich worlds, confront legendary adversaries, and shape the fate of interconnected stories across time and space.
 
@@ -732,13 +732,13 @@ At the core of Player2 is the **Echoes Trilogy**, a showcase of Player2’s capa
     - Includes tools for writing text, adding reference images, and mapping out branching storylines.
     - Leverages **Code Ledger** for version control and team collaboration, ensuring a seamless and organized development process.
 5. **Meta Space Integration**  
-    Digital assets acquired in Player2 games are portable, enabling players to use their characters, items, and creations across games and applications within UndChain’s **Meta Space**.
+    Digital assets acquired in Player2 games are portable, enabling players to use their characters, items, and creations across games and applications within Modulr’s **Meta Space**.
     
 6. **Episodic Release Framework**  
     Player2 supports episodic game releases, allowing developers to launch shorter, more focused stories and build anticipation for future chapters.
     
 7. **Player-Centric Asset Ownership**  
-    Using UndChain’s **Digital Asset Contracts**, Player2 ensures players have full control over their in-game assets, which can be monetized, transferred, or utilized across compatible games.
+    Using Modulr’s **Digital Asset Contracts**, Player2 ensures players have full control over their in-game assets, which can be monetized, transferred, or utilized across compatible games.
     
 8. **Cutting-Edge Hardware Integration**  
     Player2 supports a decentralized gaming hardware ecosystem, enabling users to share idle gaming PCs and earn rewards while powering the network.
@@ -779,7 +779,7 @@ In a modern world with some futuristic aspects, _Echoes of Destiny_ ties the tri
 #### Why Choose Player2?
 
 1. **For Developers:**  
-    Player2 provides robust tools to create multiplayer and single-player games with decentralized infrastructure, ensuring resilience, scalability, and seamless integration with UndChain’s ecosystem.
+    Player2 provides robust tools to create multiplayer and single-player games with decentralized infrastructure, ensuring resilience, scalability, and seamless integration with Modulr’s ecosystem.
     
 2. **For Players:**  
     From owning and trading assets to immersive gameplay and connected experiences, Player2 puts players at the heart of a decentralized gaming revolution.
@@ -794,13 +794,13 @@ Player2 is more than a co-chain; it’s the cornerstone of a decentralized gamin
 
 ### Summary on Co-Chains
 
-As you can see, UndChain offers an expansive framework for developing diverse co-chains, each contributing unique functionality to the ecosystem. While I may not be able to personally develop every co-chain idea presented here, my goal is to create a strong foundation that inspires innovation and ensures the protocol can adapt to the varied needs of these co-chains.
+As you can see, Modulr offers an expansive framework for developing diverse co-chains, each contributing unique functionality to the ecosystem. While I may not be able to personally develop every co-chain idea presented here, my goal is to create a strong foundation that inspires innovation and ensures the protocol can adapt to the varied needs of these co-chains.
 
 Through firsthand experience in building these systems, I’ve learned that actively using a product uncovers insights that might otherwise be missed. My hope is that developers approach their creations with a focus on delivering tangible value—not just another asset class—to enhance the ecosystem as a whole.
 
 #### Potential Co-Chain Ideas
 
-To spark inspiration for future development, here are a few ideas for co-chains that I believe could thrive on UndChain:
+To spark inspiration for future development, here are a few ideas for co-chains that I believe could thrive on Modulr:
 
 1. **Decentralized Rideshare and Delivery Services**  
     Imagine a decentralized version of Uber or DoorDash, enabling peer-to-peer ridesharing and delivery services without centralized control. Such a system could bring fairer pricing, more equitable profit distribution, and enhanced user control.
@@ -821,7 +821,7 @@ To spark inspiration for future development, here are a few ideas for co-chains 
     A decentralized Tela-Health co-chain where patients can securely connect with healthcare providers for consultations, prescriptions, and medical advice. Health data could be stored privately on the network, and Mimic could assist with diagnostics or routine health inquiries.
     
 7. **Decentralized Talent Marketplaces**  
-    A co-chain where freelancers and businesses connect without intermediaries. Users can showcase their skills, bid on projects, and receive payments through UndChain’s token systems. Built-in reputation systems ensure fair and trustworthy transactions.
+    A co-chain where freelancers and businesses connect without intermediaries. Users can showcase their skills, bid on projects, and receive payments through Modulr’s token systems. Built-in reputation systems ensure fair and trustworthy transactions.
     
 8. **Event Ticketing and Management**  
     A co-chain for creating, selling, and managing event tickets. Tickets would be issued as digital assets, ensuring authenticity and preventing fraud. Event organizers could even create virtual venues using Live and Player2 for decentralized concerts or esports events.
@@ -844,14 +844,14 @@ To spark inspiration for future development, here are a few ideas for co-chains 
 	This co-chain paves the way for decentralized streaming platforms—think of it as a blockchain-powered alternative to services like Netflix or Spotify—where content ownership, control, and monetization are shifted back to the creators and their audiences. Additionally, creators can use the built-in functionality of Pages to host their libraries and leverage AdCoin for monetization options.
 ## Open vs. Closed Source
 
-While I firmly believe in the principles of open-source development, UndChain also provides the flexibility to run closed-source code. This capability is achieved through **Preferred Partners**, systems that execute Creator code directly without requiring compilation by the Code Ledger co-chain. However, implementing closed-source systems introduces challenges, particularly regarding security and transparency, as public scrutiny of the code is limited.
+While I firmly believe in the principles of open-source development, Modulr also provides the flexibility to run closed-source code. This capability is achieved through **Preferred Partners**, systems that execute Creator code directly without requiring compilation by the Code Ledger co-chain. However, implementing closed-source systems introduces challenges, particularly regarding security and transparency, as public scrutiny of the code is limited.
 
-This approach may seem to contrast with the ideals of decentralization, but UndChain is designed to go beyond rigid definitions. By blending the strengths of both decentralized and centralized systems, UndChain ensures developers have the freedom to use the tools that best meet the unique requirements of their applications. Whether it’s full transparency through open-source projects or the tailored control of closed-source solutions, UndChain is built for the future—empowering developers to innovate without compromise.
+This approach may seem to contrast with the ideals of decentralization, but Modulr is designed to go beyond rigid definitions. By blending the strengths of both decentralized and centralized systems, Modulr ensures developers have the freedom to use the tools that best meet the unique requirements of their applications. Whether it’s full transparency through open-source projects or the tailored control of closed-source solutions, Modulr is built for the future—empowering developers to innovate without compromise.
 
 ---
-# User Types in UndChain
+# User Types in Modulr
 
-UndChain features four distinct user types, each designed to balance power and ensure no single entity can compromise the integrity of the chain. Here's how they function:
+Modulr features four distinct user types, each designed to balance power and ensure no single entity can compromise the integrity of the chain. Here's how they function:
 
 1. **Creators**  
     Creators are the architects of a co-chain. They define its functionality, tokenomics (fees), and governance rules. Upon launching a chain, owners receive a digital asset certifying their ownership, which can be transferred or shared with up to two additional partners. Owners also select **preferred validators** (often themselves) and determine the number of validators on their network, with a minimum of three.  
@@ -865,13 +865,13 @@ UndChain features four distinct user types, each designed to balance power and e
     - Maintaining the **Users File**, a secure directory mapping usernames to public keys.  
         Validators play a crucial role in keeping the network functional, secure, and efficient.
 3. **Partners**  
-    Partners are UndChain’s equivalent of miners, but instead of solving cryptographic puzzles, they perform meaningful tasks in three utility categories: computation, storage, and access.
+    Partners are Modulr’s equivalent of miners, but instead of solving cryptographic puzzles, they perform meaningful tasks in three utility categories: computation, storage, and access.
     
     - Partners collaborate with validators by fulfilling jobs listed in the **Jobs File**.
     - After completing a task, they sign a receipt with the client, ensuring transparency and accountability.  
-        Partners are essential for driving the decentralized cloud services that UndChain provides.
+        Partners are essential for driving the decentralized cloud services that Modulr provides.
 4. **Clients**  
-    Clients are the end-users of UndChain’s resources, engaging with services for entertainment, productivity, or business. They’re not merely consumers but an integral part of the chain's security.
+    Clients are the end-users of Modulr’s resources, engaging with services for entertainment, productivity, or business. They’re not merely consumers but an integral part of the chain's security.
     
     - Clients sign receipts upon completing transactions, ensuring trust and verifying job fulfillment.
     - By participating in this process, clients help secure the network while benefiting from its decentralized services.
@@ -880,13 +880,13 @@ UndChain features four distinct user types, each designed to balance power and e
 
 # Block Generation
 
-Blocks on UndChain are generated using a fixed block time rather than size to ensure consistent and predictable operation. This design choice mitigates the risk of rapid chain expansion by offloading completed items such as job files, work files, and payout lists to partners for storage. Additionally, a process called **The Convergence** consolidates the chain to optimize storage and performance; this is explained further in the encryption standards section. Each block is generated in three distinct stages, with each stage consisting of three steps.
+Blocks on Modulr are generated using a fixed block time rather than size to ensure consistent and predictable operation. This design choice mitigates the risk of rapid chain expansion by offloading completed items such as job files, work files, and payout lists to partners for storage. Additionally, a process called **The Convergence** consolidates the chain to optimize storage and performance; this is explained further in the encryption standards section. Each block is generated in three distinct stages, with each stage consisting of three steps.
 
 The timing of block generation will initially be experimental. Blocks need to be long enough to accommodate a sufficient number of job requests while maintaining responsiveness for users. The current target is **44 seconds per block**. While blocks finalize at this interval, transaction propagation is near-instantaneous, providing users with a fast and seamless experience.
 
 ### **Transaction Throughput and Responsiveness**
 
-UndChain decouples transaction placement from block finalization. Transactions are processed and placed in the **job file** almost immediately after being initiated, allowing clients and partners to proceed without waiting for block finalization.
+Modulr decouples transaction placement from block finalization. Transactions are processed and placed in the **job file** almost immediately after being initiated, allowing clients and partners to proceed without waiting for block finalization.
 
 This approach ensures:
 
@@ -915,25 +915,25 @@ Utility tasks are not required to conclude within a single block and may span mu
 1. **Receipt:** Both the client and partner must submit a receipt of the utility. This receipt, signed by both parties, serves as verification of the transaction. Submissions from both parties are recommended to ensure redundancy.
 2. **Utility Complete:** Validators mark the utility task as complete, recording the completion block and appending the transaction receipt. _Note: Receipts must remain under 128 characters to optimize storage, though they may link to larger off-chain files._
 3. **Payout:** At the Creator’s defined intervals, payouts are processed. Transactions not included in the current payout are appended to the **pay sheet** for inclusion in the next interval. Validators hash the payout data and append it to the block, sharing the hash with interconnected co-chains.
-4. **Subscription Model**: UGP will introduce the subscription style model system. If users choose they can subscribe to UndChain's services for a flat rate which allows near infinite requests. *There is an anti-spam system*
+4. **Subscription Model**: UGP will introduce the subscription style model system. If users choose they can subscribe to Modulr's services for a flat rate which allows near infinite requests. *There is an anti-spam system*
 
 ---
 
 ### **Note on Adjustments**
 
-Block timing and related parameters may be adjusted based on real-world data to ensure optimal transaction throughput and storage efficiency. This iterative approach ensures UndChain remains both responsive and sustainable as the network grows.
+Block timing and related parameters may be adjusted based on real-world data to ensure optimal transaction throughput and storage efficiency. This iterative approach ensures Modulr remains both responsive and sustainable as the network grows.
 
 ---
 
 ## Tokenomics
 
-UndChain employs two primary utility tokens on its main chain—**UndChain Gold Piece (UGP)** and **UndChain Silver Piece (USP)**—to incentivize validators and partners. Additionally, **AdCoin**, a token specific to the Pages co-chain, demonstrates how developers can implement custom tokens to override USP for specific functionalities.
+Modulr employs two primary utility tokens on its main chain—**Modulr Gold Piece (UGP)** and **Modulr Silver Piece (USP)**—to incentivize validators and partners. Additionally, **AdCoin**, a token specific to the Pages co-chain, demonstrates how developers can implement custom tokens to override USP for specific functionalities.
 
 _Note: The blockchain experienced a soft launch on April 24, 2024. All token emissions from this date until the network officially launches are effectively burned and will not enter circulation._
 
 ---
 
-### UndChain Gold Piece (UGP)
+### Modulr Gold Piece (UGP)
 
 UGP serves as the primary reward token for validators, following a deflationary model inspired by Bitcoin. It introduces periodic reductions in daily emissions, referred to as **floorings**, to promote long-term sustainability and maintain validator interest without inflating fees.
 
@@ -964,7 +964,7 @@ UGP serves as the primary reward token for validators, following a deflationary 
 
 ---
 
-### UndChain Silver Piece (USP)
+### Modulr Silver Piece (USP)
 
 USP rewards partners for providing computational, storage, and access services. Unlike UGP, USP’s emission schedule is dynamically adjusted through voting by active partners.
 
@@ -975,7 +975,7 @@ USP rewards partners for providing computational, storage, and access services. 
 3. **Voting Mechanism:** Partners vote every four years to either halve or double the emission rate.
 4. **Eligibility for Voting:** Partners must complete at least one transaction per week and maintain a Reliability score above **444** to participate in the vote.
 
-This dynamic voting mechanism enables decentralized governance and can serve as a testing ground for broader governance features across UndChain.
+This dynamic voting mechanism enables decentralized governance and can serve as a testing ground for broader governance features across Modulr.
 
 ---
 
@@ -1002,10 +1002,10 @@ AdCoin is the native token of the Pages co-chain and integrates into other syste
 
 ### Fees
 
-UndChain’s fee system reflects its core principles of digital ownership and fairness:
+Modulr’s fee system reflects its core principles of digital ownership and fairness:
 
 1. **Partner-Set Fees:** Partners can independently set fees for services, with a portion allocated to the Creator. Validators cannot set fees.
-2. **Network Suggested Fee:** Partners can opt for a network-suggested fee based on what the UndChain protocol recommends.
+2. **Network Suggested Fee:** Partners can opt for a network-suggested fee based on what the Modulr protocol recommends.
 3. **Auto-Fee System:** Dynamically adjusts fees based on token value and network activity.
 4. **Fee Reduction Voting:** Users and partners can vote to reduce fees temporarily if token values become overinflated.
 5. **No-Fee Model:** Partners and co-chains can opt to charge no fees, though this forfeits emission-based rewards. This supports non-profit initiatives.
@@ -1019,13 +1019,13 @@ UndChain’s fee system reflects its core principles of digital ownership and fa
 
 ---
 
-## Digital Assets on UndChain
+## Digital Assets on Modulr
 
-In the era of decentralized networks, **digital assets** are the backbone of user engagement, creativity, and commerce. Unlike traditional NFTs, which merely record ownership, UndChain’s assets bring enforceable rights, clear usage terms, and choices for creators and users alike. This section provides an overview of the contract types, enforcement mechanisms, and protections that make UndChain’s digital assets uniquely valuable.
+In the era of decentralized networks, **digital assets** are the backbone of user engagement, creativity, and commerce. Unlike traditional NFTs, which merely record ownership, Modulr’s assets bring enforceable rights, clear usage terms, and choices for creators and users alike. This section provides an overview of the contract types, enforcement mechanisms, and protections that make Modulr’s digital assets uniquely valuable.
 
 #### Predefined Digital Asset Contracts
 
-Each digital asset on UndChain is governed by a **predefined contract** that determines how it can be used, shared, and monetized. These contracts are color-coded for easy recognition, ensuring transparency for creators and users at all levels. Here’s a summary of the five contract types:
+Each digital asset on Modulr is governed by a **predefined contract** that determines how it can be used, shared, and monetized. These contracts are color-coded for easy recognition, ensuring transparency for creators and users at all levels. Here’s a summary of the five contract types:
 
 1. **⚪ Unregistered (Gray)**: Basic NFT-like ownership recorded on-chain without enforceable rights or protections.
     
@@ -1052,11 +1052,11 @@ These predefined contracts address the limitations of traditional digital assets
 
 #### Enforcement Through Digital Asset Guardians (DAGs)
 
-UndChain’s **Digital Asset Guardians (DAGs)** are independent entities responsible for enforcing the network’s Digital Asset Program. By bridging decentralized principles with real-world compliance, DAGs ensure that asset contracts are meaningful and actionable.
+Modulr’s **Digital Asset Guardians (DAGs)** are independent entities responsible for enforcing the network’s Digital Asset Program. By bridging decentralized principles with real-world compliance, DAGs ensure that asset contracts are meaningful and actionable.
 
 #### Key Roles of DAGs:
 
-1. **Asset Validation:** DAGs verify that digital assets comply with UndChain's standards and terms. This includes monitoring for unauthorized use or duplication of existing works.
+1. **Asset Validation:** DAGs verify that digital assets comply with Modulr's standards and terms. This includes monitoring for unauthorized use or duplication of existing works.
 2. **Dispute Resolution:** DAGs mediate disputes between creators and claimants, providing a fair and balanced resolution mechanism.
 3. **Revenue Distribution:** For assets with multiple contributors or shared ownership, DAGs oversee revenue splits to ensure fair compensation.
 
@@ -1073,11 +1073,11 @@ UndChain’s **Digital Asset Guardians (DAGs)** are independent entities respons
 
 #### Why DAGs Are Essential
 
-Without an enforcement mechanism, digital asset contracts are meaningless. DAGs bring legitimacy to UndChain’s asset system by offering active protections and reliable dispute resolution. By combining DAG oversight with Mimic’s AI-driven insights, UndChain ensures a balanced ecosystem that empowers creators and protects consumers.
+Without an enforcement mechanism, digital asset contracts are meaningless. DAGs bring legitimacy to Modulr’s asset system by offering active protections and reliable dispute resolution. By combining DAG oversight with Mimic’s AI-driven insights, Modulr ensures a balanced ecosystem that empowers creators and protects consumers.
 
 ### Claim Filing and Dispute Resolution
 
-To ensure transparency and fairness, UndChain incorporates a decentralized process for filing and resolving claims regarding digital assets. This system operates independently through DAGs and is supported by the protocol's foundational tools.
+To ensure transparency and fairness, Modulr incorporates a decentralized process for filing and resolving claims regarding digital assets. This system operates independently through DAGs and is supported by the protocol's foundational tools.
 
 #### Filing a Claim:
 
@@ -1134,7 +1134,7 @@ Mimic aids both parties during the claim process:
 
 #### Protocol Forks for Ownership and Representation
 
-UndChain’s protocol remains neutral, avoiding mandatory enforcement to reduce network burden. Instead, **protocol forks** enable flexibility and creator-defined enforcement:
+Modulr’s protocol remains neutral, avoiding mandatory enforcement to reduce network burden. Instead, **protocol forks** enable flexibility and creator-defined enforcement:
 
 - **Ownership Fork:** Sets the asset’s primary owner, governs revenue distribution, and can initiate actions like asset freezes in case of disputes.
 - **Representation Fork:** Allows creators to assign an **enforcement mechanism** (such as DAGs) for handling claims, enforcing rights, and managing disputes if needed.
@@ -1143,22 +1143,22 @@ These forks create the foundation for a decentralized enforcement system, giving
 
 #### Built-in User Protections and Decentralized Dispute Resolution
 
-UndChain’s digital asset model includes comprehensive user protections to create a balanced environment:
+Modulr’s digital asset model includes comprehensive user protections to create a balanced environment:
 
 - **Transparency with Color-Coded Contracts:** Clear asset terms prevent misunderstandings and allow users to make informed decisions.
 - **Accountability in Dispute Resolution:** Both claimants and users are accountable in disputes, with sponsors providing support and verification to prevent misuse.
-- **Modular, Decentralized Enforcement:** Optional DAGs and protocol forks allow enforcement and monitoring to evolve without impacting the core protocol, promoting innovation within the UndChain ecosystem.
+- **Modular, Decentralized Enforcement:** Optional DAGs and protocol forks allow enforcement and monitoring to evolve without impacting the core protocol, promoting innovation within the Modulr ecosystem.
 
-#### Advantages of Enforceable Digital Assets on UndChain
+#### Advantages of Enforceable Digital Assets on Modulr
 
-The UndChain digital asset model brings unique advantages over traditional NFTs and decentralized assets:
+The Modulr digital asset model brings unique advantages over traditional NFTs and decentralized assets:
 
 - **Clear Rights and Responsibilities:** Predefined contracts outline specific usage rights, empowering creators and users to understand and control asset interactions.
 - **Optional, Effective Enforcement:** By choosing DAGs, creators can access a robust IP protection system that operates independently of the main protocol.
 - **Upgrade Flexibility for Unregistered Assets:** Unregistered (Gray) assets offer a straightforward entry point, with the flexibility to upgrade protections as desired.
 - **Future-Proof Flexibility:** The enforcement system, combined with protocol forks, allows the ecosystem to grow, adapt, and incorporate new enforcement mechanisms without requiring protocol changes.
 
-Through enforceable digital assets, UndChain enables a **new standard in digital ownership** for Web4, balancing creator rights with user freedom while remaining scalable and neutral at its core.
+Through enforceable digital assets, Modulr enables a **new standard in digital ownership** for Web4, balancing creator rights with user freedom while remaining scalable and neutral at its core.
 
 ---
 
@@ -1166,7 +1166,7 @@ Through enforceable digital assets, UndChain enables a **new standard in digital
 
 ### Accounts
 
-Anyone can generate an account on UndChain just as they can with any other blockchain, by generating a public/private key pair. Once you have generated your keys, simply send in a new user request message. Usernames, which begin with an @ symbol (e.g., @Undline), provide an easy means of transferring digital assets using a name instead of a long public key. These names are resolved on the validators' end using UnaS (UndChain Naming System), which acts like DNS.
+Anyone can generate an account on Modulr just as they can with any other blockchain, by generating a public/private key pair. Once you have generated your keys, simply send in a new user request message. Usernames, which begin with an @ symbol (e.g., @Undline), provide an easy means of transferring digital assets using a name instead of a long public key. These names are resolved on the validators' end using UnaS (Modulr Naming System), which acts like DNS.
 
 While usernames are not a requirement, public keys are necessary for adding you to the public ledger and allowing other users to reach you. This ensures that even new users without tokens can still participate and interact on the network. Users can receive tokens through drops or earn them by actively participating in the network.
 
@@ -1188,7 +1188,7 @@ Accounts are refundable after demonstrating active participation in the network,
 
 ### Organizations
 
-An organization is a group of user accounts on UndChain that have access/privileges to shared resources. There are different roles within an organization that can control various utilities (e.g., digital assets, data, software, and points of contact). There are predefined account types such as president, developer, support, board member, manager, editor, contributor, auditor, moderator, advisor, marketing, treasurer, analyst, and operations. Each organization will begin with a % symbol followed by the organization name (e.g., %UndChain for the UndChain system).
+An organization is a group of user accounts on Modulr that have access/privileges to shared resources. There are different roles within an organization that can control various utilities (e.g., digital assets, data, software, and points of contact). There are predefined account types such as president, developer, support, board member, manager, editor, contributor, auditor, moderator, advisor, marketing, treasurer, analyst, and operations. Each organization will begin with a % symbol followed by the organization name (e.g., %Modulr for the Modulr system).
 
 Unlike user accounts, organizations do cost tokens to mint. However, after minting, you can add as many members as you wish with however many roles. Members can also choose to transfer their role in the same way that any digital asset is transferred on chain, with the exception that the president must agree to the transfer as well as the transferee. Organizations are not based on a staking period and are not refunded. The cost to mint an organization is equivalent to $44 in 1986 USD, which must be paid in USP.
 
@@ -1230,7 +1230,7 @@ The president can also appoint managers to handle member additions and deletions
 
 ### Consensus and Rotation
 
-UndChain operates on a 2/3 majority consensus mechanism, the reason behind this is that since a Creator is able to set up to 44% of the available slots with **known validators** (which guarantees them a spot), they have to get buy in from another 23% of unknown validators. This consensus system also works in regulating unknown validators since they must have buy in from at least 11% of the known validators. There is a potential problem with this however, the Creator could simply create more validators that are not listed and have them run on the network. 
+Modulr operates on a 2/3 majority consensus mechanism, the reason behind this is that since a Creator is able to set up to 44% of the available slots with **known validators** (which guarantees them a spot), they have to get buy in from another 23% of unknown validators. This consensus system also works in regulating unknown validators since they must have buy in from at least 11% of the known validators. There is a potential problem with this however, the Creator could simply create more validators that are not listed and have them run on the network. 
 
 Due to this potential vulnerability, a rotation schedule for validators will be implemented that forces **active validators** to swap out with **passive validators** which should reduce the risk. 
 
@@ -1281,7 +1281,7 @@ In order to make building the Reliability score more transparent we are introduc
 
 ### Scaling and Security
 
-UndChain should move very quickly since we use so few validators in order to issue work on the chain, however there is a problem with network delay due to physical size so the use of parallel networks is to be used. The idea is that a parallel network operates in the same manner as each other with the exception being their user base. The user declares which network they wish to be apart of and with that they are provided a list of the validators that are responsible in that region to interact with. This doesn't mean that you are stuck on that network permanently though. You can initiate a transfer at anytime and your assets will travel with you. Again the reason for the parallel networks is to increase QoS by making content more local to that specific space, this includes the ledger. Much like how tokens are dispersed across co-chains they are also dispersed the same way with networks. Token allotment is decided by network 1 and is based on activity. 
+Modulr should move very quickly since we use so few validators in order to issue work on the chain, however there is a problem with network delay due to physical size so the use of parallel networks is to be used. The idea is that a parallel network operates in the same manner as each other with the exception being their user base. The user declares which network they wish to be apart of and with that they are provided a list of the validators that are responsible in that region to interact with. This doesn't mean that you are stuck on that network permanently though. You can initiate a transfer at anytime and your assets will travel with you. Again the reason for the parallel networks is to increase QoS by making content more local to that specific space, this includes the ledger. Much like how tokens are dispersed across co-chains they are also dispersed the same way with networks. Token allotment is decided by network 1 and is based on activity. 
 
 ##### How do you create a new network? You don't :) 
 
@@ -1293,7 +1293,7 @@ I believe that this blockchain is going to get large fast even with some of the 
 
 ### Security
 
-There is a concern with quantum computing on the rise that traditional cryptographic algorithms may become obsolete. If history tells us anything is that it's a matter of when a cryptographic algorithm will be cracked rather than if. Because of that potential danger, UndChain can modulate and / or change it's cryptographic algorithm. *This is why we have usernames rather than just use public keys* Initially we will use standard AES encryption since that is industry standard and seems like it should work for quite a while longer. When we are close to that algorithm being compromised we will initiate a crypto swap. This will notify users to generate a new public / private key pair using a more secure cryptographic algorithm. The user then responds with the public key to the new protocol and signs it with the current private key so we know it comes from them. The Validators then update the users file to reflect the new public key and on the day of go live we use those signatures instead. If a user fails to update their keys then during the next transaction we initiate a forced key migration (which sounds worse than what it is, basically we send a emergency message back saying to update the key). If that fails, then we allow the account to continue, but notify them that the account is high risk and can be compromised at anytime. UndChain should NEVER force a user to update their keys, but should warn them of the danger of not doing so. *Important to note, once we reach zero day (meaning the attack is live) we do not allow the user to change the key since we don't know if it's them. Instead they can use the freeze feature and hopefully it will go to a updated account. Or they can loose their digital assets if and when someone cracks their account.*
+There is a concern with quantum computing on the rise that traditional cryptographic algorithms may become obsolete. If history tells us anything is that it's a matter of when a cryptographic algorithm will be cracked rather than if. Because of that potential danger, Modulr can modulate and / or change it's cryptographic algorithm. *This is why we have usernames rather than just use public keys* Initially we will use standard AES encryption since that is industry standard and seems like it should work for quite a while longer. When we are close to that algorithm being compromised we will initiate a crypto swap. This will notify users to generate a new public / private key pair using a more secure cryptographic algorithm. The user then responds with the public key to the new protocol and signs it with the current private key so we know it comes from them. The Validators then update the users file to reflect the new public key and on the day of go live we use those signatures instead. If a user fails to update their keys then during the next transaction we initiate a forced key migration (which sounds worse than what it is, basically we send a emergency message back saying to update the key). If that fails, then we allow the account to continue, but notify them that the account is high risk and can be compromised at anytime. Modulr should NEVER force a user to update their keys, but should warn them of the danger of not doing so. *Important to note, once we reach zero day (meaning the attack is live) we do not allow the user to change the key since we don't know if it's them. Instead they can use the freeze feature and hopefully it will go to a updated account. Or they can loose their digital assets if and when someone cracks their account.*
 
 - Interesting thought would be to allow users to update their key at anytime, but I am not sure why anyone would do this. The validator has to mark the active public key anyway so it wouldn't matter if they did update their keys. 
 	- Could lead to an attack if users are constantly updating their keys. Maybe charge for out of sequence key update?
@@ -1302,15 +1302,15 @@ There is a concern with quantum computing on the rise that traditional cryptogra
 
 #### What is Pseudo?
 
-Pseudo is a Pythonic-style language designed for securely creating real-world programs that run directly on chain within the UndChain protocol. It's main goal is to allow developers (Creators) a way to execute decentralized applications while maintaining a high level of security, fixability and accuracy. It provides a sandboxed environment that ensures no partner nor validator can exploit the system, protecting personal files and resources during the execution of these scripts. Pseudo is a heavily typed language so you will need to declare a variables type prior to using it such as: `my_var: i32 = 0`.
+Pseudo is a Pythonic-style language designed for securely creating real-world programs that run directly on chain within the Modulr protocol. It's main goal is to allow developers (Creators) a way to execute decentralized applications while maintaining a high level of security, fixability and accuracy. It provides a sandboxed environment that ensures no partner nor validator can exploit the system, protecting personal files and resources during the execution of these scripts. Pseudo is a heavily typed language so you will need to declare a variables type prior to using it such as: `my_var: i32 = 0`.
 
 ##### Sandbox Environment
 
-Pseudo runs all of it's scripts within a sandboxed environment that is designed to limit access to the hosts (partner or clients) machine, so that malicious code should not be able to access data or resources that are outside the scope that the program can run within. This is done by the partner dedicating portions of their system for UndChain specific tasks; for example when setting up a new worker the user is asked how much of their storage space they want to dedicate to the blockchain (has to be within 4GB segments). At that point the 'working folder' cannot go outside this area. Any attempts to do so will result in a drop in Reliability score from the Creator. 
+Pseudo runs all of it's scripts within a sandboxed environment that is designed to limit access to the hosts (partner or clients) machine, so that malicious code should not be able to access data or resources that are outside the scope that the program can run within. This is done by the partner dedicating portions of their system for Modulr specific tasks; for example when setting up a new worker the user is asked how much of their storage space they want to dedicate to the blockchain (has to be within 4GB segments). At that point the 'working folder' cannot go outside this area. Any attempts to do so will result in a drop in Reliability score from the Creator. 
 
 ##### On Chain Compilation
 
-Other than having the language create a sandbox environment, another security feature is that Pseudo code is compiled on chain. This means that if there is an attempt to access data outside of the range / scope of this program it will return as an error. The one exception to this rule is when UndChain is being ran on a local network, although technically it's still remote because the partner user type would need to compile the code. 
+Other than having the language create a sandbox environment, another security feature is that Pseudo code is compiled on chain. This means that if there is an attempt to access data outside of the range / scope of this program it will return as an error. The one exception to this rule is when Modulr is being ran on a local network, although technically it's still remote because the partner user type would need to compile the code. 
 
 ##### Co-Chain Extensibility
 
@@ -1321,7 +1321,7 @@ Developers can import functions from other co-chains, extending the language fun
 ```Pseudo
 from pages import ratings, client
 
-if ratings(undchain.info) >= client.age:
+if ratings(Modulr.info) >= client.age:
 	show()
 ```
 
@@ -1345,7 +1345,7 @@ Types are declared in the same way they are in Python (yes you can declare types
 
 ##### When
 
-The **when** keyword is meant to be used for asynchronous process (which are common for UndChain since everything will happen over the network). This provides a structure that makes this easier to read and write when you are waiting on a specific event. Plus it eliminates the need to poll a resource all the time to wait on a specific value.
+The **when** keyword is meant to be used for asynchronous process (which are common for Modulr since everything will happen over the network). This provides a structure that makes this easier to read and write when you are waiting on a specific event. Plus it eliminates the need to poll a resource all the time to wait on a specific value.
 
 **Example**
 
@@ -1368,7 +1368,7 @@ At this time it is our intent to make the language case insensitive, meaning tha
 
 ## Decentralization
 
-Ensuring that the network stays decentralized and ensuring that there is no concentration of resources going to one area is a key factor with UndChain. With that in mind the chain will envelop protocols that are designed to keep with those philosophies. One such method is the separation of powers between the different user types. With that in mind this section will discuss how these separation of powers come into play regarding the network.
+Ensuring that the network stays decentralized and ensuring that there is no concentration of resources going to one area is a key factor with Modulr. With that in mind the chain will envelop protocols that are designed to keep with those philosophies. One such method is the separation of powers between the different user types. With that in mind this section will discuss how these separation of powers come into play regarding the network.
 
 #### Creators
 
@@ -1384,7 +1384,7 @@ What use is a partner that is never used? If a partner is not being utilized the
 
 #### Clients
 
-It is illegal on UndChain to not process a transaction regardless of how poorly a user acts on chain. If you make a request and you meet the fee then the transaction is performed. So, what UndChain does in cases where a client who has a low Reliability score, is in cases where you are submitting a claim against another user it reduces the likelihood you will win that claim without substantial proof. How do clients have low Reliability scores? Mainly through false claims, but also when they act in either of the other user types. Think that you are a partner who has earned tokens and then you want to use network resources with those tokens, but you provided poor service. As always, you can redeem yourself by acting as a partner or validator. 
+It is illegal on Modulr to not process a transaction regardless of how poorly a user acts on chain. If you make a request and you meet the fee then the transaction is performed. So, what Modulr does in cases where a client who has a low Reliability score, is in cases where you are submitting a claim against another user it reduces the likelihood you will win that claim without substantial proof. How do clients have low Reliability scores? Mainly through false claims, but also when they act in either of the other user types. Think that you are a partner who has earned tokens and then you want to use network resources with those tokens, but you provided poor service. As always, you can redeem yourself by acting as a partner or validator. 
 
 
 ### Latency / Cost
@@ -1393,21 +1393,21 @@ While a balance of power is key that doesn't completely ensure decentralization,
 
 ### Pool-less Protocol
 
-While having a separation of power between the validators who maintain the blockchain and the partners who hold the ledger and process the payments. There is another reason the validators exist, and that is to keep mining pools away from UndChain. There is no need for them; the Validators already perform token distributions and traffic control so there is no benefit for another entity to perform that function. This also gives the partners full rewards since validators don't earn SP.
+While having a separation of power between the validators who maintain the blockchain and the partners who hold the ledger and process the payments. There is another reason the validators exist, and that is to keep mining pools away from Modulr. There is no need for them; the Validators already perform token distributions and traffic control so there is no benefit for another entity to perform that function. This also gives the partners full rewards since validators don't earn SP.
 
 ## Wallets
 
-Had a thought while doing some development work in regards to having hot and cold wallets, and since UndChain needs the ability to sign transactions (fairly regularly) I think it may be wise to implement the idea of hot and cold wallets so that users already have that as a additional means of security. What this would mean is that instead of just one public address in a user accounts name you would have two. I need to think more on this and how it should be implemented. I will say for sure that fees between those two wallets will be zero.
+Had a thought while doing some development work in regards to having hot and cold wallets, and since Modulr needs the ability to sign transactions (fairly regularly) I think it may be wise to implement the idea of hot and cold wallets so that users already have that as a additional means of security. What this would mean is that instead of just one public address in a user accounts name you would have two. I need to think more on this and how it should be implemented. I will say for sure that fees between those two wallets will be zero.
 
 # Code Bounties
 
-In this section I am going to list out the active *bounties* for the UndChain project. The Bounty program is meant to not only list what is needed for chain development, but also provide reward structures for each *contract* that is listed. 
+In this section I am going to list out the active *bounties* for the Modulr project. The Bounty program is meant to not only list what is needed for chain development, but also provide reward structures for each *contract* that is listed. 
 
-One of the ideas I have for UndChain is to make it so that open source software doesn't mean free, which means for everyone not just the project. This not only refers to the organization which can receive tokens, nor the Creator(s) who can collect fees, but also freelance developers who are looking to assist in a project. 
+One of the ideas I have for Modulr is to make it so that open source software doesn't mean free, which means for everyone not just the project. This not only refers to the organization which can receive tokens, nor the Creator(s) who can collect fees, but also freelance developers who are looking to assist in a project. 
 
-UndChain itself has a startup developer fund of 1 million GP as well as 10 million SP. UndChain will also use this fund to support new co-chains since new blockchains coming into UndChain help support the eco system and make UndChain better. 
+Modulr itself has a startup developer fund of 1 million GP as well as 10 million SP. Modulr will also use this fund to support new co-chains since new blockchains coming into Modulr help support the eco system and make Modulr better. 
 
-Currently there are no active bounties at this time as the system is still under development, but I am going to make some examples of what a warrant should look like. *Note: this is currently being posted in GitHub, but will eventually only exist on UndChain once the Code Ledger side chain goes live*
+Currently there are no active bounties at this time as the system is still under development, but I am going to make some examples of what a warrant should look like. *Note: this is currently being posted in GitHub, but will eventually only exist on Modulr once the Code Ledger side chain goes live*
 
 ## Example of Bounties
 
@@ -1430,7 +1430,7 @@ Currently there are no active bounties at this time as the system is still under
 
 #### Explanation
 
-While UndChain is the only chain that should be requesting new chains (although anyone can do that). I believe this shows a good example of what a contract should looks like. 
+While Modulr is the only chain that should be requesting new chains (although anyone can do that). I believe this shows a good example of what a contract should looks like. 
 
 1. **Wanted** - This defines what is being sought after and should be treated as an overview, meaning what the final product should be. *I should probably limit this field to a specific amount of characters to enforce the idea that this should be a brief description.*
 2. **Status** - The current status of the contract. Open means you are looking for candidates, active means that the module is being worked on and is not open for additional candidates at this time (this should only be reserved for large projects that may have too many participants) and closed which means the contract was completed.
@@ -1507,7 +1507,7 @@ This example is meant to show how you could create a contract that adds function
 
 ### Example of a Hardware Contract
 
-**Wanted** - Need to create a wireless device that can use multiple radio frequencies that broadcast UndChain routing protocols that enable fast local communication. 
+**Wanted** - Need to create a wireless device that can use multiple radio frequencies that broadcast Modulr routing protocols that enable fast local communication. 
 
 **Status** - Open
 
@@ -1527,7 +1527,7 @@ Not sure if this will work out well, but I was thinking we could also make real 
 
 ### Conclusions
 
-This should all be housed inside programs that have a form of revision control so that you can maintain and control projects. Ideally you would have an *organization* (in UndChain) responsible for creating these projects that way you can define roles and positions that you need. *Tip: never skip out on Documentation or Quality Control as it is critical for any successful project...*
+This should all be housed inside programs that have a form of revision control so that you can maintain and control projects. Ideally you would have an *organization* (in Modulr) responsible for creating these projects that way you can define roles and positions that you need. *Tip: never skip out on Documentation or Quality Control as it is critical for any successful project...*
 
 ---
 # Technical Documentation / Roadmap
@@ -1539,6 +1539,6 @@ Any submitted code should have type definitions as well as doc strings to accomp
 
 ## Roadmap
 
-Follow this link to see the internal roadmap for UndChain to get more in depth knowledge on how the technology works [Internal UndChain Roadmap](docs/Internal_UndChain_Roadmap.md)
+Follow this link to see the internal roadmap for Modulr to get more in depth knowledge on how the technology works [Internal Modulr Roadmap](docs/Internal_UndChain_Roadmap.md)
 
 We are currently in [Phase 1](docs/Phase_1.md)
